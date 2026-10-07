@@ -12,14 +12,12 @@
     flagships: { label: 'Flagships', title: 'Programs that turn curiosity into capability.', eyebrow: 'Our signature initiatives' },
     team: { label: 'Team', title: 'The people behind the signal.', eyebrow: 'Meet the club team' },
     gallery: { label: 'Gallery', title: 'Captured in the club.', eyebrow: 'Moments from our community' },
-    leaderboard: { label: 'Leaderboard', title: 'Celebrate progress, not just points.', eyebrow: 'Challenge standings' },
     membership: { label: 'Membership', title: 'Your route from visitor to contributor.', eyebrow: 'Join the community' },
     contact: { label: 'Contact', title: 'Have a question? Start a conversation.', eyebrow: 'Reach the club' },
     ctf: { label: 'CTF', title: 'Think sideways. Solve carefully. Learn constantly.', eyebrow: 'Capture the flag' },
-    dashboard: { label: 'Dashboard', title: 'Your learning command centre.', eyebrow: 'Member workspace' }
   };
 
-  const linkOrder = ['home', 'about', 'events', 'flagships', 'team', 'gallery', 'leaderboard', 'membership', 'contact', 'ctf', 'dashboard'];
+  const linkOrder = ['home', 'about', 'events', 'flagships', 'team', 'gallery', 'membership', 'contact', 'ctf'];
   navigation.innerHTML = linkOrder.map(function (key) {
     return '<a href="#/' + key + '" data-page="' + key + '">' + pages[key].label + '</a>';
   }).join('');
@@ -182,8 +180,6 @@
       content = { lede: 'A student-led space to understand technology, question assumptions and practise defending the systems we depend on.', body: '<div class="split-content"><article class="info-panel"><p class="eyebrow">Our purpose</p><h2>Security is a team sport.</h2><p>We believe cybersecurity grows through curiosity, responsible practice and people willing to share what they learn.</p></article><article class="info-panel"><p class="eyebrow">Our principles</p><h2>Learn openly. Build responsibly.</h2><p>We create beginner-friendly spaces for secure coding, digital safety, ethical hacking, research and defence.</p></article></div>' };
     } else if (key === 'flagships') {
       content = { lede: 'Our recurring initiatives create clear ways to learn, practise and contribute throughout the academic year.', body: cards(window.flagshipsData || [], 'flagship-grid') };
-    } else if (key === 'leaderboard') {
-      content = { lede: 'A static showcase of challenge progress. Update the names and scores directly in this page when publishing results.', body: '<div class="leaderboard">' + ['Participant one', 'Participant two', 'Participant three', 'Participant four'].map(function (name, index) { return '<div class="leader-row"><strong>0' + (index + 1) + '</strong><span>' + name + '</span><b>' + (980 - index * 127) + ' pts</b></div>'; }).join('') + '</div>' };
     } else if (key === 'ctf') {
       const challenges = (window.challengesData || []).map(function (challenge) {
         return Object.assign({}, challenge, { meta: challenge.category + ' · ' + challenge.difficulty + ' · ' + challenge.points + ' points' });

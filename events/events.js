@@ -8,7 +8,10 @@ window.eventsData = [
     "venue": "Seminar Hall",
     "image": "events/Inauguration Poster.png",
     "attachments": [
-      { "label": "Inauguration poster", "path": "events/Inauguration Poster.png", "type": "Image" }
+      {
+        "label": "Inauguration poster", "path": "events/Inauguration Poster.png", "type": "Image",
+
+      }
     ]
   },
   {
