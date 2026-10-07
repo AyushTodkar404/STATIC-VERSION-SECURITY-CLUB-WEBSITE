@@ -1,0 +1,22 @@
+<svg width="600" height="600" viewBox="0 0 1074 1074" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title">
+  <title id="title">Security Club shield</title>
+  <defs>
+    <pattern id="mesh" width="38" height="38" patternUnits="userSpaceOnUse">
+      <path d="M0 0H38V38H0Z M0 0L38 38 M38 0L0 38" fill="none" stroke="#00eaff" stroke-opacity=".3" stroke-width="1"/>
+      <circle cx="0" cy="0" r="2.5" fill="#00eaff"/>
+    </pattern>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="7" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <clipPath id="shieldClip">
+      <path d="M537 245L774 330V555C774 690 700 775 537 830C374 775 300 690 300 555V330Z"/>
+    </clipPath>
+  </defs>
+  <circle cx="537" cy="537" r="390" fill="none" stroke="#00eaff" stroke-opacity=".2" stroke-width="2"/>
+  <circle cx="537" cy="537" r="310" fill="none" stroke="#00eaff" stroke-opacity=".35" stroke-width="2" stroke-dasharray="5 14"/>
+  <path d="M537 245L774 330V555C774 690 700 775 537 830C374 775 300 690 300 555V330Z" fill="#06131d" stroke="#00eaff" stroke-width="8" filter="url(#glow)"/>
+  <path d="M537 265L750 341V555C750 670 685 739 537 794C389 739 324 670 324 555V341Z" fill="url(#mesh)" clip-path="url(#shieldClip)" opacity=".9"/>
+  <path d="M537 245L774 330V555C774 690 700 775 537 830C374 775 300 690 300 555V330Z" fill="none" stroke="#00eaff" stroke-width="8" filter="url(#glow)"/>
+  <path d="M430 430L537 490L644 430V620C644 680 606 718 537 745C468 718 430 680 430 620Z" fill="none" stroke="#8affc1" stroke-width="7" opacity=".9"/>
+</svg>

@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Security Club DBIT - explore, learn and build practical cybersecurity skills.">
+    <title>Security Club | DBIT</title>
+    <link rel="icon" href="assets/security-club-logo.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <canvas id="matrix-background" aria-hidden="true"></canvas>
+    <div class="ambient-grid" aria-hidden="true"></div>
+    <header class="site-header">
+      <a class="brand" href="#/" aria-label="Security Club home"><img src="assets/security-club-logo.svg" alt="Security Club DBIT logo" width="42" height="42"><span>Security Club <small>DBIT</small></span></a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-navigation"><span></span><span></span><span></span><span class="sr-only">Toggle navigation</span></button>
+      <nav id="site-navigation" class="site-nav" aria-label="Main navigation"></nav>
+      <button class="theme-toggle" type="button" aria-label="Switch to light theme"><span aria-hidden="true">☀</span><span>Light</span></button>
+    </header>
+    <main id="app" tabindex="-1"></main>
+    <footer class="site-footer">
+      <div class="footer-inner section-shell">
+        <div><a class="brand" href="#/"><img src="assets/security-club-logo.svg" alt="Security Club DBIT logo" width="36" height="36"><span>Security Club <small>DBIT</small></span></a><p>Hack. Defend. Secure. Building practical cybersecurity skills at campus scale.</p></div>
+        <div><h3>Contact</h3><a href="mailto:securityclubdbit@gmail.com">securityclubdbit@gmail.com</a><a href="https://www.instagram.com/securityclubdbit" target="_blank" rel="noreferrer">Instagram ↗</a><a href="https://www.linkedin.com/in/security-club-dbit-801708404/" target="_blank" rel="noreferrer">LinkedIn ↗</a></div>
+        <div><h3>Explore</h3><a href="#/events">Events</a><a href="#/team">Team</a><a href="#/gallery">Gallery</a><a href="#/membership">Membership</a></div>
+      </div>
+      <p class="copyright">© <span id="current-year"></span> Security Club DBIT. Built by students, for students.</p>
+    </footer>
+    <script src="events/events.js"></script>
+    <script src="flagships/flagships.js"></script>
+    <script src="ctf/challenges.js"></script>
+    <script src="team/team.js"></script>
+    <script src="gallery/gallery.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
