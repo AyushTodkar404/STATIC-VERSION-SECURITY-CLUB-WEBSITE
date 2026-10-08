@@ -7,7 +7,7 @@
   const cursor = document.createElement('div');
   cursor.className = 'target-cursor-root';
   cursor.setAttribute('aria-hidden', 'true');
-  cursor.innerHTML = '<span class="target-cursor-dot"></span><span class="target-cursor-corner corner-tl"></span><span class="target-cursor-corner corner-tr"></span><span class="target-cursor-corner corner-br"></span><span class="target-cursor-corner corner-bl"></span>';
+  cursor.innerHTML = '<span class="target-cursor-dot"></span><span class="target-cursor-frame"><span class="target-cursor-corner corner-tl"></span><span class="target-cursor-corner corner-tr"></span><span class="target-cursor-corner corner-br"></span><span class="target-cursor-corner corner-bl"></span></span>';
   document.body.appendChild(cursor);
   document.body.classList.add("has-target-cursor");
 
@@ -98,11 +98,4 @@
   window.addEventListener('pointerdown', function (event) { if (event.pointerType !== 'touch') cursor.classList.add('is-clicking'); });
   window.addEventListener('pointerup', function (event) { if (event.pointerType !== 'touch') cursor.classList.remove('is-clicking'); });
   window.addEventListener('pointercancel', function (event) { if (event.pointerType !== 'touch') cursor.classList.remove('is-clicking'); });
-  finePointer.addEventListener('change', function (event) {
-    if (!event.matches) {
-      cursor.remove();
-      document.body.classList.remove("has-target-cursor");
-    }
-    else if (!cursor.isConnected && !reducedMotion.matches) window.location.reload();
-  });
 }());
