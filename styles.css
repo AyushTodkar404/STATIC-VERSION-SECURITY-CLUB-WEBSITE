@@ -142,7 +142,7 @@ h3 { font-size: 1.1rem; }
   .event-detail-overlay { padding: .5rem; }
   .event-detail { max-height: 94dvh; }
   .page { padding-block: 1.5rem 4rem; }
-  .page-hero h1 { font-size: clamp(2.6rem, 13vw, 4.5rem); }
+  .page-hero h1 { font-size: clamp(2rem, 8vw, 3rem); }
   .contact-email { overflow-wrap: anywhere; }
   .gallery-years { border-left: 0; padding-left: 0; }
 }
@@ -150,7 +150,7 @@ h3 { font-size: 1.1rem; }
 
 .page { padding-block: 3rem 6rem; }
 .page-hero { display: grid; grid-template-columns: minmax(0, 1fr); align-items: end; gap: 2rem; min-height: 300px; padding-block: 2rem 4rem; border-bottom: 1px solid var(--line); }
-.page-hero h1 { max-width: 14ch; margin-bottom: 1rem; }
+.page-hero h1 { max-width: 18ch; margin-bottom: 1rem; font-size: clamp(2.4rem, 4.5vw, 4.25rem); line-height: 1.04; letter-spacing: -.05em; }
 .page > .intro { width: 100%; padding-block: 4rem; }
 .home-actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.5rem; }
 .split-content { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; padding-top: 3rem; }
