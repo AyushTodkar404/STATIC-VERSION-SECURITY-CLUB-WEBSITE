@@ -13,11 +13,12 @@
     team: { label: 'Team', title: 'The people behind the signal.', eyebrow: 'Meet the club team' },
     gallery: { label: 'Gallery', title: 'Captured in the club.', eyebrow: 'Moments from our community' },
     membership: { label: 'Membership', title: 'Your route from visitor to contributor.', eyebrow: 'Join the community' },
+    submission: { label: 'Submission', title: 'Submit your interest in the club.', eyebrow: 'Student submission' },
     contact: { label: 'Contact', title: 'Have a question? Start a conversation.', eyebrow: 'Reach the club' },
     ctf: { label: 'CTF', title: 'Think sideways. Solve carefully. Learn constantly.', eyebrow: 'Capture the flag' },
   };
 
-  const linkOrder = ['home', 'about', 'events', 'flagships', 'team', 'gallery', 'membership', 'contact', 'ctf'];
+  const linkOrder = ['home', 'about', 'events', 'flagships', 'team', 'gallery', 'membership', 'submission', 'contact', 'ctf'];
   navigation.innerHTML = linkOrder.map(function (key) {
     return '<a href="#/' + key + '" data-page="' + key + '">' + pages[key].label + '</a>';
   }).join('');
@@ -26,6 +27,11 @@
     return String(value).replace(/[&<>"']/g, function (character) {
       return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' })[character];
     });
+  }
+
+  function gmailComposeUrl(subject, body) {
+    const params = new URLSearchParams({ view: 'cm', fs: '1', to: 'securityclubdbit@gmail.com', su: subject, body: body || '' });
+    return 'https://mail.google.com/mail/?' + params.toString();
   }
 
   function image(path, fallback, alt, className) {
@@ -187,8 +193,10 @@
       content = { lede: 'Choose a challenge, learn responsibly and practise the skills that make secure systems possible.', body: cards(challenges, 'challenge-grid') };
     } else if (key === 'membership') {
       content = { lede: 'There is no account or login on this static page. Contact the club to ask about joining and upcoming sessions.', body: '<div class="split-content"><article class="info-panel"><p class="eyebrow">Start here</p><h2>Show up curious.</h2><p>Join an open session, ask questions and find the area of cybersecurity that excites you. Prior experience is never required.</p><a class="button button-primary" href="#/contact">Contact the club</a></article><article class="info-panel"><p class="eyebrow">What you can explore</p><ul class="clean-list"><li>Security fundamentals</li><li>CTFs and practical labs</li><li>Secure development</li><li>Research and community projects</li></ul></article></div>' };
+    } else if (key === 'submission') {
+      content = { lede: 'Share your details and tell us why you would like to join. Choose Gmail or WhatsApp to open a prepared message that you can review and send.', body: '<form class="contact-panel contact-form submission-form-panel" id="student-submission-form"><label for="submission-name">Name</label><input id="submission-name" name="name" autocomplete="name" required><label for="submission-email">Gmail address</label><input id="submission-email" name="email" type="email" autocomplete="email" required><label for="submission-phone">Phone number</label><input id="submission-phone" name="phone" type="tel" autocomplete="tel" required><label for="submission-reason">Reason to join the club</label><textarea id="submission-reason" name="reason" rows="4" required></textarea><label for="submission-query">Query or question <span class="form-optional">(optional)</span></label><textarea id="submission-query" name="query" rows="3"></textarea><div class="submission-details"><div><label for="submission-year">Year of study</label><select id="submission-year" name="year" required><option value="">Choose your year</option><option value="FE">FE (First Year)</option><option value="SE">SE (Second Year)</option><option value="TE">TE (Third Year)</option><option value="BE">BE (Fourth Year)</option></select></div><div><label for="submission-division">Division</label><select id="submission-division" name="division" required><option value="">Choose your division</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="Other">Other / not listed</option></select></div></div><p class="form-help">This static website does not store your details. A prepared message opens in your selected service; review and send it there.</p><div class="submission-actions"><button class="button button-primary" type="submit" name="destination" value="gmail">Send on Gmail ↗</button><button class="button button-ghost" type="submit" name="destination" value="whatsapp">Send on WhatsApp ↗</button></div></form>' };
     } else if (key === 'contact') {
-      content = { lede: 'For collaborations, event invites, workshop partnerships or club questions, reach us directly by email or WhatsApp.', body: '<div class="contact-layout"><div class="contact-panel"><p class="eyebrow">Contact info</p><a class="contact-email" href="mailto:securityclubdbit@gmail.com">securityclubdbit@gmail.com</a><p>WhatsApp: <a href="https://wa.me/919819582340" target="_blank" rel="noreferrer">+91 98195 82340</a></p><p>Location: Don Bosco Institute of Technology, Kurla</p><p>For current meeting times, contact the club.</p><div class="home-actions"><a class="button button-primary" href="mailto:securityclubdbit@gmail.com">Send an email →</a><a class="button button-ghost" href="https://wa.me/919819582340" target="_blank" rel="noreferrer">Open WhatsApp ↗</a></div></div><form class="contact-panel contact-form" id="contact-form"><p class="eyebrow">Message the club</p><label for="contact-name">Name</label><input id="contact-name" name="name" required><label for="contact-email">Email</label><input id="contact-email" name="email" type="email" required><label for="contact-message">Message</label><textarea id="contact-message" name="message" rows="5" required></textarea><p class="form-help">Your email app will open with the message prepared. Nothing is stored on a server.</p><button class="button button-primary" type="submit">Prepare email →</button></form></div>' };
+      content = { lede: 'For collaborations, event invites, workshop partnerships or club questions, reach us directly by email or WhatsApp.', body: '<div class="contact-layout"><div class="contact-panel"><p class="eyebrow">Contact info</p><a class="contact-email" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=securityclubdbit%40gmail.com" target="_blank" rel="noopener noreferrer">securityclubdbit@gmail.com</a><p>WhatsApp: <a href="https://wa.me/919819582340" target="_blank" rel="noreferrer">+91 98195 82340</a></p><p>Location: Don Bosco Institute of Technology, Kurla</p><p>For current meeting times, contact the club.</p><div class="home-actions"><a class="button button-primary" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=securityclubdbit%40gmail.com" target="_blank" rel="noopener noreferrer">Compose in Gmail ↗</a><a class="button button-ghost" href="https://wa.me/919819582340" target="_blank" rel="noreferrer">Open WhatsApp ↗</a></div></div><form class="contact-panel contact-form" id="contact-form"><p class="eyebrow">Message the club</p><label for="contact-name">Name</label><input id="contact-name" name="name" required><label for="contact-email">Email</label><input id="contact-email" name="email" type="email" required><label for="contact-message">Message</label><textarea id="contact-message" name="message" rows="5" required></textarea><p class="form-help">Opens a Gmail draft in your browser. Sign in if prompted, then review and send it from Gmail. The message is not sent automatically.</p><button class="button button-primary" type="submit">Open Gmail draft →</button></form></div>' };
     } else {
       content = { lede: 'This page is presented as a public static information page. There is no login, account system or private data in this version.', body: '<div class="split-content"><article class="info-panel"><p class="eyebrow">Static workspace</p><h2>' + pages[key].label + '</h2><p>Use this space to publish the club’s current work, resources and updates directly from the GitHub repository.</p></article><article class="info-panel"><p class="eyebrow">How it works</p><h2>GitHub is the editor.</h2><p>Update the HTML, CSS, JavaScript and image folders, then commit and push. The hosted page reflects the repository contents.</p></article></div>' };
     }
@@ -201,9 +209,31 @@
     if (contactForm) contactForm.addEventListener('submit', function (event) {
       event.preventDefault();
       const form = new FormData(contactForm);
-      const subject = encodeURIComponent('Security Club DBIT enquiry from ' + form.get('name'));
-      const body = encodeURIComponent(String(form.get('message')) + '\n\nFrom: ' + form.get('name') + '\nEmail: ' + form.get('email'));
-      window.location.href = 'mailto:securityclubdbit@gmail.com?subject=' + subject + '&body=' + body;
+      const subject = 'Security Club DBIT enquiry from ' + form.get('name');
+      const body = String(form.get('message')) + '\n\nFrom: ' + form.get('name') + '\nEmail: ' + form.get('email');
+      window.open(gmailComposeUrl(subject, body), '_blank', 'noopener,noreferrer');
+    });
+    const submissionForm = app.querySelector('#student-submission-form');
+    if (submissionForm) submissionForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+      const form = new FormData(submissionForm);
+      const lines = [
+        'Student club submission',
+        'Name: ' + form.get('name'),
+        'Gmail: ' + form.get('email'),
+        'Phone: ' + form.get('phone'),
+        'Reason to join: ' + form.get('reason'),
+        'Year of study: ' + form.get('year'),
+        'Division: ' + form.get('division')
+      ];
+      if (form.get('query')) lines.push('Query: ' + form.get('query'));
+      const message = lines.join('\n');
+      const destination = event.submitter && event.submitter.value;
+      if (destination === 'whatsapp') {
+        window.open('https://wa.me/919819582340?text=' + encodeURIComponent(message), '_blank', 'noopener,noreferrer');
+      } else {
+        window.open(gmailComposeUrl('Student submission to Security Club DBIT', message), '_blank', 'noopener,noreferrer');
+      }
     });
     decodeText(app.querySelector('h1'));
     app.focus({ preventScroll: true });

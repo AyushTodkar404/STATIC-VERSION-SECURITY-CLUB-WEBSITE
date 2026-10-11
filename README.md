@@ -101,8 +101,14 @@ applications, contact messages, leaderboard/private user data, and all other
 non-public backend records.
 
 The static navigation intentionally excludes Profile and Core Workspace. The
-Contact page uses `mailto:` and WhatsApp links, so it opens the visitor's own
-email or WhatsApp app without requiring a server.
+Contact page opens Gmail's browser-based compose page and WhatsApp links. The
+visitor must sign in to Gmail if prompted and send the draft themselves; the
+static page does not send or store messages.
+
+The Submission page collects a student's name, Gmail address, phone number,
+reason for joining, optional query, year, and division. It opens a prepared
+Gmail draft or WhatsApp message; the student reviews and sends it from that
+service. Submission details are not stored by this static page.
 
 The original Security Club logo is stored in `assets/security-club-logo.svg`
 and `assets/security-club-logo.png`. The welcome page uses the original
