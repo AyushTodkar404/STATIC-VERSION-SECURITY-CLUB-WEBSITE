@@ -37,5 +37,17 @@ window.eventsData = [
       { "label": "DSCI bootcamp poster", "path": "events/Poster DSCI Bootcamp.png", "type": "Image" }
     ]
   },
+  {
+    "title": "Tech Quest - 2026 ",
+    "date": "09-10-2026 ",
+    "type": "Competition",
+    "description": "Tech Quest is an inter-college competition organized by DBIT, featuring a series of challenges and activities designed to test participants' skills and knowledge.Security Club was in collaboration with SIE Club.As a challenge, we designed a murder mystery for the participants. Here, we provided three files, out of which one was about the case and two were the evidence files. Along with those, there was a 10-minute timer to find out the actual perpetrator. ",
+    "venue": "Computer tutorial room ",
+    "image": "events/Security Club_20261009_142358_0000.png",
+    "attachments": [
+      { "label": "Tech Quest poster", "path": "events/Security Club_20261009_142358_0000.png", "type": "Image" }
+    ]
+  }
+
 
 ];
