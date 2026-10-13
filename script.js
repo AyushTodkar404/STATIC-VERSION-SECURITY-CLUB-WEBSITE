@@ -4,6 +4,8 @@
   const menuButton = document.querySelector('.menu-toggle');
   const themeToggle = document.querySelector('.theme-toggle');
   const matrixCanvas = document.querySelector('#matrix-background');
+  const scrambleSessionKey = 'security-club-heading-scramble-v1';
+  let scrambleInterval = 0;
 
   const pages = {
     home: { label: 'Welcome', title: 'Curious about cybersecurity? You belong here.', eyebrow: 'Security Club · Welcome terminal' },
@@ -35,8 +37,19 @@
   }
 
   function image(path, fallback, alt, className) {
-    return '<img loading="lazy" decoding="async" class="' + (className || 'card-image') + '" src="' + escapeHtml(path) + '" alt="' + escapeHtml(alt) + '" onerror="this.replaceWith(Object.assign(document.createElement(\'div\'),{className:\'' + (className || 'card-image') + '\',textContent:\'' + fallback + '\'}))">';
+    return '<img loading="lazy" decoding="async" class="' + (className || 'card-image') + '" src="' + escapeHtml(path) + '" alt="' + escapeHtml(alt) + '" data-image-fallback="' + escapeHtml(fallback) + '">';
   }
+
+  app.addEventListener('error', function (event) {
+    const failedImage = event.target;
+    if (!(failedImage instanceof HTMLImageElement) || !failedImage.hasAttribute('data-image-fallback')) return;
+    const fallback = document.createElement('div');
+    fallback.className = failedImage.className || 'card-image';
+    fallback.setAttribute('role', 'img');
+    fallback.setAttribute('aria-label', failedImage.alt || 'Image unavailable');
+    fallback.textContent = failedImage.dataset.imageFallback;
+    failedImage.replaceWith(fallback);
+  }, true);
 
   function shell(key, content) {
     const page = pages[key];
@@ -170,11 +183,15 @@
 
   function render(key) {
     if (!pages[key]) key = 'home';
+    if (scrambleInterval) {
+      window.clearInterval(scrambleInterval);
+      scrambleInterval = 0;
+    }
     let content;
     if (key === 'home') {
       content = {
         lede: 'Security Club is a welcoming campus community for beginners, builders and problem-solvers. Explore cybersecurity through workshops, CTFs, projects and hands-on learning.',
-        body: '<div class="home-hero-visual"><img src="assets/security-shield.svg" alt="Security Club shield" width="420" height="420"></div><div class="home-actions"><a class="button button-primary" href="#/events">Explore events →</a><a class="button button-ghost" href="#/about">Meet the club</a></div><p class="hero-note">No prior knowledge. No gatekeeping. Just curiosity.</p><section class="intro"><p class="eyebrow">A club for first steps</p><h2>You do not need to be a hacker to start.</h2><p>We make the first step practical, social and fun. Find your people, try a lab and build real skills at your own pace.</p></section><section class="opportunities"><div class="stat"><strong>Community</strong><span>learn together</span></div><div class="stat"><strong>Questions</strong><span>always welcome</span></div><div class="stat"><strong>Hands-on</strong><span>build real skills</span></div></section>'
+        body: '<div class="home-hero-visual"><img src="assets/security-shield.svg" alt="Security Club shield" width="420" height="420" loading="eager" fetchpriority="high" decoding="async"></div><div class="home-actions"><a class="button button-primary" href="#/events">Explore events →</a><a class="button button-ghost" href="#/about">Meet the club</a></div><p class="hero-note">No prior knowledge. No gatekeeping. Just curiosity.</p><section class="intro"><p class="eyebrow">A club for first steps</p><h2>You do not need to be a hacker to start.</h2><p>We make the first step practical, social and fun. Find your people, try a lab and build real skills at your own pace.</p></section><section class="opportunities"><div class="stat"><strong>Community</strong><span>learn together</span></div><div class="stat"><strong>Questions</strong><span>always welcome</span></div><div class="stat"><strong>Hands-on</strong><span>build real skills</span></div></section>'
       };
     } else if (key === 'events') {
       content = { lede: 'Look back at Security Club workshops, bootcamps, and community sessions. Contact the club for details about future events.', body: cards(window.eventsData || [], 'event-grid') };
@@ -241,10 +258,21 @@
 
   function decodeText(element) {
     if (!element) return;
+    // sessionStorage is shared by route changes and survives reloads in this tab.
+    // If storage is unavailable, keep a page-lifetime guard as a safe fallback.
+    let alreadyAnimated = false;
+    try {
+      alreadyAnimated = sessionStorage.getItem(scrambleSessionKey) === 'done';
+      if (!alreadyAnimated) sessionStorage.setItem(scrambleSessionKey, 'done');
+    } catch (_) {
+      alreadyAnimated = window.headingScramblePlayed === true;
+      window.headingScramblePlayed = true;
+    }
+    if (alreadyAnimated) return;
     const finalText = element.textContent;
     const chars = "!@#$%^&*()_+{}:\"<>?|[];',./`~0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     let iteration = 0;
-    const interval = setInterval(function () {
+    scrambleInterval = window.setInterval(function () {
       element.textContent = finalText.split('').map(function (character, index) {
         if (index < iteration) return character;
         return chars[Math.floor(Math.random() * chars.length)];
@@ -252,25 +280,37 @@
       iteration += 1 / 3;
       if (iteration >= finalText.length) {
         element.textContent = finalText;
-        clearInterval(interval);
+        window.clearInterval(scrambleInterval);
+        scrambleInterval = 0;
       }
-    }, 30);
+    }, 20);
   }
 
   function setupMatrix() {
     const context = matrixCanvas.getContext('2d');
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     if (!context) return;
     const characters = '01';
     const fontSize = 14;
     let width = 0;
     let height = 0;
     let drops = [];
+    let animationFrame = 0;
+    let animationTimer = 0;
     function resize() {
-      width = matrixCanvas.width = window.innerWidth;
-      height = matrixCanvas.height = window.innerHeight;
+      const pixelRatio = Math.min(window.devicePixelRatio || 1, 1.5);
+      width = window.innerWidth;
+      height = window.innerHeight;
+      matrixCanvas.width = Math.round(width * pixelRatio);
+      matrixCanvas.height = Math.round(height * pixelRatio);
+      matrixCanvas.style.width = width + 'px';
+      matrixCanvas.style.height = height + 'px';
+      context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
       drops = new Array(Math.floor(width / fontSize)).fill(1);
     }
     function draw() {
+      animationFrame = 0;
+      if (document.hidden) return;
       context.fillStyle = 'rgba(0, 0, 0, 0.1)';
       context.fillRect(0, 0, width, height);
       context.fillStyle = '#00ff40';
@@ -280,10 +320,33 @@
         if (drop * fontSize > height && Math.random() > .975) drops[index] = 0;
         drops[index] += 1;
       });
+      animationTimer = window.setTimeout(function () {
+        animationTimer = 0;
+        animationFrame = window.requestAnimationFrame(draw);
+      }, 100);
+    }
+    function pause() {
+      if (animationTimer) window.clearTimeout(animationTimer);
+      if (animationFrame) window.cancelAnimationFrame(animationFrame);
+      animationTimer = 0;
+      animationFrame = 0;
+    }
+    function resume() {
+      if (!document.hidden && !reducedMotion.matches && !animationFrame && !animationTimer) {
+        animationFrame = window.requestAnimationFrame(draw);
+      }
     }
     resize();
-    window.addEventListener('resize', resize);
-    window.setInterval(draw, 70);
+    window.addEventListener('resize', resize, { passive: true });
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) pause(); else resume();
+    });
+    if (typeof reducedMotion.addEventListener === 'function') {
+      reducedMotion.addEventListener('change', function (event) {
+        if (event.matches) pause(); else resume();
+      });
+    }
+    resume();
   }
 
   menuButton.addEventListener('click', function () {

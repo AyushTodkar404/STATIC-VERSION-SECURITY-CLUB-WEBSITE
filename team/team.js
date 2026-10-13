@@ -15,6 +15,13 @@ window.teamData = [
     "linkedin": ""
   },
   {
+    "name": "Maverick Dsilva",
+    "role": "VICE PRESIDENT",
+    "bio": "Security Club DBIT team member.",
+    "image": "team/member-16.jpg",
+    "linkedin": ""
+  },
+  {
     "name": "RONALD MENEZES",
     "role": "TECHNICAL HEAD",
     "bio": "Security Club DBIT team member.",
