@@ -31,16 +31,28 @@ node "SECURITY CLUB STATIC PAGE\build-gallery-manifest.js"
 
 ## Updating content
 
+### Optimizing images
+
+Before adding raster photos to the site, open `image-optimizer.html` in a modern
+browser, select the photos, and download the generated WebP files. The tool
+resizes large photos to a maximum dimension of 2000 pixels and encodes them at
+high visual quality. It runs locally in the browser and does not upload selected
+files. Add the downloaded WebP files to the relevant site folder and use their
+`.webp` paths in the data file. Keep original photos outside the published site
+as backups. Prefer SVG for logos and illustrations.
+
 ### Events
 
-1. Add event images inside `events/`.
+1. Optimize event photos with `image-optimizer.html` and add the downloaded WebP
+   files inside `events/`.
 2. Edit `events/events.js`.
 3. Set each image path relative to the repository root, such as
    `events/annual-ctf.jpg`.
 
 ### Team members
 
-1. Add member photos inside `team/`.
+1. Optimize member photos with `image-optimizer.html` and add the downloaded
+   WebP files inside `team/`.
 2. Edit `team/team.js`.
 3. Update the member's name, role, biography, and image path.
 
@@ -72,7 +84,8 @@ cannot display directly.
 
 ### Gallery
 
-1. Add photos inside the appropriate folder under `gallery/`, such as
+1. Optimize photos with `image-optimizer.html` and add the downloaded WebP files
+   inside the appropriate folder under `gallery/`, such as
    `gallery/2026/DSCI 2 DAY BOOTCAMP 2026/`.
 2. Run `build-gallery-manifest.js`. It discovers supported image files inside
    year folders and writes their folder paths into `gallery/gallery.js`.

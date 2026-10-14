@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#05080c">
+  <title>Image Optimizer · Security Club DBIT</title>
+  <style>
+    :root { color-scheme: dark; font: 16px/1.55 Inter, system-ui, sans-serif; background: #05080c; color: #e5f3f8; }
+    * { box-sizing: border-box; }
+    body { width: min(860px, calc(100% - 2rem)); margin: 3rem auto; }
+    h1 { margin-bottom: .4rem; font-size: clamp(2rem, 6vw, 3.5rem); line-height: 1.05; }
+    p { color: #9ab2bd; }
+    .panel, .result { padding: 1.25rem; border: 1px solid #1b3a4b; background: #08131b; }
+    .panel { margin-top: 2rem; }
+    label { display: block; margin-bottom: .6rem; color: #6bd9ff; font-weight: 700; }
+    input { max-width: 100%; }
+    button, .download { display: inline-block; margin-top: .75rem; padding: .7rem 1rem; border: 1px solid #00ff78; background: #00ff78; color: #00150d; font: inherit; font-weight: 700; text-decoration: none; cursor: pointer; }
+    button:disabled { opacity: .55; cursor: wait; }
+    .results { display: grid; gap: .8rem; margin-top: 1rem; }
+    .result { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem; }
+    .result p { margin: 0; overflow-wrap: anywhere; }
+    .download { margin: 0; }
+    .status { min-height: 1.6em; color: #00ff78; }
+    .note { padding-left: 1rem; border-left: 2px solid #6bd9ff; }
+  </style>
+</head>
+<body>
+  <main>
+    <p>SECURITY CLUB DBIT · LOCAL TOOL</p>
+    <h1>Optimize photos before adding them to the site.</h1>
+    <p>Choose one or more JPG, PNG, or WebP images. This page resizes large photos to at most 2000 pixels on the longest side and exports high-quality WebP copies. Everything runs in your browser; selected images are not uploaded anywhere.</p>
+    <section class="panel" aria-labelledby="optimizer-label">
+      <label id="optimizer-label" for="images">Select photos</label>
+      <input id="images" type="file" accept="image/jpeg,image/png,image/webp" multiple>
+      <p class="note">Use the downloaded .webp files in the site folders and point the matching entry in the data file to the .webp filename. Keep original photos outside the published site as backups. Keep logos and illustrations in SVG when available.</p>
+      <button id="optimize" type="button">Optimize selected images</button>
+      <p id="status" class="status" role="status" aria-live="polite"></p>
+    </section>
+    <section id="results" class="results" aria-label="Optimized images"></section>
+  </main>
+  <script>
+    const imageInput = document.querySelector('#images');
+    const optimizeButton = document.querySelector('#optimize');
+    const status = document.querySelector('#status');
+    const results = document.querySelector('#results');
+    const maxSide = 2000;
+    const quality = 0.88;
+
+    function toWebp(file) {
+      return new Promise(function (resolve, reject) {
+        const sourceUrl = URL.createObjectURL(file);
+        const image = new Image();
+        image.onload = function () {
+          const scale = Math.min(1, maxSide / Math.max(image.naturalWidth, image.naturalHeight));
+          const canvas = document.createElement('canvas');
+          canvas.width = Math.max(1, Math.round(image.naturalWidth * scale));
+          canvas.height = Math.max(1, Math.round(image.naturalHeight * scale));
+          const context = canvas.getContext('2d', { alpha: true });
+          context.drawImage(image, 0, 0, canvas.width, canvas.height);
+          URL.revokeObjectURL(sourceUrl);
+          canvas.toBlob(function (blob) {
+            if (!blob) return reject(new Error('This browser could not encode the image.'));
+            resolve({ blob: blob, width: canvas.width, height: canvas.height });
+          }, 'image/webp', quality);
+        };
+        image.onerror = function () {
+          URL.revokeObjectURL(sourceUrl);
+          reject(new Error('The image could not be read.'));
+        };
+        image.src = sourceUrl;
+      });
+    }
+
+    optimizeButton.addEventListener('click', async function () {
+      const files = Array.from(imageInput.files || []);
+      results.replaceChildren();
+      if (!files.length) {
+        status.textContent = 'Select at least one JPG, PNG, or WebP image first.';
+        return;
+      }
+      optimizeButton.disabled = true;
+      let completed = 0;
+      status.textContent = 'Optimizing images locally…';
+      for (const file of files) {
+        try {
+          const output = await toWebp(file);
+          const baseName = file.name.replace(/\.[^.]+$/, '');
+          const outputName = baseName + '.webp';
+          const link = document.createElement('a');
+          link.className = 'download';
+          link.href = URL.createObjectURL(output.blob);
+          link.download = outputName;
+          link.textContent = 'Download ' + outputName;
+          const row = document.createElement('article');
+          row.className = 'result';
+          const detail = document.createElement('p');
+          const saved = file.size ? Math.max(0, Math.round((1 - output.blob.size / file.size) * 100)) : 0;
+          detail.textContent = file.name + ' · ' + output.width + ' × ' + output.height + ' · ' + (file.size / 1024).toFixed(0) + ' KB → ' + (output.blob.size / 1024).toFixed(0) + ' KB' + (output.blob.size < file.size ? ' (' + saved + '% smaller)' : '');
+          row.append(detail, link);
+          results.append(row);
+          completed += 1;
+        } catch (error) {
+          const row = document.createElement('p');
+          row.className = 'result';
+          row.textContent = file.name + ': ' + error.message;
+          results.append(row);
+        }
+      }
+      status.textContent = 'Finished: ' + completed + ' of ' + files.length + ' image(s) ready to download.';
+      optimizeButton.disabled = false;
+    });
+  </script>
+</body>
+</html>
