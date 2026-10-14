@@ -1,8 +1,9 @@
+import { mountSecurityLogo } from './SecurityLogoTrace.js';
+
 (function () {
   const app = document.querySelector('#app');
   const navigation = document.querySelector('.site-nav');
   const menuButton = document.querySelector('.menu-toggle');
-  const themeToggle = document.querySelector('.theme-toggle');
   const matrixCanvas = document.querySelector('#matrix-background');
   const scrambleSessionKey = 'security-club-heading-scramble-v1';
   let scrambleInterval = 0;
@@ -63,6 +64,27 @@
       const eventHint = type === 'event-grid' ? '<p class="card-action-hint">Open event details →</p>' : '';
       return '<article class="card' + (type === 'event-grid' ? ' event-card' : '') + '"' + eventAttribute + '>' + photo + '<div class="card-body">' + (item.meta ? '<p class="card-meta">' + item.meta + '</p>' : '') + '<h3>' + escapeHtml(item.name || item.title) + '</h3>' + (item.role ? '<p class="role">' + escapeHtml(item.role) + '</p>' : '') + '<p>' + escapeHtml(item.description || item.bio || '') + '</p>' + eventHint + '</div></article>';
     }).join('') + '</div>';
+  }
+
+  function teamSections(items) {
+    const byFirstName = function (left, right) {
+      const firstName = function (member) {
+        return String(member.name || '').trim().split(/\s+/)[0] || '';
+      };
+      return firstName(left).localeCompare(firstName(right), undefined, { sensitivity: 'base' })
+        || String(left.name || '').localeCompare(String(right.name || ''), undefined, { sensitivity: 'base' });
+    };
+    const mentors = items.filter(function (member) {
+      return /faculty|mentor|teacher/i.test(member.role || '');
+    }).slice().sort(byFirstName);
+    const coreTeam = items.filter(function (member) {
+      return !/faculty|mentor|teacher/i.test(member.role || '');
+    }).slice().sort(byFirstName);
+    return '<section class="team-section" aria-labelledby="team-mentors-heading"><div class="team-section-heading"><p class="eyebrow">Guidance and support</p><h2 id="team-mentors-heading">Mentors</h2><p>Faculty coordinators and teachers supporting the club.</p></div>'
+      + (mentors.length ? cards(mentors, 'team-grid') : '<p class="team-empty">Mentors will be listed here.</p>')
+      + '</section><section class="team-section" aria-labelledby="team-core-heading"><div class="team-section-heading"><p class="eyebrow">Student leadership</p><h2 id="team-core-heading">Core Team</h2><p>The students who organise, build and contribute to the club.</p></div>'
+      + (coreTeam.length ? cards(coreTeam, 'team-grid') : '<p class="team-empty">Core team members will be listed here.</p>')
+      + '</section>';
   }
 
   function eventDetailsMarkup(event) {
@@ -191,12 +213,12 @@
     if (key === 'home') {
       content = {
         lede: 'Security Club is a welcoming campus community for beginners, builders and problem-solvers. Explore cybersecurity through workshops, CTFs, projects and hands-on learning.',
-        body: '<div class="home-hero-visual"><img src="assets/security-shield.svg" alt="Security Club shield" width="420" height="420" loading="eager" fetchpriority="high" decoding="async"></div><div class="home-actions"><a class="button button-primary" href="#/events">Explore events →</a><a class="button button-ghost" href="#/about">Meet the club</a></div><p class="hero-note">No prior knowledge. No gatekeeping. Just curiosity.</p><section class="intro"><p class="eyebrow">A club for first steps</p><h2>You do not need to be a hacker to start.</h2><p>We make the first step practical, social and fun. Find your people, try a lab and build real skills at your own pace.</p></section><section class="opportunities"><div class="stat"><strong>Community</strong><span>learn together</span></div><div class="stat"><strong>Questions</strong><span>always welcome</span></div><div class="stat"><strong>Hands-on</strong><span>build real skills</span></div></section>'
+        body: '<div class="home-hero-visual"></div><div class="home-actions"><a class="button button-primary" href="#/events">Explore events →</a><a class="button button-ghost" href="#/about">Meet the club</a></div><p class="hero-note">No prior knowledge. No gatekeeping. Just curiosity.</p><section class="intro"><p class="eyebrow">A club for first steps</p><h2>You do not need to be a hacker to start.</h2><p>We make the first step practical, social and fun. Find your people, try a lab and build real skills at your own pace.</p></section><section class="opportunities"><div class="stat"><strong>Community</strong><span>learn together</span></div><div class="stat"><strong>Questions</strong><span>always welcome</span></div><div class="stat"><strong>Hands-on</strong><span>build real skills</span></div></section>'
       };
     } else if (key === 'events') {
       content = { lede: 'Look back at Security Club workshops, bootcamps, and community sessions. Contact the club for details about future events.', body: cards(window.eventsData || [], 'event-grid') };
     } else if (key === 'team') {
-      content = { lede: 'Meet the students and faculty who help make cybersecurity approachable, practical and collaborative.', body: cards(window.teamData || [], 'team-grid') };
+      content = { lede: 'Meet the faculty mentors and student core team who make cybersecurity approachable, practical and collaborative.', body: teamSections(window.teamData || []) };
     } else if (key === 'gallery') {
       content = { lede: 'Browse the original folder arrangement, then open any photo for a closer look.', body: galleryMarkup(window.galleryData || []) };
     } else if (key === 'about') {
@@ -218,6 +240,7 @@
       content = { lede: 'This page is presented as a public static information page. There is no login, account system or private data in this version.', body: '<div class="split-content"><article class="info-panel"><p class="eyebrow">Static workspace</p><h2>' + pages[key].label + '</h2><p>Use this space to publish the club’s current work, resources and updates directly from the GitHub repository.</p></article><article class="info-panel"><p class="eyebrow">How it works</p><h2>GitHub is the editor.</h2><p>Update the HTML, CSS, JavaScript and image folders, then commit and push. The hosted page reflects the repository contents.</p></article></div>' };
     }
     app.innerHTML = shell(key, content);
+    if (key === 'home') mountSecurityLogo(app.querySelector('.home-hero-visual'));
     setupGallery();
     if (key === 'events') setupEvents(window.eventsData || []);
     document.title = pages[key].label + ' | Security Club DBIT';
@@ -357,19 +380,6 @@
     if (event.target.matches('a')) { navigation.classList.remove('open'); menuButton.setAttribute('aria-expanded', 'false'); }
   });
   window.addEventListener('hashchange', function () { render(location.hash.replace('#/', '') || 'home'); window.scrollTo(0, 0); });
-  const storedTheme = localStorage.getItem('security-club-theme') === 'light' ? 'light' : 'dark';
-  document.documentElement.dataset.theme = storedTheme;
-  function updateTheme(theme) {
-    document.documentElement.dataset.theme = theme;
-    localStorage.setItem('security-club-theme', theme);
-    const isLight = theme === 'light';
-    themeToggle.setAttribute('aria-label', 'Switch to ' + (isLight ? 'dark' : 'light') + ' theme');
-    themeToggle.innerHTML = '<span aria-hidden="true">' + (isLight ? '☾' : '☀') + '</span><span>' + (isLight ? 'Dark' : 'Light') + '</span>';
-  }
-  themeToggle.addEventListener('click', function () {
-    updateTheme(document.documentElement.dataset.theme === 'light' ? 'dark' : 'light');
-  });
-  updateTheme(storedTheme);
   document.querySelector('#current-year').textContent = new Date().getFullYear();
   setupMatrix();
   render(location.hash.replace('#/', '') || 'home');

@@ -91,6 +91,7 @@ window.teamData = [
     "image": "team/member-13.jpg",
     "linkedin": ""
   },
+
   {
     "name": "DHERAZLIN JEBISHA",
     "role": "ASST. EDITORIAL AND DESIGN HEAD",
