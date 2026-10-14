@@ -23,9 +23,13 @@
   filter: drop-shadow(0 0 3px rgba(0, 234, 255, .8)) drop-shadow(0 0 8px rgba(0, 234, 255, .35));
 }
 
+.security-logo .logo-web {
+  filter: drop-shadow(0 0 2px rgba(0, 234, 255, .45));
+}
+
 .security-logo .web .trace-path {
   stroke-width: 1.5;
-  filter: drop-shadow(0 0 2px rgba(0, 234, 255, .65));
+  filter: none;
 }
 
 .security-logo .trace-path.shield {
@@ -37,6 +41,10 @@
   fill: #00eaff;
   stroke: none;
   filter: drop-shadow(0 0 4px rgba(0, 234, 255, .9));
+}
+
+.security-logo .logo-mesh .trace-path {
+  filter: none;
 }
 
 .security-logo .logo-orbit {
@@ -65,6 +73,16 @@
   animation-direction: reverse;
 }
 
+.security-logo.is-animating .green-orbit-spinner {
+  opacity: 0;
+  animation: security-logo-orbit 3.6s linear 6.7s infinite,
+    security-green-orbit-reveal .45s ease-out 6.7s forwards;
+}
+
+.security-logo.is-animating .green-orbit-spinner.reverse {
+  animation-direction: reverse, normal;
+}
+
 .security-logo .logo-orbit-green-track {
   stroke: #00ff78;
   stroke-width: 5;
@@ -89,27 +107,55 @@
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
   opacity: 0;
-  animation: security-logo-draw 1.1s cubic-bezier(.45, 0, .2, 1) .08s forwards,
-    security-shield-pulse 2.8s ease-in-out 1.2s infinite;
+  animation: security-logo-draw 1.65s cubic-bezier(.45, 0, .2, 1) 2.55s forwards,
+    security-shield-pulse 2.8s ease-in-out 4.2s infinite;
 }
 
-.security-logo.is-animating .logo-divider {
+.security-logo.is-animating .logo-divider-vertical {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
   opacity: 0;
-  animation: security-logo-draw .5s ease-out .62s forwards;
+  animation: security-logo-draw 1s ease-out 2.95s forwards;
 }
 
-.security-logo.is-animating .logo-orbit,
-.security-logo.is-animating .logo-web,
-.security-logo.is-animating .logo-mesh {
+.security-logo.is-animating .logo-divider-horizontal {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
   opacity: 0;
-  animation: security-logo-fade .7s ease-out .55s forwards;
+  animation: security-logo-draw .8s ease-out 4.15s forwards;
+}
+
+.security-logo.is-animating .logo-orbit-outer {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  opacity: 0;
+  animation: security-logo-draw 2.1s ease-out .05s forwards;
+}
+
+.security-logo.is-animating .logo-orbit-inner {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  opacity: 0;
+  animation: security-logo-draw 1.55s ease-out .85s forwards;
+}
+
+.security-logo.is-animating .logo-web .web-line {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  opacity: 0;
+  animation: security-logo-draw .3s ease-out var(--trace-delay, 0s) forwards;
+}
+
+.security-logo.is-animating .logo-mesh .mesh-edge {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  opacity: 0;
+  animation: security-logo-draw .22s ease-out calc(4.95s + var(--trace-delay, 0s)) forwards;
 }
 
 .security-logo.is-animating .node-dot {
   opacity: 0;
-  animation: security-logo-fade .35s ease-out .95s forwards;
+  animation: security-logo-fade .25s ease-out calc(5.45s + var(--trace-delay, 0s)) forwards;
 }
 
 @keyframes security-logo-draw {
@@ -122,6 +168,10 @@
   to { opacity: 1; }
 }
 
+@keyframes security-green-orbit-reveal {
+  to { opacity: 1; }
+}
+
 @keyframes security-shield-pulse {
   0%, 100% { stroke-opacity: .72; }
   50% { stroke-opacity: 1; }
@@ -130,17 +180,4 @@
 @keyframes security-logo-orbit {
   from { transform: rotate(var(--orbit-start, 0deg)); }
   to { transform: rotate(calc(var(--orbit-start, 0deg) + 360deg)); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .security-logo.is-animating .logo-divider,
-  .security-logo.is-animating .logo-orbit,
-  .security-logo.is-animating .logo-web,
-  .security-logo.is-animating .logo-mesh,
-  .security-logo.is-animating .node-dot {
-    animation: none;
-    opacity: 1;
-    stroke-dashoffset: 0;
-  }
-
 }

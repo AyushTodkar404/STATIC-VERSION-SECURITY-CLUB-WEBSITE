@@ -48,6 +48,8 @@ as backups. Prefer SVG for logos and illustrations.
 2. Edit `events/events.js`.
 3. Set each image path relative to the repository root, such as
    `events/annual-ctf.jpg`.
+4. Give every event a `date` in `YYYY-MM-DD` format (for example,
+   `2027-04-20`). The Events page groups entries by the year in this date.
 
 ### Team members
 

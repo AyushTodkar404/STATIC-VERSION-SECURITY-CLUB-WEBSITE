@@ -33,13 +33,13 @@ function buildMesh(minX, maxX, minY, maxY, columns, rows) {
 }
 
 function meshMarkup(mesh) {
-  const edges = mesh.edges.map(function ([from, to]) {
+  const edges = mesh.edges.map(function ([from, to], index) {
     const [x1, y1] = mesh.points[from];
     const [x2, y2] = mesh.points[to];
-    return '<path class="trace-path" d="M ' + x1 + ' ' + y1 + ' L ' + x2 + ' ' + y2 + '"/>';
+    return '<path class="trace-path mesh-edge" pathLength="1" style="--trace-delay:' + (index * 0.02).toFixed(2) + 's" d="M ' + x1 + ' ' + y1 + ' L ' + x2 + ' ' + y2 + '"/>';
   }).join('');
-  const nodes = mesh.points.map(function ([cx, cy]) {
-    return '<circle class="trace-path node-dot" cx="' + cx + '" cy="' + cy + '" r="3"/>';
+  const nodes = mesh.points.map(function ([cx, cy], index) {
+    return '<circle class="trace-path node-dot" style="--trace-delay:' + (index * 0.025).toFixed(2) + 's" cx="' + cx + '" cy="' + cy + '" r="3"/>';
   }).join('');
   return edges + nodes;
 }
@@ -50,21 +50,22 @@ function polarPoint(radius, angle) {
 
 function webMarkup() {
   const radials = Array.from({ length: 24 }, function (_, index) {
-    const angle = index * Math.PI / 12;
+    const angle = index * Math.PI / 12 - Math.PI / 2;
     const [x1, y1] = polarPoint(151, angle);
     const [x2, y2] = polarPoint(525, angle);
-    return '<path class="trace-path" d="M ' + x1.toFixed(1) + ' ' + y1.toFixed(1) + ' L ' + x2.toFixed(1) + ' ' + y2.toFixed(1) + '"/>';
+    return '<path class="trace-path web-line" pathLength="1" style="--trace-delay:' + (index * 0.035).toFixed(2) + 's" d="M ' + x1.toFixed(1) + ' ' + y1.toFixed(1) + ' L ' + x2.toFixed(1) + ' ' + y2.toFixed(1) + '"/>';
   }).join('');
 
-  const rings = [220, 295, 370, 445].map(function (radius) {
+  const rings = [220, 295, 370, 445].map(function (radius, ringIndex) {
     return Array.from({ length: 24 }, function (_, index) {
-      const start = index * Math.PI / 12;
-      const end = (index + 1) * Math.PI / 12;
+      const start = index * Math.PI / 12 - Math.PI / 2;
+      const end = (index + 1) * Math.PI / 12 - Math.PI / 2;
       const middle = (start + end) / 2;
       const [x1, y1] = polarPoint(radius, start);
       const [x2, y2] = polarPoint(radius, end);
       const [cx, cy] = polarPoint(radius - 12, middle);
-      return '<path class="trace-path" d="M ' + x1.toFixed(1) + ' ' + y1.toFixed(1) + ' Q ' + cx.toFixed(1) + ' ' + cy.toFixed(1) + ' ' + x2.toFixed(1) + ' ' + y2.toFixed(1) + '"/>';
+      const delay = 0.2 + ringIndex * 0.35 + index * 0.025;
+      return '<path class="trace-path web-line" pathLength="1" style="--trace-delay:' + delay.toFixed(2) + 's" d="M ' + x1.toFixed(1) + ' ' + y1.toFixed(1) + ' Q ' + cx.toFixed(1) + ' ' + cy.toFixed(1) + ' ' + x2.toFixed(1) + ' ' + y2.toFixed(1) + '"/>';
     }).join('');
   }).join('');
 
@@ -100,32 +101,21 @@ export function mountSecurityLogo(container, size = 420) {
     + '<clipPath id="' + suffix + '-top-left-clip"><rect x="298" y="243" width="240" height="295"/></clipPath>'
     + '<clipPath id="' + suffix + '-bottom-right-clip"><rect x="538" y="538" width="238" height="294"/></clipPath>'
     + '</defs>'
-    + '<circle class="logo-orbit logo-orbit-outer" cx="537" cy="537" r="525"/>'
-    + '<circle class="logo-orbit logo-orbit-inner" cx="537" cy="537" r="386"/>'
+    + '<circle class="logo-orbit logo-orbit-outer" pathLength="1" transform="rotate(-90 537 537)" cx="537" cy="537" r="525"/>'
+    + '<circle class="logo-orbit logo-orbit-inner" pathLength="1" transform="rotate(-90 537 537)" cx="537" cy="537" r="386"/>'
     + greenOrbitMarkup()
     + '<g class="web logo-web" mask="url(#' + suffix + '-web-mask)">' + webMarkup() + '</g>'
     + '<path d="' + SHIELD_D + '" fill="#050a14"/>'
-    + '<path class="trace-path shield logo-divider" pathLength="1" d="M 537 245 L 537 828"/>'
-    + '<path class="trace-path shield logo-divider" pathLength="1" d="M 302 538 L 772 538"/>'
+    + '<path class="trace-path shield logo-divider logo-divider-vertical" pathLength="1" d="M 537 245 L 537 828"/>'
+    + '<path class="trace-path shield logo-divider logo-divider-horizontal" pathLength="1" d="M 302 538 L 772 538"/>'
     + '<g class="logo-mesh" clip-path="url(#' + suffix + '-shield-clip)"><g clip-path="url(#' + suffix + '-top-left-clip)">' + meshMarkup(meshTopLeft) + '</g>'
     + '<g clip-path="url(#' + suffix + '-bottom-right-clip)">' + meshMarkup(meshBottomRight) + '</g></g>'
     + '<path class="trace-path shield logo-outline" pathLength="1" d="' + SHIELD_D + '"/>'
     + '</svg>';
 
-  let animationPlayed = false;
-  try {
-    animationPlayed = sessionStorage.getItem('security-club-logo-motion-v1') === 'done';
-  } catch (_) {
-    animationPlayed = window.securityClubLogoMotionPlayed === true;
-  }
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (!animationPlayed && !reduceMotion) {
+  if (!window.securityClubLogoMotionPlayed) {
     logo.classList.add('is-animating');
-    try {
-      sessionStorage.setItem('security-club-logo-motion-v1', 'done');
-    } catch (_) {
-      window.securityClubLogoMotionPlayed = true;
-    }
+    window.securityClubLogoMotionPlayed = true;
   }
 
   container.replaceChildren(logo);

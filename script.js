@@ -87,6 +87,13 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
       + '</section>';
   }
 
+  function aboutMarkup() {
+    return '<div class="split-content"><article class="info-panel"><p class="eyebrow">Our purpose</p><h2>Security is a team sport.</h2><p>We believe cybersecurity grows through curiosity, responsible practice and people willing to share what they learn.</p></article><article class="info-panel"><p class="eyebrow">Our principles</p><h2>Learn openly. Build responsibly.</h2><p>We create beginner-friendly spaces for secure coding, digital safety, ethical hacking, research and defence.</p></article></div>'
+      + '<div class="about-vision-mission"><section class="info-panel course-panel" aria-labelledby="about-vision-heading"><p class="eyebrow">Our Vision</p><h2 id="about-vision-heading">A secure and socially responsible digital ecosystem</h2><p>To establish a center in the field of security that develops ethically grounded, industry-ready professionals who innovate, research, and contribute to building a secure and socially responsible digital ecosystem.</p></section><section class="info-panel course-panel" aria-labelledby="about-mission-heading"><p class="eyebrow">Our Mission</p><h2 id="about-mission-heading">Learn, act ethically, and keep innovating</h2><ul class="mission-list"><li>To develop industry-ready security professionals through hands-on training, practical exposure, and modern tools.</li><li>To foster ethical practices, digital responsibility, and integrity in the use of technology.</li><li>To promote innovation, research, and continuous learning while preparing students for certifications, careers, and real-world challenges.</li></ul></section></div>'
+      + '<div class="about-coursework"><section class="info-panel course-panel" aria-labelledby="course-objectives-heading"><p class="eyebrow">Course Objectives</p><h2 id="course-objectives-heading">Key objectives of the Security Club</h2><p>The key objectives of the Security Club are:</p><ol class="course-objectives"><li>To provide training in industry-relevant cybersecurity tools, frameworks, and methodologies.</li><li>To enhance students’ preparedness for internships, certifications, and placements in cybersecurity roles.</li><li>To encourage research, innovation, and project-based learning within security domains.</li><li>To promote ethical hacking practices through structured awareness programs and practical sessions.</li><li>To foster responsible digital conduct through interactive workshops and seminars.</li></ol></section>'
+      + '<section class="info-panel course-panel" aria-labelledby="course-outcomes-heading"><p class="eyebrow">Course Outcomes (COs)</p><h2 id="course-outcomes-heading">Students will be able to:</h2><div class="course-outcomes"><article class="course-outcome"><h3>CO1</h3><p>Define fundamental digital security concepts, threats, vulnerabilities and ethical principles, and explain industry practices, commonly used cybersecurity tools and methodologies.</p></article><article class="course-outcome"><h3>CO2</h3><p>Apply digital security concepts, tools, and methodologies to implement security practices and address cybersecurity challenges through practical hands-on activities and competitions.</p></article><article class="course-outcome"><h3>CO3</h3><p>Analyze digital security threats, vulnerabilities, security solutions, and ethical implications to determine appropriate mitigation strategies and evaluate their effectiveness in practical scenarios.</p></article><article class="course-outcome"><h3>CO4</h3><p>Create innovative digital security solutions, awareness initiatives, and technical portfolios to address identified security challenges while demonstrating teamwork, effective communication, and responsible digital conduct.</p></article></div></section></div>';
+  }
+
   function eventDetailsMarkup(event) {
     const files = (event.attachments || []).map(function (file) {
       return '<li><a class="button button-ghost attachment-link" href="' + escapeHtml(file.path) + '" target="_blank" rel="noopener">' + escapeHtml(file.label || file.path) + ' ↗</a><span>' + escapeHtml(file.type || 'File') + '</span></li>';
@@ -94,9 +101,50 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
     return '<div class="event-detail-overlay" role="dialog" aria-modal="true" aria-label="Event details"><div class="event-detail"><button class="event-detail-close" type="button" aria-label="Close event details">×</button><p class="eyebrow">' + escapeHtml(event.type || 'Event') + '</p><h2>' + escapeHtml(event.title) + '</h2><p class="event-detail-meta">' + escapeHtml(event.dateLabel || event.date || '') + (event.venue ? ' · ' + escapeHtml(event.venue) : '') + '</p><p>' + escapeHtml(event.description || '') + '</p><h3>Attached files</h3>' + (files ? '<ul class="attachment-list">' + files + '</ul>' : '<p class="muted">No files are attached to this event yet.</p>') + '</div></div>';
   }
 
+  function eventYear(date) {
+    const value = String(date || '').trim();
+    const iso = value.match(/^(\d{4})[-/]/);
+    const dayFirst = value.match(/^\d{1,2}[-/]\d{1,2}[-/](\d{4})$/);
+    return (iso && iso[1]) || (dayFirst && dayFirst[1]) || 'Undated';
+  }
+
+  function eventsMarkup(items) {
+    const years = items.map(function (item) { return eventYear(item.date); })
+      .filter(function (year, index, all) { return all.indexOf(year) === index; })
+      .sort(function (left, right) {
+        if (left === 'Undated') return 1;
+        if (right === 'Undated') return -1;
+        return right.localeCompare(left);
+      });
+    if (!years.length) return '<p class="team-empty">Events will be listed here.</p>';
+    const initialYear = years[0];
+    const buttons = years.map(function (year) {
+      return '<button class="gallery-year-button event-year-button' + (year === initialYear ? ' is-active' : '') + '" type="button" data-event-year="' + escapeHtml(year) + '" aria-pressed="' + (year === initialYear) + '">' + escapeHtml(year) + '</button>';
+    }).join('');
+    const groups = years.map(function (year) {
+      const yearItems = items.filter(function (item) { return eventYear(item.date) === year; });
+      return '<section class="event-year-group" data-event-year-group="' + escapeHtml(year) + '" aria-label="Events in ' + escapeHtml(year) + '"' + (year === initialYear ? '' : ' hidden') + '>' + cards(yearItems, 'event-grid') + '</section>';
+    }).join('');
+    return '<div class="event-browser"><div class="event-years" role="group" aria-label="Filter events by year">' + buttons + '</div>' + groups + '</div>';
+  }
+
   function setupEvents(items) {
+    const browser = document.querySelector('.event-browser');
+    if (!browser) return;
+    const yearButtons = browser.querySelectorAll('[data-event-year]');
+    yearButtons.forEach(function (button) {
+      button.addEventListener('click', function () {
+        yearButtons.forEach(function (other) {
+          const selected = other === button;
+          other.classList.toggle('is-active', selected);
+          other.setAttribute('aria-pressed', String(selected));
+        });
+        browser.querySelectorAll('[data-event-year-group]').forEach(function (group) {
+          group.hidden = group.dataset.eventYearGroup !== button.dataset.eventYear;
+        });
+      });
+    });
     const cards = document.querySelectorAll('[data-event-id]');
-    if (!cards.length) return;
     cards.forEach(function (card) {
       card.setAttribute('tabindex', '0');
       const open = function () {
@@ -216,13 +264,13 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
         body: '<div class="home-hero-visual"></div><div class="home-actions"><a class="button button-primary" href="#/events">Explore events →</a><a class="button button-ghost" href="#/about">Meet the club</a></div><p class="hero-note">No prior knowledge. No gatekeeping. Just curiosity.</p><section class="intro"><p class="eyebrow">A club for first steps</p><h2>You do not need to be a hacker to start.</h2><p>We make the first step practical, social and fun. Find your people, try a lab and build real skills at your own pace.</p></section><section class="opportunities"><div class="stat"><strong>Community</strong><span>learn together</span></div><div class="stat"><strong>Questions</strong><span>always welcome</span></div><div class="stat"><strong>Hands-on</strong><span>build real skills</span></div></section>'
       };
     } else if (key === 'events') {
-      content = { lede: 'Look back at Security Club workshops, bootcamps, and community sessions. Contact the club for details about future events.', body: cards(window.eventsData || [], 'event-grid') };
+      content = { lede: 'Browse Security Club events by year. Select a year to see that year’s workshops, bootcamps and community sessions.', body: eventsMarkup(window.eventsData || []) };
     } else if (key === 'team') {
       content = { lede: 'Meet the faculty mentors and student core team who make cybersecurity approachable, practical and collaborative.', body: teamSections(window.teamData || []) };
     } else if (key === 'gallery') {
       content = { lede: 'Browse the original folder arrangement, then open any photo for a closer look.', body: galleryMarkup(window.galleryData || []) };
     } else if (key === 'about') {
-      content = { lede: 'A student-led space to understand technology, question assumptions and practise defending the systems we depend on.', body: '<div class="split-content"><article class="info-panel"><p class="eyebrow">Our purpose</p><h2>Security is a team sport.</h2><p>We believe cybersecurity grows through curiosity, responsible practice and people willing to share what they learn.</p></article><article class="info-panel"><p class="eyebrow">Our principles</p><h2>Learn openly. Build responsibly.</h2><p>We create beginner-friendly spaces for secure coding, digital safety, ethical hacking, research and defence.</p></article></div>' };
+      content = { lede: 'A student-led space to understand technology, question assumptions and practise defending the systems we depend on.', body: aboutMarkup() };
     } else if (key === 'flagships') {
       content = { lede: 'Our recurring initiatives create clear ways to learn, practise and contribute throughout the academic year.', body: cards(window.flagshipsData || [], 'flagship-grid') };
     } else if (key === 'ctf') {
