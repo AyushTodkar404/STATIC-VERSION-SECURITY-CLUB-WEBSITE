@@ -59,7 +59,7 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
 
   function cards(items, type) {
     return '<div class="card-grid ' + (type || '') + '">' + items.map(function (item, index) {
-      const photo = item.image ? image(item.image, '+', item.name || item.title || item.alt) : '<div class="card-image card-placeholder" aria-hidden="true"></div>';
+      const photo = item.image ? (type === 'team-grid' ? '<a class="team-image-link" href="' + escapeHtml(item.image) + '" target="_blank" rel="noopener noreferrer" aria-label="View full-size photo of ' + escapeHtml(item.name || item.alt || 'team member') + '">' + image(item.image, '+', item.name || item.title || item.alt) + '</a>' : image(item.image, '+', item.name || item.title || item.alt)) : '<div class="card-image card-placeholder" aria-hidden="true"></div>';
       const eventAttribute = type === 'event-grid' ? ' data-event-id="' + escapeHtml(item.title) + '"' : '';
       const eventHint = type === 'event-grid' ? '<p class="card-action-hint">Open event details →</p>' : '';
       return '<article class="card' + (type === 'event-grid' ? ' event-card' : '') + '"' + eventAttribute + '>' + photo + '<div class="card-body">' + (item.meta ? '<p class="card-meta">' + item.meta + '</p>' : '') + '<h3>' + escapeHtml(item.name || item.title) + '</h3>' + (item.role ? '<p class="role">' + escapeHtml(item.role) + '</p>' : '') + '<p>' + escapeHtml(item.description || item.bio || '') + '</p>' + eventHint + '</div></article>';
