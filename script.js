@@ -77,21 +77,19 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
     const mentors = items.filter(function (member) {
       return /faculty|mentor|teacher/i.test(member.role || '');
     }).slice().sort(byFirstName);
-    const coreTeam = items.filter(function (member) {
-      return !/faculty|mentor|teacher/i.test(member.role || '');
+    const alumni = items.filter(function (member) {
+      return /alumni/i.test(member.role || '');
     }).slice().sort(byFirstName);
-    return '<section class="team-section" aria-labelledby="team-mentors-heading"><div class="team-section-heading"><p class="eyebrow">Guidance and support</p><h2 id="team-mentors-heading">Mentors</h2><p>Faculty coordinators and teachers supporting the club.</p></div>'
+    const coreTeam = items.filter(function (member) {
+      return !/faculty|mentor|teacher|alumni/i.test(member.role || '');
+    }).slice().sort(byFirstName);
+    return '<section class="team-section" aria-labelledby="team-alumni-heading"><div class="team-section-heading"><p class="eyebrow">Our growing community</p><h2 id="team-alumni-heading">Alumni</h2><p>Former members who helped shape the Security Club.</p></div>'
+      + (alumni.length ? cards(alumni, 'team-grid') : '<p class="team-empty">Alumni will be listed here.</p>')
+      + '</section><section class="team-section" aria-labelledby="team-mentors-heading"><div class="team-section-heading"><p class="eyebrow">Guidance and support</p><h2 id="team-mentors-heading">Mentors</h2><p>Faculty coordinators and teachers supporting the club.</p></div>'
       + (mentors.length ? cards(mentors, 'team-grid') : '<p class="team-empty">Mentors will be listed here.</p>')
       + '</section><section class="team-section" aria-labelledby="team-core-heading"><div class="team-section-heading"><p class="eyebrow">Student leadership</p><h2 id="team-core-heading">Core Team</h2><p>The students who organise, build and contribute to the club.</p></div>'
       + (coreTeam.length ? cards(coreTeam, 'team-grid') : '<p class="team-empty">Core team members will be listed here.</p>')
       + '</section>';
-  }
-
-  function aboutMarkup() {
-    return '<div class="split-content"><article class="info-panel"><p class="eyebrow">Our purpose</p><h2>Security is a team sport.</h2><p>We believe cybersecurity grows through curiosity, responsible practice and people willing to share what they learn.</p></article><article class="info-panel"><p class="eyebrow">Our principles</p><h2>Learn openly. Build responsibly.</h2><p>We create beginner-friendly spaces for secure coding, digital safety, ethical hacking, research and defence.</p></article></div>'
-      + '<div class="about-vision-mission"><section class="info-panel course-panel" aria-labelledby="about-vision-heading"><p class="eyebrow">Our Vision</p><h2 id="about-vision-heading">A secure and socially responsible digital ecosystem</h2><p>To establish a center in the field of security that develops ethically grounded, industry-ready professionals who innovate, research, and contribute to building a secure and socially responsible digital ecosystem.</p></section><section class="info-panel course-panel" aria-labelledby="about-mission-heading"><p class="eyebrow">Our Mission</p><h2 id="about-mission-heading">Learn, act ethically, and keep innovating</h2><ul class="mission-list"><li>To develop industry-ready security professionals through hands-on training, practical exposure, and modern tools.</li><li>To foster ethical practices, digital responsibility, and integrity in the use of technology.</li><li>To promote innovation, research, and continuous learning while preparing students for certifications, careers, and real-world challenges.</li></ul></section></div>'
-      + '<div class="about-coursework"><section class="info-panel course-panel" aria-labelledby="course-objectives-heading"><p class="eyebrow">Course Objectives</p><h2 id="course-objectives-heading">Key objectives of the Security Club</h2><p>The key objectives of the Security Club are:</p><ol class="course-objectives"><li>To provide training in industry-relevant cybersecurity tools, frameworks, and methodologies.</li><li>To enhance students’ preparedness for internships, certifications, and placements in cybersecurity roles.</li><li>To encourage research, innovation, and project-based learning within security domains.</li><li>To promote ethical hacking practices through structured awareness programs and practical sessions.</li><li>To foster responsible digital conduct through interactive workshops and seminars.</li></ol></section>'
-      + '<section class="info-panel course-panel" aria-labelledby="course-outcomes-heading"><p class="eyebrow">Course Outcomes (COs)</p><h2 id="course-outcomes-heading">Students will be able to:</h2><div class="course-outcomes"><article class="course-outcome"><h3>CO1</h3><p>Define fundamental digital security concepts, threats, vulnerabilities and ethical principles, and explain industry practices, commonly used cybersecurity tools and methodologies.</p></article><article class="course-outcome"><h3>CO2</h3><p>Apply digital security concepts, tools, and methodologies to implement security practices and address cybersecurity challenges through practical hands-on activities and competitions.</p></article><article class="course-outcome"><h3>CO3</h3><p>Analyze digital security threats, vulnerabilities, security solutions, and ethical implications to determine appropriate mitigation strategies and evaluate their effectiveness in practical scenarios.</p></article><article class="course-outcome"><h3>CO4</h3><p>Create innovative digital security solutions, awareness initiatives, and technical portfolios to address identified security challenges while demonstrating teamwork, effective communication, and responsible digital conduct.</p></article></div></section></div>';
   }
 
   function eventDetailsMarkup(event) {

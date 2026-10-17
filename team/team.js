@@ -105,5 +105,50 @@ window.teamData = [
     "bio": "Security Club DBIT team member.",
     "image": "team/member-15.jpg",
     "linkedin": ""
-  }
+  },
+  {
+    "name": "PRASAD PADALKAR",
+    "role": "STAFF MENTOR",
+    "bio": "Security Club DBIT team member.",
+    "image": "team/prasad-sir.png",
+    "linkedin": ""
+  },
+  {
+    "name": "MS. VARSHA KULKARNI",
+    "role": "STAFF MENTOR",
+    "bio": "Security Club DBIT team member.",
+    "image": "team/VARSHA-MAM.jpeg",
+    "linkedin": ""
+  },
+  {
+    "name": "RIEAN ESTEVES",
+    "role": "ALUMNI",
+    "bio": "Security Club DBIT team member.",
+    "image": "team/Riean.jpeg",
+    "linkedin": ""
+  },
+  {
+    "name": "VICKY FERNANDES",
+    "role": "ALUMNI",
+    "bio": "Security Club DBIT team member.",
+    "image": "team/VICKY.jpeg",
+    "linkedin": ""
+  },
+  {
+    "name": "SHWETA GUPTA",
+    "role": "ALUMNI",
+    "bio": "Security Club DBIT team member.",
+    "image": "team/Shweta-Gupta.jpeg",
+    "linkedin": ""
+  },
+  {
+    "name": "SHREECHAITANYA DAMLE",
+    "role": "ALUMNI",
+    "bio": "Security Club DBIT team member.",
+    "image": "team/SHREECHAITANYA.jpeg",
+    "linkedin": ""
+  },
+
+
+
 ];
