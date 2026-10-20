@@ -2,50 +2,50 @@
 window.galleryData = [
   {
     "image": "gallery/2026/CLUB PHOTOSHOOTS/photo-12.jpg",
-    "alt": "DSC02905.JPG.jpeg",
-    "caption": "DSC02905.JPG.jpeg",
+    "alt": "Security Club Core Team photoshoot",
+    "caption": "Security Club Core Team photoshoot",
     "folder": "2026/CLUB PHOTOSHOOTS",
     "folderLabel": "CLUB PHOTOSHOOTS"
   },
   {
     "image": "gallery/2026/CLUB PHOTOSHOOTS/photo-13.jpg",
-    "alt": "DSC02909.JPG.jpeg",
-    "caption": "DSC02909.JPG.jpeg",
+    "alt": "Security Club members collaborative session",
+    "caption": "Security Club members collaborative session",
     "folder": "2026/CLUB PHOTOSHOOTS",
     "folderLabel": "CLUB PHOTOSHOOTS"
   },
   {
     "image": "gallery/2026/CLUB PHOTOSHOOTS/photo-14.jpg",
-    "alt": "DSC02911.JPG.jpeg",
-    "caption": "DSC02911.JPG.jpeg",
+    "alt": "Club leaders planning cybersecurity initiatives",
+    "caption": "Club leaders planning cybersecurity initiatives",
     "folder": "2026/CLUB PHOTOSHOOTS",
     "folderLabel": "CLUB PHOTOSHOOTS"
   },
   {
     "image": "gallery/2026/CLUB PHOTOSHOOTS/photo-15.jpg",
-    "alt": "DSC02928.JPG.jpeg",
-    "caption": "DSC02928.JPG.jpeg",
+    "alt": "Security Club DBIT team portrait",
+    "caption": "Security Club DBIT team portrait",
     "folder": "2026/CLUB PHOTOSHOOTS",
     "folderLabel": "CLUB PHOTOSHOOTS"
   },
   {
     "image": "gallery/2026/CLUB PHOTOSHOOTS/photo-16.jpg",
-    "alt": "DSC02927.JPG.jpeg",
-    "caption": "DSC02927.JPG.jpeg",
+    "alt": "Club leadership team discussion",
+    "caption": "Club leadership team discussion",
     "folder": "2026/CLUB PHOTOSHOOTS",
     "folderLabel": "CLUB PHOTOSHOOTS"
   },
   {
     "image": "gallery/2026/CLUB PHOTOSHOOTS/photo-17.jpg",
-    "alt": "DSC02922.JPG.jpeg",
-    "caption": "DSC02922.JPG.jpeg",
+    "alt": "Cybersecurity workshop organizers",
+    "caption": "Cybersecurity workshop organizers",
     "folder": "2026/CLUB PHOTOSHOOTS",
     "folderLabel": "CLUB PHOTOSHOOTS"
   },
   {
     "image": "gallery/2026/CLUB PHOTOSHOOTS/photo-19.jpg",
-    "alt": "DSC02906.JPG.jpeg",
-    "caption": "DSC02906.JPG.jpeg",
+    "alt": "Student coordinators and mentors",
+    "caption": "Student coordinators and mentors",
     "folder": "2026/CLUB PHOTOSHOOTS",
     "folderLabel": "CLUB PHOTOSHOOTS"
   },

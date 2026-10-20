@@ -117,7 +117,7 @@ window.teamData = [
     "name": "MS. VARSHA KULKARNI",
     "role": "STAFF MENTOR",
     "bio": "Security Club DBIT team member.",
-    "image": "team/VARSHA-MAM.jpeg",
+    "image": "team/VARSHA-MAM.webp",
     "linkedin": ""
   },
   {
@@ -138,7 +138,7 @@ window.teamData = [
     "name": "SHWETA GUPTA",
     "role": "ALUMNI",
     "bio": "Security Club DBIT team member.",
-    "image": "team/Shweta-Gupta.jpeg",
+    "image": "team/Shweta-Gupta.webp",
     "linkedin": ""
   },
   {

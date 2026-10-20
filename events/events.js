@@ -6,10 +6,10 @@ window.eventsData = [
     "type": "Inauguration",
     "description": "Security Club DBIT officially launched on April 20, 2026, with its Inauguration Ceremony, marking the beginning of a student cybersecurity community at Don Bosco Institute of Technology.",
     "venue": "Seminar Hall",
-    "image": "events/Inauguration Poster.png",
+    "image": "events/Inauguration Poster.webp",
     "attachments": [
       {
-        "label": "Inauguration poster", "path": "events/Inauguration Poster.png", "type": "Image",
+        "label": "Inauguration poster", "path": "events/Inauguration Poster.webp", "type": "Image",
 
       }
     ]
@@ -20,9 +20,9 @@ window.eventsData = [
     "type": "Seminar",
     "description": "Session 1 was presented by Security Club DBIT on April 20, 2026. Prof. Prasad Padalkar, Assistant Professor and IQAC Coordinator, discussed IT audits, required skills, career opportunities, and challenges.",
     "venue": "Seminar Hall",
-    "image": "events/Session 1 Poster.jpg",
+    "image": "events/Session 1 Poster.webp",
     "attachments": [
-      { "label": "IT Audit session poster", "path": "events/Session 1 Poster.jpg", "type": "Image" }
+      { "label": "IT Audit session poster", "path": "events/Session 1 Poster.webp", "type": "Image" }
     ]
   },
   {
@@ -32,9 +32,9 @@ window.eventsData = [
     "type": "Bootcamp",
     "description": "Security Club DBIT, in association with Employment Express and DSCI, organized a two-day intensive Cyber Security Bootcamp on August 3–4, 2026. The program included practical security skills, industry mentorship, hands-on labs, a live CTF experience, and a certificate subject to DSCI assessment.",
     "venue": "Computer Centers 1 and 2",
-    "image": "events/Poster DSCI Bootcamp.png",
+    "image": "events/Poster DSCI Bootcamp.webp",
     "attachments": [
-      { "label": "DSCI bootcamp poster", "path": "events/Poster DSCI Bootcamp.png", "type": "Image" }
+      { "label": "DSCI bootcamp poster", "path": "events/Poster DSCI Bootcamp.webp", "type": "Image" }
     ]
   },
   {
@@ -43,9 +43,9 @@ window.eventsData = [
     "type": "Competition",
     "description": "Tech Quest is an inter-college competition organized by DBIT, featuring a series of challenges and activities designed to test participants' skills and knowledge.Security Club was in collaboration with SIE Club.As a challenge, we designed a murder mystery for the participants. Here, we provided three files, out of which one was about the case and two were the evidence files. Along with those, there was a 10-minute timer to find out the actual perpetrator. ",
     "venue": "Computer tutorial room ",
-    "image": "events/Security Club_20261009_142358_0000.png",
+    "image": "events/Security Club_20261009_142358_0000.webp",
     "attachments": [
-      { "label": "Tech Quest poster", "path": "events/Security Club_20261009_142358_0000.png", "type": "Image" }
+      { "label": "Tech Quest poster", "path": "events/Security Club_20261009_142358_0000.webp", "type": "Image" }
     ]
   }
 

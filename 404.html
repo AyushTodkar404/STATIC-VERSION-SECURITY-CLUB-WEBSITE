@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#05080c">
+  <meta name="description" content="404 - Page Not Found · Security Club DBIT">
+  <title>404 - Target Not Found | Security Club DBIT</title>
+  <link rel="icon" href="assets/security-club-logo-small.png" type="image/png">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .not-found-wrapper {
+      min-height: 80vh;
+      display: grid;
+      place-items: center;
+      padding: 2rem 1rem;
+      text-align: center;
+    }
+    .not-found-terminal {
+      max-width: 620px;
+      width: 100%;
+      padding: clamp(1.5rem, 5vw, 3rem);
+      border: 1px solid var(--line);
+      background: var(--surface);
+      box-shadow: 0 0 40px rgba(0, 255, 120, .06);
+      text-align: left;
+    }
+    .not-found-code {
+      font-size: clamp(3.5rem, 12vw, 6rem);
+      font-weight: 800;
+      color: var(--cyan);
+      margin: 0;
+      line-height: 1;
+      font-family: ui-monospace, monospace;
+    }
+    .not-found-log {
+      margin: 1.5rem 0;
+      padding: 1rem;
+      background: rgba(0, 0, 0, .45);
+      border-left: 2px solid var(--green);
+      font: .85rem/1.6 ui-monospace, monospace;
+      color: var(--muted);
+    }
+    .not-found-log span {
+      color: var(--green);
+    }
+    .not-found-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="ambient-grid" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="brand" href="index.html#/" aria-label="Security Club home">
+      <img src="assets/security-club-logo-small.png" alt="Security Club DBIT logo" width="42" height="42">
+      <span>Security Club <small>DBIT</small><span class="brand-tagline">Stay connected, stay secure.</span></span>
+    </a>
+  </header>
+
+  <main class="not-found-wrapper">
+    <section class="not-found-terminal" aria-labelledby="error-heading">
+      <p class="eyebrow">Status · 404</p>
+      <h1 id="error-heading" class="not-found-code">404</h1>
+      <h2>Target Not Found</h2>
+      <div class="not-found-log">
+        <p><span>[ALERT]</span> Route requested does not exist on this host.</p>
+        <p><span>[ORIGIN]</span> Cyberspace navigation failed to locate packet destination.</p>
+        <p><span>[ACTION]</span> Re-routing back to primary Security Club DBIT terminal.</p>
+      </div>
+      <div class="not-found-actions">
+        <a class="button button-primary" href="index.html#/">Return to Terminal →</a>
+        <a class="button button-ghost" href="index.html#/contact">Contact Club</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p class="copyright">© Security Club DBIT · Don Bosco Institute of Technology</p>
+  </footer>
+</body>
+
+</html>
