@@ -398,14 +398,17 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
   function setupMatrix() {
     const context = matrixCanvas.getContext('2d');
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const toggleButton = document.querySelector('#matrix-toggle');
     if (!context) return;
-    const characters = '01';
+    const characters = '0101010123456789ABCDEF$#*+-<>/';
     const fontSize = 14;
     let width = 0;
     let height = 0;
     let drops = [];
     let animationFrame = 0;
     let animationTimer = 0;
+    let isStreamActive = !reducedMotion.matches;
+
     function resize() {
       const pixelRatio = Math.min(window.devicePixelRatio || 1, 1.5);
       width = window.innerWidth;
@@ -417,34 +420,71 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
       context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
       drops = new Array(Math.floor(width / fontSize)).fill(1);
     }
+
     function draw() {
       animationFrame = 0;
-      if (document.hidden) return;
-      context.fillStyle = 'rgba(0, 0, 0, 0.1)';
+      if (document.hidden || !isStreamActive) return;
+      context.fillStyle = 'rgba(3, 7, 11, 0.12)';
       context.fillRect(0, 0, width, height);
-      context.fillStyle = '#00ff40';
       context.font = fontSize + "px 'JetBrains Mono', monospace";
       drops.forEach(function (drop, index) {
-        context.fillText(characters.charAt(Math.floor(Math.random() * characters.length)), index * fontSize, drop * fontSize);
-        if (drop * fontSize > height && Math.random() > .975) drops[index] = 0;
+        const char = characters.charAt(Math.floor(Math.random() * characters.length));
+        const x = index * fontSize;
+        const y = drop * fontSize;
+
+        // Lead character glows in bright cyan/white
+        context.fillStyle = '#e5f3f8';
+        context.fillText(char, x, y);
+
+        // Previous character in phosphor matrix green
+        if (drop > 1) {
+          const prevChar = characters.charAt(Math.floor(Math.random() * characters.length));
+          context.fillStyle = '#00ff78';
+          context.fillText(prevChar, x, (drop - 1) * fontSize);
+        }
+
+        if (y > height && Math.random() > 0.98) drops[index] = 0;
         drops[index] += 1;
       });
       animationTimer = window.setTimeout(function () {
         animationTimer = 0;
         animationFrame = window.requestAnimationFrame(draw);
-      }, 100);
+      }, 70);
     }
+
     function pause() {
       if (animationTimer) window.clearTimeout(animationTimer);
       if (animationFrame) window.cancelAnimationFrame(animationFrame);
       animationTimer = 0;
       animationFrame = 0;
     }
+
     function resume() {
-      if (!document.hidden && !reducedMotion.matches && !animationFrame && !animationTimer) {
+      if (!document.hidden && isStreamActive && !reducedMotion.matches && !animationFrame && !animationTimer) {
         animationFrame = window.requestAnimationFrame(draw);
       }
     }
+
+    if (toggleButton) {
+      toggleButton.setAttribute('aria-pressed', String(isStreamActive));
+      toggleButton.classList.toggle('is-paused', !isStreamActive);
+      const textSpan = toggleButton.querySelector('.hud-toggle-text');
+      if (textSpan) textSpan.textContent = isStreamActive ? 'STREAM: ON' : 'STREAM: OFF';
+
+      toggleButton.addEventListener('click', function () {
+        isStreamActive = !isStreamActive;
+        toggleButton.setAttribute('aria-pressed', String(isStreamActive));
+        toggleButton.classList.toggle('is-paused', !isStreamActive);
+        if (textSpan) textSpan.textContent = isStreamActive ? 'STREAM: ON' : 'STREAM: OFF';
+        if (isStreamActive) {
+          resume();
+        } else {
+          pause();
+          context.clearRect(0, 0, width, height);
+        }
+      });
+    }
+
     resize();
     window.addEventListener('resize', resize, { passive: true });
     document.addEventListener('visibilitychange', function () {
@@ -452,7 +492,11 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
     });
     if (typeof reducedMotion.addEventListener === 'function') {
       reducedMotion.addEventListener('change', function (event) {
-        if (event.matches) pause(); else resume();
+        if (event.matches) {
+          pause();
+        } else if (isStreamActive) {
+          resume();
+        }
       });
     }
     resume();

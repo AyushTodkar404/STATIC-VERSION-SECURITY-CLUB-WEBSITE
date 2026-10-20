@@ -18,6 +18,9 @@
   <meta name="twitter:image" content="assets/security-club-logo.png">
   <title>Security Club | DBIT</title>
   <link rel="icon" href="assets/security-club-logo-small.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="SecurityLogoTrace.css">
 </head>
@@ -28,12 +31,16 @@
   <header class="site-header">
     <a class="brand" href="#/" aria-label="Security Club home"><img src="assets/security-club-logo-small.png"
         alt="Security Club DBIT logo" width="42" height="42"><span>Security Club <small>DBIT</small><span
-          class="brand-tagline">Stay connected, stay secure.</span></span></a>
+          class="brand-tagline"><span class="status-beacon" aria-hidden="true"></span>Stay connected, stay secure.</span></span></a>
     <button class="menu-toggle" type="button" aria-expanded="false"
       aria-controls="site-navigation"><span></span><span></span><span></span><span class="sr-only">Toggle
         navigation</span></button>
     <nav id="site-navigation" class="site-nav" aria-label="Main navigation"></nav>
     <div class="header-actions">
+      <button id="matrix-toggle" class="hud-toggle-btn" type="button" aria-pressed="true" title="Toggle flowing matrix background">
+        <span class="hud-toggle-led" aria-hidden="true"></span>
+        <span class="hud-toggle-text">STREAM: ON</span>
+      </button>
       <div class="social-links" aria-label="Social media links">
         <a href="https://www.linkedin.com/in/security-club-dbit-801708404/" target="_blank" rel="noopener noreferrer"
           aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true">
