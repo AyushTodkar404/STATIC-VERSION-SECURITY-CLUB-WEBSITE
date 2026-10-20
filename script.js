@@ -39,13 +39,20 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
     return 'https://mail.google.com/mail/?' + params.toString();
   }
 
-  function image(path, fallback, alt, className) {
-    return '<img loading="lazy" decoding="async" class="' + (className || 'card-image') + '" src="' + escapeHtml(path) + '" alt="' + escapeHtml(alt) + '" data-image-fallback="' + escapeHtml(fallback) + '">';
+  function image(path, fallback, alt, className, priority) {
+    const priorityAttr = priority ? ' fetchpriority="high"' : ' loading="lazy"';
+    return '<img' + priorityAttr + ' decoding="async" class="' + (className || 'card-image') + '" src="' + escapeHtml(path) + '" alt="' + escapeHtml(alt) + '" data-image-fallback="' + escapeHtml(fallback) + '" onload="this.classList.add(\'is-loaded\')">';
   }
 
   app.addEventListener('error', function (event) {
     const failedImage = event.target;
-    if (!(failedImage instanceof HTMLImageElement) || !failedImage.hasAttribute('data-image-fallback')) return;
+    if (!(failedImage instanceof HTMLImageElement)) return;
+    if (failedImage.src && failedImage.src.endsWith('.webp') && !failedImage.dataset.fallbackTried) {
+      failedImage.dataset.fallbackTried = 'true';
+      failedImage.src = failedImage.src.replace(/\.webp$/, '.jpg');
+      return;
+    }
+    if (!failedImage.hasAttribute('data-image-fallback')) return;
     const fallback = document.createElement('div');
     fallback.className = failedImage.className || 'card-image';
     fallback.setAttribute('role', 'img');
@@ -61,7 +68,8 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
 
   function cards(items, type) {
     return '<div class="card-grid ' + (type || '') + '">' + items.map(function (item, index) {
-      const photo = item.image ? (type === 'team-grid' ? '<a class="team-image-link" href="' + escapeHtml(item.image) + '" target="_blank" rel="noopener noreferrer" aria-label="View full-size photo of ' + escapeHtml(item.name || item.alt || 'team member') + '">' + image(item.image, '+', item.name || item.title || item.alt) + '</a>' : image(item.image, '+', item.name || item.title || item.alt)) : '<div class="card-image card-placeholder" aria-hidden="true"></div>';
+      const isTop = index < 2;
+      const photo = item.image ? (type === 'team-grid' ? '<a class="team-image-link" href="' + escapeHtml(item.image) + '" target="_blank" rel="noopener noreferrer" aria-label="View full-size photo of ' + escapeHtml(item.name || item.alt || 'team member') + '">' + image(item.image, '+', item.name || item.title || item.alt, '', isTop) + '</a>' : image(item.image, '+', item.name || item.title || item.alt, '', isTop)) : '<div class="card-image card-placeholder" aria-hidden="true"></div>';
       const eventAttribute = type === 'event-grid' ? ' data-event-id="' + escapeHtml(item.title) + '"' : '';
       const eventHint = type === 'event-grid' ? '<p class="card-action-hint">Open event details →</p>' : '';
       return '<article class="card' + (type === 'event-grid' ? ' event-card' : '') + '"' + eventAttribute + '>' + photo + '<div class="card-body">' + (item.meta ? '<p class="card-meta">' + item.meta + '</p>' : '') + '<h3>' + escapeHtml(item.name || item.title) + '</h3>' + (item.role ? '<p class="role">' + escapeHtml(item.role) + '</p>' : '') + '<p>' + escapeHtml(item.description || item.bio || '') + '</p>' + eventHint + '</div></article>';
@@ -362,6 +370,9 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
       showFormFeedback(submissionForm, targetUrl, destination === 'whatsapp' ? 'WhatsApp' : 'Gmail');
     });
     decodeText(app.querySelector('h1'));
+    app.querySelectorAll('img').forEach(function (img) {
+      if (img.complete) img.classList.add('is-loaded');
+    });
     app.focus({ preventScroll: true });
   }
 

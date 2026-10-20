@@ -553,18 +553,35 @@ h3 { font-family: var(--font-heading); font-size: 1.15rem; font-weight: 700; col
 }
 .card:hover::before { opacity: 1; }
 
+@keyframes cyber-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
 .card-image {
   display: grid;
   place-items: center;
   width: 100%;
   height: 200px;
+  aspect-ratio: 16 / 9;
   object-fit: cover;
-  background: linear-gradient(135deg, #071720, #040a0f);
+  background: linear-gradient(90deg, rgba(6, 17, 26, 0.95) 0%, rgba(14, 38, 54, 0.95) 50%, rgba(6, 17, 26, 0.95) 100%);
+  background-size: 200% 100%;
+  animation: cyber-shimmer 2.2s ease-in-out infinite;
   color: var(--cyan);
   font: 3rem var(--font-mono);
-  transition: transform 0.35s ease;
+  transition: transform 0.35s ease, opacity 0.3s ease;
 }
 .card:hover .card-image { transform: scale(1.03); }
+
+img.card-image:not(.is-loaded),
+.gallery-item img:not(.is-loaded) {
+  opacity: 0;
+}
+img.card-image.is-loaded,
+.gallery-item img.is-loaded {
+  opacity: 1;
+}
 .card-body { padding: 1.25rem; }
 .card-body p { color: var(--muted); font-size: 0.92rem; line-height: 1.6; }
 .card-meta {
@@ -842,10 +859,13 @@ h3 { font-family: var(--font-heading); font-size: 1.15rem; font-weight: 700; col
 .gallery-item {
   position: relative;
   min-height: 180px;
+  aspect-ratio: 4 / 3;
   overflow: hidden;
   border: 1px solid var(--line);
-  border-radius: 10px;
-  background: #07151e;
+  border-radius: 8px;
+  background: linear-gradient(90deg, rgba(6, 17, 26, 0.95) 0%, rgba(14, 38, 54, 0.95) 50%, rgba(6, 17, 26, 0.95) 100%);
+  background-size: 200% 100%;
+  animation: cyber-shimmer 2.2s ease-in-out infinite;
   transition: all 0.25s ease;
 }
 .gallery-item:hover {
@@ -857,9 +877,10 @@ h3 { font-family: var(--font-heading); font-size: 1.15rem; font-weight: 700; col
   display: block;
   width: 100%;
   height: 100%;
+  aspect-ratio: 4 / 3;
   min-height: 180px;
   object-fit: cover;
-  transition: transform 0.35s ease;
+  transition: transform 0.35s ease, opacity 0.3s ease;
 }
 .gallery-item:hover img { transform: scale(1.05); }
 .gallery-item figcaption {

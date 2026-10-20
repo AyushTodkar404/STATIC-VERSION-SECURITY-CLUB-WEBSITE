@@ -31,16 +31,31 @@ function toWebPath(relativePath) {
 const existingEntries = readExistingEntries();
 const existingByPath = new Map(existingEntries.map(function (entry) { return [entry.image, entry]; }));
 const imagePaths = fs.existsSync(galleryRoot)
-  ? collectImages(galleryRoot, 'gallery').filter(function (file) {
-    return file.split(path.sep)[1] && /^\d{4}$/.test(file.split(path.sep)[1]);
-  })
+  ? (function () {
+    const all = collectImages(galleryRoot, 'gallery').filter(function (file) {
+      const full = path.join(root, file);
+      try {
+        if (fs.statSync(full).size === 0) return false;
+      } catch (_) { return false; }
+      return file.split(path.sep)[1] && /^\d{4}$/.test(file.split(path.sep)[1]);
+    });
+    const byBase = new Map();
+    all.forEach(function (file) {
+      const ext = path.extname(file).toLowerCase();
+      const base = file.slice(0, -ext.length);
+      if (!byBase.has(base) || ext === '.webp') {
+        byBase.set(base, file);
+      }
+    });
+    return Array.from(byBase.values());
+  })()
   : [];
 
 const entries = imagePaths.map(function (file) {
   const image = toWebPath(file);
   const parts = image.split('/');
   const folder = parts.slice(1, -1).join('/');
-  const existing = existingByPath.get(image);
+  const existing = existingByPath.get(image) || existingByPath.get(image.replace(/\.webp$/, '.jpg'));
   const defaultLabel = parts[parts.length - 2] || parts[parts.length - 1];
   return {
     image,
