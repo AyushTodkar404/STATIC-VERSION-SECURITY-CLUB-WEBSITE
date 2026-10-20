@@ -7,6 +7,7 @@
   --text: #e5f3f8;
   --muted: #9ab2bd;
   --cyan: #6bd9ff;
+  --accent: var(--cyan);
   --green: #00ff78;
   --max-width: 1180px;
 }
