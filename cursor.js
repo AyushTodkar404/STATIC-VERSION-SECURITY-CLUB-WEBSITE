@@ -3,7 +3,7 @@
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   if (!finePointer.matches || reducedMotion.matches) return;
 
-  const targetSelector = 'a, button, input, textarea, select, [role="button"], .cursor-target';
+  const targetSelector = 'a, button, input, textarea, select, [role="button"], .cursor-target, .gallery-item, .card, [data-event-id], .info-panel, .opportunities, .option, .hud-toggle-btn, .year-btn, .level-btn, .gallery-folder-button, .gallery-image-button';
   const cursor = document.createElement('div');
   cursor.className = 'target-cursor-root';
   cursor.setAttribute('aria-hidden', 'true');
@@ -52,7 +52,10 @@
   }
 
   function findTarget(node) {
-    return node instanceof Element ? node.closest(targetSelector) : null;
+    if (!(node instanceof Element)) return null;
+    const galleryItem = node.closest('.gallery-item');
+    if (galleryItem) return galleryItem;
+    return node.closest(targetSelector);
   }
 
   function onPointerOver(event) {

@@ -1,0 +1,36 @@
+; Cyber Security Club - Custom Reticle Cursor Scheme
+; Installer INF for Windows 10 / 11
+
+[Version]
+Signature="$CHICAGO$"
+Class=Mouse
+Provider="AyushTodkar404"
+DriverVer=10/23/2026,2.1.0.0
+
+[DefaultInstall]
+CopyFiles = Scheme.Files
+AddReg    = Scheme.Reg
+
+[DestinationDirs]
+Scheme.Files = 10, "Cursors\CyberSecurityReticle"
+
+[Scheme.Reg]
+HKCU, "Control Panel\Cursors\Schemes", "%SCHEME_NAME%", 0x00000000, "%10%\Cursors\CyberSecurityReticle\cyber_normal.ani,%10%\Cursors\aero_helpsel.cur,%10%\Cursors\CyberSecurityReticle\cyber_working.ani,%10%\Cursors\CyberSecurityReticle\cyber_busy.ani,%10%\Cursors\CyberSecurityReticle\cyber_crosshair.cur,%10%\Cursors\CyberSecurityReticle\cyber_text.cur,%10%\Cursors\aero_pen.cur,%10%\Cursors\CyberSecurityReticle\cyber_unavail.cur,%10%\Cursors\CyberSecurityReticle\cyber_ns.cur,%10%\Cursors\CyberSecurityReticle\cyber_ew.cur,%10%\Cursors\CyberSecurityReticle\cyber_nwse.cur,%10%\Cursors\CyberSecurityReticle\cyber_nesw.cur,%10%\Cursors\CyberSecurityReticle\cyber_move.cur,%10%\Cursors\CyberSecurityReticle\cyber_normal.ani,%10%\Cursors\CyberSecurityReticle\cyber_link.cur,,,"
+
+[Scheme.Files]
+cyber_normal.ani
+cyber_normal_static.cur
+cyber_link.cur
+cyber_text.cur
+cyber_ns.cur
+cyber_ew.cur
+cyber_nwse.cur
+cyber_nesw.cur
+cyber_move.cur
+cyber_crosshair.cur
+cyber_unavail.cur
+cyber_working.ani
+cyber_busy.ani
+
+[Strings]
+SCHEME_NAME = "Cyber Security Reticle"
