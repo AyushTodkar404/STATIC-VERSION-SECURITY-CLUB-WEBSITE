@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cyber Security Club - Master Black Hat Workstation Live Wallpaper</title>
+  <title>Live Matrix Wallpaper</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Orbitron:wght@500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
@@ -31,7 +31,18 @@
       z-index: 1;
       background: url('hacker.jpg') no-repeat center center;
       background-size: cover;
-      filter: brightness(0.92) contrast(1.12);
+      filter: brightness(1.08) contrast(1.08);
+    }
+
+    .background-data-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 2;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      opacity: 0.22;
+      mix-blend-mode: screen;
     }
 
     /* 2. Monitor Glow Reflection onto Hacker & Desk */
@@ -61,7 +72,7 @@
       font-family: 'Consolas', 'JetBrains Mono', monospace;
       line-height: 1.25;
       color: #00ff88;
-      text-shadow: 0 0 4px #00ff88;
+      text-shadow: 0 0 2px rgba(0, 255, 136, 0.55);
       border-radius: 2px;
     }
 
@@ -77,6 +88,7 @@
       font-size: 0.65rem;
       padding: 0.3rem;
       box-shadow: inset 0 0 15px rgba(0, 255, 136, 0.25);
+      animation: monitor-top-drift 6s ease-in-out infinite;
     }
 
     /* Audio / Frequency wave bars */
@@ -109,8 +121,9 @@
       font-size: 0.64rem;
       padding: 0.35rem;
       color: #00e5ff;
-      text-shadow: 0 0 5px #00e5ff;
+      text-shadow: 0 0 2px rgba(0, 229, 255, 0.55);
       box-shadow: inset 0 0 18px rgba(0, 229, 255, 0.25);
+      animation: monitor-left-drift 7.5s ease-in-out infinite;
     }
 
     /* --- Screen C: Center Main Monitor directly in front of Hacker --- */
@@ -128,6 +141,7 @@
       gap: 2px;
       padding: 2px;
       box-shadow: inset 0 0 25px rgba(0, 255, 136, 0.3), 0 0 15px rgba(0, 229, 255, 0.2);
+      animation: monitor-center-drift 8s ease-in-out infinite;
     }
 
     .monitor-pane {
@@ -137,6 +151,9 @@
       padding: 0.3rem;
       font-size: 0.58rem;
       position: relative;
+      background-image: linear-gradient(to bottom, transparent 0, rgba(0, 229, 255, 0.035) 50%, transparent 100%);
+      background-size: 100% 8px;
+      animation: screen-refresh 2.8s linear infinite;
     }
 
     /* Radar Map Pane */
@@ -166,6 +183,31 @@
 
     @keyframes radar-spin {
       to { transform: rotate(360deg); }
+    }
+
+    @keyframes monitor-top-drift {
+      0%, 100% { transform: perspective(600px) rotateY(18deg) rotateX(10deg) translate(0, 0); }
+      50% { transform: perspective(600px) rotateY(18deg) rotateX(10deg) translate(0.5px, -1px); }
+    }
+
+    @keyframes monitor-left-drift {
+      0%, 100% { transform: perspective(600px) rotateY(16deg) rotateX(2deg) translate(0, 0); }
+      50% { transform: perspective(600px) rotateY(16deg) rotateX(2deg) translate(-0.5px, 1px); }
+    }
+
+    @keyframes monitor-center-drift {
+      0%, 100% { transform: perspective(800px) rotateY(-5deg) rotateX(1deg) translate(0, 0); }
+      50% { transform: perspective(800px) rotateY(-5deg) rotateX(1deg) translate(0.5px, 0.5px); }
+    }
+
+    @keyframes monitor-laptop-drift {
+      0%, 100% { transform: perspective(450px) rotateX(28deg) rotateY(17deg) rotateZ(-3deg) translate(0, 0); }
+      50% { transform: perspective(450px) rotateX(28deg) rotateY(17deg) rotateZ(-3deg) translate(0.5px, -0.5px); }
+    }
+
+    @keyframes screen-refresh {
+      from { background-position: 0 -8px; }
+      to { background-position: 0 8px; }
     }
 
     .radar-blip {
@@ -212,8 +254,9 @@
       font-size: 0.52rem;
       padding: 0.25rem;
       color: #38bdf8;
-      text-shadow: 0 0 4px #00e5ff;
+      text-shadow: 0 0 2px rgba(0, 229, 255, 0.55);
       box-shadow: inset 0 0 12px rgba(0, 229, 255, 0.35);
+      animation: monitor-laptop-drift 6.8s ease-in-out infinite;
     }
 
     /* --- Screen E: Floating Holographic HUD in front of Hacker's Chest --- */
@@ -233,7 +276,7 @@
       background: radial-gradient(ellipse at center, rgba(0, 229, 255, 0.08), transparent 75%);
       border: 1px dashed rgba(0, 229, 255, 0.4);
       color: #00e5ff;
-      text-shadow: 0 0 6px rgba(0, 229, 255, 0.8);
+      text-shadow: 0 0 3px rgba(0, 229, 255, 0.55);
       font-size: 0.58rem;
       backdrop-filter: blur(1px);
       animation: holo-float 3.2s infinite ease-in-out alternate;
@@ -251,29 +294,30 @@
       top: 77.2%;
       left: 41.6%;
       width: 2.2%;
-      height: 2.2%;
+      height: 3.1%;
       z-index: 6;
       pointer-events: none;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      background: rgba(0, 255, 170, 0.25);
-      border: 1px solid #00ff88;
+      background: rgba(0, 255, 170, 0.32);
+      border: 1px solid rgba(148, 255, 207, 0.95);
       border-radius: 2px;
-      box-shadow: 0 0 8px #00ff88, inset 0 0 4px #00ff88;
+      box-shadow: 0 0 10px #00ff88, 0 0 22px rgba(0, 255, 136, 0.75), inset 0 0 6px #00ff88;
       transform: rotate(12deg);
-      font-size: 0.38rem;
+      font-family: 'Orbitron', 'Consolas', monospace;
+      font-size: 0.34rem;
       font-weight: bold;
       color: #ffffff;
-      text-shadow: 0 0 4px #00ff88;
+      text-shadow: 0 0 3px #b8ffdc, 0 0 7px #00ff88;
       line-height: 1.1;
       animation: watch-pulse 1.4s infinite ease-in-out alternate;
     }
 
     @keyframes watch-pulse {
-      0% { box-shadow: 0 0 6px #00ff88; }
-      100% { box-shadow: 0 0 14px #00ff88; }
+      0% { box-shadow: 0 0 8px #00ff88, 0 0 16px rgba(0, 255, 136, 0.55), inset 0 0 4px #00ff88; }
+      100% { box-shadow: 0 0 15px #00ff88, 0 0 30px rgba(0, 255, 136, 0.9), inset 0 0 8px #00ff88; }
     }
 
     /* 4. Active Typing: Continuously Moving Fingers on Keyboard Canvas */
@@ -317,6 +361,377 @@
       background: linear-gradient(90deg, rgba(1, 4, 7, 0.85) 0%, rgba(1, 4, 7, 0.48) 32%, transparent 60%);
     }
 
+    /* 5b. Tactical Pop-up Screens on Left Side (Non-overlapping row) */
+    .left-popup-workspace {
+      position: absolute;
+      top: 1.5%;
+      left: 1.0%;
+      width: 30.5%;
+      max-width: 530px;
+      z-index: 5;
+      pointer-events: none;
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 0.65rem;
+    }
+
+    .popup-screen-card {
+      pointer-events: auto;
+      flex: 1;
+      min-width: 215px;
+      max-width: 255px;
+      background: rgba(1, 9, 15, 0.94);
+      border: 1px solid rgba(0, 229, 255, 0.44);
+      border-radius: 3px;
+      box-shadow: 0 0 16px rgba(0, 229, 255, 0.22), inset 0 0 18px rgba(0, 229, 255, 0.08);
+      backdrop-filter: blur(8px);
+      overflow: hidden;
+      opacity: 0;
+      transform: perspective(650px) rotateY(6deg) rotateX(2deg) scale(0.95) translateY(6px);
+      transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      display: none;
+    }
+
+    .popup-screen-card.popup-visible {
+      display: block;
+      opacity: 1;
+      transform: perspective(650px) rotateY(6deg) rotateX(2deg) scale(1) translateY(0);
+    }
+
+    .popup-screen-card.popup-hiding {
+      opacity: 0;
+      transform: perspective(650px) rotateY(6deg) rotateX(2deg) scale(0.94) translateY(-8px);
+    }
+
+    .popup-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.28rem 0.45rem;
+      background: rgba(2, 14, 24, 0.95);
+      border-bottom: 1px solid rgba(0, 229, 255, 0.25);
+      font-size: 0.58rem;
+      letter-spacing: 0.08em;
+    }
+
+    .popup-header-left {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .popup-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .popup-dot.red { background: #ff4757; box-shadow: 0 0 4px #ff4757; }
+    .popup-dot.yellow { background: #ffa502; box-shadow: 0 0 4px #ffa502; }
+    .popup-dot.green { background: #2ed573; box-shadow: 0 0 4px #2ed573; }
+
+    .popup-title {
+      font-family: 'Share Tech Mono', 'Consolas', monospace;
+      font-weight: bold;
+      color: #8defff;
+      text-shadow: 0 0 3px rgba(0, 229, 255, 0.5);
+    }
+
+    .popup-header-right {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .popup-status-badge {
+      font-size: 0.50rem;
+      padding: 0.05rem 0.25rem;
+      border-radius: 2px;
+      font-weight: bold;
+      letter-spacing: 0.06em;
+    }
+    .popup-status-badge.live {
+      background: rgba(0, 255, 136, 0.18);
+      border: 1px solid rgba(0, 255, 136, 0.6);
+      color: #00ff88;
+      text-shadow: 0 0 3px #00ff88;
+    }
+    .popup-status-badge.alert {
+      background: rgba(255, 42, 75, 0.2);
+      border: 1px solid rgba(255, 42, 75, 0.65);
+      color: #ff4757;
+      text-shadow: 0 0 3px #ff4757;
+    }
+
+    .popup-close-btn {
+      background: transparent;
+      border: none;
+      color: rgba(141, 239, 255, 0.6);
+      font-size: 0.72rem;
+      cursor: pointer;
+      line-height: 1;
+      padding: 0 0.15rem;
+      transition: color 0.15s ease;
+    }
+    .popup-close-btn:hover {
+      color: #ff4757;
+    }
+
+    .popup-card-body {
+      padding: 0.35rem;
+      font-size: 0.56rem;
+      line-height: 1.25;
+      color: #e2e8f0;
+    }
+
+    /* World Map Styles */
+    .world-map-wrap {
+      position: relative;
+      width: 100%;
+      height: 98px;
+      background: rgba(0, 7, 12, 0.85);
+      border: 1px solid rgba(0, 229, 255, 0.22);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-bottom: 0.25rem;
+    }
+    .world-map-svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .world-map-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+    .world-threat-log {
+      font-family: 'Consolas', monospace;
+      font-size: 0.50rem;
+      background: rgba(0, 5, 8, 0.9);
+      padding: 0.22rem 0.35rem;
+      border-radius: 2px;
+      border-left: 2px solid #ff2a4b;
+      color: #94a3b8;
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+    .world-threat-log .hl-red { color: #ff4757; font-weight: bold; }
+    .world-threat-log .hl-cyan { color: #38bdf8; }
+    .world-threat-log .hl-green { color: #00ff88; }
+
+    /* SATCOM Satellite Styles */
+    .satcom-grid {
+      display: grid;
+      grid-template-columns: 82px 1fr;
+      gap: 0.4rem;
+      align-items: center;
+      margin-bottom: 0.25rem;
+    }
+    .satcom-radar {
+      position: relative;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 1px solid rgba(0, 229, 255, 0.45);
+      background: radial-gradient(circle, rgba(0, 229, 255, 0.08) 0%, transparent 70%);
+      overflow: hidden;
+    }
+    .satcom-sweep {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, rgba(0, 229, 255, 0.7) 0deg, transparent 65deg, transparent 360deg);
+      animation: satcom-spin 2.2s linear infinite;
+    }
+    @keyframes satcom-spin {
+      to { transform: rotate(360deg); }
+    }
+    .satcom-orbit-ring {
+      position: absolute;
+      inset: 12px;
+      border-radius: 50%;
+      border: 1px dashed rgba(0, 255, 136, 0.35);
+    }
+    .satcom-blip {
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #00ff88;
+      box-shadow: 0 0 6px #00ff88;
+      top: 24px;
+      left: 56px;
+      animation: satcom-blip-pulse 1.2s infinite alternate;
+    }
+    @keyframes satcom-blip-pulse {
+      0% { transform: scale(0.9); opacity: 0.5; }
+      100% { transform: scale(1.3); opacity: 1; }
+    }
+    .satcom-stats {
+      font-family: 'Consolas', monospace;
+      font-size: 0.52rem;
+      line-height: 1.35;
+      color: #94a3b8;
+    }
+    .satcom-waterfall {
+      width: 100%;
+      height: 26px;
+      background: rgba(0, 5, 10, 0.85);
+      border: 1px solid rgba(0, 229, 255, 0.2);
+      border-radius: 2px;
+      display: block;
+    }
+
+    /* Stack Exploit Styles */
+    .stack-viz {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      font-family: 'Consolas', monospace;
+      font-size: 0.50rem;
+      margin-bottom: 0.25rem;
+    }
+    .stack-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.12rem 0.3rem;
+      border-radius: 2px;
+      background: rgba(0, 20, 30, 0.85);
+      border-left: 2px solid rgba(0, 229, 255, 0.4);
+    }
+    .stack-row.danger {
+      background: rgba(60, 10, 20, 0.85);
+      border-left-color: #ff2a4b;
+      color: #ff6b81;
+    }
+    .stack-row.warn {
+      background: rgba(50, 35, 10, 0.85);
+      border-left-color: #ffa502;
+      color: #f6e58d;
+    }
+    .stack-row.success {
+      background: rgba(10, 45, 25, 0.85);
+      border-left-color: #00ff88;
+      color: #2ed573;
+    }
+    .exploit-progress-wrap {
+      background: rgba(0, 10, 15, 0.85);
+      border: 1px solid rgba(0, 229, 255, 0.3);
+      border-radius: 2px;
+      height: 7px;
+      overflow: hidden;
+      margin-top: 0.15rem;
+    }
+    .exploit-progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #00e5ff, #00ff88);
+      box-shadow: 0 0 6px rgba(0, 255, 136, 0.7);
+      transition: width 0.3s ease;
+    }
+
+    /* Packet Stream Styles */
+    .packet-stream-box {
+      font-family: 'Consolas', monospace;
+      font-size: 0.49rem;
+      line-height: 1.25;
+      background: rgba(1, 6, 12, 0.9);
+      padding: 0.25rem 0.35rem;
+      border: 1px solid rgba(0, 229, 255, 0.2);
+      border-radius: 2px;
+      height: 72px;
+      overflow: hidden;
+      color: #94a3b8;
+    }
+    .packet-stream-line {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 1px;
+    }
+
+    /* Nmap Screen Styles */
+    .nmap-ports-box {
+      font-family: 'Consolas', monospace;
+      font-size: 0.49rem;
+      line-height: 1.25;
+      background: rgba(0, 6, 12, 0.85);
+      border: 1px solid rgba(0, 229, 255, 0.2);
+      border-radius: 2px;
+      padding: 0.22rem 0.32rem;
+      margin: 0.15rem 0;
+    }
+    .nmap-exploit-pill {
+      background: rgba(255, 42, 75, 0.16);
+      border: 1px solid rgba(255, 42, 75, 0.5);
+      padding: 2px 4px;
+      border-radius: 2px;
+      font-size: 0.47rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 0.15rem;
+    }
+
+    /* Hashcat Screen Styles */
+    .hashcat-stream-box {
+      font-family: 'Consolas', monospace;
+      font-size: 0.48rem;
+      line-height: 1.22;
+      background: rgba(0, 8, 14, 0.9);
+      border: 1px solid rgba(0, 255, 136, 0.22);
+      border-radius: 2px;
+      padding: 0.22rem 0.32rem;
+      height: 42px;
+      overflow: hidden;
+      color: #94a3b8;
+      margin: 0.15rem 0;
+    }
+
+    /* Malware Reverse Engineering & CFG Styles */
+    .malware-cfg-box {
+      background: rgba(0, 6, 12, 0.9);
+      border: 1px solid rgba(0, 229, 255, 0.25);
+      border-radius: 2px;
+      padding: 0.22rem 0.35rem;
+      font-family: 'Consolas', monospace;
+      font-size: 0.49rem;
+      line-height: 1.25;
+      color: #94a3b8;
+      height: 60px;
+      overflow: hidden;
+      margin: 0.15rem 0;
+    }
+    .malware-cfg-box .asm-addr { color: #64748b; }
+    .malware-cfg-box .asm-op { color: #00e5ff; font-weight: bold; }
+    .malware-cfg-box .asm-fn { color: #ffa502; }
+    .malware-cfg-box .asm-cmt { color: #475569; font-style: italic; }
+    .malware-cfg-box .asm-lbl { color: #f43f5e; }
+    .malware-cfg-box .asm-res { color: #00ff88; font-weight: bold; }
+
+    /* Botnet C2 Swarm Styles */
+    .botnet-stream-box {
+      background: rgba(0, 6, 12, 0.9);
+      border: 1px solid rgba(255, 42, 75, 0.25);
+      border-radius: 2px;
+      padding: 0.22rem 0.35rem;
+      font-family: 'Consolas', monospace;
+      font-size: 0.48rem;
+      line-height: 1.25;
+      color: #94a3b8;
+      height: 52px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      margin: 0.15rem 0;
+    }
+
     /* 6. Clearly Visible Tactical Cyber Gridlines */
     .cyber-gridlines {
       position: fixed;
@@ -324,94 +739,706 @@
       z-index: 8;
       pointer-events: none;
       background-image:
-        linear-gradient(rgba(0, 229, 255, 0.12) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 229, 255, 0.12) 1px, transparent 1px);
+        linear-gradient(rgba(0, 229, 255, 0.16) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 229, 255, 0.16) 1px, transparent 1px);
       background-size: 52px 52px;
-      opacity: 0.85;
+      opacity: 0.95;
+      filter: drop-shadow(0 0 2px rgba(0, 229, 255, 0.28));
     }
 
-    .cyber-gridlines::before {
+    /* Glowing wave sweep across gridlines: left to right, then right to left */
+    .cyber-gridlines::after {
       content: '';
       position: absolute;
       inset: 0;
-      background-image: radial-gradient(rgba(0, 255, 136, 0.40) 1.5px, transparent 1.5px);
+      background-image:
+        linear-gradient(rgba(0, 255, 170, 0.75) 1.5px, transparent 1.5px),
+        linear-gradient(90deg, rgba(0, 229, 255, 0.75) 1.5px, transparent 1.5px);
       background-size: 52px 52px;
-      background-position: -1px -1px;
+      -webkit-mask-image: linear-gradient(90deg,
+        transparent 0%,
+        rgba(0, 0, 0, 0.25) 20%,
+        rgba(0, 0, 0, 1) 50%,
+        rgba(0, 0, 0, 0.25) 80%,
+        transparent 100%
+      );
+      mask-image: linear-gradient(90deg,
+        transparent 0%,
+        rgba(0, 0, 0, 0.25) 20%,
+        rgba(0, 0, 0, 1) 50%,
+        rgba(0, 0, 0, 0.25) 80%,
+        transparent 100%
+      );
+      -webkit-mask-size: 38% 100%;
+      mask-size: 38% 100%;
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      filter: drop-shadow(0 0 6px #00ffaa) drop-shadow(0 0 14px #00e5ff);
+      animation: grid-glow-sweep 5.5s infinite ease-in-out alternate;
     }
 
-    /* 7. Full-Screen Binary & English Matrix Rain (Eye-Friendly Dark Mode) */
-    #matrix-canvas {
-      position: fixed;
-      inset: 0;
-      z-index: 9;
-      display: block;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
-      opacity: 0.65;
+    /* Vertical glowing laser scan beam that travels with the sweep */
+    .cyber-gridlines::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: linear-gradient(180deg,
+        transparent 0%,
+        rgba(0, 255, 170, 0.55) 15%,
+        #00e5ff 50%,
+        rgba(0, 255, 170, 0.55) 85%,
+        transparent 100%
+      );
+      box-shadow: 0 0 14px #00e5ff, 0 0 28px rgba(0, 255, 170, 0.85);
+      opacity: 0.85;
+      animation: grid-beam-sweep 5.5s infinite ease-in-out alternate;
     }
 
-    /* 8. Top & Bottom HUD Telemetry */
+    @keyframes grid-glow-sweep {
+      0% {
+        -webkit-mask-position: -40vw 0;
+        mask-position: -40vw 0;
+      }
+      100% {
+        -webkit-mask-position: 140vw 0;
+        mask-position: 140vw 0;
+      }
+    }
+
+    @keyframes grid-beam-sweep {
+      0% {
+        left: -15px;
+        opacity: 0.25;
+      }
+      50% {
+        opacity: 0.95;
+      }
+      100% {
+        left: calc(100vw + 15px);
+        opacity: 0.25;
+      }
+    }
+
+    /* 7. Minimal digital clock & session monitor */
     .hud-header {
       position: fixed;
       top: 1.25rem;
-      left: 1.5rem;
+      left: auto;
       right: 1.5rem;
       z-index: 10;
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-end;
       align-items: center;
-      pointer-events: none;
+      pointer-events: auto;
       font-size: 0.78rem;
       letter-spacing: 0.14em;
       text-transform: uppercase;
       color: rgba(0, 229, 255, 0.92);
-      text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+      text-shadow: 0 0 3px rgba(0, 229, 255, 0.45);
     }
 
     .hud-box {
       display: flex;
-      align-items: center;
-      gap: 0.65rem;
-      padding: 0.4rem 0.85rem;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.35rem;
+      padding: 0.45rem 0.85rem;
       background: rgba(2, 6, 12, 0.88);
       border: 1px solid rgba(0, 229, 255, 0.38);
       border-radius: 2px;
       backdrop-filter: blur(10px);
+      box-shadow: 0 0 14px rgba(0, 229, 255, 0.15);
     }
 
-    .hud-box.left-accent {
-      border-left: 3px solid #00ff88;
-    }
-
-    .hud-footer {
-      position: fixed;
-      bottom: 1.25rem;
-      left: 1.5rem;
-      right: 1.5rem;
-      z-index: 10;
+    .hud-topbar {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      pointer-events: none;
-      font-size: 0.74rem;
-      letter-spacing: 0.12em;
-      color: #94a3b8;
+      justify-content: space-between;
+      gap: 0.8rem;
+      width: 100%;
+      font-size: 0.62rem;
+      letter-spacing: 0.08em;
+      color: rgba(141, 239, 255, 0.85);
+      border-bottom: 1px solid rgba(0, 229, 255, 0.18);
+      padding-bottom: 0.25rem;
+      margin-bottom: 0.15rem;
     }
 
-    .beacon-dot {
-      display: inline-block;
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
+    .hud-modes {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .hud-mode-btn {
+      background: transparent;
+      border: 1px solid rgba(0, 229, 255, 0.3);
+      color: rgba(141, 239, 255, 0.65);
+      font-family: inherit;
+      font-size: 0.58rem;
+      padding: 0.1rem 0.35rem;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      letter-spacing: 0.06em;
+    }
+
+    .hud-mode-btn:hover {
+      border-color: rgba(0, 229, 255, 0.7);
+      color: #fff;
+    }
+
+    .hud-mode-btn.active {
+      background: rgba(255, 42, 75, 0.2);
+      border-color: #ff2a4b;
+      color: #ff6b81;
+      text-shadow: 0 0 4px rgba(255, 42, 75, 0.8);
+      font-weight: bold;
+    }
+
+    .hud-telemetry-pill {
+      font-family: 'Share Tech Mono', 'Consolas', monospace;
+      font-size: 0.62rem;
+      color: #a7f3d0;
+      text-shadow: 0 0 3px rgba(52, 211, 153, 0.5);
+      display: flex;
+      align-items: center;
+      gap: 0.32rem;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .hud-telemetry-pill:hover {
+      color: #6ee7b7;
+    }
+
+    .hud-telemetry-pill .pulse-dot {
+      width: 5px;
+      height: 5px;
       background: #00ff88;
-      box-shadow: 0 0 10px #00ff88, 0 0 20px #00ff88;
-      animation: pulse-beacon 1.8s infinite ease-in-out;
+      border-radius: 50%;
+      box-shadow: 0 0 6px #00ff88;
+      animation: session-pulse 1.2s infinite ease-in-out alternate;
     }
 
-    @keyframes pulse-beacon {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.35; transform: scale(0.75); }
+    .hud-topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+    }
+
+    /* Live Laptop Battery Telemetry Pill */
+    .hud-battery-pill {
+      font-family: 'Share Tech Mono', 'Consolas', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.06em;
+      color: #00ff88;
+      text-shadow: 0 0 3px rgba(0, 255, 136, 0.5);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.28rem;
+      padding: 0.08rem 0.32rem;
+      background: rgba(0, 18, 24, 0.65);
+      border: 1px solid rgba(0, 229, 255, 0.28);
+      border-radius: 2px;
+      user-select: none;
+      cursor: default;
+      transition: all 0.2s ease;
+    }
+    .hud-battery-pill:hover {
+      border-color: rgba(0, 229, 255, 0.65);
+      box-shadow: 0 0 8px rgba(0, 229, 255, 0.25);
+    }
+    .hud-battery-pill.charging {
+      color: #38bdf8;
+      border-color: rgba(56, 189, 248, 0.45);
+      text-shadow: 0 0 4px #00e5ff;
+    }
+    .hud-battery-pill.mid {
+      color: #ffa502;
+      border-color: rgba(255, 165, 2, 0.4);
+      text-shadow: 0 0 4px #ffa502;
+    }
+    .hud-battery-pill.low {
+      color: #ff4757;
+      border-color: rgba(255, 71, 87, 0.55);
+      text-shadow: 0 0 4px #ff4757;
+      animation: battery-low-pulse 1.2s infinite alternate;
+    }
+    @keyframes battery-low-pulse {
+      0% { opacity: 0.7; }
+      100% { opacity: 1; filter: drop-shadow(0 0 4px #ff2a4b); }
+    }
+
+    .battery-icon-wrap {
+      display: inline-flex;
+      align-items: center;
+    }
+    .battery-shell {
+      width: 15px;
+      height: 8px;
+      border: 1px solid currentColor;
+      border-radius: 1.5px;
+      padding: 1px;
+      display: flex;
+      align-items: center;
+      box-sizing: border-box;
+      background: rgba(0, 0, 0, 0.45);
+    }
+    .battery-nub {
+      width: 1.5px;
+      height: 4px;
+      background: currentColor;
+      border-radius: 0 1px 1px 0;
+      margin-left: 1px;
+    }
+    .battery-fill {
+      height: 100%;
+      width: 80%;
+      background: currentColor;
+      border-radius: 0.5px;
+      transition: width 0.3s ease;
+      box-shadow: 0 0 3px currentColor;
+    }
+    .battery-bolt {
+      font-size: 0.52rem;
+      line-height: 1;
+      color: #38bdf8;
+      margin-right: -1px;
+    }
+    .battery-status-tag {
+      font-size: 0.50rem;
+      padding: 0 0.15rem;
+      border-radius: 1px;
+      background: rgba(0, 229, 255, 0.12);
+      border: 1px solid rgba(0, 229, 255, 0.25);
+      color: inherit;
+      line-height: 1.1;
+    }
+
+    @keyframes session-pulse {
+      0% { opacity: 0.4; transform: scale(0.85); }
+      100% { opacity: 1; transform: scale(1.15); }
+    }
+
+    .ip-panel {
+      position: fixed;
+      right: 1.5rem;
+      bottom: 1.25rem;
+      z-index: 10;
+      min-width: 11.8rem;
+      padding: 0.45rem 0.8rem;
+      background: rgba(2, 6, 12, 0.9);
+      border: 1px solid rgba(255, 42, 75, 0.35);
+      border-right: 3px solid #ff2a4b;
+      border-radius: 2px;
+      color: #ff8597;
+      font: 600 0.68rem 'Consolas', monospace;
+      letter-spacing: 0.08em;
+      text-align: right;
+      text-shadow: 0 0 3px rgba(255, 42, 75, 0.45);
+      box-shadow: 0 0 8px rgba(255, 42, 75, 0.16), inset 0 0 8px rgba(255, 42, 75, 0.08);
+    }
+
+    .ip-panel strong {
+      display: block;
+      font-family: 'Orbitron', 'Share Tech Mono', monospace;
+      font-weight: 700;
+      font-size: 0.96rem;
+      letter-spacing: 0.14em;
+      font-variant-numeric: tabular-nums;
+      color: #ff2a4b;
+      text-shadow: 0 0 5px rgba(255, 42, 75, 0.95), 0 0 12px rgba(255, 0, 60, 0.55);
+      margin-top: 2px;
+    }
+
+    .digital-clock {
+      display: flex;
+      align-items: center;
+      gap: 0.2rem;
+      min-height: 2.35rem;
+    }
+
+    .digital-digit {
+      position: relative;
+      width: 1.25rem;
+      height: 2.15rem;
+    }
+
+    .digital-segment {
+      position: absolute;
+      background: rgba(65, 15, 20, 0.45);
+      border-radius: 0.12rem;
+      transition: background 0.12s ease, box-shadow 0.12s ease;
+    }
+
+    .digital-segment.on {
+      background: #ff2a4b;
+      box-shadow: 0 0 4px rgba(255, 42, 75, 0.95), 0 0 9px rgba(255, 0, 60, 0.55);
+    }
+
+    .digital-segment.a,
+    .digital-segment.g,
+    .digital-segment.d {
+      left: 0.18rem;
+      width: 0.89rem;
+      height: 0.22rem;
+      clip-path: polygon(12% 0, 88% 0, 100% 50%, 88% 100%, 12% 100%, 0 50%);
+    }
+
+    .digital-segment.a { top: 0; }
+    .digital-segment.g { top: 0.96rem; }
+    .digital-segment.d { bottom: 0; }
+
+    .digital-segment.f,
+    .digital-segment.e,
+    .digital-segment.b,
+    .digital-segment.c {
+      width: 0.22rem;
+      height: 0.82rem;
+      clip-path: polygon(50% 0, 100% 12%, 100% 88%, 50% 100%, 0 88%, 0 12%);
+    }
+
+    .digital-segment.f { left: 0; top: 0.13rem; }
+    .digital-segment.e { left: 0; bottom: 0.13rem; }
+    .digital-segment.b { right: 0; top: 0.13rem; }
+    .digital-segment.c { right: 0; bottom: 0.13rem; }
+
+    .digital-colon {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      height: 1.8rem;
+      padding: 0 0.05rem;
+    }
+
+    .digital-colon::before,
+    .digital-colon::after {
+      content: '';
+      width: 0.2rem;
+      height: 0.2rem;
+      border-radius: 50%;
+      background: #ff2a4b;
+      box-shadow: 0 0 5px rgba(255, 42, 75, 0.9);
+    }
+
+    .digital-dot {
+      display: flex;
+      align-items: flex-end;
+      height: 1.8rem;
+      padding: 0 0.12rem 0.22rem 0.12rem;
+    }
+
+    .digital-dot::after {
+      content: '';
+      width: 0.22rem;
+      height: 0.22rem;
+      border-radius: 50%;
+      background: #ff2a4b;
+      box-shadow: 0 0 5px rgba(255, 42, 75, 0.9);
+    }
+
+    .digital-digit.ms-digit {
+      transform: scale(0.86);
+      transform-origin: bottom center;
+      margin: 0 -0.06rem;
+      opacity: 0.95;
+    }
+
+    /* 14b. Real-Time Date Bar */
+    .hud-date-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding-top: 0.22rem;
+      margin-top: 0.15rem;
+      border-top: 1px solid rgba(0, 229, 255, 0.18);
+      font-size: 0.60rem;
+      letter-spacing: 0.08em;
+    }
+
+    .hud-date-info {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .hud-date-tag {
+      font-size: 0.48rem;
+      padding: 0.05rem 0.22rem;
+      border-radius: 2px;
+      background: rgba(0, 229, 255, 0.14);
+      border: 1px solid rgba(0, 229, 255, 0.35);
+      color: #00e5ff;
+      font-weight: bold;
+    }
+
+    .hud-live-date {
+      font-family: 'Share Tech Mono', 'Consolas', monospace;
+      font-size: 0.64rem;
+      font-weight: bold;
+      color: #8defff;
+      text-shadow: 0 0 3px rgba(0, 229, 255, 0.5);
+      letter-spacing: 0.09em;
+    }
+
+    .hud-cal-toggle-btn {
+      background: rgba(0, 20, 30, 0.65);
+      border: 1px solid rgba(0, 229, 255, 0.3);
+      border-radius: 2px;
+      color: rgba(141, 239, 255, 0.85);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.54rem;
+      padding: 0.1rem 0.35rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      transition: all 0.15s ease;
+      letter-spacing: 0.06em;
+    }
+
+    .hud-cal-toggle-btn:hover {
+      border-color: rgba(0, 229, 255, 0.7);
+      color: #00ff88;
+      box-shadow: 0 0 6px rgba(0, 229, 255, 0.25);
+    }
+
+    /* 14c. Modern Cybersecurity Calendar Module */
+    .hud-cyber-calendar {
+      width: 100%;
+      margin-top: 0.3rem;
+      padding-top: 0.3rem;
+      border-top: 1px dashed rgba(0, 229, 255, 0.22);
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      transition: all 0.25s ease;
+    }
+
+    .hud-cyber-calendar.cal-collapsed {
+      display: none;
+    }
+
+    .cal-nav-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.25rem;
+      font-size: 0.58rem;
+    }
+
+    .cal-nav-btn {
+      background: rgba(0, 15, 24, 0.8);
+      border: 1px solid rgba(0, 229, 255, 0.3);
+      color: #8defff;
+      border-radius: 2px;
+      cursor: pointer;
+      font-size: 0.55rem;
+      padding: 0.12rem 0.35rem;
+      line-height: 1;
+      transition: all 0.15s ease;
+    }
+
+    .cal-nav-btn:hover {
+      border-color: #00e5ff;
+      background: rgba(0, 229, 255, 0.15);
+      color: #fff;
+    }
+
+    .cal-month-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .cal-month-title {
+      font-family: 'Orbitron', 'Share Tech Mono', monospace;
+      font-weight: 700;
+      font-size: 0.60rem;
+      letter-spacing: 0.08em;
+      color: #fff;
+      text-shadow: 0 0 4px rgba(0, 229, 255, 0.6);
+    }
+
+    .cal-ops-tag {
+      font-size: 0.44rem;
+      padding: 0.04rem 0.2rem;
+      background: rgba(255, 42, 75, 0.18);
+      border: 1px solid rgba(255, 42, 75, 0.5);
+      border-radius: 2px;
+      color: #ff4757;
+      font-weight: bold;
+    }
+
+    .cal-today-btn {
+      background: rgba(0, 255, 136, 0.12);
+      border: 1px solid rgba(0, 255, 136, 0.4);
+      color: #00ff88;
+      font-size: 0.48rem;
+      font-family: 'Share Tech Mono', monospace;
+      font-weight: bold;
+      border-radius: 2px;
+      padding: 0.12rem 0.3rem;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .cal-today-btn:hover {
+      background: rgba(0, 255, 136, 0.28);
+      border-color: #00ff88;
+      box-shadow: 0 0 6px #00ff88;
+    }
+
+    .cal-weekdays {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      text-align: center;
+      font-family: 'Consolas', monospace;
+      font-size: 0.50rem;
+      color: #64748b;
+      font-weight: bold;
+      margin-top: 0.1rem;
+    }
+
+    .cal-days-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 2px;
+      text-align: center;
+      font-family: 'Share Tech Mono', 'Consolas', monospace;
+      font-size: 0.52rem;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .cal-day-cell {
+      position: relative;
+      height: 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 10, 18, 0.65);
+      border: 1px solid rgba(0, 229, 255, 0.14);
+      border-radius: 2px;
+      cursor: pointer;
+      color: #94a3b8;
+      transition: all 0.15s ease;
+      user-select: none;
+    }
+
+    .cal-day-cell:hover {
+      background: rgba(0, 229, 255, 0.2);
+      border-color: rgba(0, 229, 255, 0.55);
+      color: #fff;
+    }
+
+    .cal-day-cell.other-month {
+      opacity: 0.25;
+      cursor: default;
+    }
+
+    .cal-day-cell.today {
+      background: rgba(255, 42, 75, 0.25);
+      border: 1px solid #ff2a4b;
+      color: #fff;
+      font-weight: bold;
+      box-shadow: 0 0 6px rgba(255, 42, 75, 0.6);
+    }
+
+    .cal-day-cell.selected:not(.today) {
+      background: rgba(0, 229, 255, 0.28);
+      border: 1px solid #00e5ff;
+      color: #00e5ff;
+      box-shadow: 0 0 6px rgba(0, 229, 255, 0.5);
+    }
+
+    .cal-event-dot {
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      position: absolute;
+      bottom: 1.5px;
+    }
+
+    .cal-event-dot.patch {
+      background: #ff4757;
+      box-shadow: 0 0 3px #ff4757;
+    }
+
+    .cal-event-dot.intel {
+      background: #00e5ff;
+      box-shadow: 0 0 3px #00e5ff;
+    }
+
+    .cal-event-dot.drill {
+      background: #00ff88;
+      box-shadow: 0 0 3px #00ff88;
+    }
+
+    .cal-event-dot.zeroday {
+      background: #ffa502;
+      box-shadow: 0 0 3px #ffa502;
+    }
+
+    /* Security Briefing Card at bottom of calendar */
+    .cal-briefing-card {
+      background: rgba(0, 8, 14, 0.9);
+      border: 1px solid rgba(0, 229, 255, 0.25);
+      border-left: 2px solid #00e5ff;
+      border-radius: 2px;
+      padding: 0.22rem 0.35rem;
+      margin-top: 0.15rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .cal-briefing-top {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.48rem;
+    }
+
+    .briefing-indicator {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #00e5ff;
+      box-shadow: 0 0 4px #00e5ff;
+      animation: session-pulse 1.4s infinite alternate;
+    }
+
+    .cal-briefing-label {
+      color: #8defff;
+      font-family: 'Consolas', monospace;
+      font-weight: bold;
+    }
+
+    .cal-briefing-status {
+      font-size: 0.44rem;
+      padding: 0.02rem 0.2rem;
+      border-radius: 1px;
+      background: rgba(255, 42, 75, 0.2);
+      border: 1px solid rgba(255, 42, 75, 0.5);
+      color: #ff6b81;
+      font-weight: bold;
+    }
+
+    .cal-briefing-event {
+      font-family: 'Consolas', monospace;
+      font-size: 0.46rem;
+      color: #cbd5e1;
+      line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .scanlines {
@@ -438,14 +1465,244 @@
       0%, 49% { opacity: 1; }
       50%, 100% { opacity: 0; }
     }
+
+    /* 15. Responsive Adaptations across all screen dimensions & resolutions */
+    /* Laptops and smaller displays (<= 1366px width or <= 768px height) */
+    @media (max-width: 1366px), (max-height: 768px) {
+      .hud-header {
+        top: 0.6rem;
+        right: 0.8rem;
+      }
+      .hud-box {
+        padding: 0.32rem 0.65rem;
+        gap: 0.25rem;
+      }
+      .digital-clock {
+        transform: scale(0.92);
+        transform-origin: top right;
+      }
+      .hud-topbar {
+        font-size: 0.56rem;
+        gap: 0.4rem;
+      }
+      .hud-battery-pill {
+        font-size: 0.52rem;
+        padding: 0.05rem 0.25rem;
+      }
+      .cal-day-cell {
+        height: 15px;
+        font-size: 0.48rem;
+      }
+      .left-popup-workspace {
+        top: 1.0%;
+        left: 0.8%;
+        max-width: 440px;
+        gap: 0.4rem;
+      }
+      .popup-screen-card {
+        min-width: 180px;
+        max-width: 215px;
+      }
+      .world-map-wrap {
+        height: 78px;
+      }
+      .ip-panel {
+        right: 0.8rem;
+        bottom: 0.8rem;
+        padding: 0.35rem 0.6rem;
+        min-width: 10rem;
+      }
+      .ip-panel strong {
+        font-size: 0.85rem;
+      }
+    }
+
+    /* Ultra-compact / Tablet / Low resolution screens (<= 1024px width) */
+    @media (max-width: 1024px) {
+      .left-popup-workspace {
+        flex-direction: column;
+        max-width: 240px;
+        gap: 0.4rem;
+      }
+      .popup-screen-card {
+        min-width: 210px;
+        max-width: 240px;
+      }
+      .hud-box {
+        max-width: 280px;
+      }
+      .hud-cyber-calendar {
+        font-size: 0.48rem;
+      }
+    }
+
+    /* Mobile / Very narrow displays (<= 768px width) */
+    @media (max-width: 768px) {
+      .hud-header {
+        top: 0.4rem;
+        right: 0.4rem;
+        left: auto;
+      }
+      .hud-box {
+        max-width: 250px;
+        padding: 0.25rem 0.5rem;
+      }
+      .digital-clock {
+        transform: scale(0.78);
+        transform-origin: top right;
+      }
+      .hud-cyber-calendar,
+      .hud-cal-toggle-btn {
+        display: none !important;
+      }
+      .left-popup-workspace {
+        top: 0.4rem;
+        left: 0.4rem;
+        max-width: 190px;
+      }
+      .popup-screen-card {
+        min-width: 180px;
+        max-width: 190px;
+      }
+      .ip-panel {
+        display: none;
+      }
+    }
+
+    /* Very small heights (<= 640px) like split screens or netbooks */
+    @media (max-height: 640px) {
+      .hud-cyber-calendar {
+        display: none !important;
+      }
+      .hud-cal-toggle-btn {
+        display: none !important;
+      }
+      .world-map-wrap {
+        height: 64px;
+      }
+      .packet-stream-box {
+        height: 52px;
+      }
+    }
+
+    /* Ultra-High Definition 2K / 4K Displays (>= 2560px width) */
+    @media (min-width: 2560px) {
+      .hud-header {
+        top: 2rem;
+        right: 2.2rem;
+      }
+      .hud-box {
+        padding: 0.7rem 1.2rem;
+        gap: 0.5rem;
+        border-width: 1.5px;
+      }
+      .digital-clock {
+        transform: scale(1.22);
+        transform-origin: top right;
+      }
+      .hud-topbar {
+        font-size: 0.82rem;
+      }
+      .hud-live-date {
+        font-size: 0.82rem;
+      }
+      .cal-day-cell {
+        height: 24px;
+        font-size: 0.70rem;
+      }
+      .left-popup-workspace {
+        max-width: 720px;
+        gap: 1rem;
+      }
+      .popup-screen-card {
+        min-width: 290px;
+        max-width: 350px;
+        font-size: 0.75rem;
+      }
+      .world-map-wrap {
+        height: 140px;
+      }
+      .ip-panel {
+        right: 2.2rem;
+        bottom: 2rem;
+        padding: 0.7rem 1.2rem;
+        min-width: 16rem;
+        font-size: 0.95rem;
+      }
+      .ip-panel strong {
+        font-size: 1.4rem;
+      }
+    }
+
+    /* Performance CSS optimizations: GPU compositing & layout containment */
+    .screen-overlay {
+      contain: layout style paint;
+      text-rendering: optimizeSpeed;
+    }
+
+    .popup-screen-card {
+      contain: layout style paint;
+      will-change: transform, opacity;
+    }
+
+    .hud-box {
+      contain: layout style;
+    }
+
+    .background-data-canvas,
+    #keyboard-lighting-canvas,
+    #hacker-hands-canvas {
+      will-change: transform;
+      contain: strict;
+    }
   </style>
 </head>
 <body>
   <!-- 1. Background Image -->
   <div class="hacker-backdrop"></div>
 
-  <!-- 2. Dynamic Ambient Monitor Light Flicker -->
+  <!-- 2. Subtle dynamic data behind the hacker -->
+  <canvas id="background-data-canvas" class="background-data-canvas"></canvas>
+
+  <!-- 3. Dynamic Ambient Monitor Light Flicker -->
   <div class="screen-ambient-glow"></div>
+
+  <!-- 2b. Tactical Left Pop-up Workspace (Auto pop up, stay, disappear, cycle) -->
+  <aside id="left-popup-workspace" class="left-popup-workspace" aria-label="Tactical Operations Monitors">
+    <!-- Top Slot: Threat Map & SATCOM -->
+    <div id="popup-slot-top" class="popup-screen-card" role="region">
+      <div class="popup-card-header">
+        <div class="popup-header-left">
+          <span class="popup-dot red"></span>
+          <span class="popup-dot yellow"></span>
+          <span class="popup-dot green"></span>
+          <span id="popup-top-title" class="popup-title">THREAT_INTEL // GLOBAL_MAP</span>
+        </div>
+        <div class="popup-header-right">
+          <span id="popup-top-badge" class="popup-status-badge live">INTERCEPTING</span>
+          <button type="button" class="popup-close-btn" data-slot="top" title="Dismiss screen" aria-label="Dismiss screen">×</button>
+        </div>
+      </div>
+      <div id="popup-top-body" class="popup-card-body"></div>
+    </div>
+
+    <!-- Bottom Slot: Memory Exploit & Packet Sniffer -->
+    <div id="popup-slot-bottom" class="popup-screen-card" role="region">
+      <div class="popup-card-header">
+        <div class="popup-header-left">
+          <span class="popup-dot red"></span>
+          <span class="popup-dot yellow"></span>
+          <span class="popup-dot green"></span>
+          <span id="popup-bottom-title" class="popup-title">KERNEL_EXPLOIT // ROP_CHAIN</span>
+        </div>
+        <div class="popup-header-right">
+          <span id="popup-bottom-badge" class="popup-status-badge alert">STAGE_ACTIVE</span>
+          <button type="button" class="popup-close-btn" data-slot="bottom" title="Dismiss screen" aria-label="Dismiss screen">×</button>
+        </div>
+      </div>
+      <div id="popup-bottom-body" class="popup-card-body"></div>
+    </div>
+  </aside>
 
   <!-- 3. Screen A: Top-Left Vertical Screen (Waterfall binary & registers) -->
   <div class="screen-overlay" id="screen-top-left">
@@ -509,8 +1766,9 @@
 
   <!-- 6. Screen D: Desk Laptop Screen (Wireshark Packet Feed) -->
   <div class="screen-overlay" id="screen-laptop">
-    <div style="color:#38bdf8; font-weight:bold; font-size:0.50rem; border-bottom:1px solid rgba(56,189,248,0.4); margin-bottom:2px;">
-      PACKET_SNIFFER // ETH0
+    <div style="color:#38bdf8; font-weight:bold; font-size:0.50rem; border-bottom:1px solid rgba(56,189,248,0.4); margin-bottom:2px; display:flex; justify-content:space-between; align-items:center;">
+      <span>PACKET_SNIFFER // ETH0</span>
+      <span id="screen-laptop-battery" style="color:#00ff88; font-family:'Consolas', monospace; font-size:0.46rem; font-weight:normal;">BAT: --%</span>
     </div>
     <div id="screen-packet-content"></div>
   </div>
@@ -519,19 +1777,19 @@
   <div id="screen-hologram">
     <div style="display:flex; justify-content:space-between; border-bottom:1px solid rgba(0,229,255,0.4); padding-bottom:2px;">
       <span>HOLO_SPECTRAL</span>
-      <span style="color:#00ff88;">99.4%</span>
+      <span style="color:#00ff88;" id="holo-confidence">99.4%</span>
     </div>
     <canvas id="holo-wave-canvas" width="120" height="40" style="width:100%; height:40px;"></canvas>
     <div style="font-size:0.52rem; display:flex; justify-content:space-between;">
-      <span>NODE: 01010100</span>
+      <span>NODE: <span id="holo-node">01010100</span></span>
       <span>VULN: CRITICAL</span>
     </div>
   </div>
 
   <!-- 8. Hacker's Smartwatch Display on Right Wrist -->
   <div id="hacker-smartwatch">
-    <span style="font-size:0.42rem; color:#00ff88;" id="watch-bpm">138</span>
-    <span>BPM</span>
+    <span id="watch-time">00:00</span>
+    <span style="font-size:0.32rem; color:#b8ffdc;" id="watch-bpm">138</span>
   </div>
 
   <!-- 9. Mechanical Keycaps Under-Glow Canvas -->
@@ -549,59 +1807,633 @@
   <!-- 13. Scanlines Filter -->
   <div class="scanlines"></div>
 
-  <!-- 14. Full-Screen Binary & English Matrix Rain -->
-  <canvas id="matrix-canvas"></canvas>
-
-  <!-- 15. Top Telemetry Header -->
+  <!-- 14. Minimal digital clock & session monitor -->
   <header class="hud-header">
-    <div class="hud-box left-accent">
-      <span class="beacon-dot"></span>
-      <span><strong>DBIT SECURITY CLUB</strong> // BLACK HAT WORKSTATION</span>
-    </div>
     <div class="hud-box">
-      <span>PROTOCOL: <strong>TLS_1.3</strong></span>
-      <span>SPEED: <strong id="hud-wpm" style="color:#00e5ff;">148 WPM</strong></span>
-      <span>STATUS: <strong style="color:#00ff88;">ROOT ACCESS</strong></span>
-      <span id="hud-clock">00:00:00</span>
+      <div class="hud-topbar">
+        <div class="hud-modes">
+          <button id="mode-live-btn" class="hud-mode-btn active" type="button" title="Switch to Real-Time Watch">LIVE</button>
+          <button id="mode-session-btn" class="hud-mode-btn" type="button" title="Switch to Screen Session Mode">SESSION</button>
+        </div>
+        <div class="hud-topbar-right">
+          <!-- Live Laptop Battery Pill -->
+          <div id="hud-battery-pill" class="hud-battery-pill" title="Laptop Battery & Power Status">
+            <span class="battery-icon-wrap">
+              <span class="battery-shell"><span id="battery-fill" class="battery-fill"></span></span>
+              <span class="battery-nub"></span>
+            </span>
+            <span id="battery-bolt" class="battery-bolt" style="display:none;">⚡</span>
+            <span id="battery-pct">--%</span>
+            <span id="battery-status-tag" class="battery-status-tag">BAT</span>
+          </div>
+          <div id="hud-session-telemetry" class="hud-telemetry-pill" title="Click to restart session timer">
+            <span class="pulse-dot"></span>
+            <span id="hud-sub-counter">SCREEN ON: 00:00:00</span>
+          </div>
+        </div>
+      </div>
+      <div id="hud-clock" class="digital-clock" aria-label="Current time and session monitor"></div>
+
+      <!-- 3. Real-Time Date Bar with Calendar Toggle -->
+      <div class="hud-date-bar">
+        <div class="hud-date-info" id="hud-date-info-toggle" title="Click to toggle Cybersecurity Operations Calendar">
+          <span class="hud-date-tag">DATE</span>
+          <span id="hud-live-date" class="hud-live-date">SUN, 25 OCT 2026</span>
+        </div>
+        <button id="hud-cal-toggle-btn" class="hud-cal-toggle-btn" type="button" title="Toggle Cybersecurity Operations Calendar" aria-expanded="true">
+          <span class="cal-ico">📅</span>
+          <span id="cal-toggle-label">CALENDAR ▲</span>
+        </button>
+      </div>
+
+      <!-- 4. Modern Cybersecurity Calendar Module -->
+      <div id="hud-cyber-calendar" class="hud-cyber-calendar">
+        <div class="cal-nav-bar">
+          <button type="button" id="cal-prev-btn" class="cal-nav-btn" title="Previous Month">◀</button>
+          <div class="cal-month-wrap">
+            <span id="cal-month-title" class="cal-month-title">OCTOBER 2026</span>
+            <span class="cal-ops-tag">CYBER_OPS</span>
+          </div>
+          <button type="button" id="cal-today-btn" class="cal-today-btn" title="Jump to Today">TODAY</button>
+          <button type="button" id="cal-next-btn" class="cal-nav-btn" title="Next Month">▶</button>
+        </div>
+
+        <div class="cal-weekdays">
+          <span>SU</span><span>MO</span><span>TU</span><span>WE</span><span>TH</span><span>FR</span><span>SA</span>
+        </div>
+
+        <div id="cal-days-grid" class="cal-days-grid"></div>
+
+        <div class="cal-briefing-card">
+          <div class="cal-briefing-top">
+            <span class="briefing-indicator"></span>
+            <span id="cal-briefing-label" class="cal-briefing-label">25 OCT // POSTURE:</span>
+            <span id="cal-briefing-status" class="cal-briefing-status">DEFCON 2</span>
+          </div>
+          <div id="cal-briefing-event" class="cal-briefing-event">ACTIVE: 0-DAY MITIGATION · GLOBAL SATELLITE SYNC</div>
+        </div>
+      </div>
     </div>
   </header>
-
-  <!-- 16. Bottom Telemetry Footer -->
-  <footer class="hud-footer">
-    <div class="hud-box">
-      <span>ACTIVE STREAMS: <strong>BINARY_FEED + KERNEL_DISASM + EXPLOIT_STUDIO</strong></span>
-    </div>
-    <div class="hud-box">
-      <span>NODE: <strong>127.0.0.1:443</strong> · ZERO_LOGS · <span class="beacon-dot" style="margin-left:4px;"></span></span>
-    </div>
-  </footer>
+  <div class="ip-panel" aria-live="polite">
+    <div>REMOTE NODE</div>
+    <strong id="live-ip">10.24.81.106</strong>
+  </div>
 
   <script>
     (function () {
       /* ==============================================================
-         1. REAL-TIME CLOCK & HUD TELEMETRY
+         0. MASTER POWER & CPU THROTTLING ENGINE
+         - Visibility-based suspension: 0% CPU when screen is minimized/obscured
+         - Safe throttled intervals that automatically sleep when inactive
+         - Automatic low-battery adaptive frame rates
+         ============================================================== */
+      let isAppActive = !document.hidden;
+      let isBatterySaving = false;
+      let bgDataRafId = null;
+      let keyLightingRafId = null;
+      let clockRafId = null;
+      let lastBgDrawTime = 0;
+      let lastKeyLightingTime = 0;
+
+      function safeSetInterval(fn, delay) {
+        return setInterval(() => {
+          if (isAppActive) fn();
+        }, delay);
+      }
+
+      /* ==============================================================
+         1. DYNAMIC BACKGROUND DATA (24 FPS Cap & DPI Clamping)
+         ============================================================== */
+      const dataCanvas = document.getElementById('background-data-canvas');
+      const dataCtx = dataCanvas ? dataCanvas.getContext('2d', { alpha: true }) : null;
+      let dataWidth = 0;
+      let dataHeight = 0;
+      let dataColumns = [];
+      const dataTokens = ['0', '1', '0', '1', 'A', 'F', '7', 'C'];
+
+      function resizeDataCanvas() {
+        if (!dataCanvas || !dataCtx) return;
+        // Clamp DPR to 1.5 max to drastically reduce pixel fill rate on 4K/retina displays
+        const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+        dataWidth = window.innerWidth;
+        dataHeight = window.innerHeight;
+        dataCanvas.width = Math.round(dataWidth * dpr);
+        dataCanvas.height = Math.round(dataHeight * dpr);
+        dataCanvas.style.width = dataWidth + 'px';
+        dataCanvas.style.height = dataHeight + 'px';
+        dataCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        const count = Math.max(12, Math.floor(dataWidth / 56));
+        dataColumns = Array.from({ length: count }, (_, index) => ({
+          x: index * 56 + Math.random() * 20,
+          y: Math.random() * dataHeight,
+          speed: 0.12 + Math.random() * 0.25,
+          length: 4 + Math.floor(Math.random() * 7),
+          phase: Math.random() * 6
+        }));
+      }
+
+      function drawBackgroundData(timestamp) {
+        if (!isAppActive) {
+          bgDataRafId = null;
+          return;
+        }
+        // Throttle to ~24 FPS (~41ms) normally, or ~18 FPS (~55ms) under battery-saving
+        const minInterval = isBatterySaving ? 55 : 41;
+        if (!timestamp || timestamp - lastBgDrawTime >= minInterval) {
+          lastBgDrawTime = timestamp || performance.now();
+          if (dataCtx) {
+            dataCtx.clearRect(0, 0, dataWidth, dataHeight);
+            dataCtx.font = '600 12px Consolas, monospace';
+            dataColumns.forEach(column => {
+              for (let row = 0; row < column.length; row++) {
+                const y = column.y - row * 16;
+                if (y < -16 || y > dataHeight + 16) continue;
+                const alpha = Math.max(0.08, 0.34 - row * 0.045);
+                dataCtx.fillStyle = row === 0
+                  ? 'rgba(92, 236, 255, 0.55)'
+                  : 'rgba(0, 255, 136, ' + alpha + ')';
+                const token = dataTokens[(Math.floor(column.phase + row) + row) % dataTokens.length];
+                dataCtx.fillText(token, column.x, y);
+              }
+              column.y += column.speed;
+              column.phase += 0.015;
+              if (column.y - column.length * 16 > dataHeight) {
+                column.y = -Math.random() * 160;
+                column.length = 4 + Math.floor(Math.random() * 7);
+              }
+            });
+          }
+        }
+        bgDataRafId = requestAnimationFrame(drawBackgroundData);
+      }
+
+      // Debounced window resize handler prevents CPU bursts during resize
+      let resizeTimer = null;
+      function debouncedResize() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+          resizeDataCanvas();
+          if (typeof resizeLightingCanvas === 'function') resizeLightingCanvas();
+        }, 120);
+      }
+      window.addEventListener('resize', debouncedResize, { passive: true });
+      resizeDataCanvas();
+      bgDataRafId = requestAnimationFrame(drawBackgroundData);
+
+      /* ==============================================================
+         2. REAL-TIME CLOCK & SESSION TELEMETRY
          ============================================================== */
       const clockEl = document.getElementById('hud-clock');
-      const wpmEl = document.getElementById('hud-wpm');
       const watchBpmEl = document.getElementById('watch-bpm');
+      const watchTimeEl = document.getElementById('watch-time');
+      const liveIpEl = document.getElementById('live-ip');
+      const modeLiveBtn = document.getElementById('mode-live-btn');
+      const modeSessionBtn = document.getElementById('mode-session-btn');
+      const subCounterEl = document.getElementById('hud-sub-counter');
+      const sessionTelemetryEl = document.getElementById('hud-session-telemetry');
 
-      function updateClock() {
+      let clockMode = 'live'; // 'live' | 'session'
+      let sessionStartTime = Date.now();
+      let lastHiddenAt = 0;
+
+      // Master visibility & lifecycle suspension handler
+      function handleActiveState(active) {
+        if (isAppActive === active) return;
+        isAppActive = active;
+        if (isAppActive) {
+          if (!bgDataRafId) bgDataRafId = requestAnimationFrame(drawBackgroundData);
+          if (!clockRafId) clockRafId = requestAnimationFrame(clockLoop);
+          if (!keyLightingRafId && typeof renderKeyLighting === 'function') {
+            keyLightingRafId = requestAnimationFrame(renderKeyLighting);
+          }
+        }
+      }
+
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'hidden') {
+          lastHiddenAt = Date.now();
+          handleActiveState(false);
+        } else if (document.visibilityState === 'visible') {
+          if (lastHiddenAt && (Date.now() - lastHiddenAt > 1500)) {
+            sessionStartTime = Date.now();
+          }
+          lastHiddenAt = 0;
+          handleActiveState(true);
+        }
+      });
+      window.addEventListener('focus', () => handleActiveState(true));
+      window.addEventListener('blur', () => {
+        // Keeps running smoothly in desktop/wallpaper mode, but respects hidden state
+      });
+
+      function setMode(mode) {
+        clockMode = mode;
+        if (modeLiveBtn) modeLiveBtn.classList.toggle('active', mode === 'live');
+        if (modeSessionBtn) modeSessionBtn.classList.toggle('active', mode === 'session');
+      }
+
+      if (modeLiveBtn) modeLiveBtn.addEventListener('click', () => setMode('live'));
+      if (modeSessionBtn) modeSessionBtn.addEventListener('click', () => setMode('session'));
+      if (sessionTelemetryEl) {
+        sessionTelemetryEl.addEventListener('click', () => {
+          sessionStartTime = Date.now();
+        });
+      }
+
+      // Hotkey: 'S' or 'M' to toggle between Live and Session modes
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 's' || e.key === 'S' || e.key === 'm' || e.key === 'M') {
+          setMode(clockMode === 'live' ? 'session' : 'live');
+        }
+      });
+
+      const segments = {
+        0: 'abcdef', 1: 'bc', 2: 'abdeg', 3: 'abcdg', 4: 'bcfg',
+        5: 'acdfg', 6: 'acdefg', 7: 'abc', 8: 'abcdefg', 9: 'abcdfg'
+      };
+
+      // Build DOM for 8 digits: HH : MM : SS . ms (2 continuous milliseconds digits)
+      const digitEls = [];
+      if (clockEl) {
+        clockEl.innerHTML = '';
+        function createDigit(isMs) {
+          const digit = document.createElement('span');
+          digit.className = 'digital-digit' + (isMs ? ' ms-digit' : '');
+          const segSpans = {};
+          'abcdefg'.split('').forEach(seg => {
+            const span = document.createElement('span');
+            span.className = 'digital-segment ' + seg;
+            digit.appendChild(span);
+            segSpans[seg] = span;
+          });
+          clockEl.appendChild(digit);
+          digitEls.push(segSpans);
+        }
+        function createColon() {
+          const colon = document.createElement('span');
+          colon.className = 'digital-colon';
+          clockEl.appendChild(colon);
+        }
+        function createDot() {
+          const dot = document.createElement('span');
+          dot.className = 'digital-dot';
+          clockEl.appendChild(dot);
+        }
+
+        createDigit(false); // H tens
+        createDigit(false); // H units
+        createColon();
+        createDigit(false); // M tens
+        createDigit(false); // M units
+        createColon();
+        createDigit(false); // S tens
+        createDigit(false); // S units
+        createDot();
+        createDigit(true);  // ms tens
+        createDigit(true);  // ms units
+      }
+
+      let lastSec = -1;
+      let lastBpmTick = 0;
+
+      function renderTelemetry() {
         const now = new Date();
+
+        // 1. Live real-time clock
         const h = String(now.getHours()).padStart(2, '0');
         const m = String(now.getMinutes()).padStart(2, '0');
         const s = String(now.getSeconds()).padStart(2, '0');
-        if (clockEl) clockEl.textContent = h + ':' + m + ':' + s;
+        const ms = String(Math.floor(now.getMilliseconds() / 10)).padStart(2, '0');
 
-        // Subtle variation in typing speed & heart rate
-        if (wpmEl && Math.random() < 0.25) {
-          wpmEl.textContent = (140 + Math.floor(Math.random() * 22)) + ' WPM';
+        // 2. Wrist watch display
+        if (watchTimeEl && now.getSeconds() !== lastSec) {
+          watchTimeEl.textContent = h + ':' + m;
         }
-        if (watchBpmEl && Math.random() < 0.3) {
-          watchBpmEl.textContent = (130 + Math.floor(Math.random() * 14));
+
+        // 3. Screen session duration
+        const sessionElapsed = Math.max(0, Date.now() - sessionStartTime);
+        const sessH = String(Math.min(99, Math.floor(sessionElapsed / 3600000))).padStart(2, '0');
+        const sessM = String(Math.floor((sessionElapsed % 3600000) / 60000)).padStart(2, '0');
+        const sessS = String(Math.floor((sessionElapsed % 60000) / 1000)).padStart(2, '0');
+        const sessMs = String(Math.floor((sessionElapsed % 1000) / 10)).padStart(2, '0');
+
+        // 4. Update primary watch display
+        const activeStr = (clockMode === 'session')
+          ? (sessH + sessM + sessS + sessMs)
+          : (h + m + s + ms);
+
+        if (digitEls.length === 8) {
+          for (let i = 0; i < 8; i++) {
+            const char = activeStr[i] || '0';
+            const pattern = segments[char] || '';
+            const segs = digitEls[i];
+            segs.a.classList.toggle('on', pattern.includes('a'));
+            segs.b.classList.toggle('on', pattern.includes('b'));
+            segs.c.classList.toggle('on', pattern.includes('c'));
+            segs.d.classList.toggle('on', pattern.includes('d'));
+            segs.e.classList.toggle('on', pattern.includes('e'));
+            segs.f.classList.toggle('on', pattern.includes('f'));
+            segs.g.classList.toggle('on', pattern.includes('g'));
+          }
+        }
+
+        // 5. Secondary sub-counter readout
+        if (subCounterEl) {
+          if (clockMode === 'session') {
+            subCounterEl.textContent = 'LIVE TIME: ' + h + ':' + m + ':' + s;
+          } else {
+            subCounterEl.textContent = 'SCREEN ON: ' + sessH + ':' + sessM + ':' + sessS;
+          }
+        }
+
+        // 6. Wrist watch BPM update once a second
+        if (now.getTime() - lastBpmTick > 1000) {
+          lastBpmTick = now.getTime();
+          if (watchBpmEl && Math.random() < 0.3) {
+            watchBpmEl.textContent = (130 + Math.floor(Math.random() * 14));
+          }
+        }
+
+        lastSec = now.getSeconds();
+      }
+
+      // Smooth requestAnimationFrame update for continuous milliseconds (~30 FPS capped)
+      let lastClockFrame = 0;
+      function clockLoop(timestamp) {
+        if (!isAppActive) {
+          clockRafId = null;
+          return;
+        }
+        const minClockInterval = isBatterySaving ? 50 : 33;
+        if (!timestamp || timestamp - lastClockFrame >= minClockInterval) {
+          lastClockFrame = timestamp || performance.now();
+          renderTelemetry();
+        }
+        clockRafId = requestAnimationFrame(clockLoop);
+      }
+      clockRafId = requestAnimationFrame(clockLoop);
+
+      function updateIp() {
+        if (!liveIpEl) return;
+        liveIpEl.textContent = '10.' + (20 + Math.floor(Math.random() * 20)) + '.' +
+          Math.floor(Math.random() * 256) + '.' + (10 + Math.floor(Math.random() * 240));
+      }
+      safeSetInterval(updateIp, 2500);
+      updateIp();
+
+      /* ==============================================================
+         1b. LIVE LAPTOP BATTERY TELEMETRY (Browser Battery Status API)
+         ============================================================== */
+      const batteryPill = document.getElementById('hud-battery-pill');
+      const batteryFill = document.getElementById('battery-fill');
+      const batteryBolt = document.getElementById('battery-bolt');
+      const batteryPct = document.getElementById('battery-pct');
+      const batteryTag = document.getElementById('battery-status-tag');
+      const laptopBatBadge = document.getElementById('screen-laptop-battery');
+
+      function applyBatteryState(level, isCharging) {
+        isBatterySaving = (!isCharging && level != null && !isNaN(level) && level <= 0.20);
+        const pct = Math.round((level != null && !isNaN(level)) ? (level * 100) : 92);
+        if (batteryPct) batteryPct.textContent = pct + '%';
+        if (laptopBatBadge) {
+          laptopBatBadge.textContent = (isCharging ? '⚡ ' : '') + 'BAT: ' + pct + '%';
+          laptopBatBadge.style.color = isCharging ? '#38bdf8' : (pct <= 20 ? '#ff4757' : (pct <= 50 ? '#ffa502' : '#00ff88'));
+        }
+
+        if (batteryFill) {
+          batteryFill.style.width = Math.max(8, Math.min(100, pct)) + '%';
+        }
+
+        if (batteryBolt) {
+          batteryBolt.style.display = isCharging ? 'inline' : 'none';
+        }
+
+        if (batteryTag) {
+          batteryTag.textContent = isCharging ? 'CHG' : (pct >= 99 ? 'FULL' : 'BAT');
+        }
+
+        if (batteryPill) {
+          batteryPill.classList.remove('charging', 'low', 'mid', 'full');
+          if (isCharging) {
+            batteryPill.classList.add('charging');
+            batteryPill.title = 'Laptop Battery: ' + pct + '% (Charging on AC)';
+          } else if (pct <= 20) {
+            batteryPill.classList.add('low');
+            batteryPill.title = 'Laptop Battery: ' + pct + '% (Critical Low - Low Power Mode Active)';
+          } else if (pct <= 50) {
+            batteryPill.classList.add('mid');
+            batteryPill.title = 'Laptop Battery: ' + pct + '% (Discharging)';
+          } else {
+            batteryPill.classList.add('full');
+            batteryPill.title = 'Laptop Battery: ' + pct + '% (Normal)';
+          }
         }
       }
-      setInterval(updateClock, 1000);
-      updateClock();
+
+      function initBatteryTelemetry() {
+        if (typeof navigator !== 'undefined' && 'getBattery' in navigator) {
+          navigator.getBattery().then(battery => {
+            const update = () => applyBatteryState(battery.level, battery.charging);
+            update();
+            battery.addEventListener('levelchange', update);
+            battery.addEventListener('chargingchange', update);
+          }).catch(() => {
+            fallbackBattery();
+          });
+        } else {
+          fallbackBattery();
+        }
+      }
+
+      function fallbackBattery() {
+        applyBatteryState(0.94, true);
+        if (batteryTag) batteryTag.textContent = 'AC';
+        if (batteryPill) batteryPill.title = 'Laptop Power: AC Connected';
+      }
+
+      initBatteryTelemetry();
+
+      /* ==============================================================
+         1c. REAL-TIME DATE & MODERN CYBERSECURITY CALENDAR
+         ============================================================== */
+      const liveDateEl = document.getElementById('hud-live-date');
+      const calToggleBtn = document.getElementById('hud-cal-toggle-btn');
+      const calToggleLabel = document.getElementById('cal-toggle-label');
+      const dateInfoToggle = document.getElementById('hud-date-info-toggle');
+      const cyberCalendarEl = document.getElementById('hud-cyber-calendar');
+      const calMonthTitle = document.getElementById('cal-month-title');
+      const calDaysGrid = document.getElementById('cal-days-grid');
+      const calPrevBtn = document.getElementById('cal-prev-btn');
+      const calNextBtn = document.getElementById('cal-next-btn');
+      const calTodayBtn = document.getElementById('cal-today-btn');
+      const calBriefingLabel = document.getElementById('cal-briefing-label');
+      const calBriefingStatus = document.getElementById('cal-briefing-status');
+      const calBriefingEvent = document.getElementById('cal-briefing-event');
+
+      const DAYS_SHORT = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+      const MONTHS_FULL = [
+        'JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE',
+        'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'
+      ];
+      const MONTHS_SHORT = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+
+      let currentNavDate = new Date();
+      let selectedCalDate = new Date();
+
+      // Real-time date update in HUD date bar
+      function updateLiveDate() {
+        if (!liveDateEl) return;
+        const now = new Date();
+        const dayStr = DAYS_SHORT[now.getDay()];
+        const dateNum = now.getDate();
+        const monthStr = MONTHS_SHORT[now.getMonth()];
+        const yearNum = now.getFullYear();
+        liveDateEl.textContent = dayStr + ', ' + dateNum + ' ' + monthStr + ' ' + yearNum;
+      }
+      updateLiveDate();
+      safeSetInterval(updateLiveDate, 30000);
+
+      // Cybersecurity operations schedule rules
+      function getDayThreatInfo(year, month, day, dayOfWeek) {
+        // Patch Tuesday: 2nd Tuesday of the month
+        if (dayOfWeek === 2 && day >= 8 && day <= 14) {
+          return { type: 'patch', status: 'DEFCON 1', badge: 'PATCH TUESDAY', text: 'CRITICAL: OS KERNEL & SMBv3 SECURITY BULLETINS' };
+        }
+        // Zero-day Hardening Audit: 15th
+        if (day === 15) {
+          return { type: 'zeroday', status: 'DEFCON 2', badge: '0-DAY AUDIT', text: 'AUDIT: C2 INFRASTRUCTURE & ROP CHAIN EVASION HARDENING' };
+        }
+        // Threat Intel & IOC Sync: 1st & 3rd Friday
+        if (dayOfWeek === 5 && (day <= 7 || (day >= 15 && day <= 21))) {
+          return { type: 'intel', status: 'DEFCON 3', badge: 'IOC SYNC', text: 'INTELLIGENCE: GLOBAL BGP & TOR EXIT RELAYS ROTATED' };
+        }
+        // CTF & Red Team Drill: 2nd & 4th Saturday
+        if (dayOfWeek === 6 && ((day >= 8 && day <= 14) || (day >= 22 && day <= 28))) {
+          return { type: 'drill', status: 'DEFCON 2', badge: 'WARGAME', text: 'RED TEAM SIMULATION: ACTIVE PRIVILEGE ESCALATION LAB' };
+        }
+        // Standard operational posture
+        return { type: null, status: 'DEFCON 3', badge: 'ACTIVE', text: 'ROUTINE PATROL: PROMISCUOUS PACKET FILTERING & ENCRYPTION' };
+      }
+
+      function renderCyberCalendar() {
+        if (!calDaysGrid || !calMonthTitle) return;
+        const year = currentNavDate.getFullYear();
+        const month = currentNavDate.getMonth();
+        calMonthTitle.textContent = MONTHS_FULL[month] + ' ' + year;
+
+        const realToday = new Date();
+        const isCurrentMonth = (year === realToday.getFullYear() && month === realToday.getMonth());
+
+        const firstDayIdx = new Date(year, month, 1).getDay();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        const daysInPrevMonth = new Date(year, month, 0).getDate();
+
+        let cellsHtml = '';
+
+        // Previous month filler days
+        for (let i = firstDayIdx - 1; i >= 0; i--) {
+          const d = daysInPrevMonth - i;
+          cellsHtml += '<div class="cal-day-cell other-month" data-prev="true">' + d + '</div>';
+        }
+
+        // Current month days
+        for (let day = 1; day <= daysInMonth; day++) {
+          const dayDate = new Date(year, month, day);
+          const dayOfWeek = dayDate.getDay();
+          const isToday = isCurrentMonth && (day === realToday.getDate());
+          const isSelected = (year === selectedCalDate.getFullYear() && month === selectedCalDate.getMonth() && day === selectedCalDate.getDate());
+          const threat = getDayThreatInfo(year, month, day, dayOfWeek);
+
+          let classList = 'cal-day-cell';
+          if (isToday) classList += ' today';
+          if (isSelected) classList += ' selected';
+
+          let dotHtml = '';
+          if (threat.type) {
+            dotHtml = '<span class="cal-event-dot ' + threat.type + '" title="' + threat.badge + '"></span>';
+          }
+
+          cellsHtml += '<div class="' + classList + '" data-day="' + day + '">' + day + dotHtml + '</div>';
+        }
+
+        // Next month filler days (fill to 35 or 42 cells total)
+        const totalRendered = firstDayIdx + daysInMonth;
+        const nextFillerCount = (totalRendered <= 35 ? 35 : 42) - totalRendered;
+        for (let n = 1; n <= nextFillerCount; n++) {
+          cellsHtml += '<div class="cal-day-cell other-month" data-next="true">' + n + '</div>';
+        }
+
+        calDaysGrid.innerHTML = cellsHtml;
+
+        // Attach click listeners to current month days
+        calDaysGrid.querySelectorAll('.cal-day-cell:not(.other-month)').forEach(cell => {
+          cell.addEventListener('click', () => {
+            const d = parseInt(cell.getAttribute('data-day'), 10);
+            selectedCalDate = new Date(year, month, d);
+            renderCyberCalendar();
+            updateBriefing(year, month, d);
+          });
+        });
+
+        // Update briefing for current selection
+        updateBriefing(selectedCalDate.getFullYear(), selectedCalDate.getMonth(), selectedCalDate.getDate());
+      }
+
+      function updateBriefing(y, m, d) {
+        if (!calBriefingLabel || !calBriefingStatus || !calBriefingEvent) return;
+        const targetDate = new Date(y, m, d);
+        const dayOfWeek = targetDate.getDay();
+        const threat = getDayThreatInfo(y, m, d, dayOfWeek);
+        const dateStr = d + ' ' + MONTHS_SHORT[m] + (y !== new Date().getFullYear() ? (' ' + y) : '');
+
+        calBriefingLabel.textContent = dateStr + ' // POSTURE:';
+        calBriefingStatus.textContent = threat.status;
+        calBriefingStatus.style.borderColor = threat.type === 'patch' ? '#ff2a4b' : (threat.type === 'drill' ? '#00ff88' : '#00e5ff');
+        calBriefingStatus.style.color = threat.type === 'patch' ? '#ff6b81' : (threat.type === 'drill' ? '#00ff88' : '#8defff');
+        calBriefingEvent.textContent = '[' + threat.badge + '] ' + threat.text;
+      }
+
+      // Calendar Navigation & Toggle Handlers
+      if (calPrevBtn) {
+        calPrevBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          currentNavDate.setMonth(currentNavDate.getMonth() - 1);
+          renderCyberCalendar();
+        });
+      }
+      if (calNextBtn) {
+        calNextBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          currentNavDate.setMonth(currentNavDate.getMonth() + 1);
+          renderCyberCalendar();
+        });
+      }
+      if (calTodayBtn) {
+        calTodayBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          currentNavDate = new Date();
+          selectedCalDate = new Date();
+          renderCyberCalendar();
+        });
+      }
+
+      function toggleCalendar() {
+        if (!cyberCalendarEl) return;
+        const isCollapsed = cyberCalendarEl.classList.toggle('cal-collapsed');
+        if (calToggleLabel) {
+          calToggleLabel.textContent = isCollapsed ? 'CALENDAR ▼' : 'CALENDAR ▲';
+        }
+        if (calToggleBtn) {
+          calToggleBtn.setAttribute('aria-expanded', String(!isCollapsed));
+        }
+      }
+
+      if (calToggleBtn) calToggleBtn.addEventListener('click', toggleCalendar);
+      if (dateInfoToggle) dateInfoToggle.addEventListener('click', toggleCalendar);
+
+      // Initial calendar render
+      renderCyberCalendar();
 
       /* ==============================================================
          2. SCREEN A: TOP-LEFT SYSTEM REGISTERS & EQUALIZER
@@ -625,7 +2457,8 @@
           b.style.height = (20 + Math.random() * 75) + '%';
         });
       }
-      setInterval(updateRegisters, 150);
+      safeSetInterval(updateRegisters, 280);
+      updateRegisters();
 
       /* ==============================================================
          3. SCREEN B: MAIN-LEFT GDB DISASSEMBLY TRACE (FAST SCROLL)
@@ -649,7 +2482,8 @@
         if (disasmLines.length > 12) disasmLines.shift();
         disasmEl.innerHTML = disasmLines.join('<br>') + ' <span class="cursor-blink"></span>';
       }
-      setInterval(updateDisasm, 110);
+      safeSetInterval(updateDisasm, 220);
+      updateDisasm();
 
       /* ==============================================================
          4. SCREEN C: CENTER EXPLOIT CODE & ATTACK TERMINAL
@@ -688,7 +2522,8 @@
         }
       }
       // Code types rapidly in sync with hacker fingers
-      setInterval(typeCode, 42);
+      safeSetInterval(typeCode, 75);
+      typeCode();
 
       // Attack Console Feed
       const attackEl = document.getElementById('screen-attack-content');
@@ -711,7 +2546,8 @@
         if (attackLines.length > 3) attackLines.shift();
         attackEl.innerHTML = attackLines.join('<br>') + ' <span class="cursor-blink"></span>';
       }
-      setInterval(updateAttack, 280);
+      safeSetInterval(updateAttack, 400);
+      updateAttack();
 
       // Hex Memory Stream
       const hexEl = document.getElementById('screen-hex-content');
@@ -728,7 +2564,8 @@
         }
         hexEl.innerHTML = lines.join('<br>');
       }
-      setInterval(updateHex, 90);
+      safeSetInterval(updateHex, 180);
+      updateHex();
 
       /* ==============================================================
          5. SCREEN D: LAPTOP SCREEN PACKET SNIFFER
@@ -745,13 +2582,16 @@
         if (packetLines.length > 5) packetLines.shift();
         packetEl.innerHTML = packetLines.join('<br>');
       }
-      setInterval(updatePackets, 140);
+      safeSetInterval(updatePackets, 320);
+      updatePackets();
 
       /* ==============================================================
          6. SCREEN E: FLOATING CYAN HOLOGRAPHIC WAVEFORM
          ============================================================== */
       const holoCanvas = document.getElementById('holo-wave-canvas');
       const holoCtx = holoCanvas ? holoCanvas.getContext('2d') : null;
+      const holoConfidenceEl = document.getElementById('holo-confidence');
+      const holoNodeEl = document.getElementById('holo-node');
       let holoPhase = 0;
 
       function renderHoloWave() {
@@ -776,7 +2616,16 @@
         holoCtx.shadowBlur = 0;
         holoPhase += 0.15;
       }
-      setInterval(renderHoloWave, 40);
+      safeSetInterval(renderHoloWave, 66);
+      renderHoloWave();
+      safeSetInterval(function () {
+        if (holoConfidenceEl) {
+          holoConfidenceEl.textContent = (98.8 + Math.random() * 1.1).toFixed(1) + '%';
+        }
+        if (holoNodeEl) {
+          holoNodeEl.textContent = Math.floor(Math.random() * 256).toString(2).padStart(8, '0');
+        }
+      }, 1000);
 
       /* ==============================================================
          7. HACKER FINGERS CONTINUOUSLY MOVING ON KEYBOARD
@@ -793,7 +2642,6 @@
           keyCanvas.height = handsCanvas.offsetHeight;
         }
       }
-      window.addEventListener('resize', resizeLightingCanvas);
       resizeLightingCanvas();
 
       // Load 8-frame seamless typing spritesheet
@@ -804,9 +2652,9 @@
       const FRAME_HEIGHT = 170;
       const TOTAL_FRAMES = 8;
       let currentFrame = 0;
+      let typingStarted = false;
 
       // Key illumination coordinates corresponding to finger strike in each frame
-      // Frame coordinates in (280 x 170) space
       const frameKeyStrikes = [
         [], // Frame 0: rest
         [{ x: 102, y: 102, color: '0, 255, 170' }], // Frame 1: Left Index
@@ -819,9 +2667,18 @@
       ];
 
       let keyLightFlares = [];
+      const keycaps = [
+        [36, 112, 22, 15], [62, 108, 22, 15], [88, 104, 22, 15],
+        [116, 108, 22, 15], [144, 112, 22, 15], [172, 108, 22, 15],
+        [76, 132, 30, 14], [112, 132, 30, 14], [148, 132, 30, 14]
+      ];
 
       // Continuous typing animation cycle (human high-speed typing cadence: 55-80ms per frame)
       function advanceTyping() {
+        if (!isAppActive) {
+          setTimeout(advanceTyping, 120);
+          return;
+        }
         currentFrame = (currentFrame + 1) % TOTAL_FRAMES;
 
         // Render current hands frame
@@ -850,208 +2707,853 @@
         }
 
         // Next stroke with realistic keystroke timing variance (135 - 180 WPM)
-        const nextDelay = 45 + Math.random() * 45;
+        const nextDelay = isBatterySaving ? (65 + Math.random() * 50) : (45 + Math.random() * 45);
         setTimeout(advanceTyping, nextDelay);
       }
 
-      handsSprite.onload = function () {
-        advanceTyping();
-      };
-
-      // If image is already cached
-      if (handsSprite.complete) {
+      function startTyping() {
+        if (typingStarted) return;
+        typingStarted = true;
         advanceTyping();
       }
 
-      // Render glowing mechanical keycaps rebound pulses
-      function renderKeyLighting() {
-        if (!keyCtx || !keyCanvas.width) {
-          requestAnimationFrame(renderKeyLighting);
+      handsSprite.onload = startTyping;
+      if (handsSprite.complete && handsSprite.naturalWidth > 0) startTyping();
+
+      // Render glowing mechanical keycaps rebound pulses (30 FPS capped)
+      function renderKeyLighting(timestamp) {
+        if (!isAppActive) {
+          keyLightingRafId = null;
           return;
         }
 
-        keyCtx.clearRect(0, 0, keyCanvas.width, keyCanvas.height);
-        const scaleX = keyCanvas.width / FRAME_WIDTH;
-        const scaleY = keyCanvas.height / FRAME_HEIGHT;
+        const minKeyInterval = isBatterySaving ? 50 : 33;
+        if (!timestamp || timestamp - lastKeyLightingTime >= minKeyInterval) {
+          lastKeyLightingTime = timestamp || performance.now();
 
-        for (let i = keyLightFlares.length - 1; i >= 0; i--) {
-          const k = keyLightFlares[i];
-          k.radius += 1.2;
-          k.alpha -= 0.08;
+          if (keyCtx && keyCanvas.width) {
+            keyCtx.clearRect(0, 0, keyCanvas.width, keyCanvas.height);
+            const scaleX = keyCanvas.width / FRAME_WIDTH;
+            const scaleY = keyCanvas.height / FRAME_HEIGHT;
+            keyCtx.lineWidth = 1;
+            keycaps.forEach((key, index) => {
+              const x = key[0] * scaleX;
+              const y = key[1] * scaleY;
+              const width = key[2] * scaleX;
+              const height = key[3] * scaleY;
+              const pressed = frameKeyStrikes[currentFrame].some(strike =>
+                Math.abs(strike.x - (key[0] + key[2] / 2)) < 22 &&
+                Math.abs(strike.y - (key[1] + key[3] / 2)) < 18
+              );
+              const lift = pressed ? 1.5 : Math.sin(Date.now() / 700 + index) * 0.3;
+              keyCtx.fillStyle = pressed ? 'rgba(0, 229, 255, 0.24)' : 'rgba(0, 229, 255, 0.06)';
+              keyCtx.strokeStyle = pressed ? 'rgba(184, 247, 255, 0.8)' : 'rgba(0, 229, 255, 0.18)';
+              keyCtx.fillRect(x, y + lift, width, height);
+              keyCtx.strokeRect(x, y + lift, width, height);
+            });
 
-          if (k.alpha <= 0) {
-            keyLightFlares.splice(i, 1);
-            continue;
+            for (let i = keyLightFlares.length - 1; i >= 0; i--) {
+              const k = keyLightFlares[i];
+              k.radius += 1.2;
+              k.alpha -= 0.08;
+
+              if (k.alpha <= 0) {
+                keyLightFlares.splice(i, 1);
+                continue;
+              }
+
+              const rx = k.x * scaleX;
+              const ry = k.y * scaleY;
+              const rRadius = k.radius * scaleX;
+
+              const grad = keyCtx.createRadialGradient(rx, ry, 1, rx, ry, rRadius);
+              grad.addColorStop(0, 'rgba(' + k.color + ', ' + k.alpha + ')');
+              grad.addColorStop(0.5, 'rgba(' + k.color + ', ' + (k.alpha * 0.5) + ')');
+              grad.addColorStop(1, 'rgba(' + k.color + ', 0)');
+
+              keyCtx.fillStyle = grad;
+              keyCtx.beginPath();
+              keyCtx.arc(rx, ry, rRadius, 0, Math.PI * 2);
+              keyCtx.fill();
+            }
           }
-
-          const rx = k.x * scaleX;
-          const ry = k.y * scaleY;
-          const rRadius = k.radius * scaleX;
-
-          const grad = keyCtx.createRadialGradient(rx, ry, 1, rx, ry, rRadius);
-          grad.addColorStop(0, 'rgba(' + k.color + ', ' + k.alpha + ')');
-          grad.addColorStop(0.5, 'rgba(' + k.color + ', ' + (k.alpha * 0.5) + ')');
-          grad.addColorStop(1, 'rgba(' + k.color + ', 0)');
-
-          keyCtx.fillStyle = grad;
-          keyCtx.beginPath();
-          keyCtx.arc(rx, ry, rRadius, 0, Math.PI * 2);
-          keyCtx.fill();
         }
 
-        requestAnimationFrame(renderKeyLighting);
+        keyLightingRafId = requestAnimationFrame(renderKeyLighting);
       }
-      renderKeyLighting();
+      keyLightingRafId = requestAnimationFrame(renderKeyLighting);
 
       /* ==============================================================
-         8. FULL-SCREEN BINARY & ENGLISH MATRIX RAIN
+         7. DYNAMIC LEFT-SIDE POP-UP WORK SCREENS (WORLD MAP, SATCOM, MEMORY EXPLOIT)
          ============================================================== */
-      const mCanvas = document.getElementById('matrix-canvas');
-      const mCtx = mCanvas.getContext('2d');
-      if (!mCtx) return;
+      const popupTopEl = document.getElementById('popup-slot-top');
+      const popupBottomEl = document.getElementById('popup-slot-bottom');
+      const popupTopTitle = document.getElementById('popup-top-title');
+      const popupBottomTitle = document.getElementById('popup-bottom-title');
+      const popupTopBadge = document.getElementById('popup-top-badge');
+      const popupBottomBadge = document.getElementById('popup-bottom-badge');
+      const popupTopBody = document.getElementById('popup-top-body');
+      const popupBottomBody = document.getElementById('popup-bottom-body');
 
-      const BINARY_CHARS = ['0', '1', '0', '1', '0', '1', '1', '0'];
-      const HEX_CHARS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'];
-      const SYMBOLS = ['$', '#', '*', '+', '-', '<', '>', '/', '_', ':', '|', '[', ']'];
-      const CYBER_WORDS = [
-        'ROOT', 'ACCESS', 'BREACH', 'CIPHER', 'KERNEL', 'PAYLOAD',
-        'DECRYPT', 'EXPLOIT', 'BUFFER', 'OVERFLOW', 'SOCKET', 'PACKET',
-        'INTRUSION', 'FIREWALL', 'SECURITY', 'DBIT', 'AUTH', 'HASH',
-        'SHA256', 'ZERO_DAY', 'STEALTH', 'SSH', 'PORT', 'NODE', 'VULN'
+      const MAP_HUBS = [
+        { name: 'US-WEST (SF)', x: 48, y: 40, ip: '198.51.100.24' },
+        { name: 'US-EAST (DC)', x: 65, y: 38, ip: '192.0.2.88' },
+        { name: 'EU-WEST (LON)', x: 110, y: 28, ip: '185.220.101.5' },
+        { name: 'EU-CENTRAL (FRA)', x: 122, y: 32, ip: '194.26.29.112' },
+        { name: 'ME (DUB)', x: 154, y: 52, ip: '185.191.171.6' },
+        { name: 'ASIA-SOUTH (MUM)', x: 174, y: 58, ip: '103.21.244.0' },
+        { name: 'ASIA-EAST (SHA)', x: 202, y: 44, ip: '45.154.255.8' },
+        { name: 'ASIA-PAC (TYO)', x: 226, y: 40, ip: '133.242.18.1' },
+        { name: 'ASIA-SE (SIN)', x: 198, y: 70, ip: '118.189.200.12' },
+        { name: 'OC (SYD)', x: 228, y: 94, ip: '139.130.4.5' },
+        { name: 'SA (SAO)', x: 62, y: 88, ip: '177.18.200.41' }
       ];
 
-      const fontSize = 15;
-      const colSpacing = 22; // Clean spacing between columns for high legibility
-      let mWidth = 0;
-      let mHeight = 0;
-      let columns = 0;
-      let mDrops = [];
-      let mActiveWords = []; // Holds { word: 'ROOT' } or null
+      const THREAT_TYPES = [
+        'BGP_HIJACK', 'TCP_SYN_FLOOD', 'CVE-2024-38077', 'SSH_BRUTE',
+        'TLS_INTERCEPT', 'DNS_POISON', 'KERNEL_PANIC', 'ZERO_DAY_STAGE2'
+      ];
 
-      function resizeMatrix() {
+      let mapAnimId = null;
+      let satcomAnimId = null;
+      let exploitInterval = null;
+      let packetInterval = null;
+      let nmapInterval = null;
+      let hashcatInterval = null;
+      let cfgInterval = null;
+      let botnetInterval = null;
+
+      // --- SCREEN 1: WORLD MAP ---
+      function mountWorldMap(container) {
+        container.innerHTML = `
+          <div class="world-map-wrap">
+            <svg class="world-map-svg" viewBox="0 0 260 114" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="map-grid-grad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#00e5ff" stop-opacity="0.12"/>
+                  <stop offset="100%" stop-color="#00ff88" stop-opacity="0.05"/>
+                </linearGradient>
+              </defs>
+              <!-- Latitude/Longitude Tactical Gridlines -->
+              <line x1="0" y1="28" x2="260" y2="28" stroke="rgba(0,229,255,0.12)" stroke-dasharray="2,3"/>
+              <line x1="0" y1="57" x2="260" y2="57" stroke="rgba(0,229,255,0.22)" stroke-dasharray="4,2"/>
+              <line x1="0" y1="85" x2="260" y2="85" stroke="rgba(0,229,255,0.12)" stroke-dasharray="2,3"/>
+              <line x1="65" y1="0" x2="65" y2="114" stroke="rgba(0,229,255,0.12)" stroke-dasharray="2,3"/>
+              <line x1="130" y1="0" x2="130" y2="114" stroke="rgba(0,229,255,0.22)" stroke-dasharray="4,2"/>
+              <line x1="195" y1="0" x2="195" y2="114" stroke="rgba(0,229,255,0.12)" stroke-dasharray="2,3"/>
+
+              <!-- Vector World Continents -->
+              <!-- North America -->
+              <path d="M 18,22 Q 28,14 44,18 Q 62,16 68,28 Q 65,40 58,50 Q 52,56 42,54 Q 35,46 22,42 Q 14,32 18,22 Z" fill="rgba(0, 229, 255, 0.14)" stroke="rgba(0, 229, 255, 0.45)" stroke-width="0.8"/>
+              <path d="M 72,10 Q 86,8 84,18 Q 74,22 72,10 Z" fill="rgba(0, 229, 255, 0.12)" stroke="rgba(0, 229, 255, 0.35)" stroke-width="0.6"/>
+              <!-- South America -->
+              <path d="M 50,60 Q 64,62 66,74 Q 60,92 54,106 Q 48,106 46,92 Q 42,76 50,60 Z" fill="rgba(0, 229, 255, 0.14)" stroke="rgba(0, 229, 255, 0.45)" stroke-width="0.8"/>
+              <!-- Europe -->
+              <path d="M 106,24 Q 124,18 132,24 Q 128,34 118,36 Q 108,34 106,24 Z" fill="rgba(0, 255, 136, 0.14)" stroke="rgba(0, 255, 136, 0.45)" stroke-width="0.8"/>
+              <path d="M 116,12 Q 124,10 126,18 Q 120,20 116,12 Z" fill="rgba(0, 255, 136, 0.12)" stroke="rgba(0, 255, 136, 0.35)" stroke-width="0.6"/>
+              <!-- Africa -->
+              <path d="M 108,40 Q 134,38 138,50 Q 134,72 126,92 Q 118,92 114,72 Q 106,62 108,40 Z" fill="rgba(0, 255, 136, 0.14)" stroke="rgba(0, 255, 136, 0.45)" stroke-width="0.8"/>
+              <!-- Asia -->
+              <path d="M 134,18 Q 175,14 212,18 Q 220,32 208,44 Q 194,48 182,58 Q 168,56 160,45 Q 148,42 134,18 Z" fill="rgba(0, 229, 255, 0.14)" stroke="rgba(0, 229, 255, 0.45)" stroke-width="0.8"/>
+              <!-- India -->
+              <path d="M 166,48 Q 178,50 176,64 Q 168,68 164,54 Z" fill="rgba(0, 229, 255, 0.14)" stroke="rgba(0, 229, 255, 0.45)" stroke-width="0.8"/>
+              <!-- Japan -->
+              <path d="M 224,34 Q 228,32 227,42 Q 223,44 224,34 Z" fill="rgba(0, 229, 255, 0.18)" stroke="rgba(0, 229, 255, 0.55)" stroke-width="0.8"/>
+              <!-- Australia -->
+              <path d="M 206,80 Q 232,78 234,92 Q 222,100 208,96 Q 202,86 206,80 Z" fill="rgba(0, 255, 136, 0.14)" stroke="rgba(0, 255, 136, 0.45)" stroke-width="0.8"/>
+
+              <!-- Hub Nodes -->
+              ${MAP_HUBS.map(h => `
+                <circle cx="${h.x}" cy="${h.y}" r="2" fill="#00e5ff" opacity="0.95"/>
+                <circle cx="${h.x}" cy="${h.y}" r="4" fill="none" stroke="#00ff88" stroke-width="0.6" opacity="0.6"/>
+              `).join('')}
+            </svg>
+            <canvas id="world-map-canvas" class="world-map-canvas"></canvas>
+          </div>
+          <div id="world-map-log" class="world-threat-log">
+            <div><span class="hl-cyan">[MONITOR]</span> GLOBAL ATTACK TELEMETRY: ACTIVE</div>
+            <div><span class="hl-red">INTERCEPTING:</span> APT-41 / BGP_HIJACK (42.8 Gbps)</div>
+          </div>
+        `;
+
+        const canvas = document.getElementById('world-map-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
         const dpr = Math.min(window.devicePixelRatio || 1, 2);
-        mWidth = window.innerWidth;
-        mHeight = window.innerHeight;
-        mCanvas.width = Math.round(mWidth * dpr);
-        mCanvas.height = Math.round(mHeight * dpr);
-        mCanvas.style.width = mWidth + 'px';
-        mCanvas.style.height = mHeight + 'px';
-        mCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        canvas.width = Math.round(canvas.clientWidth * dpr);
+        canvas.height = Math.round(canvas.clientHeight * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-        columns = Math.floor(mWidth / colSpacing);
-        mDrops = [];
-        mActiveWords = [];
-        for (let i = 0; i < columns; i++) {
-          mDrops[i] = Math.floor(Math.random() * -45);
-          mActiveWords[i] = null;
+        const arcs = [];
+        const shockwaves = [];
+        let lastArcTime = 0;
+        const logEl = document.getElementById('world-map-log');
+        const logLines = [
+          '<span class="hl-cyan">[SYSTEM]</span> BGP INTERCEPT ACTIVE (PORTS 443, 8080)',
+          '<span class="hl-green">[OK]</span> 194.26.29.112 -> 10.24.81.106 | TCP SYN | 1.2M pps'
+        ];
+
+        function createArc() {
+          const sIdx = Math.floor(Math.random() * MAP_HUBS.length);
+          let dIdx = Math.floor(Math.random() * MAP_HUBS.length);
+          while (dIdx === sIdx) dIdx = Math.floor(Math.random() * MAP_HUBS.length);
+          const src = MAP_HUBS[sIdx];
+          const dst = MAP_HUBS[dIdx];
+          const threat = THREAT_TYPES[Math.floor(Math.random() * THREAT_TYPES.length)];
+          const scaleW = canvas.clientWidth / 260;
+          const scaleH = canvas.clientHeight / 114;
+
+          const sx = src.x * scaleW;
+          const sy = src.y * scaleH;
+          const dx = dst.x * scaleW;
+          const dy = dst.y * scaleH;
+          const midX = (sx + dx) / 2;
+          const midY = Math.min(sy, dy) - (20 + Math.random() * 25);
+
+          arcs.push({
+            sx, sy, dx, dy, midX, midY,
+            progress: 0,
+            speed: 0.016 + Math.random() * 0.018,
+            color: Math.random() < 0.35 ? '#ff2a4b' : (Math.random() < 0.65 ? '#00e5ff' : '#00ff88'),
+            src, dst, threat
+          });
         }
-      }
 
-      function getRandomToken() {
-        const r = Math.random();
-        if (r < 0.74) return BINARY_CHARS[Math.floor(Math.random() * BINARY_CHARS.length)];
-        if (r < 0.88) return HEX_CHARS[Math.floor(Math.random() * HEX_CHARS.length)];
-        return SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
-      }
-
-      function drawMatrix() {
-        // Soft dark fade trail - eliminates eye strain and bloom
-        mCtx.fillStyle = 'rgba(1, 4, 7, 0.20)';
-        mCtx.fillRect(0, 0, mWidth, mHeight);
-        mCtx.font = 'bold ' + fontSize + "px 'Share Tech Mono', 'JetBrains Mono', 'Consolas', monospace";
-
-        for (let i = 0; i < columns; i++) {
-          const x = i * colSpacing;
-          const dropRow = mDrops[i];
-          const y = dropRow * fontSize;
-
-          // Occasionally trigger a distinct, readable cybersecurity word
-          if (!mActiveWords[i] && Math.random() < 0.012 && dropRow > 0) {
-            const w = CYBER_WORDS[Math.floor(Math.random() * CYBER_WORDS.length)];
-            mActiveWords[i] = w;
+        let lastMapFrame = 0;
+        function animLoop(timestamp) {
+          if (!isAppActive) {
+            mapAnimId = requestAnimationFrame(animLoop);
+            return;
           }
 
-          if (mActiveWords[i]) {
-            // RENDER DISTINCT READABLE ENGLISH WORD DESCENDING VERTICALLY
-            const word = mActiveWords[i];
-            const wLen = word.length;
+          const minMapInterval = isBatterySaving ? 50 : 33;
+          if (!timestamp || timestamp - lastMapFrame >= minMapInterval) {
+            lastMapFrame = timestamp || performance.now();
+            ctx.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
 
-            for (let cIdx = 0; cIdx < wLen; cIdx++) {
-              const charRow = dropRow - (wLen - 1 - cIdx);
-              const charY = charRow * fontSize;
-
-              if (charY >= 0 && charY <= mHeight + fontSize) {
-                const isWordHead = (cIdx === wLen - 1);
-                // Clear, comfortable cyber cyan - zero blinding glare
-                mCtx.fillStyle = isWordHead ? '#38bdf8' : '#0ea5e9';
-                mCtx.shadowColor = 'rgba(56, 189, 248, 0.45)';
-                mCtx.shadowBlur = 3;
-                mCtx.fillText(word[cIdx], x, charY);
-                mCtx.shadowBlur = 0;
-              }
+            const now = Date.now();
+            if (now - lastArcTime > 1400) {
+              lastArcTime = now;
+              createArc();
             }
 
-            // Soft trailing binary trail above the word
-            for (let t = 1; t <= 6; t++) {
-              const trailRow = dropRow - wLen - t;
-              const trailY = trailRow * fontSize;
-              if (trailY >= 0 && trailY <= mHeight) {
-                const alpha = (7 - t) / 7 * 0.35;
-                mCtx.fillStyle = 'rgba(16, 185, 129, ' + alpha + ')';
-                mCtx.fillText(getRandomToken(), x, trailY);
-              }
-            }
-          } else {
-            // RENDER EYE-FRIENDLY MUTED BINARY STREAM
-            if (y >= -fontSize && y <= mHeight + fontSize) {
-              // Gentle mint lead character (NOT harsh white)
-              mCtx.fillStyle = '#6ee7b7';
-              mCtx.shadowColor = 'rgba(52, 211, 153, 0.4)';
-              mCtx.shadowBlur = 2;
-              mCtx.fillText(getRandomToken(), x, y);
-              mCtx.shadowBlur = 0;
+            // Render arcs
+            for (let i = arcs.length - 1; i >= 0; i--) {
+              const arc = arcs[i];
+              arc.progress += arc.speed;
 
-              // Soft emerald trail 1
-              if (dropRow > 1) {
-                mCtx.fillStyle = 'rgba(16, 185, 129, 0.65)';
-                mCtx.fillText(getRandomToken(), x, (dropRow - 1) * fontSize);
-              }
+              // Draw trajectory path
+              ctx.beginPath();
+              ctx.moveTo(arc.sx, arc.sy);
+              ctx.quadraticCurveTo(arc.midX, arc.midY, arc.dx, arc.dy);
+              ctx.strokeStyle = arc.color === '#ff2a4b' ? 'rgba(255, 42, 75, 0.28)' : 'rgba(0, 229, 255, 0.22)';
+              ctx.lineWidth = 1;
+              ctx.setLineDash([2, 3]);
+              ctx.stroke();
+              ctx.setLineDash([]);
 
-              // Soft cyan trail 2
-              if (dropRow > 2) {
-                mCtx.fillStyle = 'rgba(14, 165, 233, 0.45)';
-                mCtx.fillText(getRandomToken(), x, (dropRow - 2) * fontSize);
-              }
+              // Draw moving projectile
+              const t = Math.min(1, arc.progress);
+              const px = (1 - t) * (1 - t) * arc.sx + 2 * (1 - t) * t * arc.midX + t * t * arc.dx;
+              const py = (1 - t) * (1 - t) * arc.sy + 2 * (1 - t) * t * arc.midY + t * t * arc.dy;
 
-              // Fading tail (dim green)
-              for (let t = 3; t < 10; t++) {
-                if (dropRow > t) {
-                  const alpha = (10 - t) / 10 * 0.28;
-                  mCtx.fillStyle = 'rgba(5, 150, 105, ' + alpha + ')';
-                  mCtx.fillText(getRandomToken(), x, (dropRow - t) * fontSize);
+              ctx.beginPath();
+              ctx.arc(px, py, 2.5, 0, Math.PI * 2);
+              ctx.fillStyle = arc.color;
+              ctx.shadowColor = arc.color;
+              ctx.shadowBlur = 6;
+              ctx.fill();
+              ctx.shadowBlur = 0;
+
+              if (arc.progress >= 1) {
+                shockwaves.push({
+                  x: arc.dx, y: arc.dy,
+                  radius: 1, maxRadius: 10,
+                  color: arc.color, alpha: 0.95
+                });
+
+                if (logEl) {
+                  const nowTime = new Date().toTimeString().split(' ')[0];
+                  logLines.unshift(
+                    '<span>[' + nowTime + '] <span class="hl-red">' + arc.src.name + '</span> -> <span class="hl-cyan">' +
+                    arc.dst.name + '</span> | ' + arc.threat + '</span>'
+                  );
+                  if (logLines.length > 3) logLines.pop();
+                  logEl.innerHTML = logLines.join('');
                 }
+                arcs.splice(i, 1);
               }
+            }
+
+            // Render shockwaves
+            for (let i = shockwaves.length - 1; i >= 0; i--) {
+              const sw = shockwaves[i];
+              sw.radius += 0.6;
+              sw.alpha -= 0.055;
+              if (sw.alpha <= 0) {
+                shockwaves.splice(i, 1);
+                continue;
+              }
+              ctx.beginPath();
+              ctx.arc(sw.x, sw.y, sw.radius, 0, Math.PI * 2);
+              ctx.strokeStyle = sw.color;
+              ctx.lineWidth = 1;
+              ctx.globalAlpha = sw.alpha;
+              ctx.stroke();
+              ctx.globalAlpha = 1;
             }
           }
 
-          // Reset column when past bottom of viewport
-          const resetThreshold = mActiveWords[i] ? (mHeight / fontSize + mActiveWords[i].length + 5) : (mHeight / fontSize + 10);
-          if (dropRow > resetThreshold && Math.random() > 0.97) {
-            mDrops[i] = Math.floor(Math.random() * -25);
-            mActiveWords[i] = null;
-          }
-          mDrops[i]++;
+          mapAnimId = requestAnimationFrame(animLoop);
         }
-
-        // Smooth 52ms cadence - relaxed and pleasant on the eyes
-        setTimeout(function () {
-          requestAnimationFrame(drawMatrix);
-        }, 52);
+        createArc();
+        createArc();
+        animLoop();
       }
 
-      window.addEventListener('resize', resizeMatrix, { passive: true });
-      resizeMatrix();
-      drawMatrix();
+      // --- SCREEN 2: SATCOM ORBITAL RADAR ---
+      function mountSatcom(container) {
+        container.innerHTML = `
+          <div class="satcom-grid">
+            <div class="satcom-radar">
+              <div class="satcom-sweep"></div>
+              <div class="satcom-orbit-ring"></div>
+              <div class="satcom-blip"></div>
+              <div style="position:absolute; top:50%; left:0; right:0; height:1px; background:rgba(0,229,255,0.25);"></div>
+              <div style="position:absolute; left:50%; top:0; bottom:0; width:1px; background:rgba(0,229,255,0.25);"></div>
+            </div>
+            <div class="satcom-stats">
+              <div>SAT: <strong style="color:#00ff88;">USA-245 [NROL-65]</strong></div>
+              <div>ORBIT: <span style="color:#38bdf8;">LEO 582 KM (97.8°)</span></div>
+              <div>AZ: <span id="sat-az">142.84°</span> | EL: <span id="sat-el">48.20°</span></div>
+              <div>DOPPLER: <span id="sat-dop" style="color:#ffa502;">-2.48 kHz</span></div>
+              <div>SNR: <span style="color:#00ff88;">+28.4 dB [LOCKED]</span></div>
+            </div>
+          </div>
+          <canvas id="satcom-waterfall" class="satcom-waterfall"></canvas>
+        `;
+
+        const wfCanvas = document.getElementById('satcom-waterfall');
+        const azEl = document.getElementById('sat-az');
+        const elEl = document.getElementById('sat-el');
+        const dopEl = document.getElementById('sat-dop');
+        if (!wfCanvas) return;
+
+        const ctx = wfCanvas.getContext('2d');
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        wfCanvas.width = Math.round(wfCanvas.clientWidth * dpr);
+        wfCanvas.height = Math.round(wfCanvas.clientHeight * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+        let azVal = 142.84;
+        let elVal = 48.20;
+        let dopVal = -2.48;
+        let lastSatcomFrame = 0;
+
+        function satcomLoop(timestamp) {
+          if (!isAppActive) {
+            satcomAnimId = requestAnimationFrame(satcomLoop);
+            return;
+          }
+
+          const minSatcomInterval = isBatterySaving ? 55 : 38;
+          if (!timestamp || timestamp - lastSatcomFrame >= minSatcomInterval) {
+            lastSatcomFrame = timestamp || performance.now();
+
+            // Telemetry tick
+            azVal = (azVal + 0.02) % 360;
+            elVal = 45 + Math.sin(Date.now() / 1500) * 4;
+            dopVal = -2.5 + Math.sin(Date.now() / 1000) * 0.4;
+            if (azEl) azEl.textContent = azVal.toFixed(2) + '°';
+            if (elEl) elEl.textContent = elVal.toFixed(2) + '°';
+            if (dopEl) dopEl.textContent = dopVal.toFixed(2) + ' kHz';
+
+            // Waterfall RF spectrum
+            const w = wfCanvas.clientWidth;
+            const h = wfCanvas.clientHeight;
+            ctx.fillStyle = 'rgba(0, 5, 10, 0.28)';
+            ctx.fillRect(0, 0, w, h);
+
+            const bars = 28;
+            const barW = w / bars;
+            for (let b = 0; b < bars; b++) {
+              const centerDist = Math.abs(b - bars / 2);
+              const peak = Math.max(0.1, 1 - centerDist / 8);
+              const height = (peak * (h * 0.75) * (0.6 + Math.random() * 0.4));
+              ctx.fillStyle = centerDist < 3 ? '#00e5ff' : 'rgba(0, 255, 136, 0.65)';
+              ctx.fillRect(b * barW, h - height, barW - 1, height);
+            }
+          }
+
+          satcomAnimId = requestAnimationFrame(satcomLoop);
+        }
+        satcomLoop();
+      }
+
+      // --- SCREEN 3: MEMORY EXPLOIT & ROP CHAIN ---
+      function mountStackExploit(container) {
+        container.innerHTML = `
+          <div class="stack-viz">
+            <div id="stack-ret" class="stack-row danger">
+              <span>0x7FFE8430 [RET_ADDR]</span>
+              <strong style="color:#ff4757;">0x00401140 (ROP)</strong>
+            </div>
+            <div id="stack-canary" class="stack-row warn">
+              <span>0x7FFE8428 [CANARY]</span>
+              <span style="color:#f6e58d;">0xDEADBEEF (BYPASS)</span>
+            </div>
+            <div class="stack-row">
+              <span>0x7FFE8420 [SAVED_RBP]</span>
+              <span style="color:#38bdf8;">0x7FFE8460</span>
+            </div>
+            <div class="stack-row success">
+              <span>0x7FFE8410 [BUFFER 32B]</span>
+              <span style="color:#00ff88;">NOPSLED + SHELLCODE</span>
+            </div>
+          </div>
+          <div style="display:flex; justify-content:space-between; font-size:0.50rem; color:#94a3b8; margin-top:2px;">
+            <span id="exploit-stage-label">STAGE 1: HEAP_SPRAY</span>
+            <span id="exploit-pct" style="color:#00ff88; font-weight:bold;">15%</span>
+          </div>
+          <div class="exploit-progress-wrap">
+            <div id="exploit-bar" class="exploit-progress-bar" style="width:15%;"></div>
+          </div>
+        `;
+
+        let pct = 15;
+        const bar = document.getElementById('exploit-bar');
+        const pctEl = document.getElementById('exploit-pct');
+        const labelEl = document.getElementById('exploit-stage-label');
+        const stages = [
+          { at: 25, label: 'STAGE 2: ASLR_DEFEATED' },
+          { at: 55, label: 'STAGE 3: ROP_CHAIN_LINKED' },
+          { at: 80, label: 'STAGE 4: SYSCALL_INJECTED' },
+          { at: 100, label: 'STAGE 5: ROOT_GRANTED [UID=0]' }
+        ];
+
+        exploitInterval = safeSetInterval(() => {
+          pct = Math.min(100, pct + 7);
+          if (bar) bar.style.width = pct + '%';
+          if (pctEl) pctEl.textContent = pct + '%';
+
+          for (let s of stages) {
+            if (pct >= s.at && labelEl) {
+              labelEl.textContent = s.label;
+              if (pct >= 100) labelEl.style.color = '#00ff88';
+            }
+          }
+          if (pct >= 100) clearInterval(exploitInterval);
+        }, 550);
+      }
+
+      // --- SCREEN 4: DEEP PACKET SNIFFER ---
+      function mountPacketSniffer(container) {
+        container.innerHTML = `
+          <div id="packet-stream" class="packet-stream-box"></div>
+        `;
+        const box = document.getElementById('packet-stream');
+        if (!box) return;
+
+        const packetSamples = [
+          '<span style="color:#38bdf8;">[TLS 1.3]</span> 192.168.1.104 -> 10.24.81.106 | CLIENT_HELLO',
+          '<span style="color:#00ff88;">[CIPHER]</span> TLS_AES_256_GCM_SHA384 | X25519_KEY_OK',
+          '<span style="color:#ff4757;">[ALERT]</span> PORT 443 -> 8080 SYN_RECV (RATE: 1.4M pps)',
+          '<span style="color:#f6e58d;">[HEX]</span> 45 00 00 3c 1c 46 40 00 40 06 72 20 c0 a8',
+          '<span style="color:#38bdf8;">[DNS]</span> QUERY: root-c2.internal.vault.net -> 127.0.0.1',
+          '<span style="color:#00ff88;">[AUTH]</span> BEARER TOKEN EXTRACTED: eyJhbGciOi...[VALID]',
+          '<span style="color:#ff6b81;">[SSH]</span> BRUTE_FORCE ATTEMPT ROOT@NODE_42 (BLOCKED)',
+          '<span style="color:#38bdf8;">[BGP]</span> AS65000 ANOMALOUS ROUTE ADVERTISED -> ROUTED'
+        ];
+
+        let pLines = packetSamples.slice(0, 4);
+        box.innerHTML = pLines.map(l => '<div class="packet-stream-line">' + l + '</div>').join('');
+
+        packetInterval = safeSetInterval(() => {
+          const next = packetSamples[Math.floor(Math.random() * packetSamples.length)];
+          pLines.push(next);
+          if (pLines.length > 5) pLines.shift();
+          box.innerHTML = pLines.map(l => '<div class="packet-stream-line">' + l + '</div>').join('');
+        }, 900);
+      }
+
+      // --- SCREEN: NMAP 7.94 NETWORK AUDIT & CVE MATRIX ---
+      function mountNmap(container) {
+        container.innerHTML = `
+          <div style="font-family:'Consolas', monospace; font-size:0.50rem; color:#94a3b8; display:flex; justify-content:space-between; margin-bottom:2px;">
+            <span>TARGET: <strong id="nmap-target-ip" style="color:#d8fbff;">10.24.81.12 [HOST_UP]</strong></span>
+            <span style="color:#ff2a4b; font-weight:bold;">CVSS 9.8</span>
+          </div>
+          <div class="nmap-ports-box">
+            <div style="color:#00ff88;">PORT 22/tcp  OPEN  OpenSSH-8.9p1</div>
+            <div style="color:#38bdf8;">PORT 80/tcp  OPEN  nginx/1.22.1</div>
+            <div style="color:#00ff88;">PORT 443/tcp OPEN  TLSv1.3_AES256</div>
+            <div style="color:#ff4757; font-weight:bold;">PORT 445/tcp VULN  SMBv3 [CVE-2020-0796]</div>
+            <div style="color:#ffa502;">PORT 3389/tcp EXP  MS_RDP_RCE</div>
+          </div>
+          <div class="nmap-exploit-pill">
+            <span style="color:#ff4757; font-weight:bold;">[!] EXPLOIT: RCE_SYSTEM_PRIV</span>
+            <span id="nmap-sweep-pct" style="color:#00e5ff; font-weight:bold;">SCAN: 72%</span>
+          </div>
+        `;
+        let scanPct = 72;
+        const pctEl = document.getElementById('nmap-sweep-pct');
+        const targetEl = document.getElementById('nmap-target-ip');
+        const subnets = ['10.24.81.', '172.16.4.', '192.168.10.'];
+        let subIdx = 0;
+
+        nmapInterval = safeSetInterval(() => {
+          scanPct = (scanPct + 4);
+          if (scanPct > 100) {
+            scanPct = 25;
+            subIdx = (subIdx + 1) % subnets.length;
+            if (targetEl) targetEl.textContent = subnets[subIdx] + (10 + Math.floor(Math.random() * 200)) + ' [HOST_UP]';
+          }
+          if (pctEl) pctEl.textContent = 'SCAN: ' + scanPct + '%';
+        }, 480);
+      }
+
+      // --- SCREEN: HASHCAT GPU BRUTE-FORCE & CIPHER CRACKER ---
+      function mountHashcat(container) {
+        container.innerHTML = `
+          <div style="display:flex; justify-content:space-between; font-family:'Consolas', monospace; font-size:0.48rem; color:#94a3b8; margin-bottom:2px;">
+            <span>HASH: <strong style="color:#00ff88;">WPA3-PBKDF2-SHA256</strong></span>
+            <span style="color:#38bdf8;" id="hashcat-speed">14.8 GH/s</span>
+          </div>
+          <div id="hashcat-stream" class="hashcat-stream-box">
+            <div>admin@corp24 -> [REJECT]</div>
+            <div>P@ssw0rd99! -> [REJECT]</div>
+            <div style="color:#00ff88; font-weight:bold;">ShadowRoot24 -> [CRACKED!]</div>
+          </div>
+          <div style="background:rgba(0,10,18,0.85); border:1px solid rgba(0,255,136,0.3); border-radius:2px; height:5px; overflow:hidden; margin:2px 0;">
+            <div id="hashcat-bar" style="width:84%; height:100%; background:linear-gradient(90deg, #00e5ff, #00ff88); box-shadow:0 0 6px #00ff88;"></div>
+          </div>
+          <div style="display:flex; justify-content:space-between; font-size:0.46rem; color:#64748b; font-family:'Consolas', monospace;">
+            <span>4x RTX 4090 (64°C)</span>
+            <span id="hashcat-pct-label" style="color:#00ff88;">RECOVERED: 84.6%</span>
+          </div>
+        `;
+        const stream = document.getElementById('hashcat-stream');
+        const speedEl = document.getElementById('hashcat-speed');
+        const barEl = document.getElementById('hashcat-bar');
+        const pctEl = document.getElementById('hashcat-pct-label');
+        const candidates = [
+          'adm!n_corp99', 'shadow_root#1', 'v@ult_master', 'ZeroD@y!2024',
+          'Kernel_Overf1ow', 'P@ssw0rd_Root', 'SuperAdmin_99', 'Cyb3rSec#2024'
+        ];
+        let prog = 84.6;
+
+        hashcatInterval = safeSetInterval(() => {
+          prog = 80 + Math.sin(Date.now() / 1800) * 8;
+          if (barEl) barEl.style.width = prog.toFixed(1) + '%';
+          if (pctEl) pctEl.textContent = 'RECOVERED: ' + prog.toFixed(1) + '%';
+          if (speedEl) speedEl.textContent = (14.6 + Math.random() * 0.5).toFixed(1) + ' GH/s';
+
+          if (stream && Math.random() < 0.65) {
+            const cand = candidates[Math.floor(Math.random() * candidates.length)];
+            const isHit = Math.random() < 0.18;
+            const line = document.createElement('div');
+            line.innerHTML = isHit
+              ? '<span style="color:#00ff88; font-weight:bold;">' + cand + ' -> [CRACKED!]</span>'
+              : '<span>' + cand + ' -> [REJECT]</span>';
+            stream.appendChild(line);
+            if (stream.children.length > 3) {
+              stream.removeChild(stream.children[0]);
+            }
+          }
+        }, 600);
+      }
+
+      // --- SCREEN: GHIDRA / IDA PRO REVERSE ENGINEERING & CFG ---
+      function mountMalwareCFG(container) {
+        container.innerHTML = `
+          <div style="font-family:'Consolas', monospace; font-size:0.49rem; color:#94a3b8; display:flex; justify-content:space-between; margin-bottom:2px;">
+            <span>TARGET: <strong style="color:#d8fbff;">stage2_payload.dll</strong></span>
+            <span style="color:#00ff88; font-weight:bold;">AMSI_BYPASS: OK</span>
+          </div>
+          <div class="malware-cfg-box">
+            <div><span class="asm-addr">0x14010:</span> <span class="asm-op">mov</span> rdx, [gs:0x60] <span class="asm-cmt">; PEB</span></div>
+            <div><span class="asm-addr">0x14018:</span> <span class="asm-op">call</span> <span class="asm-fn">LdrGetDllHandle</span> <span class="asm-cmt">; ntdll</span></div>
+            <div><span class="asm-addr">0x14022:</span> <span class="asm-op">test</span> eax, eax</div>
+            <div><span class="asm-addr">0x14024:</span> <span class="asm-op">jz</span> <span class="asm-lbl">0x1403C</span> <span class="asm-res">-> [HOOK_CLEARED]</span></div>
+            <div id="cfg-dynamic-line" style="color:#00e5ff; font-weight:bold;"><span class="asm-addr">0x1403C:</span> <span class="asm-op">syscall</span> <span class="asm-cmt">; NtProtectVirtualMem</span></div>
+          </div>
+          <div style="display:flex; justify-content:space-between; font-size:0.46rem; color:#64748b; font-family:'Consolas', monospace; margin-top:2px;">
+            <span>ENTROPY: <strong id="cfg-entropy-val" style="color:#ffa502;">7.89</strong></span>
+            <span id="cfg-edr-status" style="color:#00ff88; font-weight:bold;">EDR: BLINDED</span>
+          </div>
+        `;
+        const dynLine = document.getElementById('cfg-dynamic-line');
+        const entVal = document.getElementById('cfg-entropy-val');
+        const ops = [
+          '<span class="asm-addr">0x1403C:</span> <span class="asm-op">syscall</span> <span class="asm-cmt">; NtProtectVirtualMem</span>',
+          '<span class="asm-addr">0x14044:</span> <span class="asm-op">mov</span> rcx, [rsp+0x20] <span class="asm-res">-> [SHELLCODE_EXEC]</span>',
+          '<span class="asm-addr">0x1404C:</span> <span class="asm-op">jmp</span> rbx <span class="asm-cmt">; Indirect Stager Call</span>',
+          '<span class="asm-addr">0x14052:</span> <span class="asm-op">xor</span> eax, eax <span class="asm-res">-> [CLEAN_EXIT]</span>'
+        ];
+        let opIdx = 0;
+        cfgInterval = safeSetInterval(() => {
+          opIdx = (opIdx + 1) % ops.length;
+          if (dynLine) dynLine.innerHTML = ops[opIdx];
+          if (entVal) entVal.textContent = (7.80 + Math.random() * 0.15).toFixed(2);
+        }, 850);
+      }
+
+      // --- SCREEN: BOTNET C2 / DISTRIBUTED SWARM COMMAND ---
+      function mountBotnetC2(container) {
+        container.innerHTML = `
+          <div style="display:flex; justify-content:space-between; font-family:'Consolas', monospace; font-size:0.48rem; color:#94a3b8; margin-bottom:2px;">
+            <span>SWARM: <strong id="botnet-count" style="color:#00ff88;">14,892 BOTS</strong></span>
+            <span style="color:#ff2a4b; font-weight:bold;" id="botnet-bw">116.4 Gbps</span>
+          </div>
+          <div id="botnet-stream" class="botnet-stream-box">
+            <div>[+] NODE #4102: KR-SEOUL -> <span style="color:#00ff88;">ARMED</span></div>
+            <div>[+] NODE #7819: DE-FRANKFURT -> <span style="color:#00ff88;">SYNCED</span></div>
+            <div style="color:#ff4757; font-weight:bold;">[!] DISPATCH: HTTP_FLOOD -> 104.21.84.12</div>
+          </div>
+          <div style="display:flex; justify-content:space-between; font-size:0.46rem; color:#64748b; font-family:'Consolas', monospace; margin-top:2px;">
+            <span>VECTOR: SYN_ACK_AMPLIFY</span>
+            <span style="color:#38bdf8; font-weight:bold;">AMP: x58.4</span>
+          </div>
+        `;
+        const stream = document.getElementById('botnet-stream');
+        const countEl = document.getElementById('botnet-count');
+        const bwEl = document.getElementById('botnet-bw');
+        const botNodes = [
+          { loc: 'US-VIRGINIA', stat: 'BURST_TRANSIT' },
+          { loc: 'JP-TOKYO', stat: 'SYN_REFLECT' },
+          { loc: 'BR-SAOPAULO', stat: 'UDP_FLOOD' },
+          { loc: 'SG-SINGAPORE', stat: 'L7_BYPASS' },
+          { loc: 'NL-AMSTERDAM', stat: 'BGP_ANNOUNCE' }
+        ];
+
+        botnetInterval = safeSetInterval(() => {
+          if (bwEl) bwEl.textContent = (114.0 + Math.random() * 6.5).toFixed(1) + ' Gbps';
+          if (countEl) countEl.textContent = (14850 + Math.floor(Math.random() * 120)) + ' BOTS';
+
+          if (stream) {
+            const node = botNodes[Math.floor(Math.random() * botNodes.length)];
+            const line = document.createElement('div');
+            line.innerHTML = '<span style="color:#64748b;">[+] ' + node.loc + '</span> -> <span style="color:#00e5ff;">' + node.stat + '</span>';
+            stream.appendChild(line);
+            if (stream.children.length > 3) {
+              stream.removeChild(stream.children[0]);
+            }
+          }
+        }, 700);
+      }
+
+      // Cleaners
+      function cleanupTop() {
+        if (mapAnimId) { cancelAnimationFrame(mapAnimId); mapAnimId = null; }
+        if (satcomAnimId) { cancelAnimationFrame(satcomAnimId); satcomAnimId = null; }
+        if (nmapInterval) { clearInterval(nmapInterval); nmapInterval = null; }
+        if (cfgInterval) { clearInterval(cfgInterval); cfgInterval = null; }
+      }
+      function cleanupBottom() {
+        if (exploitInterval) { clearInterval(exploitInterval); exploitInterval = null; }
+        if (packetInterval) { clearInterval(packetInterval); packetInterval = null; }
+        if (hashcatInterval) { clearInterval(hashcatInterval); hashcatInterval = null; }
+        if (botnetInterval) { clearInterval(botnetInterval); botnetInterval = null; }
+      }
+
+      // --- POPUP SCHEDULER & CONTROLLER ---
+      let topIndex = 0;
+      let bottomIndex = 0;
+      let topTimer = null;
+      let bottomTimer = null;
+      let topPaused = false;
+      let bottomPaused = false;
+
+      const TOP_SCREENS = [
+        {
+          id: 'world_map',
+          title: 'THREAT_INTEL // GLOBAL_MAP',
+          badge: 'LIVE INVASION',
+          badgeClass: 'live',
+          duration: 9500,
+          mount: mountWorldMap
+        },
+        {
+          id: 'nmap',
+          title: 'NMAP 7.94 // SUBNET_SWEEP',
+          badge: 'CVSS 9.8 CRIT',
+          badgeClass: 'alert',
+          duration: 9500,
+          mount: mountNmap
+        },
+        {
+          id: 'malware_cfg',
+          title: 'GHIDRA // MALWARE_REVERSE',
+          badge: 'HOOKS EVADED',
+          badgeClass: 'live',
+          duration: 9500,
+          mount: mountMalwareCFG
+        },
+        {
+          id: 'satcom',
+          title: 'DEFENSE_SAT // USA-245_UPLINK',
+          badge: '14.2 GHz LOCK',
+          badgeClass: 'live',
+          duration: 9500,
+          mount: mountSatcom
+        }
+      ];
+
+      const BOTTOM_SCREENS = [
+        {
+          id: 'hashcat',
+          title: 'HASHCAT // GPU_CRACK',
+          badge: '14.8 GH/s',
+          badgeClass: 'live',
+          duration: 9500,
+          mount: mountHashcat
+        },
+        {
+          id: 'botnet_c2',
+          title: 'BOTNET_C2 // MIRAI_SWARM',
+          badge: '116.4 Gbps',
+          badgeClass: 'alert',
+          duration: 9500,
+          mount: mountBotnetC2
+        },
+        {
+          id: 'exploit',
+          title: 'KERNEL_EXPLOIT // ROP_CHAIN',
+          badge: 'STAGE_ACTIVE',
+          badgeClass: 'alert',
+          duration: 9500,
+          mount: mountStackExploit
+        },
+        {
+          id: 'packets',
+          title: 'PACKET_SNIFFER // TLS_DECRYPT',
+          badge: 'ETH0 PROMISC',
+          badgeClass: 'live',
+          duration: 9500,
+          mount: mountPacketSniffer
+        }
+      ];
+
+      function showTopScreen(index) {
+        if (!popupTopEl) return;
+        if (!isAppActive) {
+          clearTimeout(topTimer);
+          topTimer = setTimeout(() => showTopScreen(index), 1200);
+          return;
+        }
+        cleanupTop();
+        const sc = TOP_SCREENS[index % TOP_SCREENS.length];
+        popupTopTitle.textContent = sc.title;
+        popupTopBadge.textContent = sc.badge;
+        popupTopBadge.className = 'popup-status-badge ' + sc.badgeClass;
+
+        sc.mount(popupTopBody);
+
+        popupTopEl.classList.remove('popup-hiding');
+        popupTopEl.classList.add('popup-visible');
+
+        clearTimeout(topTimer);
+        topTimer = setTimeout(() => {
+          if (!topPaused) hideTopScreen();
+        }, sc.duration);
+      }
+
+      function hideTopScreen() {
+        if (!popupTopEl) return;
+        popupTopEl.classList.remove('popup-visible');
+        popupTopEl.classList.add('popup-hiding');
+
+        setTimeout(() => {
+          popupTopEl.classList.remove('popup-hiding');
+          cleanupTop();
+          // Pause before popping up next screen
+          clearTimeout(topTimer);
+          topTimer = setTimeout(() => {
+            topIndex++;
+            showTopScreen(topIndex);
+          }, 2400);
+        }, 400);
+      }
+
+      function showBottomScreen(index) {
+        if (!popupBottomEl) return;
+        if (!isAppActive) {
+          clearTimeout(bottomTimer);
+          bottomTimer = setTimeout(() => showBottomScreen(index), 1200);
+          return;
+        }
+        cleanupBottom();
+        const sc = BOTTOM_SCREENS[index % BOTTOM_SCREENS.length];
+        popupBottomTitle.textContent = sc.title;
+        popupBottomBadge.textContent = sc.badge;
+        popupBottomBadge.className = 'popup-status-badge ' + sc.badgeClass;
+
+        sc.mount(popupBottomBody);
+
+        popupBottomEl.classList.remove('popup-hiding');
+        popupBottomEl.classList.add('popup-visible');
+
+        clearTimeout(bottomTimer);
+        bottomTimer = setTimeout(() => {
+          if (!bottomPaused) hideBottomScreen();
+        }, sc.duration);
+      }
+
+      function hideBottomScreen() {
+        if (!popupBottomEl) return;
+        popupBottomEl.classList.remove('popup-visible');
+        popupBottomEl.classList.add('popup-hiding');
+
+        setTimeout(() => {
+          popupBottomEl.classList.remove('popup-hiding');
+          cleanupBottom();
+          // Pause before popping up next screen
+          clearTimeout(bottomTimer);
+          bottomTimer = setTimeout(() => {
+            bottomIndex++;
+            showBottomScreen(bottomIndex);
+          }, 2800);
+        }, 400);
+      }
+
+      // Dismiss buttons
+      document.querySelectorAll('.popup-close-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const slot = btn.getAttribute('data-slot');
+          if (slot === 'top') hideTopScreen();
+          if (slot === 'bottom') hideBottomScreen();
+        });
+      });
+
+      // Hover to pause auto-dismiss so user can read / inspect
+      if (popupTopEl) {
+        popupTopEl.addEventListener('mouseenter', () => { topPaused = true; });
+        popupTopEl.addEventListener('mouseleave', () => {
+          topPaused = false;
+          clearTimeout(topTimer);
+          topTimer = setTimeout(hideTopScreen, 3500);
+        });
+      }
+
+      if (popupBottomEl) {
+        popupBottomEl.addEventListener('mouseenter', () => { bottomPaused = true; });
+        popupBottomEl.addEventListener('mouseleave', () => {
+          bottomPaused = false;
+          clearTimeout(bottomTimer);
+          bottomTimer = setTimeout(hideBottomScreen, 3500);
+        });
+      }
+
+      // Initialize staggered lifecycle
+      setTimeout(() => {
+        showTopScreen(0);
+      }, 800);
+
+      setTimeout(() => {
+        showBottomScreen(0);
+      }, 4800);
+
     })();
   </script>
 </body>

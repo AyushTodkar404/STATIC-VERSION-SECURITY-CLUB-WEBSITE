@@ -1,6 +1,6 @@
 # 🕶️ Cyber Security Club - Black Hat Live Workstation Wallpaper Suite (Final v3.0)
 
-A state-of-the-art cybersecurity live wallpaper for your Windows laptop featuring a black hat hacker whose **fingers continuously type on the keyboard**, with **all monitor screens actively updating and scrolling in real time**, falling binary streams, English cyber keywords, tactical gridlines, and real-time defense HUD telemetry.
+A state-of-the-art cybersecurity live wallpaper for your Windows laptop featuring a black hat hacker whose **fingers continuously type on the keyboard**, with **all monitor screens actively updating in real time**, tactical gridlines, and a minimal digital clock.
 
 ---
 
@@ -21,7 +21,8 @@ A state-of-the-art cybersecurity live wallpaper for your Windows laptop featurin
 
 ### 2. Windows Screensaver (`.scr`)
 - Right-click [`CyberMatrixScreensaver.scr`](file:///c:/SECURITY%20CLUB%20STATIC%20PAGE/CyberSecurity-Live-Wallpaper/CyberMatrixScreensaver.scr) → Click **Install**.
-- Or run [`Install-Screensaver.bat`](file:///c:/SECURITY%20CLUB%20STATIC%20PAGE/CyberSecurity-Live-Wallpaper/Install-Screensaver.bat).
+- Or run [`Install-Screensaver.bat`](file:///c:/SECURITY%20CLUB%20STATIC%20PAGE/CyberSecurity-Live-Wallpaper/Install-Screensaver.bat). If the `.scr` file is missing, the installer uses the native wallpaper executable, which supports screensaver mode.
+- To start it immediately, run [`Start-Screensaver.bat`](file:///c:/SECURITY%20CLUB%20STATIC%20PAGE/CyberSecurity-Live-Wallpaper/Start-Screensaver.bat).
 
 ---
 
@@ -34,7 +35,8 @@ A state-of-the-art cybersecurity live wallpaper for your Windows laptop featurin
   - **Desk Laptop Screen**: Live Wireshark packet capture sniffer (`TLSv1.3`, `SSH`, `DNS`).
   - **Floating Holographic HUD**: Live oscillating cyan sine wave and target node status in front of the hacker's chest.
   - **Smartwatch on Wrist**: Live glowing heartbeat / CPU load counter (`138 BPM`).
-- **Binary Code Rain**: 75% raw binary numbers (`0` and `1`), 15% hex codes, and English cybersecurity words (`ROOT`, `ACCESS`, `BREACH`, `CIPHER`, `KERNEL`, `PAYLOAD`, `DECRYPT`, `EXPLOIT`, `ZERO_DAY`, `STEALTH`). *Zero Asian characters.*
 - **Tactical Grid**: High-contrast 52px cyan/emerald cyber grid with crosshair intersection dots.
+- **Dynamic Background Data**: Sparse, slow-moving binary and hexadecimal data streams remain behind the hacker without obscuring the scene.
+- **Live Remote Node Panel**: A compact bottom-right display cycles through private IP addresses as an active network monitor.
 - **Desktop Icon Ergonomics**: Left portion has deep vignette shading so all Windows desktop icon names remain completely legible.
-- **HUD Telemetry**: Live real-time clock, typing speed monitor, protocol status, and node indicators.
+- **Minimal Telemetry**: A live digital clock without extra branding or status clutter.

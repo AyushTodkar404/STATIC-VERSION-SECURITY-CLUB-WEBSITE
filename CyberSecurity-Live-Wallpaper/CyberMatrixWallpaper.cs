@@ -1,6 +1,5 @@
 using System;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
@@ -51,36 +50,17 @@ namespace CyberSecurityClub.LiveWallpaper
         private System.Windows.Forms.Timer animTimer;
         private NotifyIcon trayIcon;
         private Image hackerBackdrop = null;
-
-        // Binary & English tokens
-        private static readonly string[] BINARY_CHARS = { "0", "1", "0", "1", "0", "1", "1", "0" };
-        private static readonly string[] HEX_CHARS = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F" };
-        private static readonly string[] SYMBOLS = { "$", "#", "*", "+", "-", "<", ">", "/", "_", ":", "|", "[", "]" };
-        private static readonly string[] CYBER_WORDS = {
-            "ROOT", "ACCESS", "BREACH", "CIPHER", "KERNEL", "PAYLOAD",
-            "DECRYPT", "EXPLOIT", "BUFFER", "OVERFLOW", "SOCKET", "PACKET",
-            "INTRUSION", "FIREWALL", "SECURITY", "DBIT", "AUTH", "HASH",
-            "SHA256", "ZERO_DAY", "STEALTH", "SSH", "PORT", "NODE", "VULN",
-            "SYSTEM", "INJECT", "MEMORY", "DAEMON", "PROXY", "SHELL"
-        };
-
-        private const int FONT_SIZE = 15;
-        private int[] dropPositions;
-        private string[] activeWordInCol;
-        private int[] wordCharIndex;
-        private Random random = new Random();
-        private Font matrixFont;
-        private Font hudFont;
+        private readonly Random random = new Random();
+        private float[] dataPositions;
+        private float[] dataSpeeds;
+        private int[] dataLengths;
+        private string[][] dataTokens;
+        private string liveIp = "10.24.81.106";
+        private int lastIpSecond = -1;
+        private static readonly string[] BACKGROUND_TOKENS = { "0", "1", "A", "F", "7", "C" };
 
         // Eye-friendly dark mode phosphor palette
         private readonly Color BG_COLOR = Color.FromArgb(2, 5, 8);
-        private readonly Color GRID_COLOR = Color.FromArgb(24, 0, 229, 255);
-        private readonly Color LEAD_COLOR = Color.FromArgb(110, 231, 183);      // Soft mint green
-        private readonly Color WORD_LEAD_COLOR = Color.FromArgb(56, 189, 248);  // Crisp cyber cyan
-        private readonly Color GREEN_CORE = Color.FromArgb(16, 185, 129);       // Muted emerald
-        private readonly Color CYAN_TINT = Color.FromArgb(14, 165, 233);        // Calm sky blue
-        private readonly Color GREEN_DIM = Color.FromArgb(5, 150, 105);
-        private readonly Color GREEN_FAINT = Color.FromArgb(4, 120, 87);
 
         [STAThread]
         public static void Main(string[] args)
@@ -103,16 +83,24 @@ namespace CyberSecurityClub.LiveWallpaper
                     mode = "preview";
                     if (args.Length > 1)
                     {
-                        previewHwnd = new IntPtr(long.Parse(args[1]));
+                        long previewHandle;
+                        if (long.TryParse(args[1], out previewHandle))
+                        {
+                            previewHwnd = new IntPtr(previewHandle);
+                        }
                     }
                     else if (firstArg.Length > 2)
                     {
-                        previewHwnd = new IntPtr(long.Parse(firstArg.Substring(2).Trim()));
+                        long previewHandle;
+                        if (long.TryParse(firstArg.Substring(2).Trim(), out previewHandle))
+                        {
+                            previewHwnd = new IntPtr(previewHandle);
+                        }
                     }
                 }
                 else if (firstArg.StartsWith("/c"))
                 {
-                    MessageBox.Show("DBIT Cyber Security Club Live Matrix Wallpaper\nVersion 2.0 (Black Hat Edition)\nCreated for campus & desktop experience.", "Cyber Matrix Wallpaper", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Live Matrix Wallpaper\nVersion 2.0", "Live Matrix Wallpaper", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
             }
@@ -144,11 +132,6 @@ namespace CyberSecurityClub.LiveWallpaper
                 try { hackerBackdrop = Image.FromFile(imgPath); } catch { }
             }
 
-            try { matrixFont = new Font("Consolas", 10.5F, FontStyle.Bold); }
-            catch { matrixFont = new Font(FontFamily.GenericMonospace, 10.5F, FontStyle.Bold); }
-
-            hudFont = new Font("Consolas", 8F, FontStyle.Bold);
-
             if (mode == "preview" && previewHwnd != IntPtr.Zero)
             {
                 isPreview = true;
@@ -175,15 +158,11 @@ namespace CyberSecurityClub.LiveWallpaper
                 SetupTray();
             }
 
-            InitMatrix();
-
             animTimer = new System.Windows.Forms.Timer();
             animTimer.Interval = 45; // ~22 FPS: smooth, battery-efficient, authentic terminal cadence
-            animTimer.Tick += (s, e) => {
-                UpdateMatrix();
-                Invalidate();
-            };
+            animTimer.Tick += (s, e) => Invalidate();
             animTimer.Start();
+            InitializeBackgroundData();
         }
 
         protected override void OnLoad(EventArgs e)
@@ -194,6 +173,62 @@ namespace CyberSecurityClub.LiveWallpaper
                 AttachToDesktopWorkerW();
             }
         }
+
+        private void InitializeBackgroundData()
+            {
+                int columns = Math.Max(12, Width / 56);
+                dataPositions = new float[columns];
+                dataSpeeds = new float[columns];
+                dataLengths = new int[columns];
+                dataTokens = new string[columns][];
+                for (int i = 0; i < columns; i++)
+                {
+                    dataPositions[i] = random.Next(0, Math.Max(1, Height));
+                    dataSpeeds[i] = 0.12f + (float)random.NextDouble() * 0.25f;
+                    dataLengths[i] = random.Next(4, 11);
+                    dataTokens[i] = CreateDataTokens(dataLengths[i]);
+                }
+            }
+
+            private string[] CreateDataTokens(int length)
+            {
+                string[] tokens = new string[length];
+                for (int i = 0; i < tokens.Length; i++)
+                {
+                    tokens[i] = BACKGROUND_TOKENS[random.Next(BACKGROUND_TOKENS.Length)];
+                }
+                return tokens;
+            }
+
+            private void DrawBackgroundData(Graphics g)
+            {
+                if (dataPositions == null) return;
+                using (Font dataFont = new Font("Consolas", 11F, FontStyle.Bold))
+                using (SolidBrush leadBrush = new SolidBrush(Color.FromArgb(105, 92, 236, 255)))
+                using (SolidBrush trailBrush = new SolidBrush(Color.FromArgb(55, 0, 255, 136)))
+                {
+                    for (int i = 0; i < dataPositions.Length; i++)
+                    {
+                        float x = i * 56 + 8;
+                        for (int row = 0; row < dataLengths[i]; row++)
+                        {
+                            float y = dataPositions[i] - row * 15;
+                            if (y >= -15 && y <= Height + 15)
+                            {
+                                g.DrawString(dataTokens[i][row],
+                                    dataFont, row == 0 ? leadBrush : trailBrush, x, y);
+                            }
+                        }
+                        dataPositions[i] += dataSpeeds[i];
+                        if (dataPositions[i] - dataLengths[i] * 15 > Height)
+                        {
+                            dataPositions[i] = -random.Next(30, 160);
+                            dataLengths[i] = random.Next(4, 11);
+                            dataTokens[i] = CreateDataTokens(dataLengths[i]);
+                        }
+                    }
+                }
+            }
 
         private void AttachToDesktopWorkerW()
         {
@@ -234,7 +269,7 @@ namespace CyberSecurityClub.LiveWallpaper
             try
             {
                 ContextMenuStrip menu = new ContextMenuStrip();
-                menu.Items.Add("DBIT Cyber Security Club Live Wallpaper").Enabled = false;
+                menu.Items.Add("Live Matrix Wallpaper").Enabled = false;
                 menu.Items.Add(new ToolStripSeparator());
                 menu.Items.Add("Exit Wallpaper", null, (s, e) => Application.Exit());
 
@@ -255,71 +290,12 @@ namespace CyberSecurityClub.LiveWallpaper
                 trayIcon = new NotifyIcon
                 {
                     Icon = Icon.FromHandle(iconBmp.GetHicon()),
-                    Text = "Security Club Live Matrix Wallpaper",
+                    Text = "Live Matrix Wallpaper",
                     ContextMenuStrip = menu,
                     Visible = true
                 };
             }
             catch { }
-        }
-
-        private void InitMatrix()
-        {
-            int cols = Math.Max(10, Width / FONT_SIZE);
-            dropPositions = new int[cols];
-            activeWordInCol = new string[cols];
-            wordCharIndex = new int[cols];
-
-            for (int i = 0; i < cols; i++)
-            {
-                dropPositions[i] = random.Next(-50, 0);
-                activeWordInCol[i] = null;
-                wordCharIndex[i] = 0;
-            }
-        }
-
-        private string GetRandomToken()
-        {
-            double r = random.NextDouble();
-            if (r < 0.70)
-            {
-                // 70% Binary numbers
-                return BINARY_CHARS[random.Next(BINARY_CHARS.Length)];
-            }
-            else if (r < 0.88)
-            {
-                // 18% Hexadecimal
-                return HEX_CHARS[random.Next(HEX_CHARS.Length)];
-            }
-            else
-            {
-                // 12% English cyber symbols
-                return SYMBOLS[random.Next(SYMBOLS.Length)];
-            }
-        }
-
-        private void UpdateMatrix()
-        {
-            int cols = dropPositions.Length;
-            int maxRows = Height / FONT_SIZE;
-
-            for (int i = 0; i < cols; i++)
-            {
-                dropPositions[i]++;
-
-                // Occasionally drop an English cybersecurity word
-                if (activeWordInCol[i] == null && random.NextDouble() < 0.008 && dropPositions[i] > 0)
-                {
-                    activeWordInCol[i] = CYBER_WORDS[random.Next(CYBER_WORDS.Length)];
-                    wordCharIndex[i] = 0;
-                }
-
-                if (dropPositions[i] > maxRows && random.NextDouble() > 0.96)
-                {
-                    dropPositions[i] = random.Next(-30, 0);
-                    activeWordInCol[i] = null;
-                }
-            }
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -332,11 +308,11 @@ namespace CyberSecurityClub.LiveWallpaper
                 g.DrawImage(hackerBackdrop, new Rectangle(0, 0, Width, Height));
 
                 // Left vignette for desktop icon protection
-                using (Brush darkL = new SolidBrush(Color.FromArgb(170, 2, 5, 8)))
+                using (Brush darkL = new SolidBrush(Color.FromArgb(130, 2, 5, 8)))
                 {
                     g.FillRectangle(darkL, 0, 0, (int)(Width * 0.35), Height);
                 }
-                using (Brush darkOverall = new SolidBrush(Color.FromArgb(100, 2, 5, 8)))
+                using (Brush darkOverall = new SolidBrush(Color.FromArgb(45, 2, 5, 8)))
                 {
                     g.FillRectangle(darkOverall, 0, 0, Width, Height);
                 }
@@ -346,109 +322,132 @@ namespace CyberSecurityClub.LiveWallpaper
                 g.Clear(BG_COLOR);
             }
 
-            // 2. Clearly Visible Tactical Cyber Gridlines (52px spacing)
-            using (Pen gridPen = new Pen(GRID_COLOR, 1))
+            // 2. Sparse moving data behind the hacker
+            DrawBackgroundData(g);
+
+            // 3. Clearly Visible Tactical Cyber Gridlines (52px spacing)
+            int gridPulse = 34 + (int)(10 * (0.5 + 0.5 * Math.Sin(Environment.TickCount / 900.0)));
+            using (Pen gridGlowPen = new Pen(Color.FromArgb(gridPulse / 2, 0, 229, 255), 3))
+            using (Pen gridPen = new Pen(Color.FromArgb(gridPulse, 0, 229, 255), 1))
             {
                 for (int x = 0; x < Width; x += 52)
                 {
+                    g.DrawLine(gridGlowPen, x, 0, x, Height);
                     g.DrawLine(gridPen, x, 0, x, Height);
                 }
                 for (int y = 0; y < Height; y += 52)
                 {
+                    g.DrawLine(gridGlowPen, 0, y, Width, y);
                     g.DrawLine(gridPen, 0, y, Width, y);
                 }
             }
 
-            // 3. Falling Matrix Code Stream (Binary + English)
-            using (SolidBrush leadBrush = new SolidBrush(LEAD_COLOR))
-            using (SolidBrush wordLeadBrush = new SolidBrush(WORD_LEAD_COLOR))
-            using (SolidBrush greenBrush = new SolidBrush(GREEN_CORE))
-            using (SolidBrush cyanBrush = new SolidBrush(CYAN_TINT))
-            using (SolidBrush dimBrush = new SolidBrush(GREEN_DIM))
-            using (SolidBrush faintBrush = new SolidBrush(GREEN_FAINT))
-            {
-                for (int i = 0; i < dropPositions.Length; i++)
-                {
-                    int x = i * FONT_SIZE;
-                    int y = dropPositions[i] * FONT_SIZE;
-
-                    if (y >= -FONT_SIZE && y < Height + FONT_SIZE)
-                    {
-                        string charToDraw = GetRandomToken();
-                        bool isWord = false;
-
-                        if (activeWordInCol[i] != null && wordCharIndex[i] < activeWordInCol[i].Length)
-                        {
-                            charToDraw = activeWordInCol[i][wordCharIndex[i]].ToString();
-                            wordCharIndex[i]++;
-                            isWord = true;
-                            if (wordCharIndex[i] >= activeWordInCol[i].Length)
-                            {
-                                activeWordInCol[i] = null;
-                            }
-                        }
-
-                        // Lead glowing character
-                        g.DrawString(charToDraw, matrixFont, isWord ? wordLeadBrush : leadBrush, x, y);
-
-                        // Second character (Green)
-                        int y1 = y - FONT_SIZE;
-                        if (y1 >= 0 && y1 < Height)
-                        {
-                            g.DrawString(GetRandomToken(), matrixFont, greenBrush, x, y1);
-                        }
-
-                        // Third character (Cyan)
-                        int y2 = y - FONT_SIZE * 2;
-                        if (y2 >= 0 && y2 < Height)
-                        {
-                            g.DrawString(GetRandomToken(), matrixFont, cyanBrush, x, y2);
-                        }
-
-                        // Tail characters (Dim / Faint green)
-                        for (int t = 3; t < 10; t++)
-                        {
-                            int yt = y - FONT_SIZE * t;
-                            if (yt >= 0 && yt < Height)
-                            {
-                                g.DrawString(GetRandomToken(), matrixFont, (t < 6) ? dimBrush : faintBrush, x, yt);
-                            }
-                        }
-                    }
-                }
-            }
-
-            // 4. HUD Telemetry Header & Footer
+            // 4. Seven-segment digital clock
             if (!isPreview)
             {
-                // Top Header Box
-                string topText = "DBIT SECURITY CLUB // BLACK HAT TERMINAL · FEED: BINARY_STREAM";
-                SizeF topSize = g.MeasureString(topText, hudFont);
-                using (SolidBrush bgB = new SolidBrush(Color.FromArgb(180, 2, 6, 10)))
+                int currentSecond = DateTime.Now.Second;
+                if (currentSecond != lastIpSecond)
+                {
+                    lastIpSecond = currentSecond;
+                    liveIp = "10." + random.Next(20, 40) + "." + random.Next(0, 256) + "." + random.Next(10, 250);
+                }
+                string clockText = DateTime.Now.ToString("HH:mm:ss");
+                // Query live laptop battery status via Windows PowerStatus
+                PowerStatus power = SystemInformation.PowerStatus;
+                int batPct = (int)(power.BatteryLifePercent * 100);
+                if (batPct < 0 || batPct > 100) batPct = 100;
+                bool isAc = (power.PowerLineStatus == PowerLineStatus.Online);
+                string batText = isAc ? string.Format("BAT {0}% [AC]", batPct) : string.Format("BAT {0}%", batPct);
+
+                const int digitWidth = 16;
+                const int digitHeight = 28;
+                const int digitGap = 4;
+                const int colonWidth = 8;
+                const int topbarHeight = 12;
+                const int dateHeight = 12;
+                int clockWidth = digitWidth * 6 + digitGap * 5 + colonWidth * 2;
+                int clockX = Width - clockWidth - 30;
+                int clockY = 28;
+                int boxHeight = digitHeight + topbarHeight + dateHeight + 16;
+
+                string dateText = DateTime.Now.ToString("ddd, dd MMM yyyy").ToUpper();
+
+                using (SolidBrush bgB = new SolidBrush(Color.FromArgb(195, 2, 6, 12)))
                 using (Pen bPen = new Pen(Color.FromArgb(100, 0, 229, 255), 1))
-                using (SolidBrush tB = new SolidBrush(Color.FromArgb(220, 0, 229, 255)))
+                using (Font batFont = new Font("Consolas", 6.8F, FontStyle.Bold))
+                using (Font dateFont = new Font("Consolas", 6.6F, FontStyle.Bold))
+                using (SolidBrush batBrush = new SolidBrush(isAc ? Color.FromArgb(240, 56, 189, 248) : (batPct <= 20 ? Color.FromArgb(245, 255, 42, 75) : Color.FromArgb(220, 0, 255, 136))))
+                using (SolidBrush liveTagBrush = new SolidBrush(Color.FromArgb(220, 255, 42, 75)))
+                using (SolidBrush dateBrush = new SolidBrush(Color.FromArgb(190, 141, 239, 255)))
                 {
-                    g.FillRectangle(bgB, 20, 15, topSize.Width + 24, topSize.Height + 10);
-                    g.DrawRectangle(bPen, 20, 15, topSize.Width + 24, topSize.Height + 10);
-                    g.DrawString(topText, hudFont, tB, 32, 20);
+                    g.FillRectangle(bgB, clockX - 10, clockY - 18, clockWidth + 20, boxHeight);
+                    g.DrawRectangle(bPen, clockX - 10, clockY - 18, clockWidth + 20, boxHeight);
+                    g.DrawString("LIVE", batFont, liveTagBrush, clockX - 4, clockY - 15);
+                    g.DrawString(batText, batFont, batBrush, clockX + clockWidth - 68, clockY - 15);
+                    g.DrawString(dateText, dateFont, dateBrush, clockX - 4, clockY + digitHeight + 6);
                 }
 
-                // Bottom Badge
-                string botText = "SYSTEM: ONLINE · STATUS: ARMED // ZERO_LOGS · 127.0.0.1:443";
-                SizeF botSize = g.MeasureString(botText, hudFont);
-                float bx = Width - botSize.Width - 35;
-                float by = Height - botSize.Height - 20;
-
-                using (SolidBrush bgB = new SolidBrush(Color.FromArgb(180, 2, 6, 10)))
-                using (Pen bPen = new Pen(Color.FromArgb(100, 0, 255, 120), 1))
-                using (SolidBrush tB = new SolidBrush(Color.FromArgb(220, 0, 255, 120)))
-                using (SolidBrush dotB = new SolidBrush(Color.FromArgb(255, 0, 255, 120)))
+                int cursorX = clockX;
+                for (int i = 0; i < clockText.Length; i++)
                 {
-                    g.FillRectangle(bgB, bx - 14, by - 4, botSize.Width + 28, botSize.Height + 8);
-                    g.DrawRectangle(bPen, bx - 14, by - 4, botSize.Width + 28, botSize.Height + 8);
-                    g.FillEllipse(dotB, bx - 8, by + botSize.Height / 2 - 3, 6, 6);
-                    g.DrawString(botText, hudFont, tB, bx + 4, by);
+                    if (clockText[i] == ':')
+                    {
+                        using (SolidBrush colonBrush = new SolidBrush(Color.FromArgb(245, 255, 42, 75)))
+                        {
+                            g.FillEllipse(colonBrush, cursorX + 2, clockY + 6, 4, 4);
+                            g.FillEllipse(colonBrush, cursorX + 2, clockY + 16, 4, 4);
+                        }
+                        cursorX += colonWidth + digitGap;
+                    }
+                    else
+                    {
+                        DrawSevenSegmentDigit(g, clockText[i] - '0', cursorX, clockY, digitWidth, digitHeight);
+                        cursorX += digitWidth + digitGap;
+                    }
                 }
+
+                const int ipWidth = 164;
+                const int ipHeight = 40;
+                int ipX = Width - ipWidth - 30;
+                int ipY = Height - ipHeight - 22;
+                using (SolidBrush ipBg = new SolidBrush(Color.FromArgb(205, 2, 6, 12)))
+                using (Pen ipBorder = new Pen(Color.FromArgb(120, 255, 42, 75), 1))
+                using (Pen ipAccent = new Pen(Color.FromArgb(240, 255, 42, 75), 3))
+                using (Font ipLabelFont = new Font("Consolas", 7F, FontStyle.Bold))
+                using (Font ipFont = new Font("Consolas", 10F, FontStyle.Bold))
+                using (SolidBrush ipLabelBrush = new SolidBrush(Color.FromArgb(180, 255, 133, 151)))
+                using (SolidBrush ipBrush = new SolidBrush(Color.FromArgb(245, 255, 42, 75)))
+                {
+                    g.FillRectangle(ipBg, ipX, ipY, ipWidth, ipHeight);
+                    g.DrawRectangle(ipBorder, ipX, ipY, ipWidth, ipHeight);
+                    g.DrawLine(ipAccent, ipX + ipWidth - 2, ipY, ipX + ipWidth - 2, ipY + ipHeight);
+                    g.DrawString("REMOTE NODE", ipLabelFont, ipLabelBrush, ipX + 10, ipY + 6);
+                    g.DrawString(liveIp, ipFont, ipBrush, ipX + 10, ipY + 20);
+                }
+            }
+        }
+
+        private void DrawSevenSegmentDigit(Graphics g, int digit, int x, int y, int width, int height)
+        {
+            string[] patterns = {
+                "abcdef", "bc", "abdeg", "abcdg", "bcfg",
+                "acdfg", "acdefg", "abc", "abcdefg", "abcdfg"
+            };
+            string active = patterns[digit];
+            using (SolidBrush offBrush = new SolidBrush(Color.FromArgb(35, 75, 20, 25)))
+            using (SolidBrush onBrush = new SolidBrush(Color.FromArgb(245, 255, 42, 75)))
+            {
+                Action<string, Point[]> draw = (segment, points) =>
+                    g.FillPolygon(active.Contains(segment) ? onBrush : offBrush, points);
+
+                int mid = y + height / 2 - 2;
+                draw("a", new[] { new Point(x + 3, y), new Point(x + width - 3, y), new Point(x + width - 1, y + 3), new Point(x + width - 3, y + 5), new Point(x + 3, y + 5), new Point(x + 1, y + 3) });
+                draw("g", new[] { new Point(x + 3, mid), new Point(x + width - 3, mid), new Point(x + width - 1, mid + 2), new Point(x + width - 3, mid + 4), new Point(x + 3, mid + 4), new Point(x + 1, mid + 2) });
+                draw("d", new[] { new Point(x + 3, y + height - 5), new Point(x + width - 3, y + height - 5), new Point(x + width - 1, y + height - 2), new Point(x + width - 3, y + height), new Point(x + 3, y + height), new Point(x + 1, y + height - 2) });
+                draw("f", new[] { new Point(x, y + 4), new Point(x + 4, y + 2), new Point(x + 5, y + 5), new Point(x + 5, mid - 3), new Point(x + 2, mid - 1), new Point(x, mid - 3) });
+                draw("b", new[] { new Point(x + width - 5, y + 2), new Point(x + width - 1, y + 4), new Point(x + width - 1, mid - 3), new Point(x + width - 4, mid - 1), new Point(x + width - 5, mid - 3), new Point(x + width - 5, y + 5) });
+                draw("e", new[] { new Point(x, mid + 3), new Point(x + 2, mid + 1), new Point(x + 5, mid + 3), new Point(x + 5, y + height - 5), new Point(x + 4, y + height - 2), new Point(x, y + height - 4) });
+                draw("c", new[] { new Point(x + width - 5, mid + 3), new Point(x + width - 1, mid + 1), new Point(x + width - 1, y + height - 4), new Point(x + width - 4, y + height - 2), new Point(x + width - 5, y + height - 5), new Point(x + width - 5, mid + 3) });
             }
         }
 
@@ -486,6 +485,8 @@ namespace CyberSecurityClub.LiveWallpaper
                 trayIcon.Visible = false;
                 trayIcon.Dispose();
             }
+            if (isScreensaver) Cursor.Show();
+            if (hackerBackdrop != null) hackerBackdrop.Dispose();
             base.OnFormClosed(e);
         }
         #endregion
