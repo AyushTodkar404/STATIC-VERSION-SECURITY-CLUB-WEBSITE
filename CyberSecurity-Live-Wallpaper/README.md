@@ -39,4 +39,7 @@ A state-of-the-art cybersecurity live wallpaper for your Windows laptop featurin
 - **Dynamic Background Data**: Sparse, slow-moving binary and hexadecimal data streams remain behind the hacker without obscuring the scene.
 - **Live Remote Node Panel**: A compact bottom-right display cycles through private IP addresses as an active network monitor.
 - **Desktop Icon Ergonomics**: Left portion has deep vignette shading so all Windows desktop icon names remain completely legible.
-- **Minimal Telemetry**: A live digital clock without extra branding or status clutter.
+- **Minimal Telemetry & Quick System Shortcuts Dropdown**:
+  - Live red 7-segment digital clock with running milliseconds and session mode.
+  - Interactive cybersecurity operations calendar with DEFCON threat schedule.
+  - **Bottom-Right Dropdown Arrow**: Clickable quick system shortcuts menu with options for **Power Off**, **Go to Settings**, **Restart**, **Lock**, **Sleep**, **Open Task Manager (`Ctrl+Shift+T` / `Ctrl+Shift+Esc`)**, and **Restart Graphics Driver (`Ctrl+Win+Shift+B`)** featuring authentic Windows DWM buffer reload audio beep and screen flash.

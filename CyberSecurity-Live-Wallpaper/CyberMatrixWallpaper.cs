@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -37,6 +38,15 @@ namespace CyberSecurityClub.LiveWallpaper
         [StructLayout(LayoutKind.Sequential)]
         public struct RECT { public int Left, Top, Right, Bottom; }
 
+        [DllImport("user32.dll")]
+        private static extern bool LockWorkStation();
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        private static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+
+        [DllImport("user32.dll")]
+        private static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, int dwExtraInfo);
+
         private const int GWL_EXSTYLE = -20;
         private const int WS_EX_TOOLWINDOW = 0x00000080;
         private const int WS_EX_APPWINDOW = 0x00040000;
@@ -58,6 +68,7 @@ namespace CyberSecurityClub.LiveWallpaper
         private string liveIp = "10.24.81.106";
         private int lastIpSecond = -1;
         private static readonly string[] BACKGROUND_TOKENS = { "0", "1", "A", "F", "7", "C" };
+        private System.Net.HttpListener httpBridge = null;
 
         // Eye-friendly dark mode phosphor palette
         private readonly Color BG_COLOR = Color.FromArgb(2, 5, 8);
@@ -163,6 +174,7 @@ namespace CyberSecurityClub.LiveWallpaper
             animTimer.Tick += (s, e) => Invalidate();
             animTimer.Start();
             InitializeBackgroundData();
+            StartHttpBridge();
         }
 
         protected override void OnLoad(EventArgs e)
@@ -269,7 +281,36 @@ namespace CyberSecurityClub.LiveWallpaper
             try
             {
                 ContextMenuStrip menu = new ContextMenuStrip();
-                menu.Items.Add("Live Matrix Wallpaper").Enabled = false;
+                menu.Items.Add("CYBER MATRIX TACTICAL").Enabled = false;
+                menu.Items.Add(new ToolStripSeparator());
+
+                ToolStripMenuItem shortcutsMenu = new ToolStripMenuItem("Quick System Shortcuts");
+                shortcutsMenu.DropDownItems.Add("Open Task Manager (Ctrl+Shift+Esc)", null, (s, e) => {
+                    try { Process.Start("taskmgr.exe"); } catch { }
+                });
+                shortcutsMenu.DropDownItems.Add("Go to Settings (ms-settings:)", null, (s, e) => {
+                    try { Process.Start("ms-settings:"); } catch { }
+                });
+                shortcutsMenu.DropDownItems.Add("Lock Workstation (Win+L)", null, (s, e) => {
+                    try { LockWorkStation(); } catch { }
+                });
+                shortcutsMenu.DropDownItems.Add("Sleep", null, (s, e) => {
+                    try { Application.SetSuspendState(PowerState.Suspend, true, true); } catch { }
+                });
+                shortcutsMenu.DropDownItems.Add(new ToolStripSeparator());
+                shortcutsMenu.DropDownItems.Add("Restart System", null, (s, e) => {
+                    if (MessageBox.Show("Initiate system restart?", "Restart Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                    {
+                        try { Process.Start("shutdown.exe", "/r /t 0"); } catch { }
+                    }
+                });
+                shortcutsMenu.DropDownItems.Add("Power Off", null, (s, e) => {
+                    if (MessageBox.Show("Initiate system shutdown?", "Power Off Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                    {
+                        try { Process.Start("shutdown.exe", "/s /t 0"); } catch { }
+                    }
+                });
+                menu.Items.Add(shortcutsMenu);
                 menu.Items.Add(new ToolStripSeparator());
                 menu.Items.Add("Exit Wallpaper", null, (s, e) => Application.Exit());
 
@@ -477,8 +518,90 @@ namespace CyberSecurityClub.LiveWallpaper
             base.OnKeyDown(e);
         }
 
+        private void StartHttpBridge()
+        {
+            try
+            {
+                httpBridge = new System.Net.HttpListener();
+                httpBridge.Prefixes.Add("http://127.0.0.1:38281/");
+                httpBridge.Start();
+                httpBridge.BeginGetContext(OnHttpBridgeRequest, null);
+            }
+            catch { }
+        }
+
+        private void OnHttpBridgeRequest(IAsyncResult ar)
+        {
+            try
+            {
+                if (httpBridge == null || !httpBridge.IsListening) return;
+                var ctx = httpBridge.EndGetContext(ar);
+                httpBridge.BeginGetContext(OnHttpBridgeRequest, null);
+
+                ctx.Response.AddHeader("Access-Control-Allow-Origin", "*");
+                ctx.Response.AddHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+                ctx.Response.AddHeader("Access-Control-Allow-Headers", "*");
+
+                if (ctx.Request.HttpMethod == "OPTIONS")
+                {
+                    ctx.Response.StatusCode = 200;
+                    ctx.Response.Close();
+                    return;
+                }
+
+                string cmd = (ctx.Request.QueryString["cmd"] ?? "").ToLower();
+                switch (cmd)
+                {
+                    case "lock":
+                        LockWorkStation();
+                        break;
+                    case "poweroff":
+                    case "shutdown":
+                        Process.Start("shutdown.exe", "/s /t 0");
+                        break;
+                    case "restart":
+                        Process.Start("shutdown.exe", "/r /t 0");
+                        break;
+                    case "sleep":
+                        try { SendMessage((IntPtr)0xFFFF, 0x0112, (IntPtr)0xF170, (IntPtr)2); } catch { }
+                        try { Application.SetSuspendState(PowerState.Suspend, true, true); } catch { }
+                        break;
+                    case "gpu-restart":
+                    case "restart-gpu":
+                        try
+                        {
+                            keybd_event(0x5B, 0, 0, 0);
+                            keybd_event(0x11, 0, 0, 0);
+                            keybd_event(0x10, 0, 0, 0);
+                            keybd_event(0x42, 0, 0, 0);
+
+                            keybd_event(0x42, 0, 2, 0);
+                            keybd_event(0x10, 0, 2, 0);
+                            keybd_event(0x11, 0, 2, 0);
+                            keybd_event(0x5B, 0, 2, 0);
+                        }
+                        catch { }
+                        break;
+                    case "taskmgr":
+                        Process.Start("taskmgr.exe");
+                        break;
+                    case "settings":
+                        Process.Start("ms-settings:");
+                        break;
+                }
+
+                byte[] buf = System.Text.Encoding.UTF8.GetBytes("{\"ok\":true,\"cmd\":\"" + cmd + "\"}");
+                ctx.Response.ContentType = "application/json";
+                ctx.Response.ContentLength64 = buf.Length;
+                ctx.Response.OutputStream.Write(buf, 0, buf.Length);
+                ctx.Response.Close();
+            }
+            catch { }
+        }
+
         protected override void OnFormClosed(FormClosedEventArgs e)
         {
+            try { if (httpBridge != null) httpBridge.Stop(); } catch { }
             if (animTimer != null) animTimer.Stop();
             if (trayIcon != null)
             {

@@ -6,7 +6,7 @@
   <title>Live Matrix Wallpaper</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Orbitron:wght@500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Orbitron:wght@500;600;700;800;900&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
@@ -19,7 +19,10 @@
       height: 100%;
       overflow: hidden;
       background-color: #010306;
-      font-family: 'Share Tech Mono', 'JetBrains Mono', 'Consolas', monospace;
+      font-family: 'JetBrains Mono', 'Rajdhani', monospace;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
       color: #e5f3f8;
       user-select: none;
     }
@@ -69,7 +72,7 @@
       pointer-events: none;
       overflow: hidden;
       z-index: 3;
-      font-family: 'Consolas', 'JetBrains Mono', monospace;
+      font-family: 'JetBrains Mono', 'Consolas', monospace;
       line-height: 1.25;
       color: #00ff88;
       text-shadow: 0 0 2px rgba(0, 255, 136, 0.55);
@@ -432,8 +435,10 @@
     .popup-dot.green { background: #2ed573; box-shadow: 0 0 4px #2ed573; }
 
     .popup-title {
-      font-family: 'Share Tech Mono', 'Consolas', monospace;
-      font-weight: bold;
+      font-family: 'Rajdhani', 'Orbitron', sans-serif;
+      font-weight: 700;
+      font-size: 0.62rem;
+      letter-spacing: 0.08em;
       color: #8defff;
       text-shadow: 0 0 3px rgba(0, 229, 255, 0.5);
     }
@@ -445,10 +450,11 @@
     }
 
     .popup-status-badge {
+      font-family: 'JetBrains Mono', monospace;
       font-size: 0.50rem;
+      font-weight: 700;
       padding: 0.05rem 0.25rem;
       border-radius: 2px;
-      font-weight: bold;
       letter-spacing: 0.06em;
     }
     .popup-status-badge.live {
@@ -509,7 +515,7 @@
       pointer-events: none;
     }
     .world-threat-log {
-      font-family: 'Consolas', monospace;
+      font-family: 'JetBrains Mono', monospace;
       font-size: 0.50rem;
       background: rgba(0, 5, 8, 0.9);
       padding: 0.22rem 0.35rem;
@@ -573,7 +579,7 @@
       100% { transform: scale(1.3); opacity: 1; }
     }
     .satcom-stats {
-      font-family: 'Consolas', monospace;
+      font-family: 'JetBrains Mono', monospace;
       font-size: 0.52rem;
       line-height: 1.35;
       color: #94a3b8;
@@ -592,7 +598,7 @@
       display: flex;
       flex-direction: column;
       gap: 2px;
-      font-family: 'Consolas', monospace;
+      font-family: 'JetBrains Mono', monospace;
       font-size: 0.50rem;
       margin-bottom: 0.25rem;
     }
@@ -637,7 +643,7 @@
 
     /* Packet Stream Styles */
     .packet-stream-box {
-      font-family: 'Consolas', monospace;
+      font-family: 'JetBrains Mono', monospace;
       font-size: 0.49rem;
       line-height: 1.25;
       background: rgba(1, 6, 12, 0.9);
@@ -657,7 +663,7 @@
 
     /* Nmap Screen Styles */
     .nmap-ports-box {
-      font-family: 'Consolas', monospace;
+      font-family: 'JetBrains Mono', monospace;
       font-size: 0.49rem;
       line-height: 1.25;
       background: rgba(0, 6, 12, 0.85);
@@ -680,7 +686,7 @@
 
     /* Hashcat Screen Styles */
     .hashcat-stream-box {
-      font-family: 'Consolas', monospace;
+      font-family: 'JetBrains Mono', monospace;
       font-size: 0.48rem;
       line-height: 1.22;
       background: rgba(0, 8, 14, 0.9);
@@ -699,7 +705,7 @@
       border: 1px solid rgba(0, 229, 255, 0.25);
       border-radius: 2px;
       padding: 0.22rem 0.35rem;
-      font-family: 'Consolas', monospace;
+      font-family: 'JetBrains Mono', monospace;
       font-size: 0.49rem;
       line-height: 1.25;
       color: #94a3b8;
@@ -720,7 +726,7 @@
       border: 1px solid rgba(255, 42, 75, 0.25);
       border-radius: 2px;
       padding: 0.22rem 0.35rem;
-      font-family: 'Consolas', monospace;
+      font-family: 'JetBrains Mono', monospace;
       font-size: 0.48rem;
       line-height: 1.25;
       color: #94a3b8;
@@ -876,13 +882,14 @@
       background: transparent;
       border: 1px solid rgba(0, 229, 255, 0.3);
       color: rgba(141, 239, 255, 0.65);
-      font-family: inherit;
-      font-size: 0.58rem;
-      padding: 0.1rem 0.35rem;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      font-size: 0.64rem;
+      padding: 0.12rem 0.42rem;
       border-radius: 2px;
       cursor: pointer;
       transition: all 0.15s ease;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.08em;
     }
 
     .hud-mode-btn:hover {
@@ -899,7 +906,8 @@
     }
 
     .hud-telemetry-pill {
-      font-family: 'Share Tech Mono', 'Consolas', monospace;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
       font-size: 0.62rem;
       color: #a7f3d0;
       text-shadow: 0 0 3px rgba(52, 211, 153, 0.5);
@@ -908,6 +916,7 @@
       gap: 0.32rem;
       cursor: pointer;
       user-select: none;
+      letter-spacing: 0.04em;
     }
 
     .hud-telemetry-pill:hover {
@@ -931,7 +940,8 @@
 
     /* Live Laptop Battery Telemetry Pill */
     .hud-battery-pill {
-      font-family: 'Share Tech Mono', 'Consolas', monospace;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
       font-size: 0.58rem;
       letter-spacing: 0.06em;
       color: #00ff88;
@@ -939,7 +949,7 @@
       display: inline-flex;
       align-items: center;
       gap: 0.28rem;
-      padding: 0.08rem 0.32rem;
+      padding: 0.08rem 0.35rem;
       background: rgba(0, 18, 24, 0.65);
       border: 1px solid rgba(0, 229, 255, 0.28);
       border-radius: 2px;
@@ -1035,8 +1045,10 @@
       border-right: 3px solid #ff2a4b;
       border-radius: 2px;
       color: #ff8597;
-      font: 600 0.68rem 'Consolas', monospace;
-      letter-spacing: 0.08em;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
       text-align: right;
       text-shadow: 0 0 3px rgba(255, 42, 75, 0.45);
       box-shadow: 0 0 8px rgba(255, 42, 75, 0.16), inset 0 0 8px rgba(255, 42, 75, 0.08);
@@ -1044,10 +1056,10 @@
 
     .ip-panel strong {
       display: block;
-      font-family: 'Orbitron', 'Share Tech Mono', monospace;
+      font-family: 'JetBrains Mono', monospace;
       font-weight: 700;
-      font-size: 0.96rem;
-      letter-spacing: 0.14em;
+      font-size: 0.98rem;
+      letter-spacing: 0.10em;
       font-variant-numeric: tabular-nums;
       color: #ff2a4b;
       text-shadow: 0 0 5px rgba(255, 42, 75, 0.95), 0 0 12px rgba(255, 0, 60, 0.55);
@@ -1069,14 +1081,14 @@
 
     .digital-segment {
       position: absolute;
-      background: rgba(65, 15, 20, 0.45);
+      background: rgba(45, 12, 18, 0.32);
       border-radius: 0.12rem;
-      transition: background 0.12s ease, box-shadow 0.12s ease;
+      transition: background 0.08s ease, box-shadow 0.08s ease;
     }
 
     .digital-segment.on {
       background: #ff2a4b;
-      box-shadow: 0 0 4px rgba(255, 42, 75, 0.95), 0 0 9px rgba(255, 0, 60, 0.55);
+      box-shadow: 0 0 5px rgba(255, 42, 75, 1), 0 0 12px rgba(255, 0, 60, 0.65);
     }
 
     .digital-segment.a,
@@ -1147,6 +1159,263 @@
       opacity: 0.95;
     }
 
+    /* 14a. Digital Clock Anchor & Quick System Shortcuts Dropdown */
+    .digital-clock-anchor {
+      position: relative;
+      display: inline-flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+      width: 100%;
+    }
+
+    /* 14a. Mode Bar Quick System Shortcuts Dropdown Anchor & Button */
+    .hud-shortcuts-anchor {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .clock-shortcuts-arrow-btn {
+      position: relative;
+      width: 17px;
+      height: 17px;
+      background: rgba(24, 6, 10, 0.92);
+      border: 1px solid rgba(255, 42, 75, 0.45);
+      border-radius: 2px;
+      color: #ff4757;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      padding: 0;
+      margin: 0;
+      transition: all 0.18s ease;
+      box-shadow: 0 0 6px rgba(255, 42, 75, 0.3);
+      z-index: 25;
+    }
+
+    .clock-shortcuts-arrow-btn:hover,
+    .clock-shortcuts-arrow-btn.active {
+      background: rgba(255, 42, 75, 0.28);
+      border-color: #ff2a4b;
+      color: #ffffff;
+      box-shadow: 0 0 10px rgba(255, 42, 75, 0.85);
+      transform: scale(1.1);
+    }
+
+    .clock-shortcuts-arrow-btn.active .clock-arrow-svg {
+      transform: rotate(180deg);
+    }
+
+    .clock-arrow-svg {
+      transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      pointer-events: none;
+    }
+
+    .clock-shortcuts-menu {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      min-width: 235px;
+      background: rgba(2, 6, 12, 0.97);
+      border: 1px solid rgba(0, 229, 255, 0.38);
+      border-top: 2px solid #ff2a4b;
+      border-radius: 2px;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.9), 0 0 16px rgba(255, 42, 75, 0.25);
+      padding: 0.35rem;
+      z-index: 100;
+      display: none;
+      flex-direction: column;
+      animation: scDropdownFadeIn 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .clock-shortcuts-menu.open {
+      display: flex;
+    }
+
+    @keyframes scDropdownFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-4px) scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .shortcuts-menu-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.25rem 0.45rem 0.35rem 0.45rem;
+      border-bottom: 1px solid rgba(0, 229, 255, 0.18);
+      font-family: 'Orbitron', 'Rajdhani', sans-serif;
+      font-size: 0.56rem;
+      letter-spacing: 0.12em;
+    }
+
+    .shortcuts-menu-title {
+      color: #ff6b81;
+      font-weight: 700;
+      text-shadow: 0 0 4px rgba(255, 42, 75, 0.6);
+    }
+
+    .shortcuts-menu-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.44rem;
+      color: #00ff88;
+      background: rgba(0, 255, 136, 0.12);
+      border: 1px solid rgba(0, 255, 136, 0.35);
+      padding: 0.04rem 0.25rem;
+      border-radius: 2px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+    }
+
+    .shortcuts-menu-items {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      margin-top: 0.25rem;
+    }
+
+    .shortcut-item {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.32rem 0.45rem;
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 2px;
+      color: #e2e8f0;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.14s ease;
+      width: 100%;
+    }
+
+    .shortcut-item:hover {
+      background: rgba(0, 229, 255, 0.12);
+      border-color: rgba(0, 229, 255, 0.35);
+      color: #ffffff;
+      transform: translateX(-2px);
+    }
+
+    .shortcut-item.item-power:hover {
+      background: rgba(255, 42, 75, 0.22);
+      border-color: #ff2a4b;
+    }
+
+    .shortcut-item.item-restart:hover {
+      background: rgba(255, 165, 2, 0.22);
+      border-color: #ffa502;
+    }
+
+    .shortcut-item .sc-icon {
+      font-size: 0.76rem;
+      width: 1.1rem;
+      text-align: center;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .shortcut-item.item-power .sc-icon { color: #ff4757; }
+    .shortcut-item.item-settings .sc-icon { color: #00e5ff; }
+    .shortcut-item.item-restart .sc-icon { color: #ffa502; }
+    .shortcut-item.item-lock .sc-icon { color: #00ff88; }
+    .shortcut-item.item-sleep .sc-icon { color: #38bdf8; }
+    .shortcut-item.item-taskmgr .sc-icon { color: #00e5ff; }
+    .shortcut-item.item-gpu .sc-icon { color: #ffd32a; }
+
+    .shortcut-item .sc-meta {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .shortcut-item .sc-label {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.70rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+
+    .shortcut-item .sc-sub {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.48rem;
+      font-weight: 500;
+      color: #64748b;
+      letter-spacing: 0.03em;
+    }
+
+    .shortcut-item:hover .sc-sub {
+      color: #94a3b8;
+    }
+
+    .shortcut-divider {
+      height: 1px;
+      background: rgba(0, 229, 255, 0.16);
+      margin: 0.2rem 0;
+    }
+
+    /* Shortcut HUD Toast Notification */
+    .hud-shortcut-toast {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: rgba(2, 6, 14, 0.96);
+      border: 1px solid rgba(0, 229, 255, 0.6);
+      border-left: 4px solid #ff2a4b;
+      box-shadow: 0 0 20px rgba(0, 229, 255, 0.35), 0 8px 30px rgba(0, 0, 0, 0.9);
+      padding: 0.45rem 1rem;
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: #d8fbff;
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .hud-shortcut-toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+      pointer-events: auto;
+    }
+
+    .hud-shortcut-toast .toast-icon {
+      font-size: 0.9rem;
+    }
+
+    /* Screen flicker when GPU driver restart is simulated */
+    .gpu-restart-flash {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 99999;
+      pointer-events: none;
+      opacity: 0;
+    }
+    .gpu-restart-flash.flash-active {
+      animation: gpuFlashAnim 0.35s steps(2, start);
+    }
+    @keyframes gpuFlashAnim {
+      0% { opacity: 0.95; }
+      50% { opacity: 0.2; }
+      75% { opacity: 0.85; }
+      100% { opacity: 0; }
+    }
+
     /* 14b. Real-Time Date Bar */
     .hud-date-bar {
       display: flex;
@@ -1169,22 +1438,24 @@
     }
 
     .hud-date-tag {
-      font-size: 0.48rem;
-      padding: 0.05rem 0.22rem;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.54rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 0.06rem 0.25rem;
       border-radius: 2px;
       background: rgba(0, 229, 255, 0.14);
       border: 1px solid rgba(0, 229, 255, 0.35);
       color: #00e5ff;
-      font-weight: bold;
     }
 
     .hud-live-date {
-      font-family: 'Share Tech Mono', 'Consolas', monospace;
-      font-size: 0.64rem;
-      font-weight: bold;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      font-weight: 600;
       color: #8defff;
       text-shadow: 0 0 3px rgba(0, 229, 255, 0.5);
-      letter-spacing: 0.09em;
+      letter-spacing: 0.08em;
     }
 
     .hud-cal-toggle-btn {
@@ -1192,15 +1463,16 @@
       border: 1px solid rgba(0, 229, 255, 0.3);
       border-radius: 2px;
       color: rgba(141, 239, 255, 0.85);
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.54rem;
-      padding: 0.1rem 0.35rem;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 0.12rem 0.4rem;
       cursor: pointer;
       display: flex;
       align-items: center;
       gap: 0.25rem;
       transition: all 0.15s ease;
-      letter-spacing: 0.06em;
     }
 
     .hud-cal-toggle-btn:hover {
@@ -1258,33 +1530,36 @@
     }
 
     .cal-month-title {
-      font-family: 'Orbitron', 'Share Tech Mono', monospace;
+      font-family: 'Orbitron', 'Rajdhani', sans-serif;
       font-weight: 700;
-      font-size: 0.60rem;
-      letter-spacing: 0.08em;
+      font-size: 0.64rem;
+      letter-spacing: 0.12em;
       color: #fff;
       text-shadow: 0 0 4px rgba(0, 229, 255, 0.6);
     }
 
     .cal-ops-tag {
+      font-family: 'JetBrains Mono', monospace;
       font-size: 0.44rem;
       padding: 0.04rem 0.2rem;
       background: rgba(255, 42, 75, 0.18);
       border: 1px solid rgba(255, 42, 75, 0.5);
       border-radius: 2px;
       color: #ff4757;
-      font-weight: bold;
+      font-weight: 700;
+      letter-spacing: 0.06em;
     }
 
     .cal-today-btn {
       background: rgba(0, 255, 136, 0.12);
       border: 1px solid rgba(0, 255, 136, 0.4);
       color: #00ff88;
-      font-size: 0.48rem;
-      font-family: 'Share Tech Mono', monospace;
-      font-weight: bold;
+      font-size: 0.52rem;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.06em;
       border-radius: 2px;
-      padding: 0.12rem 0.3rem;
+      padding: 0.12rem 0.35rem;
       cursor: pointer;
       transition: all 0.15s ease;
     }
@@ -1299,10 +1574,11 @@
       display: grid;
       grid-template-columns: repeat(7, 1fr);
       text-align: center;
-      font-family: 'Consolas', monospace;
-      font-size: 0.50rem;
-      color: #64748b;
-      font-weight: bold;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.56rem;
+      color: #7dd3fc;
+      font-weight: 700;
+      letter-spacing: 0.06em;
       margin-top: 0.1rem;
     }
 
@@ -1311,8 +1587,9 @@
       grid-template-columns: repeat(7, 1fr);
       gap: 2px;
       text-align: center;
-      font-family: 'Share Tech Mono', 'Consolas', monospace;
-      font-size: 0.52rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.54rem;
+      font-weight: 600;
       font-variant-numeric: tabular-nums;
     }
 
@@ -1417,25 +1694,29 @@
 
     .cal-briefing-label {
       color: #8defff;
-      font-family: 'Consolas', monospace;
-      font-weight: bold;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.06em;
     }
 
     .cal-briefing-status {
+      font-family: 'JetBrains Mono', monospace;
       font-size: 0.44rem;
       padding: 0.02rem 0.2rem;
       border-radius: 1px;
       background: rgba(255, 42, 75, 0.2);
       border: 1px solid rgba(255, 42, 75, 0.5);
       color: #ff6b81;
-      font-weight: bold;
+      font-weight: 700;
+      letter-spacing: 0.05em;
     }
 
     .cal-briefing-event {
-      font-family: 'Consolas', monospace;
-      font-size: 0.46rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.48rem;
+      font-weight: 500;
       color: #cbd5e1;
-      line-height: 1.2;
+      line-height: 1.25;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -1480,6 +1761,9 @@
       .digital-clock {
         transform: scale(0.92);
         transform-origin: top right;
+      }
+      .clock-shortcuts-menu {
+        min-width: 215px;
       }
       .hud-topbar {
         font-size: 0.56rem;
@@ -1550,6 +1834,12 @@
       .digital-clock {
         transform: scale(0.78);
         transform-origin: top right;
+      }
+      .clock-shortcuts-menu {
+        min-width: 200px;
+        left: 0;
+        top: calc(100% + 5px);
+        border-top: 2px solid #ff2a4b;
       }
       .hud-cyber-calendar,
       .hud-cal-toggle-btn {
@@ -1768,7 +2058,7 @@
   <div class="screen-overlay" id="screen-laptop">
     <div style="color:#38bdf8; font-weight:bold; font-size:0.50rem; border-bottom:1px solid rgba(56,189,248,0.4); margin-bottom:2px; display:flex; justify-content:space-between; align-items:center;">
       <span>PACKET_SNIFFER // ETH0</span>
-      <span id="screen-laptop-battery" style="color:#00ff88; font-family:'Consolas', monospace; font-size:0.46rem; font-weight:normal;">BAT: --%</span>
+      <span id="screen-laptop-battery" style="color:#00ff88; font-family:'JetBrains Mono', monospace; font-size:0.46rem; font-weight:600;">BAT: --%</span>
     </div>
     <div id="screen-packet-content"></div>
   </div>
@@ -1814,6 +2104,72 @@
         <div class="hud-modes">
           <button id="mode-live-btn" class="hud-mode-btn active" type="button" title="Switch to Real-Time Watch">LIVE</button>
           <button id="mode-session-btn" class="hud-mode-btn" type="button" title="Switch to Screen Session Mode">SESSION</button>
+          <div class="hud-shortcuts-anchor">
+            <button id="clock-shortcuts-btn" class="clock-shortcuts-arrow-btn" type="button" aria-expanded="false" aria-haspopup="true" title="Quick System Shortcuts (Power, Settings, Lock, Task Manager, GPU Reset)">
+              <svg class="clock-arrow-svg" viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+            <!-- Dropdown Box -->
+            <div id="clock-shortcuts-menu" class="clock-shortcuts-menu" role="menu" aria-label="System Shortcuts">
+              <div class="shortcuts-menu-header">
+                <span class="shortcuts-menu-title">SYSTEM SHORTCUTS</span>
+                <span class="shortcuts-menu-badge">TACTICAL</span>
+              </div>
+              <div class="shortcuts-menu-items">
+                <button type="button" class="shortcut-item item-power" data-action="poweroff" role="menuitem">
+                  <span class="sc-icon">⏻</span>
+                  <div class="sc-meta">
+                    <span class="sc-label">Power Off</span>
+                    <span class="sc-sub">shutdown /s /t 0</span>
+                  </div>
+                </button>
+                <button type="button" class="shortcut-item item-settings" data-action="settings" role="menuitem">
+                  <span class="sc-icon">⚙</span>
+                  <div class="sc-meta">
+                    <span class="sc-label">Go to Settings</span>
+                    <span class="sc-sub">ms-settings:</span>
+                  </div>
+                </button>
+                <button type="button" class="shortcut-item item-restart" data-action="restart" role="menuitem">
+                  <span class="sc-icon">↻</span>
+                  <div class="sc-meta">
+                    <span class="sc-label">Restart</span>
+                    <span class="sc-sub">shutdown /r /t 0</span>
+                  </div>
+                </button>
+                <button type="button" class="shortcut-item item-lock" data-action="lock" role="menuitem">
+                  <span class="sc-icon">🔒</span>
+                  <div class="sc-meta">
+                    <span class="sc-label">Lock</span>
+                    <span class="sc-sub">Win + L</span>
+                  </div>
+                </button>
+                <button type="button" class="shortcut-item item-sleep" data-action="sleep" role="menuitem">
+                  <span class="sc-icon">☾</span>
+                  <div class="sc-meta">
+                    <span class="sc-label">Sleep</span>
+                    <span class="sc-sub">Standby Mode</span>
+                  </div>
+                </button>
+                <div class="shortcut-divider"></div>
+                <button type="button" class="shortcut-item item-taskmgr" data-action="taskmgr" role="menuitem">
+                  <span class="sc-icon">📊</span>
+                  <div class="sc-meta">
+                    <span class="sc-label">Open Task Manager</span>
+                    <span class="sc-sub">Ctrl + Shift + T</span>
+                  </div>
+                </button>
+                <button type="button" class="shortcut-item item-gpu" data-action="gpu-restart" role="menuitem">
+                  <span class="sc-icon">⚡</span>
+                  <div class="sc-meta">
+                    <span class="sc-label">Restart Graphics Driver</span>
+                    <span class="sc-sub">Ctrl + Win + Shift + B</span>
+                  </div>
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="hud-topbar-right">
           <!-- Live Laptop Battery Pill -->
@@ -1832,7 +2188,10 @@
           </div>
         </div>
       </div>
-      <div id="hud-clock" class="digital-clock" aria-label="Current time and session monitor"></div>
+      <!-- Digital Red Font Clock with Shortcut Dropdown Arrow on Bottom Right -->
+      <div class="digital-clock-anchor">
+        <div id="hud-clock" class="digital-clock" aria-label="Current time and session monitor"></div>
+      </div>
 
       <!-- 3. Real-Time Date Bar with Calendar Toggle -->
       <div class="hud-date-bar">
@@ -1879,6 +2238,15 @@
     <div>REMOTE NODE</div>
     <strong id="live-ip">10.24.81.106</strong>
   </div>
+
+  <!-- Quick HUD Toast Notification -->
+  <div id="hud-shortcut-toast" class="hud-shortcut-toast" role="status" aria-live="polite">
+    <span id="toast-icon" class="toast-icon">⚡</span>
+    <span id="toast-msg">ACTION TRIGGERED</span>
+  </div>
+
+  <!-- Simulated GPU Driver Reload Flash -->
+  <div id="gpu-restart-flash" class="gpu-restart-flash"></div>
 
   <script>
     (function () {
@@ -2181,6 +2549,186 @@
       }
       safeSetInterval(updateIp, 2500);
       updateIp();
+
+      /* ==============================================================
+         2b. SYSTEM SHORTCUTS DROPDOWN ENGINE (Power, Settings, Lock, TaskMgr, GPU Reload)
+         ============================================================== */
+      const shortcutsBtn = document.getElementById('clock-shortcuts-btn');
+      const shortcutsMenu = document.getElementById('clock-shortcuts-menu');
+      const toastEl = document.getElementById('hud-shortcut-toast');
+      const toastIcon = document.getElementById('toast-icon');
+      const toastMsg = document.getElementById('toast-msg');
+      const gpuFlashEl = document.getElementById('gpu-restart-flash');
+      let toastTimer = null;
+
+      function showShortcutToast(icon, msg) {
+        if (!toastEl || !toastIcon || !toastMsg) return;
+        toastIcon.textContent = icon;
+        toastMsg.textContent = msg;
+        toastEl.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          toastEl.classList.remove('show');
+        }, 3600);
+      }
+
+      function copyToClipboard(text) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).catch(() => {});
+        }
+      }
+
+      function toggleShortcutsMenu(forceState) {
+        if (!shortcutsMenu || !shortcutsBtn) return;
+        const isOpen = typeof forceState === 'boolean'
+          ? forceState
+          : !shortcutsMenu.classList.contains('open');
+        shortcutsMenu.classList.toggle('open', isOpen);
+        shortcutsBtn.classList.toggle('active', isOpen);
+        shortcutsBtn.setAttribute('aria-expanded', String(isOpen));
+      }
+
+      if (shortcutsBtn) {
+        shortcutsBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          toggleShortcutsMenu();
+        });
+      }
+
+      // Close dropdown if user clicks outside
+      document.addEventListener('click', (e) => {
+        if (shortcutsMenu && shortcutsMenu.classList.contains('open')) {
+          if (!shortcutsMenu.contains(e.target) && e.target !== shortcutsBtn) {
+            toggleShortcutsMenu(false);
+          }
+        }
+      });
+
+      // Close on Escape key
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          toggleShortcutsMenu(false);
+        }
+      });
+
+      // Authentic GPU driver restart simulation (Ctrl + Win + Shift + B)
+      function triggerGpuRestart() {
+        // 1. Play authentic DWM reload beep tone
+        try {
+          const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(840, audioCtx.currentTime);
+          gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.16);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start();
+          osc.stop(audioCtx.currentTime + 0.18);
+        } catch (e) {}
+
+        // 2. Trigger momentary screen flash
+        if (gpuFlashEl) {
+          gpuFlashEl.classList.remove('flash-active');
+          void gpuFlashEl.offsetWidth;
+          gpuFlashEl.classList.add('flash-active');
+        }
+
+        // 3. Re-sync graphics canvases
+        if (typeof resizeDataCanvas === 'function') resizeDataCanvas();
+        if (typeof resizeLightingCanvas === 'function') resizeLightingCanvas();
+
+        showShortcutToast('⚡', '[GPU RELOAD] DWM BUFFER RE-INITIALIZED · (Ctrl+Win+Shift+B)');
+      }
+
+      // Native system action dispatcher (HTTP bridge + multi-channel fallback)
+      function executeSystemAction(action) {
+        const url = 'http://127.0.0.1:38281/action?cmd=' + encodeURIComponent(action);
+
+        // 1. High-reliability image ping (works unconditionally in all browser/WebView2 contexts without CORS blocking)
+        try {
+          const ping = new Image();
+          ping.src = url + '&_t=' + Date.now();
+        } catch (e) {}
+
+        // 2. Direct no-cors fetch to local native bridge
+        try {
+          fetch(url, {
+            method: 'GET',
+            mode: 'no-cors',
+            cache: 'no-store'
+          }).catch(() => {});
+        } catch (e) {}
+
+        // 3. Secondary fallback: Registered Windows URI protocol
+        try {
+          let protoFrame = document.getElementById('cyber-action-frame');
+          if (!protoFrame) {
+            protoFrame = document.createElement('iframe');
+            protoFrame.id = 'cyber-action-frame';
+            protoFrame.style.display = 'none';
+            document.body.appendChild(protoFrame);
+          }
+          protoFrame.src = 'cyber-action://' + action;
+        } catch (err) {}
+
+        // 4. Native Windows protocol for settings
+        if (action === 'settings') {
+          setTimeout(() => {
+            try { window.location.href = 'ms-settings:'; } catch (err) {}
+          }, 50);
+        }
+      }
+
+      // Handle item actions
+      if (shortcutsMenu) {
+        shortcutsMenu.querySelectorAll('.shortcut-item').forEach(item => {
+          item.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleShortcutsMenu(false);
+            const action = item.getAttribute('data-action');
+
+            switch (action) {
+              case 'poweroff':
+                showShortcutToast('⏻', '[POWER OFF] Initiating immediate system shutdown...');
+                executeSystemAction('poweroff');
+                break;
+
+              case 'settings':
+                showShortcutToast('⚙', '[SETTINGS] Launching Windows Settings (ms-settings:)...');
+                executeSystemAction('settings');
+                break;
+
+              case 'restart':
+                showShortcutToast('↻', '[RESTART] Initiating immediate system restart...');
+                executeSystemAction('restart');
+                break;
+
+              case 'lock':
+                showShortcutToast('🔒', '[LOCK] Workstation Locked (Win + L)');
+                executeSystemAction('lock');
+                break;
+
+              case 'sleep':
+                showShortcutToast('☾', '[SLEEP] Suspending system to Standby...');
+                executeSystemAction('sleep');
+                break;
+
+              case 'taskmgr':
+                showShortcutToast('📊', '[TASK MANAGER] Launching Task Manager (taskmgr.exe)...');
+                executeSystemAction('taskmgr');
+                break;
+
+              case 'gpu-restart':
+                showShortcutToast('⚡', '[GPU RELOAD] Restarting Graphics Driver (Win+Ctrl+Shift+B)...');
+                triggerGpuRestart();
+                executeSystemAction('gpu-restart');
+                break;
+            }
+          });
+        });
+      }
 
       /* ==============================================================
          1b. LIVE LAPTOP BATTERY TELEMETRY (Browser Battery Status API)
@@ -3179,7 +3727,7 @@
       // --- SCREEN: NMAP 7.94 NETWORK AUDIT & CVE MATRIX ---
       function mountNmap(container) {
         container.innerHTML = `
-          <div style="font-family:'Consolas', monospace; font-size:0.50rem; color:#94a3b8; display:flex; justify-content:space-between; margin-bottom:2px;">
+          <div style="font-family:'JetBrains Mono', monospace; font-size:0.50rem; color:#94a3b8; display:flex; justify-content:space-between; margin-bottom:2px;">
             <span>TARGET: <strong id="nmap-target-ip" style="color:#d8fbff;">10.24.81.12 [HOST_UP]</strong></span>
             <span style="color:#ff2a4b; font-weight:bold;">CVSS 9.8</span>
           </div>
@@ -3215,7 +3763,7 @@
       // --- SCREEN: HASHCAT GPU BRUTE-FORCE & CIPHER CRACKER ---
       function mountHashcat(container) {
         container.innerHTML = `
-          <div style="display:flex; justify-content:space-between; font-family:'Consolas', monospace; font-size:0.48rem; color:#94a3b8; margin-bottom:2px;">
+          <div style="display:flex; justify-content:space-between; font-family:'JetBrains Mono', monospace; font-size:0.48rem; color:#94a3b8; margin-bottom:2px;">
             <span>HASH: <strong style="color:#00ff88;">WPA3-PBKDF2-SHA256</strong></span>
             <span style="color:#38bdf8;" id="hashcat-speed">14.8 GH/s</span>
           </div>
@@ -3227,7 +3775,7 @@
           <div style="background:rgba(0,10,18,0.85); border:1px solid rgba(0,255,136,0.3); border-radius:2px; height:5px; overflow:hidden; margin:2px 0;">
             <div id="hashcat-bar" style="width:84%; height:100%; background:linear-gradient(90deg, #00e5ff, #00ff88); box-shadow:0 0 6px #00ff88;"></div>
           </div>
-          <div style="display:flex; justify-content:space-between; font-size:0.46rem; color:#64748b; font-family:'Consolas', monospace;">
+          <div style="display:flex; justify-content:space-between; font-size:0.46rem; color:#64748b; font-family:'JetBrains Mono', monospace;">
             <span>4x RTX 4090 (64°C)</span>
             <span id="hashcat-pct-label" style="color:#00ff88;">RECOVERED: 84.6%</span>
           </div>
@@ -3266,7 +3814,7 @@
       // --- SCREEN: GHIDRA / IDA PRO REVERSE ENGINEERING & CFG ---
       function mountMalwareCFG(container) {
         container.innerHTML = `
-          <div style="font-family:'Consolas', monospace; font-size:0.49rem; color:#94a3b8; display:flex; justify-content:space-between; margin-bottom:2px;">
+          <div style="font-family:'JetBrains Mono', monospace; font-size:0.49rem; color:#94a3b8; display:flex; justify-content:space-between; margin-bottom:2px;">
             <span>TARGET: <strong style="color:#d8fbff;">stage2_payload.dll</strong></span>
             <span style="color:#00ff88; font-weight:bold;">AMSI_BYPASS: OK</span>
           </div>
@@ -3277,7 +3825,7 @@
             <div><span class="asm-addr">0x14024:</span> <span class="asm-op">jz</span> <span class="asm-lbl">0x1403C</span> <span class="asm-res">-> [HOOK_CLEARED]</span></div>
             <div id="cfg-dynamic-line" style="color:#00e5ff; font-weight:bold;"><span class="asm-addr">0x1403C:</span> <span class="asm-op">syscall</span> <span class="asm-cmt">; NtProtectVirtualMem</span></div>
           </div>
-          <div style="display:flex; justify-content:space-between; font-size:0.46rem; color:#64748b; font-family:'Consolas', monospace; margin-top:2px;">
+          <div style="display:flex; justify-content:space-between; font-size:0.46rem; color:#64748b; font-family:'JetBrains Mono', monospace; margin-top:2px;">
             <span>ENTROPY: <strong id="cfg-entropy-val" style="color:#ffa502;">7.89</strong></span>
             <span id="cfg-edr-status" style="color:#00ff88; font-weight:bold;">EDR: BLINDED</span>
           </div>
@@ -3301,7 +3849,7 @@
       // --- SCREEN: BOTNET C2 / DISTRIBUTED SWARM COMMAND ---
       function mountBotnetC2(container) {
         container.innerHTML = `
-          <div style="display:flex; justify-content:space-between; font-family:'Consolas', monospace; font-size:0.48rem; color:#94a3b8; margin-bottom:2px;">
+          <div style="display:flex; justify-content:space-between; font-family:'JetBrains Mono', monospace; font-size:0.48rem; color:#94a3b8; margin-bottom:2px;">
             <span>SWARM: <strong id="botnet-count" style="color:#00ff88;">14,892 BOTS</strong></span>
             <span style="color:#ff2a4b; font-weight:bold;" id="botnet-bw">116.4 Gbps</span>
           </div>
@@ -3310,7 +3858,7 @@
             <div>[+] NODE #7819: DE-FRANKFURT -> <span style="color:#00ff88;">SYNCED</span></div>
             <div style="color:#ff4757; font-weight:bold;">[!] DISPATCH: HTTP_FLOOD -> 104.21.84.12</div>
           </div>
-          <div style="display:flex; justify-content:space-between; font-size:0.46rem; color:#64748b; font-family:'Consolas', monospace; margin-top:2px;">
+          <div style="display:flex; justify-content:space-between; font-size:0.46rem; color:#64748b; font-family:'JetBrains Mono', monospace; margin-top:2px;">
             <span>VECTOR: SYN_ACK_AMPLIFY</span>
             <span style="color:#38bdf8; font-weight:bold;">AMP: x58.4</span>
           </div>
