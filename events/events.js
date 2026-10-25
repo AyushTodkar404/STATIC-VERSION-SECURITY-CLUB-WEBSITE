@@ -47,6 +47,18 @@ window.eventsData = [
     "attachments": [
       { "label": "Tech Quest poster", "path": "events/Security Club_20261009_142358_0000.webp", "type": "Image" }
     ]
+  },
+  {
+    "title": "Tools For Penetration Testing",
+    "date": "26-10-2026",
+    "type": "Workshop",
+    "speaker": "MR. HERAMB PATIL",
+    "description": "A workshop on penetration testing tools and techniques by speaker MR. HERAMB PATIL, conducted by Security Club , DBIT on October 26, 2026 at 2.00 PM to 4.00 PM.",
+    "venue": "IT LAB 6 ,3rd FLOOR , A WING",
+    "image": "events/tools for penetration testinng.webp",
+    "attachments": [
+      { "label": "Penetration testing tools poster", "path": "events/tools for penetration testinng.webp", "type": "Image" }
+    ]
   }
 
 

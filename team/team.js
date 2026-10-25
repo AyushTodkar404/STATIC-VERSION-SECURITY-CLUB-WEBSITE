@@ -148,6 +148,13 @@ window.teamData = [
     "image": "team/SHREECHAITANYA.webp",
     "linkedin": ""
   },
+  {
+    "name": "AYUSH BANGERA",
+    "role": "TECHNICAL HEAD",
+    "bio": "Security Club DBIT team member.",
+    "image": "team/AYUSH.webp",
+    "linkedin": ""
+  }
 
 
 
