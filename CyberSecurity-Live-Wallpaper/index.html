@@ -750,9 +750,10 @@
       background-size: 52px 52px;
       opacity: 0.95;
       filter: drop-shadow(0 0 2px rgba(0, 229, 255, 0.28));
+      animation: grid-natural-breathe 6s infinite ease-in-out alternate;
     }
 
-    /* Glowing wave sweep across gridlines: left to right, then right to left */
+    /* Natural glowing wave sweep across gridlines: left to right, then right to left */
     .cyber-gridlines::after {
       content: '';
       position: absolute;
@@ -763,67 +764,45 @@
       background-size: 52px 52px;
       -webkit-mask-image: linear-gradient(90deg,
         transparent 0%,
-        rgba(0, 0, 0, 0.25) 20%,
+        rgba(0, 0, 0, 0.2) 20%,
         rgba(0, 0, 0, 1) 50%,
-        rgba(0, 0, 0, 0.25) 80%,
+        rgba(0, 0, 0, 0.2) 80%,
         transparent 100%
       );
       mask-image: linear-gradient(90deg,
         transparent 0%,
-        rgba(0, 0, 0, 0.25) 20%,
+        rgba(0, 0, 0, 0.2) 20%,
         rgba(0, 0, 0, 1) 50%,
-        rgba(0, 0, 0, 0.25) 80%,
+        rgba(0, 0, 0, 0.2) 80%,
         transparent 100%
       );
-      -webkit-mask-size: 38% 100%;
-      mask-size: 38% 100%;
+      -webkit-mask-size: 48% 100%;
+      mask-size: 48% 100%;
       -webkit-mask-repeat: no-repeat;
       mask-repeat: no-repeat;
       filter: drop-shadow(0 0 6px #00ffaa) drop-shadow(0 0 14px #00e5ff);
-      animation: grid-glow-sweep 5.5s infinite ease-in-out alternate;
+      animation: grid-glow-sweep 6s infinite ease-in-out alternate;
     }
 
-    /* Vertical glowing laser scan beam that travels with the sweep */
-    .cyber-gridlines::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      width: 3px;
-      background: linear-gradient(180deg,
-        transparent 0%,
-        rgba(0, 255, 170, 0.55) 15%,
-        #00e5ff 50%,
-        rgba(0, 255, 170, 0.55) 85%,
-        transparent 100%
-      );
-      box-shadow: 0 0 14px #00e5ff, 0 0 28px rgba(0, 255, 170, 0.85);
-      opacity: 0.85;
-      animation: grid-beam-sweep 5.5s infinite ease-in-out alternate;
+    @keyframes grid-natural-breathe {
+      0%, 100% {
+        opacity: 0.85;
+        filter: drop-shadow(0 0 2px rgba(0, 229, 255, 0.25));
+      }
+      50% {
+        opacity: 1;
+        filter: drop-shadow(0 0 4px rgba(0, 229, 255, 0.55)) drop-shadow(0 0 8px rgba(0, 255, 170, 0.3));
+      }
     }
 
     @keyframes grid-glow-sweep {
       0% {
-        -webkit-mask-position: -40vw 0;
-        mask-position: -40vw 0;
+        -webkit-mask-position: -48vw 0;
+        mask-position: -48vw 0;
       }
       100% {
-        -webkit-mask-position: 140vw 0;
-        mask-position: 140vw 0;
-      }
-    }
-
-    @keyframes grid-beam-sweep {
-      0% {
-        left: -15px;
-        opacity: 0.25;
-      }
-      50% {
-        opacity: 0.95;
-      }
-      100% {
-        left: calc(100vw + 15px);
-        opacity: 0.25;
+        -webkit-mask-position: 148vw 0;
+        mask-position: 148vw 0;
       }
     }
 
