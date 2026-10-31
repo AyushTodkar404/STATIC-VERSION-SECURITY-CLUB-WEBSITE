@@ -2400,32 +2400,6 @@ body.splash-active {
   color: var(--cyan);
 }
 
-.splash-skip-btn {
-  position: absolute;
-  bottom: 2rem;
-  right: 2rem;
-  z-index: 10;
-  background: rgba(8, 20, 31, 0.75);
-  border: 1px solid rgba(56, 189, 248, 0.25);
-  color: var(--muted);
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  padding: 0.4rem 0.9rem;
-  border-radius: 4px;
-  cursor: pointer;
-  letter-spacing: 0.05em;
-  transition: all 0.2s ease;
-}
-
-.splash-skip-btn:hover,
-.splash-skip-btn:focus-visible {
-  color: var(--cyan);
-  border-color: var(--cyan);
-  background: rgba(0, 229, 255, 0.12);
-  box-shadow: 0 0 12px rgba(0, 229, 255, 0.3);
-  outline: none;
-}
-
 @keyframes splash-spin {
   to {
     transform: rotate(360deg);
@@ -2450,3 +2424,4 @@ body.splash-active {
     display: none !important;
   }
 }
+

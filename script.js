@@ -690,9 +690,24 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
     const progressBar = splash.querySelector('.splash-progress-bar');
     const percentEl = splash.querySelector('.splash-percent');
     const statusEl = splash.querySelector('.splash-status');
-    const skipBtn = splash.querySelector('.splash-skip-btn');
 
-    const duration = 5400; // 5.4s duration (in the 5-6s window)
+    let isWindowLoaded = document.readyState === 'complete';
+    if (!isWindowLoaded) {
+      window.addEventListener('load', function () {
+        isWindowLoaded = true;
+      }, { once: true });
+    }
+
+    let isFontsReady = !document.fonts;
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function () {
+        isFontsReady = true;
+      }).catch(function () {
+        isFontsReady = true;
+      });
+    }
+
+    const duration = 5400; // 5.4s loading duration (within 5-6s window)
     const startTime = performance.now();
     let isDone = false;
     let animId = null;
@@ -703,7 +718,7 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
       if (animId) cancelAnimationFrame(animId);
       if (progressBar) progressBar.style.width = '100%';
       if (percentEl) percentEl.textContent = '100%';
-      if (statusEl) statusEl.textContent = 'SYSTEM READY · WELCOME';
+      if (statusEl) statusEl.textContent = 'CORE READY · WELCOME TO DBIT';
       splash.setAttribute('aria-valuenow', '100');
 
       setTimeout(function () {
@@ -713,50 +728,45 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
           splash.style.display = 'none';
           splash.setAttribute('aria-hidden', 'true');
         }, 650);
-      }, 200);
+      }, 250);
     }
 
     function step(now) {
       if (isDone) return;
       const elapsed = now - startTime;
-      const progress = Math.min(1, elapsed / duration);
-      const percent = Math.floor(progress * 100);
+      const timeRatio = elapsed / duration;
+
+      // Ensure full asset and font readiness before passing 98%
+      const assetsReady = isWindowLoaded && isFontsReady;
+      const effectiveRatio = (!assetsReady && timeRatio >= 0.98) ? 0.98 : Math.min(1, timeRatio);
+      const percent = Math.floor(effectiveRatio * 100);
 
       if (progressBar) progressBar.style.width = percent + '%';
       if (percentEl) percentEl.textContent = percent + '%';
       splash.setAttribute('aria-valuenow', String(percent));
 
       if (statusEl) {
-        if (progress < 0.25) {
+        if (effectiveRatio < 0.25) {
           statusEl.textContent = 'INITIALIZING SECURE CORE...';
-        } else if (progress < 0.50) {
+        } else if (effectiveRatio < 0.50) {
           statusEl.textContent = 'LOADING SECURITY PROTOCOLS...';
-        } else if (progress < 0.75) {
+        } else if (effectiveRatio < 0.75) {
           statusEl.textContent = 'SYNCHRONIZING THREAT MATRICES...';
-        } else if (progress < 0.95) {
-          statusEl.textContent = 'FINALIZING ENVIRONMENT...';
+        } else if (effectiveRatio < 0.98) {
+          statusEl.textContent = 'VERIFYING SYSTEM ASSETS & FONTS...';
+        } else if (!assetsReady) {
+          statusEl.textContent = 'FINALIZING NETWORK ASSET STREAM...';
         } else {
           statusEl.textContent = 'CORE READY · WELCOME TO DBIT';
         }
       }
 
-      if (progress < 1) {
-        animId = requestAnimationFrame(step);
+      if (timeRatio >= 1 && assetsReady) {
+        finish();
       } else {
-        finish();
+        animId = requestAnimationFrame(step);
       }
     }
-
-    if (skipBtn) {
-      skipBtn.addEventListener('click', finish);
-    }
-
-    document.addEventListener('keydown', function onEscape(e) {
-      if (e.key === 'Escape' && !isDone) {
-        finish();
-        document.removeEventListener('keydown', onEscape);
-      }
-    });
 
     animId = requestAnimationFrame(step);
   }
