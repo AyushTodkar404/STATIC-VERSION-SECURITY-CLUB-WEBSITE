@@ -26,6 +26,8 @@
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 body {
@@ -39,8 +41,27 @@ body {
   font: 400 16px/1.65 var(--font-sans);
   width: 100%;
   overflow-x: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+}
+
+/* Remove chunky default browser scrollbar across all engines */
+html,
+body,
+* {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+*::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent !important;
 }
 
 #matrix-background {
@@ -48,11 +69,12 @@ body {
   inset: 0;
   z-index: -3;
   display: block;
-  width: 100vw;
-  max-width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   opacity: 0.18;
   pointer-events: none;
+  contain: strict;
+  transform: translateZ(0);
 }
 
 .ambient-grid {
@@ -66,6 +88,8 @@ body {
     linear-gradient(90deg, rgba(0, 229, 255, 0.045) 1px, transparent 1px);
   background-size: 38px 38px;
   mask-image: radial-gradient(ellipse 95% 85% at 50% 40%, black 30%, transparent 95%);
+  contain: strict;
+  transform: translateZ(0);
 }
 
 a {
