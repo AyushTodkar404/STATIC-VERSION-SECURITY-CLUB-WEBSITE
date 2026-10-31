@@ -125,5 +125,111 @@ window.galleryData = [
     "caption": "DSCI 2 DAY BOOTCAMP 2026",
     "folder": "2026/DSCI 2 DAY BOOTCAMP 2026",
     "folderLabel": "DSCI 2 DAY BOOTCAMP 2026"
+  },
+  {
+    "image": "gallery/2026/TechQuest-2026/jpeg-optimizer_DBCL--DBIT--TechQuest 2026--45.",
+    "alt": "TechQuest 2026",
+    "caption": "TechQuest 2026",
+    "folder": "2026/TechQuest-2026",
+    "folderLabel": "TechQuest 2026"
+  },
+  {
+    "image": "gallery/2026/TechQuest-2026/jpeg-optimizer_DBCL--DBIT--TechQuest 2026--46.webp",
+    "alt": "TechQuest 2026",
+    "caption": "TechQuest 2026",
+    "folder": "2026/TechQuest-2026",
+    "folderLabel": "TechQuest 2026"
+  },
+  {
+    "image": "gallery/2026/TechQuest-2026/jpeg-optimizer_DBCL--DBIT--TechQuest 2026--47.JPG",
+    "alt": "TechQuest 2026",
+    "caption": "TechQuest 2026",
+    "folder": "2026/TechQuest-2026",
+    "folderLabel": "TechQuest 2026"
+  },
+  {
+    "image": "gallery/2026/TechQuest-2026/jpeg-optimizer_DBCL--DBIT--TechQuest 2026--76.JPG",
+    "alt": "TechQuest 2026",
+    "caption": "TechQuest 2026",
+    "folder": "2026/TechQuest-2026",
+    "folderLabel": "TechQuest 2026"
+  },
+  {
+    "image": "gallery/2026/TechQuest-2026/jpeg-optimizer_DBCL--DBIT--TechQuest 2026--77.JPG",
+    "alt": "TechQuest 2026",
+    "caption": "TechQuest 2026",
+    "folder": "2026/TechQuest-2026",
+    "folderLabel": "TechQuest 2026"
+  },
+  {
+    "image": "gallery/2026/TechQuest-2026/jpeg-optimizer_DBCL--DBIT--TechQuest 2026--78.JPG",
+    "alt": "TechQuest 2026",
+    "caption": "TechQuest 2026",
+    "folder": "2026/TechQuest-2026",
+    "folderLabel": "TechQuest 2026"
+  },
+  {
+    "image": "gallery/2026/TechQuest-2026/jpeg-optimizer_DBCL--DBIT--TechQuest 2026--79.JPG",
+    "alt": "TechQuest 2026",
+    "caption": "TechQuest 2026",
+    "folder": "2026/TechQuest-2026",
+    "folderLabel": "TechQuest 2026"
+  },
+  {
+    "image": "gallery/2026/TechQuest-2026/jpeg-optimizer_DBCL--DBIT--TechQuest 2026--80.JPG",
+    "alt": "TechQuest 2026",
+    "caption": "TechQuest 2026",
+    "folder": "2026/TechQuest-2026",
+    "folderLabel": "TechQuest 2026"
+  },
+  {
+    "image": "gallery/2026/TechQuest-2026/jpeg-optimizer_DBCL--DBIT--TechQuest 2026--81.JPG",
+    "alt": "TechQuest 2026",
+    "caption": "TechQuest 2026",
+    "folder": "2026/TechQuest-2026",
+    "folderLabel": "TechQuest 2026"
+  },
+  {
+    "image": "gallery/2026/TechQuest-2026/jpeg-optimizer_DBCL--DBIT--TechQuest 2026--82.JPG",
+    "alt": "TechQuest 2026",
+    "caption": "TechQuest 2026",
+    "folder": "2026/TechQuest-2026",
+    "folderLabel": "TechQuest 2026"
+  },
+  {
+    "image": "gallery/2026/TechQuest-2026/jpeg-optimizer_DBCL--DBIT--TechQuest 2026--83.JPG",
+    "alt": "TechQuest 2026",
+    "caption": "TechQuest 2026",
+    "folder": "2026/TechQuest-2026",
+    "folderLabel": "TechQuest 2026"
+  },
+  {
+    "image": "gallery/2026/TechQuest-2026/jpeg-optimizer_DBCL--DBIT--TechQuest 2026--84.JPG",
+    "alt": "TechQuest 2026",
+    "caption": "TechQuest 2026",
+    "folder": "2026/TechQuest-2026",
+    "folderLabel": "TechQuest 2026"
+  },
+  {
+    "image": "gallery/2026/TechQuest-2026/jpeg-optimizer_DBCL--DBIT--TechQuest 2026--85.JPG",
+    "alt": "TechQuest 2026",
+    "caption": "TechQuest 2026",
+    "folder": "2026/TechQuest-2026",
+    "folderLabel": "TechQuest 2026"
+  },
+  {
+    "image": "gallery/2026/TechQuest-2026/jpeg-optimizer_DBCL--DBIT--TechQuest 2026--86.JPG",
+    "alt": "TechQuest 2026",
+    "caption": "TechQuest 2026",
+    "folder": "2026/TechQuest-2026",
+    "folderLabel": "TechQuest 2026"
+  },
+  {
+    "image": "gallery/2026/TechQuest-2026/jpeg-optimizer_DBCL--DBIT--TechQuest 2026--87.JPG",
+    "alt": "TechQuest 2026",
+    "caption": "TechQuest 2026",
+    "folder": "2026/TechQuest-2026",
+    "folderLabel": "TechQuest 2026"
   }
+
 ];
