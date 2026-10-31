@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Live Matrix Wallpaper</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Orbitron:wght@500;600;700;800;900&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Orbitron:wght@500;600;700;800;900&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap"
+    rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
@@ -14,7 +17,8 @@
       padding: 0;
     }
 
-    html, body {
+    html,
+    body {
       width: 100%;
       height: 100%;
       overflow: hidden;
@@ -55,15 +59,26 @@
       z-index: 2;
       pointer-events: none;
       background: radial-gradient(ellipse 42% 38% at 24% 45%, rgba(0, 255, 170, 0.12), transparent 75%),
-                  radial-gradient(ellipse 32% 28% at 46% 76%, rgba(0, 229, 255, 0.15), transparent 70%);
+        radial-gradient(ellipse 32% 28% at 46% 76%, rgba(0, 229, 255, 0.15), transparent 70%);
       animation: ambient-flicker 2.8s infinite ease-in-out alternate;
     }
 
     @keyframes ambient-flicker {
-      0% { opacity: 0.70; }
-      40% { opacity: 0.95; }
-      75% { opacity: 0.80; }
-      100% { opacity: 1.0; }
+      0% {
+        opacity: 0.70;
+      }
+
+      40% {
+        opacity: 0.95;
+      }
+
+      75% {
+        opacity: 0.80;
+      }
+
+      100% {
+        opacity: 1.0;
+      }
     }
 
     /* 3. Screen Overlays (Live Active Screens) */
@@ -185,32 +200,67 @@
     }
 
     @keyframes radar-spin {
-      to { transform: rotate(360deg); }
+      to {
+        transform: rotate(360deg);
+      }
     }
 
     @keyframes monitor-top-drift {
-      0%, 100% { transform: perspective(600px) rotateY(18deg) rotateX(10deg) translate(0, 0); }
-      50% { transform: perspective(600px) rotateY(18deg) rotateX(10deg) translate(0.5px, -1px); }
+
+      0%,
+      100% {
+        transform: perspective(600px) rotateY(18deg) rotateX(10deg) translate(0, 0);
+      }
+
+      50% {
+        transform: perspective(600px) rotateY(18deg) rotateX(10deg) translate(0.5px, -1px);
+      }
     }
 
     @keyframes monitor-left-drift {
-      0%, 100% { transform: perspective(600px) rotateY(16deg) rotateX(2deg) translate(0, 0); }
-      50% { transform: perspective(600px) rotateY(16deg) rotateX(2deg) translate(-0.5px, 1px); }
+
+      0%,
+      100% {
+        transform: perspective(600px) rotateY(16deg) rotateX(2deg) translate(0, 0);
+      }
+
+      50% {
+        transform: perspective(600px) rotateY(16deg) rotateX(2deg) translate(-0.5px, 1px);
+      }
     }
 
     @keyframes monitor-center-drift {
-      0%, 100% { transform: perspective(800px) rotateY(-5deg) rotateX(1deg) translate(0, 0); }
-      50% { transform: perspective(800px) rotateY(-5deg) rotateX(1deg) translate(0.5px, 0.5px); }
+
+      0%,
+      100% {
+        transform: perspective(800px) rotateY(-5deg) rotateX(1deg) translate(0, 0);
+      }
+
+      50% {
+        transform: perspective(800px) rotateY(-5deg) rotateX(1deg) translate(0.5px, 0.5px);
+      }
     }
 
     @keyframes monitor-laptop-drift {
-      0%, 100% { transform: perspective(450px) rotateX(28deg) rotateY(17deg) rotateZ(-3deg) translate(0, 0); }
-      50% { transform: perspective(450px) rotateX(28deg) rotateY(17deg) rotateZ(-3deg) translate(0.5px, -0.5px); }
+
+      0%,
+      100% {
+        transform: perspective(450px) rotateX(28deg) rotateY(17deg) rotateZ(-3deg) translate(0, 0);
+      }
+
+      50% {
+        transform: perspective(450px) rotateX(28deg) rotateY(17deg) rotateZ(-3deg) translate(0.5px, -0.5px);
+      }
     }
 
     @keyframes screen-refresh {
-      from { background-position: 0 -8px; }
-      to { background-position: 0 8px; }
+      from {
+        background-position: 0 -8px;
+      }
+
+      to {
+        background-position: 0 8px;
+      }
     }
 
     .radar-blip {
@@ -224,8 +274,17 @@
     }
 
     @keyframes blink-blip {
-      0%, 100% { opacity: 1; transform: scale(1.2); }
-      50% { opacity: 0.2; transform: scale(0.8); }
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1.2);
+      }
+
+      50% {
+        opacity: 0.2;
+        transform: scale(0.8);
+      }
     }
 
     /* Attack Console Terminal Pane */
@@ -286,9 +345,20 @@
     }
 
     @keyframes holo-float {
-      0% { transform: translateY(0px); opacity: 0.88; }
-      50% { transform: translateY(-2px); opacity: 1.0; }
-      100% { transform: translateY(1.5px); opacity: 0.92; }
+      0% {
+        transform: translateY(0px);
+        opacity: 0.88;
+      }
+
+      50% {
+        transform: translateY(-2px);
+        opacity: 1.0;
+      }
+
+      100% {
+        transform: translateY(1.5px);
+        opacity: 0.92;
+      }
     }
 
     /* --- Hacker's Smartwatch Display on Right Wrist --- */
@@ -319,8 +389,13 @@
     }
 
     @keyframes watch-pulse {
-      0% { box-shadow: 0 0 8px #00ff88, 0 0 16px rgba(0, 255, 136, 0.55), inset 0 0 4px #00ff88; }
-      100% { box-shadow: 0 0 15px #00ff88, 0 0 30px rgba(0, 255, 136, 0.9), inset 0 0 8px #00ff88; }
+      0% {
+        box-shadow: 0 0 8px #00ff88, 0 0 16px rgba(0, 255, 136, 0.55), inset 0 0 4px #00ff88;
+      }
+
+      100% {
+        box-shadow: 0 0 15px #00ff88, 0 0 30px rgba(0, 255, 136, 0.9), inset 0 0 8px #00ff88;
+      }
     }
 
     /* 4. Active Typing: Continuously Moving Fingers on Keyboard Canvas */
@@ -337,10 +412,21 @@
     }
 
     @keyframes continuous-hand-recoil {
-      0% { transform: translateY(0px) rotate(0deg); }
-      35% { transform: translateY(-0.7px) rotate(-0.08deg); }
-      70% { transform: translateY(0.5px) rotate(0.1deg); }
-      100% { transform: translateY(-0.3px) rotate(0deg); }
+      0% {
+        transform: translateY(0px) rotate(0deg);
+      }
+
+      35% {
+        transform: translateY(-0.7px) rotate(-0.08deg);
+      }
+
+      70% {
+        transform: translateY(0.5px) rotate(0.1deg);
+      }
+
+      100% {
+        transform: translateY(-0.3px) rotate(0deg);
+      }
     }
 
     /* Mechanical keycaps glow canvas right under the fingers */
@@ -430,9 +516,21 @@
       border-radius: 50%;
       display: inline-block;
     }
-    .popup-dot.red { background: #ff4757; box-shadow: 0 0 4px #ff4757; }
-    .popup-dot.yellow { background: #ffa502; box-shadow: 0 0 4px #ffa502; }
-    .popup-dot.green { background: #2ed573; box-shadow: 0 0 4px #2ed573; }
+
+    .popup-dot.red {
+      background: #ff4757;
+      box-shadow: 0 0 4px #ff4757;
+    }
+
+    .popup-dot.yellow {
+      background: #ffa502;
+      box-shadow: 0 0 4px #ffa502;
+    }
+
+    .popup-dot.green {
+      background: #2ed573;
+      box-shadow: 0 0 4px #2ed573;
+    }
 
     .popup-title {
       font-family: 'Rajdhani', 'Orbitron', sans-serif;
@@ -457,12 +555,14 @@
       border-radius: 2px;
       letter-spacing: 0.06em;
     }
+
     .popup-status-badge.live {
       background: rgba(0, 255, 136, 0.18);
       border: 1px solid rgba(0, 255, 136, 0.6);
       color: #00ff88;
       text-shadow: 0 0 3px #00ff88;
     }
+
     .popup-status-badge.alert {
       background: rgba(255, 42, 75, 0.2);
       border: 1px solid rgba(255, 42, 75, 0.65);
@@ -480,6 +580,7 @@
       padding: 0 0.15rem;
       transition: color 0.15s ease;
     }
+
     .popup-close-btn:hover {
       color: #ff4757;
     }
@@ -502,11 +603,13 @@
       overflow: hidden;
       margin-bottom: 0.25rem;
     }
+
     .world-map-svg {
       width: 100%;
       height: 100%;
       display: block;
     }
+
     .world-map-canvas {
       position: absolute;
       inset: 0;
@@ -514,6 +617,7 @@
       height: 100%;
       pointer-events: none;
     }
+
     .world-threat-log {
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.50rem;
@@ -526,9 +630,19 @@
       flex-direction: column;
       gap: 1px;
     }
-    .world-threat-log .hl-red { color: #ff4757; font-weight: bold; }
-    .world-threat-log .hl-cyan { color: #38bdf8; }
-    .world-threat-log .hl-green { color: #00ff88; }
+
+    .world-threat-log .hl-red {
+      color: #ff4757;
+      font-weight: bold;
+    }
+
+    .world-threat-log .hl-cyan {
+      color: #38bdf8;
+    }
+
+    .world-threat-log .hl-green {
+      color: #00ff88;
+    }
 
     /* SATCOM Satellite Styles */
     .satcom-grid {
@@ -538,6 +652,7 @@
       align-items: center;
       margin-bottom: 0.25rem;
     }
+
     .satcom-radar {
       position: relative;
       width: 80px;
@@ -547,6 +662,7 @@
       background: radial-gradient(circle, rgba(0, 229, 255, 0.08) 0%, transparent 70%);
       overflow: hidden;
     }
+
     .satcom-sweep {
       position: absolute;
       inset: 0;
@@ -554,15 +670,20 @@
       background: conic-gradient(from 0deg, rgba(0, 229, 255, 0.7) 0deg, transparent 65deg, transparent 360deg);
       animation: satcom-spin 2.2s linear infinite;
     }
+
     @keyframes satcom-spin {
-      to { transform: rotate(360deg); }
+      to {
+        transform: rotate(360deg);
+      }
     }
+
     .satcom-orbit-ring {
       position: absolute;
       inset: 12px;
       border-radius: 50%;
       border: 1px dashed rgba(0, 255, 136, 0.35);
     }
+
     .satcom-blip {
       position: absolute;
       width: 5px;
@@ -574,16 +695,26 @@
       left: 56px;
       animation: satcom-blip-pulse 1.2s infinite alternate;
     }
+
     @keyframes satcom-blip-pulse {
-      0% { transform: scale(0.9); opacity: 0.5; }
-      100% { transform: scale(1.3); opacity: 1; }
+      0% {
+        transform: scale(0.9);
+        opacity: 0.5;
+      }
+
+      100% {
+        transform: scale(1.3);
+        opacity: 1;
+      }
     }
+
     .satcom-stats {
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.52rem;
       line-height: 1.35;
       color: #94a3b8;
     }
+
     .satcom-waterfall {
       width: 100%;
       height: 26px;
@@ -602,6 +733,7 @@
       font-size: 0.50rem;
       margin-bottom: 0.25rem;
     }
+
     .stack-row {
       display: flex;
       justify-content: space-between;
@@ -610,21 +742,25 @@
       background: rgba(0, 20, 30, 0.85);
       border-left: 2px solid rgba(0, 229, 255, 0.4);
     }
+
     .stack-row.danger {
       background: rgba(60, 10, 20, 0.85);
       border-left-color: #ff2a4b;
       color: #ff6b81;
     }
+
     .stack-row.warn {
       background: rgba(50, 35, 10, 0.85);
       border-left-color: #ffa502;
       color: #f6e58d;
     }
+
     .stack-row.success {
       background: rgba(10, 45, 25, 0.85);
       border-left-color: #00ff88;
       color: #2ed573;
     }
+
     .exploit-progress-wrap {
       background: rgba(0, 10, 15, 0.85);
       border: 1px solid rgba(0, 229, 255, 0.3);
@@ -633,6 +769,7 @@
       overflow: hidden;
       margin-top: 0.15rem;
     }
+
     .exploit-progress-bar {
       height: 100%;
       width: 0%;
@@ -654,6 +791,7 @@
       overflow: hidden;
       color: #94a3b8;
     }
+
     .packet-stream-line {
       white-space: nowrap;
       overflow: hidden;
@@ -672,6 +810,7 @@
       padding: 0.22rem 0.32rem;
       margin: 0.15rem 0;
     }
+
     .nmap-exploit-pill {
       background: rgba(255, 42, 75, 0.16);
       border: 1px solid rgba(255, 42, 75, 0.5);
@@ -713,12 +852,33 @@
       overflow: hidden;
       margin: 0.15rem 0;
     }
-    .malware-cfg-box .asm-addr { color: #64748b; }
-    .malware-cfg-box .asm-op { color: #00e5ff; font-weight: bold; }
-    .malware-cfg-box .asm-fn { color: #ffa502; }
-    .malware-cfg-box .asm-cmt { color: #475569; font-style: italic; }
-    .malware-cfg-box .asm-lbl { color: #f43f5e; }
-    .malware-cfg-box .asm-res { color: #00ff88; font-weight: bold; }
+
+    .malware-cfg-box .asm-addr {
+      color: #64748b;
+    }
+
+    .malware-cfg-box .asm-op {
+      color: #00e5ff;
+      font-weight: bold;
+    }
+
+    .malware-cfg-box .asm-fn {
+      color: #ffa502;
+    }
+
+    .malware-cfg-box .asm-cmt {
+      color: #475569;
+      font-style: italic;
+    }
+
+    .malware-cfg-box .asm-lbl {
+      color: #f43f5e;
+    }
+
+    .malware-cfg-box .asm-res {
+      color: #00ff88;
+      font-weight: bold;
+    }
 
     /* Botnet C2 Swarm Styles */
     .botnet-stream-box {
@@ -764,23 +924,21 @@
         linear-gradient(90deg, rgba(0, 229, 255, 0.75) 1.5px, transparent 1.5px);
       background-size: 52px 52px;
       -webkit-mask-image: linear-gradient(90deg,
-        transparent 0%,
-        rgba(0, 0, 0, 0.25) 20%,
-        rgba(0, 0, 0, 0.2) 20%,
-        rgba(0, 0, 0, 1) 50%,
-        rgba(0, 0, 0, 0.25) 80%,
-        rgba(0, 0, 0, 0.2) 80%,
-        transparent 100%
-      );
+          transparent 0%,
+          rgba(0, 0, 0, 0.25) 20%,
+          rgba(0, 0, 0, 0.2) 20%,
+          rgba(0, 0, 0, 1) 50%,
+          rgba(0, 0, 0, 0.25) 80%,
+          rgba(0, 0, 0, 0.2) 80%,
+          transparent 100%);
       mask-image: linear-gradient(90deg,
-        transparent 0%,
-        rgba(0, 0, 0, 0.25) 20%,
-        rgba(0, 0, 0, 0.2) 20%,
-        rgba(0, 0, 0, 1) 50%,
-        rgba(0, 0, 0, 0.25) 80%,
-        rgba(0, 0, 0, 0.2) 80%,
-        transparent 100%
-      );
+          transparent 0%,
+          rgba(0, 0, 0, 0.25) 20%,
+          rgba(0, 0, 0, 0.2) 20%,
+          rgba(0, 0, 0, 1) 50%,
+          rgba(0, 0, 0, 0.25) 80%,
+          rgba(0, 0, 0, 0.2) 80%,
+          transparent 100%);
       -webkit-mask-size: 38% 100%;
       mask-size: 38% 100%;
       -webkit-mask-size: 48% 100%;
@@ -800,12 +958,11 @@
       bottom: 0;
       width: 3px;
       background: linear-gradient(180deg,
-        transparent 0%,
-        rgba(0, 255, 170, 0.55) 15%,
-        #00e5ff 50%,
-        rgba(0, 255, 170, 0.55) 85%,
-        transparent 100%
-      );
+          transparent 0%,
+          rgba(0, 255, 170, 0.55) 15%,
+          #00e5ff 50%,
+          rgba(0, 255, 170, 0.55) 85%,
+          transparent 100%);
       box-shadow: 0 0 14px #00e5ff, 0 0 28px rgba(0, 255, 170, 0.85);
       opacity: 0.85;
       animation: grid-beam-sweep 5.5s infinite ease-in-out alternate;
@@ -815,1159 +972,1290 @@
       0% {
         -webkit-mask-position: -40vw 0;
         mask-position: -40vw 0;
-    @keyframes grid-natural-breathe {
-      0%, 100% {
-        opacity: 0.85;
-        filter: drop-shadow(0 0 2px rgba(0, 229, 255, 0.25));
-      }
-      100% {
-        -webkit-mask-position: 140vw 0;
-        mask-position: 140vw 0;
-      50% {
-        opacity: 1;
-        filter: drop-shadow(0 0 4px rgba(0, 229, 255, 0.55)) drop-shadow(0 0 8px rgba(0, 255, 170, 0.3));
-      }
-    }
-
-    @keyframes grid-beam-sweep {
-    @keyframes grid-glow-sweep {
-      0% {
-        left: -15px;
-        opacity: 0.25;
-        -webkit-mask-position: -48vw 0;
-        mask-position: -48vw 0;
-      }
-      50% {
-        opacity: 0.95;
-      }
-      100% {
-        left: calc(100vw + 15px);
-        opacity: 0.25;
-        -webkit-mask-position: 148vw 0;
-        mask-position: 148vw 0;
-      }
-    }
-
-    /* 7. Minimal digital clock & session monitor */
-    .hud-header {
-      position: fixed;
-      top: 1.25rem;
-      left: auto;
-      right: 1.5rem;
-      z-index: 10;
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      pointer-events: auto;
-      font-size: 0.78rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: rgba(0, 229, 255, 0.92);
-      text-shadow: 0 0 3px rgba(0, 229, 255, 0.45);
-    }
-
-    .hud-box {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 0.35rem;
-      padding: 0.45rem 0.85rem;
-      background: rgba(2, 6, 12, 0.88);
-      border: 1px solid rgba(0, 229, 255, 0.38);
-      border-radius: 2px;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 0 14px rgba(0, 229, 255, 0.15);
-    }
-
-    .hud-topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.8rem;
-      width: 100%;
-      font-size: 0.62rem;
-      letter-spacing: 0.08em;
-      color: rgba(141, 239, 255, 0.85);
-      border-bottom: 1px solid rgba(0, 229, 255, 0.18);
-      padding-bottom: 0.25rem;
-      margin-bottom: 0.15rem;
-    }
-
-    .hud-modes {
-      display: flex;
-      align-items: center;
-      gap: 0.3rem;
-    }
-
-    .hud-mode-btn {
-      background: transparent;
-      border: 1px solid rgba(0, 229, 255, 0.3);
-      color: rgba(141, 239, 255, 0.65);
-      font-family: 'Rajdhani', sans-serif;
-      font-weight: 700;
-      font-size: 0.64rem;
-      padding: 0.12rem 0.42rem;
-      border-radius: 2px;
-      cursor: pointer;
-      transition: all 0.15s ease;
-      letter-spacing: 0.08em;
-    }
-
-    .hud-mode-btn:hover {
-      border-color: rgba(0, 229, 255, 0.7);
-      color: #fff;
-    }
-
-    .hud-mode-btn.active {
-      background: rgba(255, 42, 75, 0.2);
-      border-color: #ff2a4b;
-      color: #ff6b81;
-      text-shadow: 0 0 4px rgba(255, 42, 75, 0.8);
-      font-weight: bold;
-    }
-
-    .hud-telemetry-pill {
-      font-family: 'JetBrains Mono', monospace;
-      font-weight: 600;
-      font-size: 0.62rem;
-      color: #a7f3d0;
-      text-shadow: 0 0 3px rgba(52, 211, 153, 0.5);
-      display: flex;
-      align-items: center;
-      gap: 0.32rem;
-      cursor: pointer;
-      user-select: none;
-      letter-spacing: 0.04em;
-    }
-
-    .hud-telemetry-pill:hover {
-      color: #6ee7b7;
-    }
-
-    .hud-telemetry-pill .pulse-dot {
-      width: 5px;
-      height: 5px;
-      background: #00ff88;
-      border-radius: 50%;
-      box-shadow: 0 0 6px #00ff88;
-      animation: session-pulse 1.2s infinite ease-in-out alternate;
-    }
-
-    .hud-topbar-right {
-      display: flex;
-      align-items: center;
-      gap: 0.55rem;
-    }
-
-    /* Live Laptop Battery Telemetry Pill */
-    .hud-battery-pill {
-      font-family: 'JetBrains Mono', monospace;
-      font-weight: 600;
-      font-size: 0.58rem;
-      letter-spacing: 0.06em;
-      color: #00ff88;
-      text-shadow: 0 0 3px rgba(0, 255, 136, 0.5);
-      display: inline-flex;
-      align-items: center;
-      gap: 0.28rem;
-      padding: 0.08rem 0.35rem;
-      background: rgba(0, 18, 24, 0.65);
-      border: 1px solid rgba(0, 229, 255, 0.28);
-      border-radius: 2px;
-      user-select: none;
-      cursor: default;
-      transition: all 0.2s ease;
-    }
-    .hud-battery-pill:hover {
-      border-color: rgba(0, 229, 255, 0.65);
-      box-shadow: 0 0 8px rgba(0, 229, 255, 0.25);
-    }
-    .hud-battery-pill.charging {
-      color: #38bdf8;
-      border-color: rgba(56, 189, 248, 0.45);
-      text-shadow: 0 0 4px #00e5ff;
-    }
-    .hud-battery-pill.mid {
-      color: #ffa502;
-      border-color: rgba(255, 165, 2, 0.4);
-      text-shadow: 0 0 4px #ffa502;
-    }
-    .hud-battery-pill.low {
-      color: #ff4757;
-      border-color: rgba(255, 71, 87, 0.55);
-      text-shadow: 0 0 4px #ff4757;
-      animation: battery-low-pulse 1.2s infinite alternate;
-    }
-    @keyframes battery-low-pulse {
-      0% { opacity: 0.7; }
-      100% { opacity: 1; filter: drop-shadow(0 0 4px #ff2a4b); }
-    }
-
-    .battery-icon-wrap {
-      display: inline-flex;
-      align-items: center;
-    }
-    .battery-shell {
-      width: 15px;
-      height: 8px;
-      border: 1px solid currentColor;
-      border-radius: 1.5px;
-      padding: 1px;
-      display: flex;
-      align-items: center;
-      box-sizing: border-box;
-      background: rgba(0, 0, 0, 0.45);
-    }
-    .battery-nub {
-      width: 1.5px;
-      height: 4px;
-      background: currentColor;
-      border-radius: 0 1px 1px 0;
-      margin-left: 1px;
-    }
-    .battery-fill {
-      height: 100%;
-      width: 80%;
-      background: currentColor;
-      border-radius: 0.5px;
-      transition: width 0.3s ease;
-      box-shadow: 0 0 3px currentColor;
-    }
-    .battery-bolt {
-      font-size: 0.52rem;
-      line-height: 1;
-      color: #38bdf8;
-      margin-right: -1px;
-    }
-    .battery-status-tag {
-      font-size: 0.50rem;
-      padding: 0 0.15rem;
-      border-radius: 1px;
-      background: rgba(0, 229, 255, 0.12);
-      border: 1px solid rgba(0, 229, 255, 0.25);
-      color: inherit;
-      line-height: 1.1;
-    }
-
-    @keyframes session-pulse {
-      0% { opacity: 0.4; transform: scale(0.85); }
-      100% { opacity: 1; transform: scale(1.15); }
-    }
-
-    .ip-panel {
-      position: fixed;
-      right: 1.5rem;
-      bottom: 1.25rem;
-      z-index: 10;
-      min-width: 11.8rem;
-      padding: 0.45rem 0.8rem;
-      background: rgba(2, 6, 12, 0.9);
-      border: 1px solid rgba(255, 42, 75, 0.35);
-      border-right: 3px solid #ff2a4b;
-      border-radius: 2px;
-      color: #ff8597;
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-align: right;
-      text-shadow: 0 0 3px rgba(255, 42, 75, 0.45);
-      box-shadow: 0 0 8px rgba(255, 42, 75, 0.16), inset 0 0 8px rgba(255, 42, 75, 0.08);
-    }
-
-    .ip-panel strong {
-      display: block;
-      font-family: 'JetBrains Mono', monospace;
-      font-weight: 700;
-      font-size: 0.98rem;
-      letter-spacing: 0.10em;
-      font-variant-numeric: tabular-nums;
-      color: #ff2a4b;
-      text-shadow: 0 0 5px rgba(255, 42, 75, 0.95), 0 0 12px rgba(255, 0, 60, 0.55);
-      margin-top: 2px;
-    }
-
-    .digital-clock {
-      display: flex;
-      align-items: center;
-      gap: 0.2rem;
-      min-height: 2.35rem;
-    }
-
-    .digital-digit {
-      position: relative;
-      width: 1.25rem;
-      height: 2.15rem;
-    }
-
-    .digital-segment {
-      position: absolute;
-      background: rgba(45, 12, 18, 0.32);
-      border-radius: 0.12rem;
-      transition: background 0.08s ease, box-shadow 0.08s ease;
-    }
-
-    .digital-segment.on {
-      background: #ff2a4b;
-      box-shadow: 0 0 5px rgba(255, 42, 75, 1), 0 0 12px rgba(255, 0, 60, 0.65);
-    }
-
-    .digital-segment.a,
-    .digital-segment.g,
-    .digital-segment.d {
-      left: 0.18rem;
-      width: 0.89rem;
-      height: 0.22rem;
-      clip-path: polygon(12% 0, 88% 0, 100% 50%, 88% 100%, 12% 100%, 0 50%);
-    }
-
-    .digital-segment.a { top: 0; }
-    .digital-segment.g { top: 0.96rem; }
-    .digital-segment.d { bottom: 0; }
-
-    .digital-segment.f,
-    .digital-segment.e,
-    .digital-segment.b,
-    .digital-segment.c {
-      width: 0.22rem;
-      height: 0.82rem;
-      clip-path: polygon(50% 0, 100% 12%, 100% 88%, 50% 100%, 0 88%, 0 12%);
-    }
-
-    .digital-segment.f { left: 0; top: 0.13rem; }
-    .digital-segment.e { left: 0; bottom: 0.13rem; }
-    .digital-segment.b { right: 0; top: 0.13rem; }
-    .digital-segment.c { right: 0; bottom: 0.13rem; }
-
-    .digital-colon {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-      height: 1.8rem;
-      padding: 0 0.05rem;
-    }
-
-    .digital-colon::before,
-    .digital-colon::after {
-      content: '';
-      width: 0.2rem;
-      height: 0.2rem;
-      border-radius: 50%;
-      background: #ff2a4b;
-      box-shadow: 0 0 5px rgba(255, 42, 75, 0.9);
-    }
-
-    .digital-dot {
-      display: flex;
-      align-items: flex-end;
-      height: 1.8rem;
-      padding: 0 0.12rem 0.22rem 0.12rem;
-    }
-
-    .digital-dot::after {
-      content: '';
-      width: 0.22rem;
-      height: 0.22rem;
-      border-radius: 50%;
-      background: #ff2a4b;
-      box-shadow: 0 0 5px rgba(255, 42, 75, 0.9);
-    }
-
-    .digital-digit.ms-digit {
-      transform: scale(0.86);
-      transform-origin: bottom center;
-      margin: 0 -0.06rem;
-      opacity: 0.95;
-    }
-
-    /* 14a. Digital Clock Anchor & Quick System Shortcuts Dropdown */
-    .digital-clock-anchor {
-      position: relative;
-      display: inline-flex;
-      align-items: flex-end;
-      justify-content: flex-end;
-      width: 100%;
-    }
-
-    /* 14a. Mode Bar Quick System Shortcuts Dropdown Anchor & Button */
-    .hud-shortcuts-anchor {
-      position: relative;
-      display: inline-flex;
-      align-items: center;
-    }
-
-    .clock-shortcuts-arrow-btn {
-      position: relative;
-      width: 17px;
-      height: 17px;
-      background: rgba(24, 6, 10, 0.92);
-      border: 1px solid rgba(255, 42, 75, 0.45);
-      border-radius: 2px;
-      color: #ff4757;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      padding: 0;
-      margin: 0;
-      transition: all 0.18s ease;
-      box-shadow: 0 0 6px rgba(255, 42, 75, 0.3);
-      z-index: 25;
-    }
-
-    .clock-shortcuts-arrow-btn:hover,
-    .clock-shortcuts-arrow-btn.active {
-      background: rgba(255, 42, 75, 0.28);
-      border-color: #ff2a4b;
-      color: #ffffff;
-      box-shadow: 0 0 10px rgba(255, 42, 75, 0.85);
-      transform: scale(1.1);
-    }
-
-    .clock-shortcuts-arrow-btn.active .clock-arrow-svg {
-      transform: rotate(180deg);
-    }
-
-    .clock-arrow-svg {
-      transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-      pointer-events: none;
-    }
-
-    .clock-shortcuts-menu {
-      position: absolute;
-      top: calc(100% + 6px);
-      left: 0;
-      min-width: 235px;
-      background: rgba(2, 6, 12, 0.97);
-      border: 1px solid rgba(0, 229, 255, 0.38);
-      border-top: 2px solid #ff2a4b;
-      border-radius: 2px;
-      backdrop-filter: blur(14px);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.9), 0 0 16px rgba(255, 42, 75, 0.25);
-      padding: 0.35rem;
-      z-index: 100;
-      display: none;
-      flex-direction: column;
-      animation: scDropdownFadeIn 0.15s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .clock-shortcuts-menu.open {
-      display: flex;
-    }
-
-    @keyframes scDropdownFadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(-4px) scale(0.98);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-    }
-
-    .shortcuts-menu-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.25rem 0.45rem 0.35rem 0.45rem;
-      border-bottom: 1px solid rgba(0, 229, 255, 0.18);
-      font-family: 'Orbitron', 'Rajdhani', sans-serif;
-      font-size: 0.56rem;
-      letter-spacing: 0.12em;
-    }
-
-    .shortcuts-menu-title {
-      color: #ff6b81;
-      font-weight: 700;
-      text-shadow: 0 0 4px rgba(255, 42, 75, 0.6);
-    }
-
-    .shortcuts-menu-badge {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.44rem;
-      color: #00ff88;
-      background: rgba(0, 255, 136, 0.12);
-      border: 1px solid rgba(0, 255, 136, 0.35);
-      padding: 0.04rem 0.25rem;
-      border-radius: 2px;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-    }
-
-    .shortcuts-menu-items {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      margin-top: 0.25rem;
-    }
-
-    .shortcut-item {
-      display: flex;
-      align-items: center;
-      gap: 0.55rem;
-      padding: 0.32rem 0.45rem;
-      background: transparent;
-      border: 1px solid transparent;
-      border-radius: 2px;
-      color: #e2e8f0;
-      cursor: pointer;
-      text-align: left;
-      transition: all 0.14s ease;
-      width: 100%;
-    }
-
-    .shortcut-item:hover {
-      background: rgba(0, 229, 255, 0.12);
-      border-color: rgba(0, 229, 255, 0.35);
-      color: #ffffff;
-      transform: translateX(-2px);
-    }
-
-    .shortcut-item.item-power:hover {
-      background: rgba(255, 42, 75, 0.22);
-      border-color: #ff2a4b;
-    }
-
-    .shortcut-item.item-restart:hover {
-      background: rgba(255, 165, 2, 0.22);
-      border-color: #ffa502;
-    }
-
-    .shortcut-item .sc-icon {
-      font-size: 0.76rem;
-      width: 1.1rem;
-      text-align: center;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .shortcut-item.item-power .sc-icon { color: #ff4757; }
-    .shortcut-item.item-settings .sc-icon { color: #00e5ff; }
-    .shortcut-item.item-restart .sc-icon { color: #ffa502; }
-    .shortcut-item.item-lock .sc-icon { color: #00ff88; }
-    .shortcut-item.item-sleep .sc-icon { color: #38bdf8; }
-    .shortcut-item.item-taskmgr .sc-icon { color: #00e5ff; }
-    .shortcut-item.item-gpu .sc-icon { color: #ffd32a; }
-
-    .shortcut-item .sc-meta {
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-    }
-
-    .shortcut-item .sc-label {
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 0.70rem;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-    }
-
-    .shortcut-item .sc-sub {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.48rem;
-      font-weight: 500;
-      color: #64748b;
-      letter-spacing: 0.03em;
-    }
-
-    .shortcut-item:hover .sc-sub {
-      color: #94a3b8;
-    }
-
-    .shortcut-divider {
-      height: 1px;
-      background: rgba(0, 229, 255, 0.16);
-      margin: 0.2rem 0;
-    }
-
-    /* Shortcut HUD Toast Notification */
-    .hud-shortcut-toast {
-      position: fixed;
-      bottom: 2rem;
-      left: 50%;
-      transform: translateX(-50%) translateY(20px);
-      background: rgba(2, 6, 14, 0.96);
-      border: 1px solid rgba(0, 229, 255, 0.6);
-      border-left: 4px solid #ff2a4b;
-      box-shadow: 0 0 20px rgba(0, 229, 255, 0.35), 0 8px 30px rgba(0, 0, 0, 0.9);
-      padding: 0.45rem 1rem;
-      border-radius: 3px;
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.68rem;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      color: #d8fbff;
-      z-index: 9999;
-      opacity: 0;
-      pointer-events: none;
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .hud-shortcut-toast.show {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-      pointer-events: auto;
-    }
-
-    .hud-shortcut-toast .toast-icon {
-      font-size: 0.9rem;
-    }
-
-    /* Screen flicker when GPU driver restart is simulated */
-    .gpu-restart-flash {
-      position: fixed;
-      inset: 0;
-      background: #000;
-      z-index: 99999;
-      pointer-events: none;
-      opacity: 0;
-    }
-    .gpu-restart-flash.flash-active {
-      animation: gpuFlashAnim 0.35s steps(2, start);
-    }
-    @keyframes gpuFlashAnim {
-      0% { opacity: 0.95; }
-      50% { opacity: 0.2; }
-      75% { opacity: 0.85; }
-      100% { opacity: 0; }
-    }
-
-    /* 14b. Real-Time Date Bar */
-    .hud-date-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      width: 100%;
-      padding-top: 0.22rem;
-      margin-top: 0.15rem;
-      border-top: 1px solid rgba(0, 229, 255, 0.18);
-      font-size: 0.60rem;
-      letter-spacing: 0.08em;
-    }
-
-    .hud-date-info {
-      display: flex;
-      align-items: center;
-      gap: 0.35rem;
-      cursor: pointer;
-      user-select: none;
-    }
-
-    .hud-date-tag {
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 0.54rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      padding: 0.06rem 0.25rem;
-      border-radius: 2px;
-      background: rgba(0, 229, 255, 0.14);
-      border: 1px solid rgba(0, 229, 255, 0.35);
-      color: #00e5ff;
-    }
-
-    .hud-live-date {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.68rem;
-      font-weight: 600;
-      color: #8defff;
-      text-shadow: 0 0 3px rgba(0, 229, 255, 0.5);
-      letter-spacing: 0.08em;
-    }
-
-    .hud-cal-toggle-btn {
-      background: rgba(0, 20, 30, 0.65);
-      border: 1px solid rgba(0, 229, 255, 0.3);
-      border-radius: 2px;
-      color: rgba(141, 239, 255, 0.85);
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 0.58rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      padding: 0.12rem 0.4rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 0.25rem;
-      transition: all 0.15s ease;
-    }
-
-    .hud-cal-toggle-btn:hover {
-      border-color: rgba(0, 229, 255, 0.7);
-      color: #00ff88;
-      box-shadow: 0 0 6px rgba(0, 229, 255, 0.25);
-    }
-
-    /* 14c. Modern Cybersecurity Calendar Module */
-    .hud-cyber-calendar {
-      width: 100%;
-      margin-top: 0.3rem;
-      padding-top: 0.3rem;
-      border-top: 1px dashed rgba(0, 229, 255, 0.22);
-      display: flex;
-      flex-direction: column;
-      gap: 0.25rem;
-      transition: all 0.25s ease;
-    }
-
-    .hud-cyber-calendar.cal-collapsed {
-      display: none;
-    }
-
-    .cal-nav-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.25rem;
-      font-size: 0.58rem;
-    }
-
-    .cal-nav-btn {
-      background: rgba(0, 15, 24, 0.8);
-      border: 1px solid rgba(0, 229, 255, 0.3);
-      color: #8defff;
-      border-radius: 2px;
-      cursor: pointer;
-      font-size: 0.55rem;
-      padding: 0.12rem 0.35rem;
-      line-height: 1;
-      transition: all 0.15s ease;
-    }
-
-    .cal-nav-btn:hover {
-      border-color: #00e5ff;
-      background: rgba(0, 229, 255, 0.15);
-      color: #fff;
-    }
-
-    .cal-month-wrap {
-      display: flex;
-      align-items: center;
-      gap: 0.3rem;
-    }
-
-    .cal-month-title {
-      font-family: 'Orbitron', 'Rajdhani', sans-serif;
-      font-weight: 700;
-      font-size: 0.64rem;
-      letter-spacing: 0.12em;
-      color: #fff;
-      text-shadow: 0 0 4px rgba(0, 229, 255, 0.6);
-    }
-
-    .cal-ops-tag {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.44rem;
-      padding: 0.04rem 0.2rem;
-      background: rgba(255, 42, 75, 0.18);
-      border: 1px solid rgba(255, 42, 75, 0.5);
-      border-radius: 2px;
-      color: #ff4757;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-    }
-
-    .cal-today-btn {
-      background: rgba(0, 255, 136, 0.12);
-      border: 1px solid rgba(0, 255, 136, 0.4);
-      color: #00ff88;
-      font-size: 0.52rem;
-      font-family: 'Rajdhani', sans-serif;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      border-radius: 2px;
-      padding: 0.12rem 0.35rem;
-      cursor: pointer;
-      transition: all 0.15s ease;
-    }
-
-    .cal-today-btn:hover {
-      background: rgba(0, 255, 136, 0.28);
-      border-color: #00ff88;
-      box-shadow: 0 0 6px #00ff88;
-    }
-
-    .cal-weekdays {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      text-align: center;
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 0.56rem;
-      color: #7dd3fc;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      margin-top: 0.1rem;
-    }
-
-    .cal-days-grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 2px;
-      text-align: center;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.54rem;
-      font-weight: 600;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .cal-day-cell {
-      position: relative;
-      height: 18px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background: rgba(0, 10, 18, 0.65);
-      border: 1px solid rgba(0, 229, 255, 0.14);
-      border-radius: 2px;
-      cursor: pointer;
-      color: #94a3b8;
-      transition: all 0.15s ease;
-      user-select: none;
-    }
-
-    .cal-day-cell:hover {
-      background: rgba(0, 229, 255, 0.2);
-      border-color: rgba(0, 229, 255, 0.55);
-      color: #fff;
-    }
-
-    .cal-day-cell.other-month {
-      opacity: 0.25;
-      cursor: default;
-    }
-
-    .cal-day-cell.today {
-      background: rgba(255, 42, 75, 0.25);
-      border: 1px solid #ff2a4b;
-      color: #fff;
-      font-weight: bold;
-      box-shadow: 0 0 6px rgba(255, 42, 75, 0.6);
-    }
-
-    .cal-day-cell.selected:not(.today) {
-      background: rgba(0, 229, 255, 0.28);
-      border: 1px solid #00e5ff;
-      color: #00e5ff;
-      box-shadow: 0 0 6px rgba(0, 229, 255, 0.5);
-    }
-
-    .cal-event-dot {
-      width: 3px;
-      height: 3px;
-      border-radius: 50%;
-      position: absolute;
-      bottom: 1.5px;
-    }
-
-    .cal-event-dot.patch {
-      background: #ff4757;
-      box-shadow: 0 0 3px #ff4757;
-    }
-
-    .cal-event-dot.intel {
-      background: #00e5ff;
-      box-shadow: 0 0 3px #00e5ff;
-    }
-
-    .cal-event-dot.drill {
-      background: #00ff88;
-      box-shadow: 0 0 3px #00ff88;
-    }
-
-    .cal-event-dot.zeroday {
-      background: #ffa502;
-      box-shadow: 0 0 3px #ffa502;
-    }
-
-    /* Security Briefing Card at bottom of calendar */
-    .cal-briefing-card {
-      background: rgba(0, 8, 14, 0.9);
-      border: 1px solid rgba(0, 229, 255, 0.25);
-      border-left: 2px solid #00e5ff;
-      border-radius: 2px;
-      padding: 0.22rem 0.35rem;
-      margin-top: 0.15rem;
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .cal-briefing-top {
-      display: flex;
-      align-items: center;
-      gap: 0.3rem;
-      font-size: 0.48rem;
-    }
-
-    .briefing-indicator {
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-      background: #00e5ff;
-      box-shadow: 0 0 4px #00e5ff;
-      animation: session-pulse 1.4s infinite alternate;
-    }
-
-    .cal-briefing-label {
-      color: #8defff;
-      font-family: 'Rajdhani', sans-serif;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-    }
-
-    .cal-briefing-status {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.44rem;
-      padding: 0.02rem 0.2rem;
-      border-radius: 1px;
-      background: rgba(255, 42, 75, 0.2);
-      border: 1px solid rgba(255, 42, 75, 0.5);
-      color: #ff6b81;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-    }
-
-    .cal-briefing-event {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.48rem;
-      font-weight: 500;
-      color: #cbd5e1;
-      line-height: 1.25;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .scanlines {
-      position: fixed;
-      inset: 0;
-      z-index: 11;
-      pointer-events: none;
-      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.22) 50%);
-      background-size: 100% 4px;
-      opacity: 0.38;
-    }
-
-    /* Screen Blinking Cursor */
-    .cursor-blink {
-      display: inline-block;
-      width: 6px;
-      height: 11px;
-      background: #00ff88;
-      vertical-align: -1px;
-      animation: blink 0.8s infinite;
-    }
-
-    @keyframes blink {
-      0%, 49% { opacity: 1; }
-      50%, 100% { opacity: 0; }
-    }
-
-    /* 15. Responsive Adaptations across all screen dimensions & resolutions */
-    /* Laptops and smaller displays (<= 1366px width or <= 768px height) */
-    @media (max-width: 1366px), (max-height: 768px) {
-      .hud-header {
-        top: 0.6rem;
-        right: 0.8rem;
-      }
-      .hud-box {
-        padding: 0.32rem 0.65rem;
-        gap: 0.25rem;
-      }
-      .digital-clock {
-        transform: scale(0.92);
-        transform-origin: top right;
-      }
-      .clock-shortcuts-menu {
-        min-width: 215px;
-      }
-      .hud-topbar {
-        font-size: 0.56rem;
-        gap: 0.4rem;
-      }
-      .hud-battery-pill {
-        font-size: 0.52rem;
-        padding: 0.05rem 0.25rem;
-      }
-      .cal-day-cell {
-        height: 15px;
-        font-size: 0.48rem;
-      }
-      .left-popup-workspace {
-        top: 1.0%;
-        left: 0.8%;
-        max-width: 440px;
-        gap: 0.4rem;
-      }
-      .popup-screen-card {
-        min-width: 180px;
-        max-width: 215px;
-      }
-      .world-map-wrap {
-        height: 78px;
-      }
-      .ip-panel {
-        right: 0.8rem;
-        bottom: 0.8rem;
-        padding: 0.35rem 0.6rem;
-        min-width: 10rem;
-      }
-      .ip-panel strong {
-        font-size: 0.85rem;
-      }
-    }
-
-    /* Ultra-compact / Tablet / Low resolution screens (<= 1024px width) */
-    @media (max-width: 1024px) {
-      .left-popup-workspace {
-        flex-direction: column;
-        max-width: 240px;
-        gap: 0.4rem;
-      }
-      .popup-screen-card {
-        min-width: 210px;
-        max-width: 240px;
-      }
-      .hud-box {
-        max-width: 280px;
-      }
-      .hud-cyber-calendar {
-        font-size: 0.48rem;
-      }
-    }
-
-    /* Mobile / Very narrow displays (<= 768px width) */
-    @media (max-width: 768px) {
-      .hud-header {
-        top: 0.4rem;
-        right: 0.4rem;
-        left: auto;
-      }
-      .hud-box {
-        max-width: 250px;
-        padding: 0.25rem 0.5rem;
-      }
-      .digital-clock {
-        transform: scale(0.78);
-        transform-origin: top right;
-      }
-      .clock-shortcuts-menu {
-        min-width: 200px;
-        left: 0;
-        top: calc(100% + 5px);
-        border-top: 2px solid #ff2a4b;
-      }
-      .hud-cyber-calendar,
-      .hud-cal-toggle-btn {
-        display: none !important;
-      }
-      .left-popup-workspace {
-        top: 0.4rem;
-        left: 0.4rem;
-        max-width: 190px;
-      }
-      .popup-screen-card {
-        min-width: 180px;
-        max-width: 190px;
-      }
-      .ip-panel {
-        display: none;
-      }
-    }
-
-    /* Very small heights (<= 640px) like split screens or netbooks */
-    @media (max-height: 640px) {
-      .hud-cyber-calendar {
-        display: none !important;
-      }
-      .hud-cal-toggle-btn {
-        display: none !important;
-      }
-      .world-map-wrap {
-        height: 64px;
-      }
-      .packet-stream-box {
-        height: 52px;
-      }
-    }
-
-    /* Ultra-High Definition 2K / 4K Displays (>= 2560px width) */
-    @media (min-width: 2560px) {
-      .hud-header {
-        top: 2rem;
-        right: 2.2rem;
-      }
-      .hud-box {
-        padding: 0.7rem 1.2rem;
-        gap: 0.5rem;
-        border-width: 1.5px;
-      }
-      .digital-clock {
-        transform: scale(1.22);
-        transform-origin: top right;
-      }
-      .hud-topbar {
-        font-size: 0.82rem;
-      }
-      .hud-live-date {
-        font-size: 0.82rem;
-      }
-      .cal-day-cell {
-        height: 24px;
-        font-size: 0.70rem;
-      }
-      .left-popup-workspace {
-        max-width: 720px;
-        gap: 1rem;
-      }
-      .popup-screen-card {
-        min-width: 290px;
-        max-width: 350px;
-        font-size: 0.75rem;
-      }
-      .world-map-wrap {
-        height: 140px;
-      }
-      .ip-panel {
-        right: 2.2rem;
-        bottom: 2rem;
-        padding: 0.7rem 1.2rem;
-        min-width: 16rem;
-        font-size: 0.95rem;
-      }
-      .ip-panel strong {
-        font-size: 1.4rem;
-      }
-    }
-
-    /* Performance CSS optimizations: GPU compositing & layout containment */
-    .screen-overlay {
-      contain: layout style paint;
-      text-rendering: optimizeSpeed;
-    }
-
-    .popup-screen-card {
-      contain: layout style paint;
-      will-change: transform, opacity;
-    }
-
-    .hud-box {
-      contain: layout style;
-    }
-
-    .background-data-canvas,
-    #keyboard-lighting-canvas,
-    #hacker-hands-canvas {
-      will-change: transform;
-      contain: strict;
-    }
+
+        @keyframes grid-natural-breathe {
+
+          0%,
+          100% {
+            opacity: 0.85;
+            filter: drop-shadow(0 0 2px rgba(0, 229, 255, 0.25));
+          }
+
+          100% {
+            -webkit-mask-position: 140vw 0;
+            mask-position: 140vw 0;
+
+            50% {
+              opacity: 1;
+              filter: drop-shadow(0 0 4px rgba(0, 229, 255, 0.55)) drop-shadow(0 0 8px rgba(0, 255, 170, 0.3));
+            }
+          }
+
+          @keyframes grid-beam-sweep {
+            @keyframes grid-glow-sweep {
+              0% {
+                left: -15px;
+                opacity: 0.25;
+                -webkit-mask-position: -48vw 0;
+                mask-position: -48vw 0;
+              }
+
+              50% {
+                opacity: 0.95;
+              }
+
+              100% {
+                left: calc(100vw + 15px);
+                opacity: 0.25;
+                -webkit-mask-position: 148vw 0;
+                mask-position: 148vw 0;
+              }
+            }
+
+            /* 7. Minimal digital clock & session monitor */
+            .hud-header {
+              position: fixed;
+              top: 1.25rem;
+              left: auto;
+              right: 1.5rem;
+              z-index: 10;
+              display: flex;
+              justify-content: flex-end;
+              align-items: center;
+              pointer-events: auto;
+              font-size: 0.78rem;
+              letter-spacing: 0.14em;
+              text-transform: uppercase;
+              color: rgba(0, 229, 255, 0.92);
+              text-shadow: 0 0 3px rgba(0, 229, 255, 0.45);
+            }
+
+            .hud-box {
+              display: flex;
+              flex-direction: column;
+              align-items: flex-end;
+              gap: 0.35rem;
+              padding: 0.45rem 0.85rem;
+              background: rgba(2, 6, 12, 0.88);
+              border: 1px solid rgba(0, 229, 255, 0.38);
+              border-radius: 2px;
+              backdrop-filter: blur(10px);
+              box-shadow: 0 0 14px rgba(0, 229, 255, 0.15);
+            }
+
+            .hud-topbar {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              gap: 0.8rem;
+              width: 100%;
+              font-size: 0.62rem;
+              letter-spacing: 0.08em;
+              color: rgba(141, 239, 255, 0.85);
+              border-bottom: 1px solid rgba(0, 229, 255, 0.18);
+              padding-bottom: 0.25rem;
+              margin-bottom: 0.15rem;
+            }
+
+            .hud-modes {
+              display: flex;
+              align-items: center;
+              gap: 0.3rem;
+            }
+
+            .hud-mode-btn {
+              background: transparent;
+              border: 1px solid rgba(0, 229, 255, 0.3);
+              color: rgba(141, 239, 255, 0.65);
+              font-family: 'Rajdhani', sans-serif;
+              font-weight: 700;
+              font-size: 0.64rem;
+              padding: 0.12rem 0.42rem;
+              border-radius: 2px;
+              cursor: pointer;
+              transition: all 0.15s ease;
+              letter-spacing: 0.08em;
+            }
+
+            .hud-mode-btn:hover {
+              border-color: rgba(0, 229, 255, 0.7);
+              color: #fff;
+            }
+
+            .hud-mode-btn.active {
+              background: rgba(255, 42, 75, 0.2);
+              border-color: #ff2a4b;
+              color: #ff6b81;
+              text-shadow: 0 0 4px rgba(255, 42, 75, 0.8);
+              font-weight: bold;
+            }
+
+            .hud-telemetry-pill {
+              font-family: 'JetBrains Mono', monospace;
+              font-weight: 600;
+              font-size: 0.62rem;
+              color: #a7f3d0;
+              text-shadow: 0 0 3px rgba(52, 211, 153, 0.5);
+              display: flex;
+              align-items: center;
+              gap: 0.32rem;
+              cursor: pointer;
+              user-select: none;
+              letter-spacing: 0.04em;
+            }
+
+            .hud-telemetry-pill:hover {
+              color: #6ee7b7;
+            }
+
+            .hud-telemetry-pill .pulse-dot {
+              width: 5px;
+              height: 5px;
+              background: #00ff88;
+              border-radius: 50%;
+              box-shadow: 0 0 6px #00ff88;
+              animation: session-pulse 1.2s infinite ease-in-out alternate;
+            }
+
+            .hud-topbar-right {
+              display: flex;
+              align-items: center;
+              gap: 0.55rem;
+            }
+
+            /* Live Laptop Battery Telemetry Pill */
+            .hud-battery-pill {
+              font-family: 'JetBrains Mono', monospace;
+              font-weight: 600;
+              font-size: 0.58rem;
+              letter-spacing: 0.06em;
+              color: #00ff88;
+              text-shadow: 0 0 3px rgba(0, 255, 136, 0.5);
+              display: inline-flex;
+              align-items: center;
+              gap: 0.28rem;
+              padding: 0.08rem 0.35rem;
+              background: rgba(0, 18, 24, 0.65);
+              border: 1px solid rgba(0, 229, 255, 0.28);
+              border-radius: 2px;
+              user-select: none;
+              cursor: default;
+              transition: all 0.2s ease;
+            }
+
+            .hud-battery-pill:hover {
+              border-color: rgba(0, 229, 255, 0.65);
+              box-shadow: 0 0 8px rgba(0, 229, 255, 0.25);
+            }
+
+            .hud-battery-pill.charging {
+              color: #38bdf8;
+              border-color: rgba(56, 189, 248, 0.45);
+              text-shadow: 0 0 4px #00e5ff;
+            }
+
+            .hud-battery-pill.mid {
+              color: #ffa502;
+              border-color: rgba(255, 165, 2, 0.4);
+              text-shadow: 0 0 4px #ffa502;
+            }
+
+            .hud-battery-pill.low {
+              color: #ff4757;
+              border-color: rgba(255, 71, 87, 0.55);
+              text-shadow: 0 0 4px #ff4757;
+              animation: battery-low-pulse 1.2s infinite alternate;
+            }
+
+            @keyframes battery-low-pulse {
+              0% {
+                opacity: 0.7;
+              }
+
+              100% {
+                opacity: 1;
+                filter: drop-shadow(0 0 4px #ff2a4b);
+              }
+            }
+
+            .battery-icon-wrap {
+              display: inline-flex;
+              align-items: center;
+            }
+
+            .battery-shell {
+              width: 15px;
+              height: 8px;
+              border: 1px solid currentColor;
+              border-radius: 1.5px;
+              padding: 1px;
+              display: flex;
+              align-items: center;
+              box-sizing: border-box;
+              background: rgba(0, 0, 0, 0.45);
+            }
+
+            .battery-nub {
+              width: 1.5px;
+              height: 4px;
+              background: currentColor;
+              border-radius: 0 1px 1px 0;
+              margin-left: 1px;
+            }
+
+            .battery-fill {
+              height: 100%;
+              width: 80%;
+              background: currentColor;
+              border-radius: 0.5px;
+              transition: width 0.3s ease;
+              box-shadow: 0 0 3px currentColor;
+            }
+
+            .battery-bolt {
+              font-size: 0.52rem;
+              line-height: 1;
+              color: #38bdf8;
+              margin-right: -1px;
+            }
+
+            .battery-status-tag {
+              font-size: 0.50rem;
+              padding: 0 0.15rem;
+              border-radius: 1px;
+              background: rgba(0, 229, 255, 0.12);
+              border: 1px solid rgba(0, 229, 255, 0.25);
+              color: inherit;
+              line-height: 1.1;
+            }
+
+            @keyframes session-pulse {
+              0% {
+                opacity: 0.4;
+                transform: scale(0.85);
+              }
+
+              100% {
+                opacity: 1;
+                transform: scale(1.15);
+              }
+            }
+
+            .ip-panel {
+              position: fixed;
+              right: 1.5rem;
+              bottom: 1.25rem;
+              z-index: 10;
+              min-width: 11.8rem;
+              padding: 0.45rem 0.8rem;
+              background: rgba(2, 6, 12, 0.9);
+              border: 1px solid rgba(255, 42, 75, 0.35);
+              border-right: 3px solid #ff2a4b;
+              border-radius: 2px;
+              color: #ff8597;
+              font-family: 'Rajdhani', sans-serif;
+              font-size: 0.68rem;
+              font-weight: 700;
+              letter-spacing: 0.1em;
+              text-align: right;
+              text-shadow: 0 0 3px rgba(255, 42, 75, 0.45);
+              box-shadow: 0 0 8px rgba(255, 42, 75, 0.16), inset 0 0 8px rgba(255, 42, 75, 0.08);
+            }
+
+            .ip-panel strong {
+              display: block;
+              font-family: 'JetBrains Mono', monospace;
+              font-weight: 700;
+              font-size: 0.98rem;
+              letter-spacing: 0.10em;
+              font-variant-numeric: tabular-nums;
+              color: #ff2a4b;
+              text-shadow: 0 0 5px rgba(255, 42, 75, 0.95), 0 0 12px rgba(255, 0, 60, 0.55);
+              margin-top: 2px;
+            }
+
+            .digital-clock {
+              display: flex;
+              align-items: center;
+              gap: 0.2rem;
+              min-height: 2.35rem;
+            }
+
+            .digital-digit {
+              position: relative;
+              width: 1.25rem;
+              height: 2.15rem;
+            }
+
+            .digital-segment {
+              position: absolute;
+              background: rgba(45, 12, 18, 0.32);
+              border-radius: 0.12rem;
+              transition: background 0.08s ease, box-shadow 0.08s ease;
+            }
+
+            .digital-segment.on {
+              background: #ff2a4b;
+              box-shadow: 0 0 5px rgba(255, 42, 75, 1), 0 0 12px rgba(255, 0, 60, 0.65);
+            }
+
+            .digital-segment.a,
+            .digital-segment.g,
+            .digital-segment.d {
+              left: 0.18rem;
+              width: 0.89rem;
+              height: 0.22rem;
+              clip-path: polygon(12% 0, 88% 0, 100% 50%, 88% 100%, 12% 100%, 0 50%);
+            }
+
+            .digital-segment.a {
+              top: 0;
+            }
+
+            .digital-segment.g {
+              top: 0.96rem;
+            }
+
+            .digital-segment.d {
+              bottom: 0;
+            }
+
+            .digital-segment.f,
+            .digital-segment.e,
+            .digital-segment.b,
+            .digital-segment.c {
+              width: 0.22rem;
+              height: 0.82rem;
+              clip-path: polygon(50% 0, 100% 12%, 100% 88%, 50% 100%, 0 88%, 0 12%);
+            }
+
+            .digital-segment.f {
+              left: 0;
+              top: 0.13rem;
+            }
+
+            .digital-segment.e {
+              left: 0;
+              bottom: 0.13rem;
+            }
+
+            .digital-segment.b {
+              right: 0;
+              top: 0.13rem;
+            }
+
+            .digital-segment.c {
+              right: 0;
+              bottom: 0.13rem;
+            }
+
+            .digital-colon {
+              display: flex;
+              flex-direction: column;
+              justify-content: space-around;
+              height: 1.8rem;
+              padding: 0 0.05rem;
+            }
+
+            .digital-colon::before,
+            .digital-colon::after {
+              content: '';
+              width: 0.2rem;
+              height: 0.2rem;
+              border-radius: 50%;
+              background: #ff2a4b;
+              box-shadow: 0 0 5px rgba(255, 42, 75, 0.9);
+            }
+
+            .digital-dot {
+              display: flex;
+              align-items: flex-end;
+              height: 1.8rem;
+              padding: 0 0.12rem 0.22rem 0.12rem;
+            }
+
+            .digital-dot::after {
+              content: '';
+              width: 0.22rem;
+              height: 0.22rem;
+              border-radius: 50%;
+              background: #ff2a4b;
+              box-shadow: 0 0 5px rgba(255, 42, 75, 0.9);
+            }
+
+            .digital-digit.ms-digit {
+              transform: scale(0.86);
+              transform-origin: bottom center;
+              margin: 0 -0.06rem;
+              opacity: 0.95;
+            }
+
+            /* 14a. Digital Clock Anchor & Quick System Shortcuts Dropdown */
+            .digital-clock-anchor {
+              position: relative;
+              display: inline-flex;
+              align-items: flex-end;
+              justify-content: flex-end;
+              width: 100%;
+            }
+
+            /* 14a. Mode Bar Quick System Shortcuts Dropdown Anchor & Button */
+            .hud-shortcuts-anchor {
+              position: relative;
+              display: inline-flex;
+              align-items: center;
+            }
+
+            .clock-shortcuts-arrow-btn {
+              position: relative;
+              width: 17px;
+              height: 17px;
+              background: rgba(24, 6, 10, 0.92);
+              border: 1px solid rgba(255, 42, 75, 0.45);
+              border-radius: 2px;
+              color: #ff4757;
+              display: inline-flex;
+              align-items: center;
+              justify-content: center;
+              cursor: pointer;
+              padding: 0;
+              margin: 0;
+              transition: all 0.18s ease;
+              box-shadow: 0 0 6px rgba(255, 42, 75, 0.3);
+              z-index: 25;
+            }
+
+            .clock-shortcuts-arrow-btn:hover,
+            .clock-shortcuts-arrow-btn.active {
+              background: rgba(255, 42, 75, 0.28);
+              border-color: #ff2a4b;
+              color: #ffffff;
+              box-shadow: 0 0 10px rgba(255, 42, 75, 0.85);
+              transform: scale(1.1);
+            }
+
+            .clock-shortcuts-arrow-btn.active .clock-arrow-svg {
+              transform: rotate(180deg);
+            }
+
+            .clock-arrow-svg {
+              transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+              pointer-events: none;
+            }
+
+            .clock-shortcuts-menu {
+              position: absolute;
+              top: calc(100% + 6px);
+              left: 0;
+              min-width: 235px;
+              background: rgba(2, 6, 12, 0.97);
+              border: 1px solid rgba(0, 229, 255, 0.38);
+              border-top: 2px solid #ff2a4b;
+              border-radius: 2px;
+              backdrop-filter: blur(14px);
+              box-shadow: 0 8px 24px rgba(0, 0, 0, 0.9), 0 0 16px rgba(255, 42, 75, 0.25);
+              padding: 0.35rem;
+              z-index: 100;
+              display: none;
+              flex-direction: column;
+              animation: scDropdownFadeIn 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+
+            .clock-shortcuts-menu.open {
+              display: flex;
+            }
+
+            @keyframes scDropdownFadeIn {
+              from {
+                opacity: 0;
+                transform: translateY(-4px) scale(0.98);
+              }
+
+              to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+              }
+            }
+
+            .shortcuts-menu-header {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              padding: 0.25rem 0.45rem 0.35rem 0.45rem;
+              border-bottom: 1px solid rgba(0, 229, 255, 0.18);
+              font-family: 'Orbitron', 'Rajdhani', sans-serif;
+              font-size: 0.56rem;
+              letter-spacing: 0.12em;
+            }
+
+            .shortcuts-menu-title {
+              color: #ff6b81;
+              font-weight: 700;
+              text-shadow: 0 0 4px rgba(255, 42, 75, 0.6);
+            }
+
+            .shortcuts-menu-badge {
+              font-family: 'JetBrains Mono', monospace;
+              font-size: 0.44rem;
+              color: #00ff88;
+              background: rgba(0, 255, 136, 0.12);
+              border: 1px solid rgba(0, 255, 136, 0.35);
+              padding: 0.04rem 0.25rem;
+              border-radius: 2px;
+              font-weight: 700;
+              letter-spacing: 0.06em;
+            }
+
+            .shortcuts-menu-items {
+              display: flex;
+              flex-direction: column;
+              gap: 2px;
+              margin-top: 0.25rem;
+            }
+
+            .shortcut-item {
+              display: flex;
+              align-items: center;
+              gap: 0.55rem;
+              padding: 0.32rem 0.45rem;
+              background: transparent;
+              border: 1px solid transparent;
+              border-radius: 2px;
+              color: #e2e8f0;
+              cursor: pointer;
+              text-align: left;
+              transition: all 0.14s ease;
+              width: 100%;
+            }
+
+            .shortcut-item:hover {
+              background: rgba(0, 229, 255, 0.12);
+              border-color: rgba(0, 229, 255, 0.35);
+              color: #ffffff;
+              transform: translateX(-2px);
+            }
+
+            .shortcut-item.item-power:hover {
+              background: rgba(255, 42, 75, 0.22);
+              border-color: #ff2a4b;
+            }
+
+            .shortcut-item.item-restart:hover {
+              background: rgba(255, 165, 2, 0.22);
+              border-color: #ffa502;
+            }
+
+            .shortcut-item .sc-icon {
+              font-size: 0.76rem;
+              width: 1.1rem;
+              text-align: center;
+              display: inline-flex;
+              align-items: center;
+              justify-content: center;
+            }
+
+            .shortcut-item.item-power .sc-icon {
+              color: #ff4757;
+            }
+
+            .shortcut-item.item-settings .sc-icon {
+              color: #00e5ff;
+            }
+
+            .shortcut-item.item-restart .sc-icon {
+              color: #ffa502;
+            }
+
+            .shortcut-item.item-lock .sc-icon {
+              color: #00ff88;
+            }
+
+            .shortcut-item.item-sleep .sc-icon {
+              color: #38bdf8;
+            }
+
+            .shortcut-item.item-taskmgr .sc-icon {
+              color: #00e5ff;
+            }
+
+            .shortcut-item.item-gpu .sc-icon {
+              color: #ffd32a;
+            }
+
+            .shortcut-item .sc-meta {
+              display: flex;
+              flex-direction: column;
+              flex: 1;
+            }
+
+            .shortcut-item .sc-label {
+              font-family: 'Rajdhani', sans-serif;
+              font-size: 0.70rem;
+              font-weight: 700;
+              letter-spacing: 0.05em;
+            }
+
+            .shortcut-item .sc-sub {
+              font-family: 'JetBrains Mono', monospace;
+              font-size: 0.48rem;
+              font-weight: 500;
+              color: #64748b;
+              letter-spacing: 0.03em;
+            }
+
+            .shortcut-item:hover .sc-sub {
+              color: #94a3b8;
+            }
+
+            .shortcut-divider {
+              height: 1px;
+              background: rgba(0, 229, 255, 0.16);
+              margin: 0.2rem 0;
+            }
+
+            /* Shortcut HUD Toast Notification */
+            .hud-shortcut-toast {
+              position: fixed;
+              bottom: 2rem;
+              left: 50%;
+              transform: translateX(-50%) translateY(20px);
+              background: rgba(2, 6, 14, 0.96);
+              border: 1px solid rgba(0, 229, 255, 0.6);
+              border-left: 4px solid #ff2a4b;
+              box-shadow: 0 0 20px rgba(0, 229, 255, 0.35), 0 8px 30px rgba(0, 0, 0, 0.9);
+              padding: 0.45rem 1rem;
+              border-radius: 3px;
+              display: flex;
+              align-items: center;
+              gap: 0.6rem;
+              font-family: 'JetBrains Mono', monospace;
+              font-size: 0.68rem;
+              font-weight: 600;
+              letter-spacing: 0.06em;
+              color: #d8fbff;
+              z-index: 9999;
+              opacity: 0;
+              pointer-events: none;
+              transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+
+            .hud-shortcut-toast.show {
+              opacity: 1;
+              transform: translateX(-50%) translateY(0);
+              pointer-events: auto;
+            }
+
+            .hud-shortcut-toast .toast-icon {
+              font-size: 0.9rem;
+            }
+
+            /* Screen flicker when GPU driver restart is simulated */
+            .gpu-restart-flash {
+              position: fixed;
+              inset: 0;
+              background: #000;
+              z-index: 99999;
+              pointer-events: none;
+              opacity: 0;
+            }
+
+            .gpu-restart-flash.flash-active {
+              animation: gpuFlashAnim 0.35s steps(2, start);
+            }
+
+            @keyframes gpuFlashAnim {
+              0% {
+                opacity: 0.95;
+              }
+
+              50% {
+                opacity: 0.2;
+              }
+
+              75% {
+                opacity: 0.85;
+              }
+
+              100% {
+                opacity: 0;
+              }
+            }
+
+            /* 14b. Real-Time Date Bar */
+            .hud-date-bar {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              width: 100%;
+              padding-top: 0.22rem;
+              margin-top: 0.15rem;
+              border-top: 1px solid rgba(0, 229, 255, 0.18);
+              font-size: 0.60rem;
+              letter-spacing: 0.08em;
+            }
+
+            .hud-date-info {
+              display: flex;
+              align-items: center;
+              gap: 0.35rem;
+              cursor: pointer;
+              user-select: none;
+            }
+
+            .hud-date-tag {
+              font-family: 'Rajdhani', sans-serif;
+              font-size: 0.54rem;
+              font-weight: 700;
+              letter-spacing: 0.08em;
+              padding: 0.06rem 0.25rem;
+              border-radius: 2px;
+              background: rgba(0, 229, 255, 0.14);
+              border: 1px solid rgba(0, 229, 255, 0.35);
+              color: #00e5ff;
+            }
+
+            .hud-live-date {
+              font-family: 'JetBrains Mono', monospace;
+              font-size: 0.68rem;
+              font-weight: 600;
+              color: #8defff;
+              text-shadow: 0 0 3px rgba(0, 229, 255, 0.5);
+              letter-spacing: 0.08em;
+            }
+
+            .hud-cal-toggle-btn {
+              background: rgba(0, 20, 30, 0.65);
+              border: 1px solid rgba(0, 229, 255, 0.3);
+              border-radius: 2px;
+              color: rgba(141, 239, 255, 0.85);
+              font-family: 'Rajdhani', sans-serif;
+              font-size: 0.58rem;
+              font-weight: 700;
+              letter-spacing: 0.08em;
+              padding: 0.12rem 0.4rem;
+              cursor: pointer;
+              display: flex;
+              align-items: center;
+              gap: 0.25rem;
+              transition: all 0.15s ease;
+            }
+
+            .hud-cal-toggle-btn:hover {
+              border-color: rgba(0, 229, 255, 0.7);
+              color: #00ff88;
+              box-shadow: 0 0 6px rgba(0, 229, 255, 0.25);
+            }
+
+            /* 14c. Modern Cybersecurity Calendar Module */
+            .hud-cyber-calendar {
+              width: 100%;
+              margin-top: 0.3rem;
+              padding-top: 0.3rem;
+              border-top: 1px dashed rgba(0, 229, 255, 0.22);
+              display: flex;
+              flex-direction: column;
+              gap: 0.25rem;
+              transition: all 0.25s ease;
+            }
+
+            .hud-cyber-calendar.cal-collapsed {
+              display: none;
+            }
+
+            .cal-nav-bar {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              gap: 0.25rem;
+              font-size: 0.58rem;
+            }
+
+            .cal-nav-btn {
+              background: rgba(0, 15, 24, 0.8);
+              border: 1px solid rgba(0, 229, 255, 0.3);
+              color: #8defff;
+              border-radius: 2px;
+              cursor: pointer;
+              font-size: 0.55rem;
+              padding: 0.12rem 0.35rem;
+              line-height: 1;
+              transition: all 0.15s ease;
+            }
+
+            .cal-nav-btn:hover {
+              border-color: #00e5ff;
+              background: rgba(0, 229, 255, 0.15);
+              color: #fff;
+            }
+
+            .cal-month-wrap {
+              display: flex;
+              align-items: center;
+              gap: 0.3rem;
+            }
+
+            .cal-month-title {
+              font-family: 'Orbitron', 'Rajdhani', sans-serif;
+              font-weight: 700;
+              font-size: 0.64rem;
+              letter-spacing: 0.12em;
+              color: #fff;
+              text-shadow: 0 0 4px rgba(0, 229, 255, 0.6);
+            }
+
+            .cal-ops-tag {
+              font-family: 'JetBrains Mono', monospace;
+              font-size: 0.44rem;
+              padding: 0.04rem 0.2rem;
+              background: rgba(255, 42, 75, 0.18);
+              border: 1px solid rgba(255, 42, 75, 0.5);
+              border-radius: 2px;
+              color: #ff4757;
+              font-weight: 700;
+              letter-spacing: 0.06em;
+            }
+
+            .cal-today-btn {
+              background: rgba(0, 255, 136, 0.12);
+              border: 1px solid rgba(0, 255, 136, 0.4);
+              color: #00ff88;
+              font-size: 0.52rem;
+              font-family: 'Rajdhani', sans-serif;
+              font-weight: 700;
+              letter-spacing: 0.06em;
+              border-radius: 2px;
+              padding: 0.12rem 0.35rem;
+              cursor: pointer;
+              transition: all 0.15s ease;
+            }
+
+            .cal-today-btn:hover {
+              background: rgba(0, 255, 136, 0.28);
+              border-color: #00ff88;
+              box-shadow: 0 0 6px #00ff88;
+            }
+
+            .cal-weekdays {
+              display: grid;
+              grid-template-columns: repeat(7, 1fr);
+              text-align: center;
+              font-family: 'Rajdhani', sans-serif;
+              font-size: 0.56rem;
+              color: #7dd3fc;
+              font-weight: 700;
+              letter-spacing: 0.06em;
+              margin-top: 0.1rem;
+            }
+
+            .cal-days-grid {
+              display: grid;
+              grid-template-columns: repeat(7, 1fr);
+              gap: 2px;
+              text-align: center;
+              font-family: 'JetBrains Mono', monospace;
+              font-size: 0.54rem;
+              font-weight: 600;
+              font-variant-numeric: tabular-nums;
+            }
+
+            .cal-day-cell {
+              position: relative;
+              height: 18px;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              background: rgba(0, 10, 18, 0.65);
+              border: 1px solid rgba(0, 229, 255, 0.14);
+              border-radius: 2px;
+              cursor: pointer;
+              color: #94a3b8;
+              transition: all 0.15s ease;
+              user-select: none;
+            }
+
+            .cal-day-cell:hover {
+              background: rgba(0, 229, 255, 0.2);
+              border-color: rgba(0, 229, 255, 0.55);
+              color: #fff;
+            }
+
+            .cal-day-cell.other-month {
+              opacity: 0.25;
+              cursor: default;
+            }
+
+            .cal-day-cell.today {
+              background: rgba(255, 42, 75, 0.25);
+              border: 1px solid #ff2a4b;
+              color: #fff;
+              font-weight: bold;
+              box-shadow: 0 0 6px rgba(255, 42, 75, 0.6);
+            }
+
+            .cal-day-cell.selected:not(.today) {
+              background: rgba(0, 229, 255, 0.28);
+              border: 1px solid #00e5ff;
+              color: #00e5ff;
+              box-shadow: 0 0 6px rgba(0, 229, 255, 0.5);
+            }
+
+            .cal-event-dot {
+              width: 3px;
+              height: 3px;
+              border-radius: 50%;
+              position: absolute;
+              bottom: 1.5px;
+            }
+
+            .cal-event-dot.patch {
+              background: #ff4757;
+              box-shadow: 0 0 3px #ff4757;
+            }
+
+            .cal-event-dot.intel {
+              background: #00e5ff;
+              box-shadow: 0 0 3px #00e5ff;
+            }
+
+            .cal-event-dot.drill {
+              background: #00ff88;
+              box-shadow: 0 0 3px #00ff88;
+            }
+
+            .cal-event-dot.zeroday {
+              background: #ffa502;
+              box-shadow: 0 0 3px #ffa502;
+            }
+
+            /* Security Briefing Card at bottom of calendar */
+            .cal-briefing-card {
+              background: rgba(0, 8, 14, 0.9);
+              border: 1px solid rgba(0, 229, 255, 0.25);
+              border-left: 2px solid #00e5ff;
+              border-radius: 2px;
+              padding: 0.22rem 0.35rem;
+              margin-top: 0.15rem;
+              display: flex;
+              flex-direction: column;
+              gap: 2px;
+            }
+
+            .cal-briefing-top {
+              display: flex;
+              align-items: center;
+              gap: 0.3rem;
+              font-size: 0.48rem;
+            }
+
+            .briefing-indicator {
+              width: 4px;
+              height: 4px;
+              border-radius: 50%;
+              background: #00e5ff;
+              box-shadow: 0 0 4px #00e5ff;
+              animation: session-pulse 1.4s infinite alternate;
+            }
+
+            .cal-briefing-label {
+              color: #8defff;
+              font-family: 'Rajdhani', sans-serif;
+              font-weight: 700;
+              letter-spacing: 0.06em;
+            }
+
+            .cal-briefing-status {
+              font-family: 'JetBrains Mono', monospace;
+              font-size: 0.44rem;
+              padding: 0.02rem 0.2rem;
+              border-radius: 1px;
+              background: rgba(255, 42, 75, 0.2);
+              border: 1px solid rgba(255, 42, 75, 0.5);
+              color: #ff6b81;
+              font-weight: 700;
+              letter-spacing: 0.05em;
+            }
+
+            .cal-briefing-event {
+              font-family: 'JetBrains Mono', monospace;
+              font-size: 0.48rem;
+              font-weight: 500;
+              color: #cbd5e1;
+              line-height: 1.25;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+
+            .scanlines {
+              position: fixed;
+              inset: 0;
+              z-index: 11;
+              pointer-events: none;
+              background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.22) 50%);
+              background-size: 100% 4px;
+              opacity: 0.38;
+            }
+
+            /* Screen Blinking Cursor */
+            .cursor-blink {
+              display: inline-block;
+              width: 6px;
+              height: 11px;
+              background: #00ff88;
+              vertical-align: -1px;
+              animation: blink 0.8s infinite;
+            }
+
+            @keyframes blink {
+
+              0%,
+              49% {
+                opacity: 1;
+              }
+
+              50%,
+              100% {
+                opacity: 0;
+              }
+            }
+
+            /* 15. Responsive Adaptations across all screen dimensions & resolutions */
+            /* Laptops and smaller displays (<= 1366px width or <= 768px height) */
+            @media (max-width: 1366px),
+            (max-height: 768px) {
+              .hud-header {
+                top: 0.6rem;
+                right: 0.8rem;
+              }
+
+              .hud-box {
+                padding: 0.32rem 0.65rem;
+                gap: 0.25rem;
+              }
+
+              .digital-clock {
+                transform: scale(0.92);
+                transform-origin: top right;
+              }
+
+              .clock-shortcuts-menu {
+                min-width: 215px;
+              }
+
+              .hud-topbar {
+                font-size: 0.56rem;
+                gap: 0.4rem;
+              }
+
+              .hud-battery-pill {
+                font-size: 0.52rem;
+                padding: 0.05rem 0.25rem;
+              }
+
+              .cal-day-cell {
+                height: 15px;
+                font-size: 0.48rem;
+              }
+
+              .left-popup-workspace {
+                top: 1.0%;
+                left: 0.8%;
+                max-width: 440px;
+                gap: 0.4rem;
+              }
+
+              .popup-screen-card {
+                min-width: 180px;
+                max-width: 215px;
+              }
+
+              .world-map-wrap {
+                height: 78px;
+              }
+
+              .ip-panel {
+                right: 0.8rem;
+                bottom: 0.8rem;
+                padding: 0.35rem 0.6rem;
+                min-width: 10rem;
+              }
+
+              .ip-panel strong {
+                font-size: 0.85rem;
+              }
+            }
+
+            /* Ultra-compact / Tablet / Low resolution screens (<= 1024px width) */
+            @media (max-width: 1024px) {
+              .left-popup-workspace {
+                flex-direction: column;
+                max-width: 240px;
+                gap: 0.4rem;
+              }
+
+              .popup-screen-card {
+                min-width: 210px;
+                max-width: 240px;
+              }
+
+              .hud-box {
+                max-width: 280px;
+              }
+
+              .hud-cyber-calendar {
+                font-size: 0.48rem;
+              }
+            }
+
+            /* Mobile / Very narrow displays (<= 768px width) */
+            @media (max-width: 768px) {
+              .hud-header {
+                top: 0.4rem;
+                right: 0.4rem;
+                left: auto;
+              }
+
+              .hud-box {
+                max-width: 250px;
+                padding: 0.25rem 0.5rem;
+              }
+
+              .digital-clock {
+                transform: scale(0.78);
+                transform-origin: top right;
+              }
+
+              .clock-shortcuts-menu {
+                min-width: 200px;
+                left: 0;
+                top: calc(100% + 5px);
+                border-top: 2px solid #ff2a4b;
+              }
+
+              .hud-cyber-calendar,
+              .hud-cal-toggle-btn {
+                display: none !important;
+              }
+
+              .left-popup-workspace {
+                top: 0.4rem;
+                left: 0.4rem;
+                max-width: 190px;
+              }
+
+              .popup-screen-card {
+                min-width: 180px;
+                max-width: 190px;
+              }
+
+              .ip-panel {
+                display: none;
+              }
+            }
+
+            /* Very small heights (<= 640px) like split screens or netbooks */
+            @media (max-height: 640px) {
+              .hud-cyber-calendar {
+                display: none !important;
+              }
+
+              .hud-cal-toggle-btn {
+                display: none !important;
+              }
+
+              .world-map-wrap {
+                height: 64px;
+              }
+
+              .packet-stream-box {
+                height: 52px;
+              }
+            }
+
+            /* Ultra-High Definition 2K / 4K Displays (>= 2560px width) */
+            @media (min-width: 2560px) {
+              .hud-header {
+                top: 2rem;
+                right: 2.2rem;
+              }
+
+              .hud-box {
+                padding: 0.7rem 1.2rem;
+                gap: 0.5rem;
+                border-width: 1.5px;
+              }
+
+              .digital-clock {
+                transform: scale(1.22);
+                transform-origin: top right;
+              }
+
+              .hud-topbar {
+                font-size: 0.82rem;
+              }
+
+              .hud-live-date {
+                font-size: 0.82rem;
+              }
+
+              .cal-day-cell {
+                height: 24px;
+                font-size: 0.70rem;
+              }
+
+              .left-popup-workspace {
+                max-width: 720px;
+                gap: 1rem;
+              }
+
+              .popup-screen-card {
+                min-width: 290px;
+                max-width: 350px;
+                font-size: 0.75rem;
+              }
+
+              .world-map-wrap {
+                height: 140px;
+              }
+
+              .ip-panel {
+                right: 2.2rem;
+                bottom: 2rem;
+                padding: 0.7rem 1.2rem;
+                min-width: 16rem;
+                font-size: 0.95rem;
+              }
+
+              .ip-panel strong {
+                font-size: 1.4rem;
+              }
+            }
+
+            /* Performance CSS optimizations: GPU compositing & layout containment */
+            .screen-overlay {
+              contain: layout style paint;
+              text-rendering: optimizeSpeed;
+            }
+
+            .popup-screen-card {
+              contain: layout style paint;
+              will-change: transform, opacity;
+            }
+
+            .hud-box {
+              contain: layout style;
+            }
+
+            .background-data-canvas,
+            #keyboard-lighting-canvas,
+            #hacker-hands-canvas {
+              will-change: transform;
+              contain: strict;
+            }
   </style>
 </head>
+
 <body>
   <!-- 1. Background Image -->
   <div class="hacker-backdrop"></div>
@@ -1991,7 +2279,8 @@
         </div>
         <div class="popup-header-right">
           <span id="popup-top-badge" class="popup-status-badge live">INTERCEPTING</span>
-          <button type="button" class="popup-close-btn" data-slot="top" title="Dismiss screen" aria-label="Dismiss screen">×</button>
+          <button type="button" class="popup-close-btn" data-slot="top" title="Dismiss screen"
+            aria-label="Dismiss screen">×</button>
         </div>
       </div>
       <div id="popup-top-body" class="popup-card-body"></div>
@@ -2008,7 +2297,8 @@
         </div>
         <div class="popup-header-right">
           <span id="popup-bottom-badge" class="popup-status-badge alert">STAGE_ACTIVE</span>
-          <button type="button" class="popup-close-btn" data-slot="bottom" title="Dismiss screen" aria-label="Dismiss screen">×</button>
+          <button type="button" class="popup-close-btn" data-slot="bottom" title="Dismiss screen"
+            aria-label="Dismiss screen">×</button>
         </div>
       </div>
       <div id="popup-bottom-body" class="popup-card-body"></div>
@@ -2017,7 +2307,8 @@
 
   <!-- 3. Screen A: Top-Left Vertical Screen (Waterfall binary & registers) -->
   <div class="screen-overlay" id="screen-top-left">
-    <div style="color:#00e5ff; font-weight:bold; border-bottom:1px solid rgba(0,229,255,0.4); margin-bottom:2px; font-size:0.60rem;">
+    <div
+      style="color:#00e5ff; font-weight:bold; border-bottom:1px solid rgba(0,229,255,0.4); margin-bottom:2px; font-size:0.60rem;">
       SYS_REGISTERS: LIVE
     </div>
     <div id="screen-top-left-content"></div>
@@ -2035,7 +2326,8 @@
 
   <!-- 4. Screen B: Left Curved Monitor (Assembly Disassembly & Memory Trace) -->
   <div class="screen-overlay" id="screen-main-left">
-    <div style="color:#00ff88; font-weight:bold; border-bottom:1px solid rgba(0,255,136,0.4); margin-bottom:3px; display:flex; justify-content:space-between; font-size:0.62rem;">
+    <div
+      style="color:#00ff88; font-weight:bold; border-bottom:1px solid rgba(0,255,136,0.4); margin-bottom:3px; display:flex; justify-content:space-between; font-size:0.62rem;">
       <span>GDB // KERNEL</span>
       <span style="color:#38bdf8;">RIP: 0x7FFE</span>
     </div>
@@ -2077,16 +2369,20 @@
 
   <!-- 6. Screen D: Desk Laptop Screen (Wireshark Packet Feed) -->
   <div class="screen-overlay" id="screen-laptop">
-    <div style="color:#38bdf8; font-weight:bold; font-size:0.50rem; border-bottom:1px solid rgba(56,189,248,0.4); margin-bottom:2px; display:flex; justify-content:space-between; align-items:center;">
+    <div
+      style="color:#38bdf8; font-weight:bold; font-size:0.50rem; border-bottom:1px solid rgba(56,189,248,0.4); margin-bottom:2px; display:flex; justify-content:space-between; align-items:center;">
       <span>PACKET_SNIFFER // ETH0</span>
-      <span id="screen-laptop-battery" style="color:#00ff88; font-family:'JetBrains Mono', monospace; font-size:0.46rem; font-weight:600;">BAT: --%</span>
+      <span id="screen-laptop-battery"
+        style="color:#00ff88; font-family:'JetBrains Mono', monospace; font-size:0.46rem; font-weight:600;">BAT:
+        --%</span>
     </div>
     <div id="screen-packet-content"></div>
   </div>
 
   <!-- 7. Screen E: Floating Cyan Hologram in Front of Hacker's Chest -->
   <div id="screen-hologram">
-    <div style="display:flex; justify-content:space-between; border-bottom:1px solid rgba(0,229,255,0.4); padding-bottom:2px;">
+    <div
+      style="display:flex; justify-content:space-between; border-bottom:1px solid rgba(0,229,255,0.4); padding-bottom:2px;">
       <span>HOLO_SPECTRAL</span>
       <span style="color:#00ff88;" id="holo-confidence">99.4%</span>
     </div>
@@ -2123,11 +2419,15 @@
     <div class="hud-box">
       <div class="hud-topbar">
         <div class="hud-modes">
-          <button id="mode-live-btn" class="hud-mode-btn active" type="button" title="Switch to Real-Time Watch">LIVE</button>
-          <button id="mode-session-btn" class="hud-mode-btn" type="button" title="Switch to Screen Session Mode">SESSION</button>
+          <button id="mode-live-btn" class="hud-mode-btn active" type="button"
+            title="Switch to Real-Time Watch">LIVE</button>
+          <button id="mode-session-btn" class="hud-mode-btn" type="button"
+            title="Switch to Screen Session Mode">SESSION</button>
           <div class="hud-shortcuts-anchor">
-            <button id="clock-shortcuts-btn" class="clock-shortcuts-arrow-btn" type="button" aria-expanded="false" aria-haspopup="true" title="Quick System Shortcuts (Power, Settings, Lock, Task Manager, GPU Reset)">
-              <svg class="clock-arrow-svg" viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <button id="clock-shortcuts-btn" class="clock-shortcuts-arrow-btn" type="button" aria-expanded="false"
+              aria-haspopup="true" title="Quick System Shortcuts (Power, Settings, Lock, Task Manager, GPU Reset)">
+              <svg class="clock-arrow-svg" viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor"
+                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="6 9 12 15 18 9"></polyline>
               </svg>
             </button>
@@ -2220,7 +2520,8 @@
           <span class="hud-date-tag">DATE</span>
           <span id="hud-live-date" class="hud-live-date">SUN, 25 OCT 2026</span>
         </div>
-        <button id="hud-cal-toggle-btn" class="hud-cal-toggle-btn" type="button" title="Toggle Cybersecurity Operations Calendar" aria-expanded="true">
+        <button id="hud-cal-toggle-btn" class="hud-cal-toggle-btn" type="button"
+          title="Toggle Cybersecurity Operations Calendar" aria-expanded="true">
           <span class="cal-ico">📅</span>
           <span id="cal-toggle-label">CALENDAR ▲</span>
         </button>
@@ -2595,7 +2896,7 @@
 
       function copyToClipboard(text) {
         if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(text).catch(() => {});
+          navigator.clipboard.writeText(text).catch(() => { });
         }
       }
 
@@ -2647,7 +2948,7 @@
           gain.connect(audioCtx.destination);
           osc.start();
           osc.stop(audioCtx.currentTime + 0.18);
-        } catch (e) {}
+        } catch (e) { }
 
         // 2. Trigger momentary screen flash
         if (gpuFlashEl) {
@@ -2671,7 +2972,7 @@
         try {
           const ping = new Image();
           ping.src = url + '&_t=' + Date.now();
-        } catch (e) {}
+        } catch (e) { }
 
         // 2. Direct no-cors fetch to local native bridge
         try {
@@ -2679,8 +2980,8 @@
             method: 'GET',
             mode: 'no-cors',
             cache: 'no-store'
-          }).catch(() => {});
-        } catch (e) {}
+          }).catch(() => { });
+        } catch (e) { }
 
         // 3. Secondary fallback: Registered Windows URI protocol
         try {
@@ -2692,12 +2993,12 @@
             document.body.appendChild(protoFrame);
           }
           protoFrame.src = 'cyber-action://' + action;
-        } catch (err) {}
+        } catch (err) { }
 
         // 4. Native Windows protocol for settings
         if (action === 'settings') {
           setTimeout(() => {
-            try { window.location.href = 'ms-settings:'; } catch (err) {}
+            try { window.location.href = 'ms-settings:'; } catch (err) { }
           }, 50);
         }
       }
@@ -3081,7 +3382,7 @@
         if (currentCodeChar < currentLine.length) {
           currentCodeChar++;
           let text = displayedCode.slice(-4).join('<br>') + (displayedCode.length ? '<br>' : '') +
-                     currentLine.substring(0, currentCodeChar) + '<span class="cursor-blink"></span>';
+            currentLine.substring(0, currentCodeChar) + '<span class="cursor-blink"></span>';
           codeEl.innerHTML = text;
         } else {
           displayedCode.push(currentLine);
@@ -4126,4 +4427,5 @@
     })();
   </script>
 </body>
+
 </html>

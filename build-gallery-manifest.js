@@ -55,14 +55,25 @@ const entries = imagePaths.map(function (file) {
   const image = toWebPath(file);
   const parts = image.split('/');
   const folder = parts.slice(1, -1).join('/');
-  const existing = existingByPath.get(image) || existingByPath.get(image.replace(/\.webp$/, '.jpg'));
-  const defaultLabel = parts[parts.length - 2] || parts[parts.length - 1];
+  const existing = existingByPath.get(image)
+    || existingByPath.get(image.replace(/\.webp$/i, '.jpg'))
+    || existingByPath.get(image.replace(/\.webp$/i, '.JPG'))
+    || existingByPath.get(image.replace(/\.jpe?g$/i, '.webp'));
+  const folderName = parts[parts.length - 2] || parts[parts.length - 1];
+  const defaultLabel = (existing && existing.folderLabel && existing.folderLabel !== folderName)
+    ? existing.folderLabel
+    : folderName.replace(/[-_]+/g, ' ');
+  const rawAlt = existing && existing.alt ? existing.alt : defaultLabel;
+  const rawCaption = existing && existing.caption ? existing.caption : defaultLabel;
+  const alt = rawAlt.replace(/TechQuest[-_]2026/g, 'TechQuest 2026');
+  const caption = rawCaption.replace(/TechQuest[-_]2026/g, 'TechQuest 2026');
+  const folderLabel = defaultLabel.replace(/TechQuest[-_]2026/g, 'TechQuest 2026');
   return {
     image,
-    alt: existing && existing.alt ? existing.alt : defaultLabel,
-    caption: existing && existing.caption ? existing.caption : defaultLabel,
+    alt,
+    caption,
     folder,
-    folderLabel: parts[parts.length - 2] || defaultLabel
+    folderLabel
   };
 }).sort(function (left, right) {
   return left.folder.localeCompare(right.folder) || left.image.localeCompare(right.image, undefined, { numeric: true });

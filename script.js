@@ -48,8 +48,13 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
     const failedImage = event.target;
     if (!(failedImage instanceof HTMLImageElement)) return;
     if (failedImage.src && failedImage.src.endsWith('.webp') && !failedImage.dataset.fallbackTried) {
-      failedImage.dataset.fallbackTried = 'true';
+      failedImage.dataset.fallbackTried = 'jpg';
       failedImage.src = failedImage.src.replace(/\.webp$/, '.jpg');
+      return;
+    }
+    if (failedImage.src && failedImage.dataset.fallbackTried === 'jpg') {
+      failedImage.dataset.fallbackTried = 'JPG';
+      failedImage.src = failedImage.src.replace(/\.jpg$/, '.JPG');
       return;
     }
     if (!failedImage.hasAttribute('data-image-fallback')) return;
@@ -189,7 +194,9 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
         return folder.split('/')[0] === year && all.indexOf(folder) === index;
       }).sort();
       return '<div class="gallery-folder-group" data-gallery-year-group="' + escapeHtml(year) + '"' + (year === initialYear ? '' : ' hidden') + '>' + folders.map(function (folder) {
-        return '<button class="gallery-folder-button" type="button" data-gallery-folder="' + escapeHtml(folder) + '">' + escapeHtml(folder.split('/').slice(1).join(' / ')) + '</button>';
+        const item = items.find(function (entry) { return entry.folder === folder && entry.folderLabel; });
+        const label = (item && item.folderLabel) || folder.split('/').slice(1).join(' / ');
+        return '<button class="gallery-folder-button" type="button" data-gallery-folder="' + escapeHtml(folder) + '">' + escapeHtml(label) + '</button>';
       }).join('') + '</div>';
     }).join('');
     const photos = items.map(function (item) {
