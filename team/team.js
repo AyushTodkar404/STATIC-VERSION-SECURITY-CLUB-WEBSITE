@@ -163,7 +163,7 @@ window.teamData = [
   },
   {
     "name": "AYUSH BANGERA",
-    "role": "TECHNICAL HEAD",
+    "role": "ASST.TECHNICAL HEAD",
     "bio": "Security Club DBIT team member.",
     "image": "team/AYUSH.webp",
     "tenure": "2026-27",
