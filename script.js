@@ -47,46 +47,87 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
   app.addEventListener('error', function (event) {
     const failedImage = event.target;
     if (!(failedImage instanceof HTMLImageElement)) return;
-    if (failedImage.src && failedImage.src.endsWith('.webp') && !failedImage.dataset.fallbackTried) {
-      failedImage.dataset.fallbackTried = 'jpg';
-      failedImage.src = failedImage.src.replace(/\.webp$/, '.jpg');
-      return;
+
+    // Ordered extension attempts to recover mismatched case or file format variants
+    const extensions = ['.webp', '.jpg', '.JPG', '.jpeg', '.png'];
+    const currentSrc = failedImage.src || '';
+    const triedCount = parseInt(failedImage.dataset.fallbackCount || '0', 10);
+
+    if (triedCount < extensions.length) {
+      const currentExtMatch = currentSrc.match(/\.(webp|jpg|jpeg|png)$/i);
+      if (currentExtMatch) {
+        const nextExt = extensions[(extensions.indexOf(currentExtMatch[0]) + 1) % extensions.length];
+        failedImage.dataset.fallbackCount = String(triedCount + 1);
+        failedImage.src = currentSrc.replace(/\.(webp|jpg|jpeg|png)$/i, nextExt);
+        return;
+      }
     }
-    if (failedImage.src && failedImage.dataset.fallbackTried === 'jpg') {
-      failedImage.dataset.fallbackTried = 'JPG';
-      failedImage.src = failedImage.src.replace(/\.jpg$/, '.JPG');
-      return;
-    }
-    if (failedImage.src && failedImage.dataset.fallbackTried === 'JPG') {
-      failedImage.dataset.fallbackTried = 'jpeg';
-      failedImage.src = failedImage.src.replace(/\.JPG$/, '.jpeg');
-      return;
-    }
+
     if (!failedImage.hasAttribute('data-image-fallback')) return;
     const fallback = document.createElement('div');
-    fallback.className = failedImage.className || 'card-image';
+    fallback.className = (failedImage.className || 'card-image') + ' image-fallback-box';
     fallback.setAttribute('role', 'img');
     fallback.setAttribute('aria-label', failedImage.alt || 'Image unavailable');
-    fallback.textContent = failedImage.dataset.imageFallback;
+    fallback.innerHTML = '<span class="image-fallback-symbol" aria-hidden="true">' + escapeHtml(failedImage.dataset.imageFallback || '◈') + '</span>';
     failedImage.replaceWith(fallback);
   }, true);
 
   function shell(key, content) {
     const page = pages[key];
-    return '<div class="page section-shell"><section class="page-hero"><div><p class="eyebrow">' + page.eyebrow + '</p><h1>' + page.title + '</h1><p class="hero-lede">' + content.lede + '</p></div></section>' + content.body + '</div>';
+    return '<div class="page section-shell"><section class="page-hero"><div><div class="hero-eyebrow-badge"><span class="eyebrow-indicator" aria-hidden="true"></span><p class="eyebrow">' + page.eyebrow + '</p></div><h1>' + page.title + '</h1><p class="hero-lede">' + content.lede + '</p></div></section>' + content.body + '</div>';
+  }
+
+  function teamCards(items) {
+    return '<div class="card-grid team-grid">' + items.map(function (item, index) {
+      const isTop = index < 3;
+      const deptCode = item.department ? item.department.toUpperCase() : (item.role && /faculty|coordinator|mentor/i.test(item.role) ? 'FACULTY' : (item.role && /alumni/i.test(item.role) ? 'ALUMNI' : 'MEMBER'));
+      const tenureTag = item.tenure || (item.role && /alumni/i.test(item.role) ? 'ALUMNI' : 'MENTOR');
+      const isLeader = item.highlight || /president/i.test(item.role || '');
+
+      const photo = item.image
+        ? '<a class="team-image-link" href="' + escapeHtml(item.image) + '" target="_blank" rel="noopener noreferrer" aria-label="View full-size photo of ' + escapeHtml(item.name || 'team member') + '">'
+          + '<div class="team-photo-wrapper">'
+          + image(item.image, '+', item.name || item.role, 'team-photo', isTop)
+          + '<div class="team-photo-scrim" aria-hidden="true"></div>'
+          + '<span class="team-tenure-badge">' + escapeHtml(tenureTag) + '</span>'
+          + '</div></a>'
+        : '<div class="team-photo-wrapper team-photo-placeholder" aria-hidden="true"><div class="team-avatar-fallback">' + escapeHtml((item.name || 'SC').slice(0, 2).toUpperCase()) + '</div><span class="team-tenure-badge">' + escapeHtml(tenureTag) + '</span></div>';
+
+      const departmentAttr = item.department ? ' data-team-department="' + escapeHtml(item.department) + '"' : '';
+      const yearAttr = item.tenure ? ' data-team-year-target="' + escapeHtml(item.tenure) + '"' : '';
+      const highlightClass = isLeader ? ' is-leadership' : '';
+
+      const linkedinLink = item.linkedin
+        ? '<a class="team-linkedin-link" href="' + escapeHtml(item.linkedin) + '" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile for ' + escapeHtml(item.name) + '" title="View LinkedIn Profile">'
+          + '<svg viewBox="0 0 24 24" aria-hidden="true" width="14" height="14"><path fill="currentColor" d="M5.2 3.5a2.2 2.2 0 1 1-.1 4.4 2.2 2.2 0 0 1 .1-4.4ZM3.3 9.5h3.8v11.2H3.3zM9.2 9.5h3.6V11h.1a4 4 0 0 1 3.6-2c3.9 0 4.6 2.5 4.6 5.7v6h-3.8v-5.3c0-1.3 0-3-1.9-3s-2.2 1.4-2.2 2.9v5.4H9.2z"/></svg>'
+          + '<span>LinkedIn</span><span class="team-link-arrow" aria-hidden="true">↗</span></a>'
+        : '';
+
+      return '<article class="card team-card' + highlightClass + '"' + departmentAttr + yearAttr + '>'
+        + '<div class="team-card-header">'
+        + '<span class="team-dept-pill">' + escapeHtml(deptCode) + '</span>'
+        + '<span class="team-index-pill">#' + String(index + 1).padStart(2, '0') + '</span>'
+        + '</div>'
+        + photo
+        + '<div class="card-body team-card-body">'
+        + '<p class="team-role-tag">' + escapeHtml(item.role || 'Member') + '</p>'
+        + '<h3 class="team-member-name">' + escapeHtml(item.name) + '</h3>'
+        + '<div class="team-card-divider" aria-hidden="true"></div>'
+        + '<p class="team-member-bio">' + escapeHtml(item.description || item.bio || 'Security Club DBIT team member.') + '</p>'
+        + linkedinLink
+        + '</div>'
+        + '</article>';
+    }).join('') + '</div>';
   }
 
   function cards(items, type) {
     return '<div class="card-grid ' + (type || '') + '">' + items.map(function (item, index) {
       const isTop = index < 2;
-      const photo = item.image ? (type === 'team-grid' ? '<a class="team-image-link" href="' + escapeHtml(item.image) + '" target="_blank" rel="noopener noreferrer" aria-label="View full-size photo of ' + escapeHtml(item.name || item.alt || 'team member') + '">' + image(item.image, '+', item.name || item.title || item.alt, '', isTop) + '</a>' : image(item.image, '+', item.name || item.title || item.alt, '', isTop)) : '<div class="card-image card-placeholder" aria-hidden="true"></div>';
+      const photo = item.image ? image(item.image, '+', item.name || item.title || item.alt, '', isTop) : '<div class="card-image card-placeholder" aria-hidden="true"></div>';
       const eventAttribute = type === 'event-grid' ? ' data-event-id="' + escapeHtml(item.title) + '"' : '';
-      const eventHint = type === 'event-grid' ? '<p class="card-action-hint">Open event details →</p>' : '';
-      const departmentAttr = item.department ? ' data-team-department="' + escapeHtml(item.department) + '"' : '';
-      const yearAttr = item.tenure ? ' data-team-year-target="' + escapeHtml(item.tenure) + '"' : '';
+      const eventHint = type === 'event-grid' ? '<p class="card-action-hint">Access Mission Brief →</p>' : '';
       const highlightClass = item.highlight ? ' card-highlight' : '';
-      const linkedinLink = item.linkedin ? '<a class="team-linkedin-link" href="' + escapeHtml(item.linkedin) + '" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile for ' + escapeHtml(item.name || 'team member') + '" title="View LinkedIn Profile"><svg viewBox="0 0 24 24" aria-hidden="true" width="14" height="14"><path fill="currentColor" d="M5.2 3.5a2.2 2.2 0 1 1-.1 4.4 2.2 2.2 0 0 1 .1-4.4ZM3.3 9.5h3.8v11.2H3.3zM9.2 9.5h3.6V11h.1a4 4 0 0 1 3.6-2c3.9 0 4.6 2.5 4.6 5.7v6h-3.8v-5.3c0-1.3 0-3-1.9-3s-2.2 1.4-2.2 2.9v5.4H9.2z"/></svg><span>LinkedIn</span></a>' : '';
-      return '<article class="card' + (type === 'event-grid' ? ' event-card' : '') + highlightClass + '"' + eventAttribute + departmentAttr + yearAttr + '>' + photo + '<div class="card-body">' + (item.meta ? '<p class="card-meta">' + item.meta + '</p>' : '') + '<h3>' + escapeHtml(item.name || item.title) + '</h3>' + (item.role ? '<p class="role">' + escapeHtml(item.role) + '</p>' : '') + '<p>' + escapeHtml(item.description || item.bio || '') + '</p>' + linkedinLink + eventHint + '</div></article>';
+      return '<article class="card' + (type === 'event-grid' ? ' event-card' : '') + highlightClass + '"' + eventAttribute + '>' + photo + '<div class="card-body">' + (item.meta ? '<p class="card-meta">' + item.meta + '</p>' : '') + '<h3>' + escapeHtml(item.name || item.title) + '</h3>' + (item.role ? '<p class="role">' + escapeHtml(item.role) + '</p>' : '') + '<p>' + escapeHtml(item.description || item.bio || '') + '</p>' + eventHint + '</div></article>';
     }).join('') + '</div>';
   }
 
@@ -177,13 +218,13 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
       + '<button class="team-filter-button" type="button" data-team-filter="design" aria-pressed="false">Design & Editorial</button>'
       + '</div></div>';
 
-    return '<section class="team-section" aria-labelledby="team-mentors-heading"><div class="team-section-heading"><p class="eyebrow">Guidance and support</p><h2 id="team-mentors-heading">Mentors</h2><p>Faculty coordinators and teachers supporting the club.</p></div>'
-      + (mentors.length ? cards(mentors, 'team-grid') : '<p class="team-empty">Mentors will be listed here.</p>')
-      + '</section><section class="team-section" aria-labelledby="team-alumni-heading"><div class="team-section-heading"><p class="eyebrow">Our foundation & heritage</p><h2 id="team-alumni-heading">Alumni</h2><p>Former members who helped shape the Security Club.</p></div>'
-      + (alumni.length ? cards(alumni, 'team-grid') : '<p class="team-empty">Alumni will be listed here.</p>')
-      + '</section><section class="team-section" aria-labelledby="team-core-heading"><div class="team-section-heading"><p class="eyebrow">Student leadership</p><h2 id="team-core-heading">Core Team</h2><p>The student council and coordinators leading the Security Club.</p></div>'
+    return '<section class="team-section" aria-labelledby="team-mentors-heading"><div class="team-section-heading"><div class="section-heading-meta"><span class="section-tag-dot" aria-hidden="true"></span><p class="eyebrow">Academic Advisory // DBIT</p></div><h2 id="team-mentors-heading">Mentors & Faculty Guidance</h2><p>Faculty coordinators and teachers supporting the club with institutional expertise.</p></div>'
+      + (mentors.length ? teamCards(mentors) : '<p class="team-empty">Mentors will be listed here.</p>')
+      + '</section><section class="team-section" aria-labelledby="team-alumni-heading"><div class="team-section-heading"><div class="section-heading-meta"><span class="section-tag-dot" aria-hidden="true"></span><p class="eyebrow">Our Foundation & Heritage</p></div><h2 id="team-alumni-heading">Alumni Network</h2><p>Former members who built the club and now defend systems across industry.</p></div>'
+      + (alumni.length ? teamCards(alumni) : '<p class="team-empty">Alumni will be listed here.</p>')
+      + '</section><section class="team-section" aria-labelledby="team-core-heading"><div class="team-section-heading"><div class="section-heading-meta"><span class="section-tag-dot" aria-hidden="true"></span><p class="eyebrow">Student Leadership Council</p></div><h2 id="team-core-heading">Core Team</h2><p>The student council and coordinators leading the Security Club initiatives.</p></div>'
       + filterBar
-      + (coreTeam.length ? cards(coreTeam, 'team-grid') : '<p class="team-empty">Core team members will be listed here.</p>')
+      + (coreTeam.length ? teamCards(coreTeam) : '<p class="team-empty">Core team members will be listed here.</p>')
       + '</section>';
   }
 
@@ -588,7 +629,7 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
     function draw() {
       animationFrame = 0;
       if (document.hidden || !isStreamActive) return;
-      context.fillStyle = 'rgba(3, 7, 11, 0.12)';
+      context.fillStyle = 'rgba(3, 7, 8, 0.14)';
       context.fillRect(0, 0, width, height);
       context.font = fontSize + "px 'JetBrains Mono', monospace";
       drops.forEach(function (drop, index) {
@@ -596,18 +637,18 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
         const x = index * fontSize;
         const y = drop * fontSize;
 
-        // Lead character glows in bright cyan/white
-        context.fillStyle = '#e5f3f8';
+        // Lead character glows in luminous mint-white
+        context.fillStyle = '#E8FAF4';
         context.fillText(char, x, y);
 
-        // Previous character in phosphor matrix green
+        // Previous character in refined emerald matrix green
         if (drop > 1) {
           const prevChar = characters.charAt(Math.floor(Math.random() * characters.length));
-          context.fillStyle = '#00ff78';
+          context.fillStyle = '#00C982';
           context.fillText(prevChar, x, (drop - 1) * fontSize);
         }
 
-        if (y > height && Math.random() > 0.98) drops[index] = 0;
+        if (y > height && Math.random() > 0.985) drops[index] = 0;
         drops[index] += 1;
       });
       animationTimer = window.setTimeout(function () {
