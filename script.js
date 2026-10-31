@@ -478,7 +478,8 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
       content = { lede: 'This page is presented as a public static information page. There is no login, account system or private data in this version.', body: '<div class="split-content"><article class="info-panel"><p class="eyebrow">Static workspace</p><h2>' + pages[key].label + '</h2><p>Use this space to publish the club’s current work, resources and updates directly from the GitHub repository.</p></article><article class="info-panel"><p class="eyebrow">How it works</p><h2>GitHub is the editor.</h2><p>Update the HTML, CSS, JavaScript and image folders, then commit and push. The hosted page reflects the repository contents.</p></article></div>' };
     }
     app.innerHTML = shell(key, content);
-    if (key === 'home') mountSecurityLogo(app.querySelector('.home-hero-visual'));
+    const splashActive = document.body.classList.contains('splash-active');
+    if (key === 'home' && !splashActive) mountSecurityLogo(app.querySelector('.home-hero-visual'));
     setupGallery();
     if (key === 'events') setupEvents(window.eventsData || []);
     if (key === 'team') setupTeam();
@@ -516,23 +517,27 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
       window.open(targetUrl, '_blank', 'noopener,noreferrer');
       showFormFeedback(submissionForm, targetUrl, destination === 'whatsapp' ? 'WhatsApp' : 'Gmail');
     });
-    decodeText(app.querySelector('h1'));
+    if (!splashActive) decodeText(app.querySelector('h1'));
     app.querySelectorAll('img').forEach(function (img) {
       if (img.complete) img.classList.add('is-loaded');
     });
     app.focus({ preventScroll: true });
   }
 
-  function decodeText(element) {
+  function decodeText(element, force) {
     if (!element) return;
+    if (scrambleInterval) {
+      window.clearInterval(scrambleInterval);
+      scrambleInterval = 0;
+    }
     // sessionStorage is shared by route changes and survives reloads in this tab.
     // If storage is unavailable, keep a page-lifetime guard as a safe fallback.
     let alreadyAnimated = false;
     try {
-      alreadyAnimated = sessionStorage.getItem(scrambleSessionKey) === 'done';
-      if (!alreadyAnimated) sessionStorage.setItem(scrambleSessionKey, 'done');
+      alreadyAnimated = !force && sessionStorage.getItem(scrambleSessionKey) === 'done';
+      sessionStorage.setItem(scrambleSessionKey, 'done');
     } catch (_) {
-      alreadyAnimated = window.headingScramblePlayed === true;
+      alreadyAnimated = !force && window.headingScramblePlayed === true;
       window.headingScramblePlayed = true;
     }
     if (alreadyAnimated) return;
@@ -731,6 +736,15 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
       setTimeout(function () {
         splash.classList.add('is-finished');
         document.body.classList.remove('splash-active');
+
+        // Splash completed: trigger logo tracing animation & heading scramble live
+        const heroVisual = app.querySelector('.home-hero-visual');
+        if (heroVisual) {
+          window.securityClubLogoMotionPlayed = false;
+          mountSecurityLogo(heroVisual);
+        }
+        decodeText(app.querySelector('h1'), true);
+
         setTimeout(function () {
           splash.style.display = 'none';
           splash.setAttribute('aria-hidden', 'true');
