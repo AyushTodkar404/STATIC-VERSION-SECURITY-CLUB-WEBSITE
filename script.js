@@ -681,8 +681,89 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
       closeNav();
     }
   });
+  function setupSplashLoader() {
+    const splash = document.querySelector('#splash-loader');
+    if (!splash) return;
+
+    document.body.classList.add('splash-active');
+
+    const progressBar = splash.querySelector('.splash-progress-bar');
+    const percentEl = splash.querySelector('.splash-percent');
+    const statusEl = splash.querySelector('.splash-status');
+    const skipBtn = splash.querySelector('.splash-skip-btn');
+
+    const duration = 5400; // 5.4s duration (in the 5-6s window)
+    const startTime = performance.now();
+    let isDone = false;
+    let animId = null;
+
+    function finish() {
+      if (isDone) return;
+      isDone = true;
+      if (animId) cancelAnimationFrame(animId);
+      if (progressBar) progressBar.style.width = '100%';
+      if (percentEl) percentEl.textContent = '100%';
+      if (statusEl) statusEl.textContent = 'SYSTEM READY · WELCOME';
+      splash.setAttribute('aria-valuenow', '100');
+
+      setTimeout(function () {
+        splash.classList.add('is-finished');
+        document.body.classList.remove('splash-active');
+        setTimeout(function () {
+          splash.style.display = 'none';
+          splash.setAttribute('aria-hidden', 'true');
+        }, 650);
+      }, 200);
+    }
+
+    function step(now) {
+      if (isDone) return;
+      const elapsed = now - startTime;
+      const progress = Math.min(1, elapsed / duration);
+      const percent = Math.floor(progress * 100);
+
+      if (progressBar) progressBar.style.width = percent + '%';
+      if (percentEl) percentEl.textContent = percent + '%';
+      splash.setAttribute('aria-valuenow', String(percent));
+
+      if (statusEl) {
+        if (progress < 0.25) {
+          statusEl.textContent = 'INITIALIZING SECURE CORE...';
+        } else if (progress < 0.50) {
+          statusEl.textContent = 'LOADING SECURITY PROTOCOLS...';
+        } else if (progress < 0.75) {
+          statusEl.textContent = 'SYNCHRONIZING THREAT MATRICES...';
+        } else if (progress < 0.95) {
+          statusEl.textContent = 'FINALIZING ENVIRONMENT...';
+        } else {
+          statusEl.textContent = 'CORE READY · WELCOME TO DBIT';
+        }
+      }
+
+      if (progress < 1) {
+        animId = requestAnimationFrame(step);
+      } else {
+        finish();
+      }
+    }
+
+    if (skipBtn) {
+      skipBtn.addEventListener('click', finish);
+    }
+
+    document.addEventListener('keydown', function onEscape(e) {
+      if (e.key === 'Escape' && !isDone) {
+        finish();
+        document.removeEventListener('keydown', onEscape);
+      }
+    });
+
+    animId = requestAnimationFrame(step);
+  }
+
   window.addEventListener('hashchange', function () { render(location.hash.replace('#/', '') || 'home'); window.scrollTo(0, 0); });
   document.querySelector('#current-year').textContent = new Date().getFullYear();
+  setupSplashLoader();
   setupMatrix();
   render(location.hash.replace('#/', '') || 'home');
 }());

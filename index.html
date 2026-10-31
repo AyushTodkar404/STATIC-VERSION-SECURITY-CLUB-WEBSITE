@@ -27,11 +27,34 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@600;700;800&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=7">
+  <link rel="stylesheet" href="styles.css?v=8">
   <link rel="stylesheet" href="SecurityLogoTrace.css">
 </head>
 
-<body>
+<body class="splash-active">
+  <div id="splash-loader" class="splash-loader" role="progressbar" aria-label="Loading Security Club DBIT" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+    <div class="splash-backdrop" aria-hidden="true"></div>
+    <div class="splash-content">
+      <div class="splash-logo-container">
+        <div class="splash-orbit-ring" aria-hidden="true"></div>
+        <div class="splash-orbit-ring-outer" aria-hidden="true"></div>
+        <div class="splash-logo-wrap">
+          <img class="splash-logo-img" src="assets/security-club-logo-small.png" alt="Security Club DBIT Logo" width="82" height="82" fetchpriority="high">
+        </div>
+      </div>
+      <div class="splash-text-container">
+        <h1 class="splash-title">Security Club, DBIT</h1>
+        <div class="splash-progress-track" aria-hidden="true">
+          <div class="splash-progress-bar"></div>
+        </div>
+        <div class="splash-status-meta">
+          <span class="splash-status">INITIALIZING SYSTEM...</span>
+          <span class="splash-percent">0%</span>
+        </div>
+      </div>
+    </div>
+    <button class="splash-skip-btn" type="button" aria-label="Skip loading animation">Skip [Esc]</button>
+  </div>
   <canvas id="matrix-background" aria-hidden="true"></canvas>
   <div class="ambient-grid" aria-hidden="true"></div>
   <header class="site-header">
