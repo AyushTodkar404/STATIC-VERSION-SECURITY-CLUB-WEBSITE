@@ -308,10 +308,15 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
         if (!event) return;
         document.body.insertAdjacentHTML('beforeend', eventDetailsMarkup(event));
         const modal = document.querySelector('.event-detail-overlay');
-        const close = function () { modal.remove(); document.body.classList.remove('event-is-open'); };
+        const onModalKey = function (e) { if (e.key === 'Escape') close(); };
+        document.addEventListener('keydown', onModalKey);
+        const close = function () {
+          document.removeEventListener('keydown', onModalKey);
+          modal.remove();
+          document.body.classList.remove('event-is-open');
+        };
         modal.querySelector('.event-detail-close').addEventListener('click', close);
         modal.addEventListener('click', function (eventTarget) { if (eventTarget.target === modal) close(); });
-        modal.addEventListener('keydown', function (eventTarget) { if (eventTarget.key === 'Escape') close(); });
         modal.querySelector('.event-detail-close').focus();
         document.body.classList.add('event-is-open');
       };
@@ -448,7 +453,7 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
     lightbox.addEventListener('click', function (event) {
       if (event.target === lightbox) closeLightbox();
     });
-    browser.addEventListener('keydown', function (event) {
+    document.addEventListener('keydown', function (event) {
       if (event.key === 'Escape' && !lightbox.hidden) closeLightbox();
     });
   }
@@ -615,9 +620,12 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
     let isStreamActive = !reducedMotion.matches;
 
     function resize() {
+      const newWidth = window.innerWidth;
+      const newHeight = window.innerHeight;
+      if (newWidth === width && Math.abs(newHeight - height) < 120) return;
       const pixelRatio = Math.min(window.devicePixelRatio || 1, 1.5);
-      width = window.innerWidth;
-      height = window.innerHeight;
+      width = newWidth;
+      height = newHeight;
       matrixCanvas.width = Math.round(width * pixelRatio);
       matrixCanvas.height = Math.round(height * pixelRatio);
       matrixCanvas.style.width = '100%';
@@ -733,6 +741,12 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
       closeNav();
     }
   });
+
+  window.addEventListener('resize', function () {
+    if (window.innerWidth > 1180 && navigation.classList.contains('open')) {
+      closeNav();
+    }
+  }, { passive: true });
   function setupSplashLoader() {
     const splash = document.querySelector('#splash-loader');
     if (!splash) return;

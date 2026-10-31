@@ -20,13 +20,21 @@
   let pointerY = window.innerHeight / 2;
   let activeTarget = null;
   let frame = 0;
+  let rafCursor = 0;
+
+  function updateCursor() {
+    rafCursor = 0;
+    cursor.style.transform = 'translate3d(' + pointerX + 'px, ' + pointerY + 'px, 0) translate(-50%, -50%)';
+    if (activeTarget) positionCorners(activeTarget);
+  }
 
   function moveCursor(event) {
     if (event.pointerType !== 'mouse' && event.pointerType !== 'pen') return;
     pointerX = event.clientX;
     pointerY = event.clientY;
-    cursor.style.transform = 'translate3d(' + pointerX + 'px, ' + pointerY + 'px, 0) translate(-50%, -50%)';
-    if (activeTarget) positionCorners(activeTarget);
+    if (!rafCursor) {
+      rafCursor = window.requestAnimationFrame(updateCursor);
+    }
   }
 
   function positionCorners(target) {

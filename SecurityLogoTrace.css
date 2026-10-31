@@ -181,3 +181,14 @@
   from { transform: rotate(var(--orbit-start, 0deg)); }
   to { transform: rotate(calc(var(--orbit-start, 0deg) + 360deg)); }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .security-logo.is-animating .trace-path,
+  .security-logo.is-animating .logo-orbit,
+  .security-logo.is-animating .green-orbit-spinner,
+  .security-logo.is-animating .node-dot {
+    animation: none !important;
+    opacity: 1 !important;
+    stroke-dashoffset: 0 !important;
+  }
+}

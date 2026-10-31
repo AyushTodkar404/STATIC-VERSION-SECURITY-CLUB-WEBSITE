@@ -2202,6 +2202,9 @@ img.card-image.is-loaded,
     display: flex;
     font-size: 0.62rem;
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: clamp(140px, 40vw, 220px);
   }
 
   .header-actions {
@@ -2401,6 +2404,53 @@ img.card-image.is-loaded,
 
   .gallery-grid {
     gap: 0.45rem;
+  }
+
+  .brand-tagline {
+    max-width: 135px;
+    font-size: 0.58rem;
+  }
+}
+
+/* Tablet & Intermediate Viewports */
+@media (min-width: 681px) and (max-width: 1024px) {
+  .hero {
+    gap: 2rem;
+    padding-block: 4rem;
+  }
+
+  .team-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Large Displays & 4K Workstations */
+@media (min-width: 1920px) {
+  :root {
+    --max-width: 1320px;
+  }
+
+  .hero {
+    min-height: 680px;
+    gap: 4.5rem;
+  }
+
+  .card-grid {
+    gap: 1.5rem;
+  }
+}
+
+/* Touchscreens: Enhanced Tap Targets */
+@media (pointer: coarse) {
+  .button,
+  .site-nav a,
+  .team-filter-button,
+  .team-year-button,
+  .event-year-button,
+  .gallery-year-button,
+  .gallery-folder-button,
+  .gallery-all-button {
+    min-height: 44px;
   }
 }
 
