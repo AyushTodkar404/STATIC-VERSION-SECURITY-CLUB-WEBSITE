@@ -57,6 +57,11 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
       failedImage.src = failedImage.src.replace(/\.jpg$/, '.JPG');
       return;
     }
+    if (failedImage.src && failedImage.dataset.fallbackTried === 'JPG') {
+      failedImage.dataset.fallbackTried = 'jpeg';
+      failedImage.src = failedImage.src.replace(/\.JPG$/, '.jpeg');
+      return;
+    }
     if (!failedImage.hasAttribute('data-image-fallback')) return;
     const fallback = document.createElement('div');
     fallback.className = failedImage.className || 'card-image';
@@ -707,7 +712,9 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
       });
     }
 
-    const duration = 2800; // Fast-paced 2.8s loading (well under 5s)
+    const isSlowConnection = typeof navigator !== 'undefined' && navigator.connection && (navigator.connection.saveData || /2g/.test(navigator.connection.effectiveType || ''));
+    const duration = isSlowConnection ? 1800 : 2600; // Fast-paced 2.6s (1.8s on 2G/data-saver)
+    const maxTimeout = isSlowConnection ? 2600 : 3600; // Strict fallback ceiling so weak connections never stall
     const startTime = performance.now();
     let isDone = false;
     let animId = null;
@@ -735,9 +742,10 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
       if (isDone) return;
       const elapsed = now - startTime;
       const timeRatio = elapsed / duration;
+      const isTimedOut = elapsed >= maxTimeout;
 
-      // Ensure full asset and font readiness before passing 98%
-      const assetsReady = isWindowLoaded && isFontsReady;
+      // Ensure full asset and font readiness before passing 98%, with fallback ceiling for weak internet
+      const assetsReady = (isWindowLoaded && isFontsReady) || isTimedOut;
       const effectiveRatio = (!assetsReady && timeRatio >= 0.98) ? 0.98 : Math.min(1, timeRatio);
       const percent = Math.floor(effectiveRatio * 100);
 
@@ -761,7 +769,7 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
         }
       }
 
-      if (timeRatio >= 1 && assetsReady) {
+      if ((timeRatio >= 1 && assetsReady) || isTimedOut) {
         finish();
       } else {
         animId = requestAnimationFrame(step);

@@ -616,6 +616,8 @@ h3 {
   display: grid;
   place-items: center;
   height: 390px;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .orbit {
@@ -2357,7 +2359,7 @@ body.splash-active {
 }
 
 .splash-progress-track {
-  width: clamp(230px, 45vw, 340px);
+  width: min(340px, 84vw);
   height: 4px;
   background: rgba(56, 189, 248, 0.16);
   border-radius: 999px;
@@ -2379,7 +2381,7 @@ body.splash-active {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: clamp(230px, 45vw, 340px);
+  width: min(340px, 84vw);
   font-family: var(--font-mono);
   font-size: 0.75rem;
   color: var(--muted);
