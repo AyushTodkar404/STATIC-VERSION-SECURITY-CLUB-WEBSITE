@@ -1252,6 +1252,93 @@ img.card-image.is-loaded,
   color: var(--muted);
 }
 
+.team-heading-split {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.team-tenure-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.95rem;
+  border-radius: 999px;
+  background: rgba(0, 255, 136, 0.08);
+  border: 1px solid rgba(0, 255, 136, 0.35);
+  color: var(--green);
+  font: 700 0.76rem var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow: 0 0 16px rgba(0, 255, 136, 0.15);
+}
+
+.team-pulse-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 8px var(--green);
+  animation: beacon-blink 2s infinite ease-in-out;
+}
+
+.team-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+  margin-bottom: 2rem;
+  padding: 0.35rem 0.45rem;
+  border: 1px solid rgba(56, 189, 248, 0.22);
+  border-radius: 8px;
+  background: linear-gradient(180deg, rgba(5, 14, 22, 0.95) 0%, rgba(2, 7, 12, 0.98) 100%);
+  width: fit-content;
+  max-width: 100%;
+}
+
+.team-filter-button {
+  padding: 0.45rem 0.9rem;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+}
+
+.team-filter-button:hover {
+  color: #fff;
+  background: rgba(0, 229, 255, 0.1);
+  border-color: rgba(0, 229, 255, 0.3);
+}
+
+.team-filter-button.is-active {
+  color: #02070c;
+  background: var(--cyan);
+  border-color: var(--cyan);
+  box-shadow: 0 0 16px rgba(0, 229, 255, 0.45);
+  font-weight: 700;
+}
+
+.card.card-highlight {
+  border-color: rgba(0, 229, 255, 0.45);
+  background: linear-gradient(180deg, rgba(10, 28, 44, 0.9) 0%, rgba(3, 11, 18, 0.98) 100%);
+  box-shadow: 0 0 30px rgba(0, 229, 255, 0.18), 0 10px 30px rgba(0, 0, 0, 0.7);
+}
+
+.card.card-highlight .role {
+  color: var(--green);
+  font-weight: 700;
+  text-shadow: 0 0 8px rgba(0, 255, 136, 0.4);
+}
+
 /* About Page Courses & Mission */
 .about-vision-mission {
   display: grid;

@@ -5,6 +5,7 @@ window.teamData = [
     "role": "President",
     "bio": "Security Club DBIT team member.",
     "image": "team/payal-samant.webp",
+    "tenure": "2026-27",
     "linkedin": ""
   },
   {
@@ -12,6 +13,7 @@ window.teamData = [
     "role": "RESEARCH HEAD",
     "bio": "Security Club DBIT team member.",
     "image": "team/member-2.webp",
+    "tenure": "2026-27",
     "linkedin": ""
   },
   {
@@ -19,6 +21,7 @@ window.teamData = [
     "role": "VICE PRESIDENT",
     "bio": "Security Club DBIT team member.",
     "image": "team/member-16.webp",
+    "tenure": "2026-27",
     "linkedin": ""
   },
   {
@@ -26,6 +29,7 @@ window.teamData = [
     "role": "TECHNICAL HEAD",
     "bio": "Security Club DBIT team member.",
     "image": "team/member-3.webp",
+    "tenure": "2026-27",
     "linkedin": ""
   },
   {
@@ -33,6 +37,7 @@ window.teamData = [
     "role": "EDITORIAL AND DESIGN HEAD",
     "bio": "Security Club DBIT team member.",
     "image": "team/member-4.webp",
+    "tenure": "2026-27",
     "linkedin": ""
   },
   {
@@ -40,6 +45,7 @@ window.teamData = [
     "role": "PUBLICITY HEAD",
     "bio": "Security Club DBIT team member.",
     "image": "team/member-5.webp",
+    "tenure": "2026-27",
     "linkedin": ""
   },
   {
@@ -47,6 +53,7 @@ window.teamData = [
     "role": "ASST. RESEARCH HEAD",
     "bio": "Security Club DBIT team member.",
     "image": "team/member-6.webp",
+    "tenure": "2026-27",
     "linkedin": ""
   },
   {
@@ -54,6 +61,7 @@ window.teamData = [
     "role": "ASST PUBLICITY HEAD.",
     "bio": "Security Club DBIT team member.",
     "image": "team/member-7.webp",
+    "tenure": "2026-27",
     "linkedin": ""
   },
   {
@@ -61,6 +69,7 @@ window.teamData = [
     "role": "RESEARCH MEMBER",
     "bio": "Security Club DBIT team member.",
     "image": "team/member-8.webp",
+    "tenure": "2026-27",
     "linkedin": ""
   },
   {
@@ -68,6 +77,7 @@ window.teamData = [
     "role": "RESEARCH MEMBER",
     "bio": "Security Club DBIT team member.",
     "image": "team/member-9.webp",
+    "tenure": "2026-27",
     "linkedin": ""
   },
   {
@@ -75,6 +85,7 @@ window.teamData = [
     "role": "EVENT HEAD",
     "bio": "Security Club DBIT team member.",
     "image": "team/member-11.webp",
+    "tenure": "2026-27",
     "linkedin": ""
   },
   {
@@ -82,6 +93,7 @@ window.teamData = [
     "role": "ASST EVENT HEAD",
     "bio": "Security Club DBIT team member.",
     "image": "team/member-12.webp",
+    "tenure": "2026-27",
     "linkedin": ""
   },
   {
@@ -91,12 +103,12 @@ window.teamData = [
     "image": "team/member-13.webp",
     "linkedin": ""
   },
-
   {
     "name": "DHERAZLIN JEBISHA",
     "role": "ASST. EDITORIAL AND DESIGN HEAD",
     "bio": "Security Club DBIT team member.",
     "image": "team/member-14.webp",
+    "tenure": "2026-27",
     "linkedin": ""
   },
   {
@@ -104,6 +116,7 @@ window.teamData = [
     "role": "EDITORIAL AND DESIGN MEMBER",
     "bio": "Security Club DBIT team member.",
     "image": "team/member-15.webp",
+    "tenure": "2026-27",
     "linkedin": ""
   },
   {
@@ -153,9 +166,7 @@ window.teamData = [
     "role": "TECHNICAL HEAD",
     "bio": "Security Club DBIT team member.",
     "image": "team/AYUSH.webp",
+    "tenure": "2026-27",
     "linkedin": ""
   }
-
-
-
 ];
