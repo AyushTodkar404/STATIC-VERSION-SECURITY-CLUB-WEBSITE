@@ -232,7 +232,7 @@ window.galleryData = [
     "folderLabel": "TechQuest 2026"
   },
   {
-    "image": "gallery/2026/techquest1.jpeg",
+    "image": "gallery/2026/techquest2.jpeg",
     "alt": "TechQuest 2026",
     "caption": "TechQuest 2026",
     "folder": "2026/TechQuest-2026",
