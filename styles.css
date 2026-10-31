@@ -2260,9 +2260,9 @@ body.splash-active {
   background-color: #03070b;
   opacity: 1;
   visibility: visible;
-  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
-              visibility 0.65s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.65s ease;
+  transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              visibility 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.45s ease;
   pointer-events: auto;
   user-select: none;
 }
@@ -2313,7 +2313,7 @@ body.splash-active {
   border-top-color: #00ffaa;
   border-right-color: #00e5ff;
   filter: drop-shadow(0 0 10px rgba(0, 255, 170, 0.75));
-  animation: splash-spin 1.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation: splash-spin 0.85s linear infinite;
 }
 
 .splash-orbit-ring-outer {
@@ -2321,7 +2321,7 @@ body.splash-active {
   inset: -10px;
   border-radius: 50%;
   border: 1px dashed rgba(56, 189, 248, 0.28);
-  animation: splash-spin-reverse 7s linear infinite;
+  animation: splash-spin-reverse 3.5s linear infinite;
 }
 
 .splash-logo-wrap {
@@ -2372,7 +2372,7 @@ body.splash-active {
   background: linear-gradient(90deg, #00ffaa, #00e5ff);
   border-radius: 999px;
   box-shadow: 0 0 14px rgba(0, 229, 255, 0.9);
-  transition: width 0.08s linear;
+  transition: width 0.04s linear;
 }
 
 .splash-status-meta {

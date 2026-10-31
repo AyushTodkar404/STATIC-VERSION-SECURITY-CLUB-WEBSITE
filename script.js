@@ -707,7 +707,7 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
       });
     }
 
-    const duration = 5400; // 5.4s loading duration (within 5-6s window)
+    const duration = 2800; // Fast-paced 2.8s loading (well under 5s)
     const startTime = performance.now();
     let isDone = false;
     let animId = null;
@@ -727,8 +727,8 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
         setTimeout(function () {
           splash.style.display = 'none';
           splash.setAttribute('aria-hidden', 'true');
-        }, 650);
-      }, 250);
+        }, 450);
+      }, 150);
     }
 
     function step(now) {
