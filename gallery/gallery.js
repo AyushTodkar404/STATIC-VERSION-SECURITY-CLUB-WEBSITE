@@ -223,5 +223,19 @@ window.galleryData = [
     "caption": "TechQuest 2026",
     "folder": "2026/TechQuest-2026",
     "folderLabel": "TechQuest 2026"
+  },
+  {
+    "image": "gallery/2026/techquest1.jpeg",
+    "alt": "TechQuest 2026",
+    "caption": "TechQuest 2026",
+    "folder": "2026/TechQuest-2026",
+    "folderLabel": "TechQuest 2026"
+  },
+  {
+    "image": "gallery/2026/techquest1.jpeg",
+    "alt": "TechQuest 2026",
+    "caption": "TechQuest 2026",
+    "folder": "2026/TechQuest-2026",
+    "folderLabel": "TechQuest 2026"
   }
 ];
