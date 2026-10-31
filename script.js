@@ -78,8 +78,9 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
       const eventAttribute = type === 'event-grid' ? ' data-event-id="' + escapeHtml(item.title) + '"' : '';
       const eventHint = type === 'event-grid' ? '<p class="card-action-hint">Open event details →</p>' : '';
       const departmentAttr = item.department ? ' data-team-department="' + escapeHtml(item.department) + '"' : '';
+      const yearAttr = item.tenure ? ' data-team-year-target="' + escapeHtml(item.tenure) + '"' : '';
       const highlightClass = item.highlight ? ' card-highlight' : '';
-      return '<article class="card' + (type === 'event-grid' ? ' event-card' : '') + highlightClass + '"' + eventAttribute + departmentAttr + '>' + photo + '<div class="card-body">' + (item.meta ? '<p class="card-meta">' + item.meta + '</p>' : '') + '<h3>' + escapeHtml(item.name || item.title) + '</h3>' + (item.role ? '<p class="role">' + escapeHtml(item.role) + '</p>' : '') + '<p>' + escapeHtml(item.description || item.bio || '') + '</p>' + eventHint + '</div></article>';
+      return '<article class="card' + (type === 'event-grid' ? ' event-card' : '') + highlightClass + '"' + eventAttribute + departmentAttr + yearAttr + '>' + photo + '<div class="card-body">' + (item.meta ? '<p class="card-meta">' + item.meta + '</p>' : '') + '<h3>' + escapeHtml(item.name || item.title) + '</h3>' + (item.role ? '<p class="role">' + escapeHtml(item.role) + '</p>' : '') + '<p>' + escapeHtml(item.description || item.bio || '') + '</p>' + eventHint + '</div></article>';
     }).join('') + '</div>';
   }
 
@@ -127,48 +128,54 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
 
     const mentors = items.filter(function (member) {
       return /faculty|mentor|teacher/i.test(member.role || '');
-    }).slice().sort(byFirstName).map(function (m) {
-      return Object.assign({}, m, { meta: m.meta || 'Faculty Mentor' });
-    });
+    }).slice().sort(byFirstName);
 
     const alumni = items.filter(function (member) {
       return /alumni/i.test(member.role || '');
-    }).slice().sort(byFirstName).map(function (a) {
-      return Object.assign({}, a, { meta: a.meta || 'Alumni' });
-    });
+    }).slice().sort(byFirstName);
 
     const coreTeam = items.filter(function (member) {
       return !/faculty|mentor|teacher|alumni/i.test(member.role || '');
     }).slice().sort(byLeadership).map(function (c) {
       const dept = departmentOf(c.role);
       const isLead = /president/i.test(c.role || '');
-      let deptLabel = 'CORE TEAM';
-      if (dept === 'leadership') deptLabel = 'EXECUTIVE LEADERSHIP';
-      else if (dept === 'technical') deptLabel = 'TECHNICAL';
-      else if (dept === 'research') deptLabel = 'RESEARCH';
-      else if (dept === 'events') deptLabel = 'EVENTS & PR';
-      else if (dept === 'design') deptLabel = 'DESIGN & EDITORIAL';
       return Object.assign({}, c, {
         department: dept,
         highlight: isLead,
-        meta: c.meta || ('2026–27 · ' + deptLabel)
+        tenure: c.tenure || '2026-27'
       });
     });
 
-    const filterBar = '<div class="team-filters" role="group" aria-label="Filter core team 2026-27 by department">'
-      + '<button class="team-filter-button is-active" type="button" data-team-filter="all" aria-pressed="true">All (' + coreTeam.length + ')</button>'
+    const tenures = coreTeam.map(function (member) {
+      return String(member.tenure || '2026-27').trim();
+    }).filter(function (tenure, index, all) {
+      return all.indexOf(tenure) === index;
+    }).sort().reverse();
+
+    if (!tenures.length) tenures.push('2026-27');
+    const initialTenure = tenures[0];
+
+    const tenureButtons = tenures.map(function (tenure) {
+      const active = tenure === initialTenure;
+      return '<button class="gallery-year-button team-year-button' + (active ? ' is-active' : '') + '" type="button" data-team-year="' + escapeHtml(tenure) + '" aria-pressed="' + active + '">' + escapeHtml(tenure) + '</button>';
+    }).join('');
+
+    const filterBar = '<div class="team-controls-bar">'
+      + '<div class="team-years" role="group" aria-label="Select Core Team tenure year">' + tenureButtons + '</div>'
+      + '<div class="team-filters" role="group" aria-label="Filter core team by department">'
+      + '<button class="team-filter-button is-active" type="button" data-team-filter="all" aria-pressed="true">All</button>'
       + '<button class="team-filter-button" type="button" data-team-filter="leadership" aria-pressed="false">Leadership</button>'
       + '<button class="team-filter-button" type="button" data-team-filter="technical" aria-pressed="false">Technical</button>'
       + '<button class="team-filter-button" type="button" data-team-filter="research" aria-pressed="false">Research</button>'
       + '<button class="team-filter-button" type="button" data-team-filter="events" aria-pressed="false">Events & PR</button>'
       + '<button class="team-filter-button" type="button" data-team-filter="design" aria-pressed="false">Design & Editorial</button>'
-      + '</div>';
+      + '</div></div>';
 
     return '<section class="team-section" aria-labelledby="team-mentors-heading"><div class="team-section-heading"><p class="eyebrow">Guidance and support</p><h2 id="team-mentors-heading">Mentors</h2><p>Faculty coordinators and teachers supporting the club.</p></div>'
       + (mentors.length ? cards(mentors, 'team-grid') : '<p class="team-empty">Mentors will be listed here.</p>')
       + '</section><section class="team-section" aria-labelledby="team-alumni-heading"><div class="team-section-heading"><p class="eyebrow">Our foundation & heritage</p><h2 id="team-alumni-heading">Alumni</h2><p>Former members who helped shape the Security Club.</p></div>'
       + (alumni.length ? cards(alumni, 'team-grid') : '<p class="team-empty">Alumni will be listed here.</p>')
-      + '</section><section class="team-section" aria-labelledby="team-core-2026-heading"><div class="team-section-heading team-heading-split"><div><p class="eyebrow">Student leadership · Tenure 2026–2027</p><h2 id="team-core-2026-heading">Core Team 2026–27</h2><p>The student council and coordinators leading Security Club DBIT for the 2026–2027 academic year.</p></div><span class="team-tenure-badge"><span class="team-pulse-dot" aria-hidden="true"></span>Active Tenure: 2026–27</span></div>'
+      + '</section><section class="team-section" aria-labelledby="team-core-heading"><div class="team-section-heading"><p class="eyebrow">Student leadership</p><h2 id="team-core-heading">Core Team</h2><p>The student council and coordinators leading the Security Club.</p></div>'
       + filterBar
       + (coreTeam.length ? cards(coreTeam, 'team-grid') : '<p class="team-empty">Core team members will be listed here.</p>')
       + '</section>';
@@ -267,9 +274,34 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
   }
 
   function setupTeam() {
+    const yearButtons = document.querySelectorAll('[data-team-year]');
     const filterButtons = document.querySelectorAll('[data-team-filter]');
-    const cards = document.querySelectorAll('[data-team-department]');
-    if (!filterButtons.length) return;
+    const cards = document.querySelectorAll('[data-team-year-target]');
+    if (!cards.length) return;
+
+    let selectedYear = (yearButtons[0] && yearButtons[0].dataset.teamYear) || '2026-27';
+    let selectedDept = 'all';
+
+    function applyFilter() {
+      cards.forEach(function (card) {
+        const matchesYear = !card.dataset.teamYearTarget || card.dataset.teamYearTarget === selectedYear;
+        const matchesDept = selectedDept === 'all' || card.dataset.teamDepartment === selectedDept;
+        card.hidden = !(matchesYear && matchesDept);
+      });
+    }
+
+    yearButtons.forEach(function (button) {
+      button.addEventListener('click', function () {
+        yearButtons.forEach(function (b) {
+          const active = b === button;
+          b.classList.toggle('is-active', active);
+          b.setAttribute('aria-pressed', String(active));
+        });
+        selectedYear = button.dataset.teamYear;
+        applyFilter();
+      });
+    });
+
     filterButtons.forEach(function (button) {
       button.addEventListener('click', function () {
         filterButtons.forEach(function (b) {
@@ -277,12 +309,12 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
           b.classList.toggle('is-active', active);
           b.setAttribute('aria-pressed', String(active));
         });
-        const selected = button.dataset.teamFilter;
-        cards.forEach(function (card) {
-          card.hidden = (selected !== 'all' && card.dataset.teamDepartment !== selected);
-        });
+        selectedDept = button.dataset.teamFilter;
+        applyFilter();
       });
     });
+
+    applyFilter();
   }
 
   function galleryMarkup(items) {

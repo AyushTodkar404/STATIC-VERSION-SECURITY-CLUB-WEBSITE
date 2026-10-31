@@ -1070,7 +1070,8 @@ img.card-image.is-loaded,
    ============================================================== */
 .event-years,
 .gallery-years,
-.gallery-level {
+.gallery-level,
+.team-years {
   display: inline-flex;
   flex-wrap: wrap;
   align-items: center;
@@ -1092,7 +1093,8 @@ img.card-image.is-loaded,
 .event-year-button,
 .gallery-year-button,
 .gallery-all-button,
-.gallery-folder-button {
+.gallery-folder-button,
+.team-year-button {
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
@@ -1115,7 +1117,8 @@ img.card-image.is-loaded,
 .event-year-button::before,
 .gallery-year-button::before,
 .gallery-all-button::before,
-.gallery-folder-button::before {
+.gallery-folder-button::before,
+.team-year-button::before {
   content: '';
   display: inline-block;
   width: 6px;
@@ -1130,7 +1133,8 @@ img.card-image.is-loaded,
 .event-year-button:hover,
 .gallery-year-button:hover,
 .gallery-all-button:hover,
-.gallery-folder-button:hover {
+.gallery-folder-button:hover,
+.team-year-button:hover {
   border-color: rgba(0, 229, 255, 0.4);
   color: #ffffff;
   background: rgba(0, 229, 255, 0.08);
@@ -1141,7 +1145,8 @@ img.card-image.is-loaded,
 .event-year-button:hover::before,
 .gallery-year-button:hover::before,
 .gallery-all-button:hover::before,
-.gallery-folder-button:hover::before {
+.gallery-folder-button:hover::before,
+.team-year-button:hover::before {
   background: var(--cyan);
   box-shadow: 0 0 6px var(--cyan);
   outline-color: rgba(0, 229, 255, 0.4);
@@ -1153,7 +1158,9 @@ img.card-image.is-loaded,
 .gallery-year-button.is-active,
 .gallery-year-button[aria-pressed="true"],
 .gallery-all-button.is-active,
-.gallery-folder-button.is-active {
+.gallery-folder-button.is-active,
+.team-year-button.is-active,
+.team-year-button[aria-pressed="true"] {
   background: linear-gradient(180deg, rgba(0, 255, 136, 0.18) 0%, rgba(0, 229, 255, 0.08) 100%), #061622;
   border-color: var(--green);
   color: #ffffff;
@@ -1166,7 +1173,9 @@ img.card-image.is-loaded,
 .gallery-year-button.is-active::before,
 .gallery-year-button[aria-pressed="true"]::before,
 .gallery-all-button.is-active::before,
-.gallery-folder-button.is-active::before {
+.gallery-folder-button.is-active::before,
+.team-year-button.is-active::before,
+.team-year-button[aria-pressed="true"]::before {
   background: var(--green);
   box-shadow: 0 0 8px var(--green), 0 0 14px rgba(0, 255, 136, 0.8);
   outline-color: rgba(0, 255, 136, 0.5);
@@ -1176,7 +1185,8 @@ img.card-image.is-loaded,
 .event-year-button:active,
 .gallery-year-button:active,
 .gallery-all-button:active,
-.gallery-folder-button:active {
+.gallery-folder-button:active,
+.team-year-button:active {
   transform: translateY(1px);
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.8);
 }
@@ -1252,36 +1262,17 @@ img.card-image.is-loaded,
   color: var(--muted);
 }
 
-.team-heading-split {
+.team-controls-bar {
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
   flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.team-tenure-badge {
-  display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.4rem 0.95rem;
-  border-radius: 999px;
-  background: rgba(0, 255, 136, 0.08);
-  border: 1px solid rgba(0, 255, 136, 0.35);
-  color: var(--green);
-  font: 700 0.76rem var(--font-mono);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  box-shadow: 0 0 16px rgba(0, 255, 136, 0.15);
+  justify-content: space-between;
+  gap: 0.85rem;
+  margin-bottom: 2rem;
 }
 
-.team-pulse-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--green);
-  box-shadow: 0 0 8px var(--green);
-  animation: beacon-blink 2s infinite ease-in-out;
+.team-controls-bar .team-years {
+  margin-bottom: 0;
 }
 
 .team-filters {
@@ -1289,7 +1280,7 @@ img.card-image.is-loaded,
   flex-wrap: wrap;
   align-items: center;
   gap: 0.45rem;
-  margin-bottom: 2rem;
+  margin-bottom: 0;
   padding: 0.35rem 0.45rem;
   border: 1px solid rgba(56, 189, 248, 0.22);
   border-radius: 8px;
@@ -2063,10 +2054,16 @@ img.card-image.is-loaded,
 
   .event-years,
   .gallery-years,
-  .gallery-level {
+  .gallery-level,
+  .team-years {
     border-radius: 8px;
     width: 100%;
     justify-content: flex-start;
+  }
+
+  .team-controls-bar {
+    flex-direction: column;
+    align-items: stretch;
   }
 
   .submission-details {
@@ -2090,7 +2087,9 @@ img.card-image.is-loaded,
   .gallery-all-button,
   .gallery-year-button,
   .event-year-button,
-  .gallery-folder-button {
+  .gallery-folder-button,
+  .team-year-button,
+  .team-filter-button {
     padding: 0.4rem 0.65rem;
     font-size: 0.74rem;
     min-height: 38px;
