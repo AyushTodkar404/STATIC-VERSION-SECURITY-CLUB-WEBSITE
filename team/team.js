@@ -6,7 +6,7 @@ window.teamData = [
     "bio": "Security Club DBIT team member.",
     "image": "team/payal-samant.webp",
     "tenure": "2026-27",
-    "linkedin": ""
+    "linkedin": "https://www.linkedin.com/in/payal-samant-3867a527a"
   },
   {
     "name": "OWAIS SHAIKH",
@@ -14,7 +14,7 @@ window.teamData = [
     "bio": "Security Club DBIT team member.",
     "image": "team/member-2.webp",
     "tenure": "2026-27",
-    "linkedin": ""
+    "linkedin": "https://www.linkedin.com/in/owais-shaikh-8bb55333a"
   },
   {
     "name": "Maverick Dsilva",
@@ -22,7 +22,7 @@ window.teamData = [
     "bio": "Security Club DBIT team member.",
     "image": "team/member-16.webp",
     "tenure": "2026-27",
-    "linkedin": ""
+    "linkedin": "https://www.linkedin.com/in/maverick-d-silva-82865b273"
   },
   {
     "name": "RONALD MENEZES",
@@ -38,7 +38,7 @@ window.teamData = [
     "bio": "Security Club DBIT team member.",
     "image": "team/member-4.webp",
     "tenure": "2026-27",
-    "linkedin": ""
+    "linkedin": "https://www.linkedin.com/in/prajyotsna-thiyassheri-72065528a"
   },
   {
     "name": "RAISSA DSOUZA",
@@ -46,7 +46,7 @@ window.teamData = [
     "bio": "Security Club DBIT team member.",
     "image": "team/member-5.webp",
     "tenure": "2026-27",
-    "linkedin": ""
+    "linkedin": "https://www.linkedin.com/in/raissa-dsouza-b1aa49401"
   },
   {
     "name": "AYUSH TODKAR",
@@ -54,7 +54,7 @@ window.teamData = [
     "bio": "Security Club DBIT team member.",
     "image": "team/member-6.webp",
     "tenure": "2026-27",
-    "linkedin": ""
+    "linkedin": "https://www.linkedin.com/in/ayush-todkar-801527411"
   },
   {
     "name": "SHARANYA KADAM",
@@ -62,7 +62,7 @@ window.teamData = [
     "bio": "Security Club DBIT team member.",
     "image": "team/member-7.webp",
     "tenure": "2026-27",
-    "linkedin": ""
+    "linkedin": "https://www.linkedin.com/in/sharanya-kadam-6b8736431"
   },
   {
     "name": "SAGNIK DAS",
@@ -78,7 +78,7 @@ window.teamData = [
     "bio": "Security Club DBIT team member.",
     "image": "team/member-9.webp",
     "tenure": "2026-27",
-    "linkedin": ""
+    "linkedin": "https://www.linkedin.com/in/meet-shinde-58a316361"
   },
   {
     "name": "JOY DANIEL",
@@ -94,7 +94,7 @@ window.teamData = [
     "bio": "Security Club DBIT team member.",
     "image": "team/member-12.webp",
     "tenure": "2026-27",
-    "linkedin": ""
+    "linkedin": "https://www.linkedin.com/in/joe-godwin-869858275"
   },
   {
     "name": "ARUNA KHUBALKAR",
@@ -109,7 +109,7 @@ window.teamData = [
     "bio": "Security Club DBIT team member.",
     "image": "team/member-14.webp",
     "tenure": "2026-27",
-    "linkedin": ""
+    "linkedin": "https://www.linkedin.com/in/dherazlin"
   },
   {
     "name": "APOORVADEEP SINHA",
@@ -124,42 +124,42 @@ window.teamData = [
     "role": "STAFF MENTOR",
     "bio": "Security Club DBIT team member.",
     "image": "team/prasad-sir.webp",
-    "linkedin": ""
+    "linkedin": "https://www.linkedin.com/in/prasad-padalkar-5165b2b"
   },
   {
     "name": "MS. VARSHA KULKARNI",
     "role": "STAFF MENTOR",
     "bio": "Security Club DBIT team member.",
     "image": "team/VARSHA-MAM.webp",
-    "linkedin": ""
+    "linkedin": "https://www.linkedin.com/in/varsha-kulkarni-9826b053"
   },
   {
     "name": "RIEAN ESTEVES",
     "role": "ALUMNI",
     "bio": "Security Club DBIT team member.",
     "image": "team/Riean.webp",
-    "linkedin": ""
+    "linkedin": "https://www.linkedin.com/in/riean-esteves"
   },
   {
     "name": "VICKY FERNANDES",
     "role": "ALUMNI",
     "bio": "Security Club DBIT team member.",
     "image": "team/VICKY.webp",
-    "linkedin": ""
+    "linkedin": "https://www.linkedin.com/in/vickyfernandes"
   },
   {
     "name": "SHWETA GUPTA",
     "role": "ALUMNI",
     "bio": "Security Club DBIT team member.",
     "image": "team/Shweta-Gupta.webp",
-    "linkedin": ""
+    "linkedin": "https://www.linkedin.com/in/shweta-gupta-a85a64252"
   },
   {
     "name": "SHREECHAITANYA DAMLE",
     "role": "ALUMNI",
     "bio": "Security Club DBIT team member.",
     "image": "team/SHREECHAITANYA.webp",
-    "linkedin": ""
+    "linkedin": "https://www.linkedin.com/in/shreechaitanyadamle"
   },
   {
     "name": "AYUSH BANGERA",
@@ -167,6 +167,6 @@ window.teamData = [
     "bio": "Security Club DBIT team member.",
     "image": "team/AYUSH.webp",
     "tenure": "2026-27",
-    "linkedin": ""
+    "linkedin": "https://www.linkedin.com/in/ayush-bangera-26aab1387"
   }
 ];
