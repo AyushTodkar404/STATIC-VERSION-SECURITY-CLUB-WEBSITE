@@ -433,8 +433,8 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
       height = window.innerHeight;
       matrixCanvas.width = Math.round(width * pixelRatio);
       matrixCanvas.height = Math.round(height * pixelRatio);
-      matrixCanvas.style.width = width + 'px';
-      matrixCanvas.style.height = height + 'px';
+      matrixCanvas.style.width = '100%';
+      matrixCanvas.style.height = '100%';
       context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
       drops = new Array(Math.floor(width / fontSize)).fill(1);
     }
@@ -520,12 +520,31 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
     resume();
   }
 
-  menuButton.addEventListener('click', function () {
+  function closeNav() {
+    navigation.classList.remove('open');
+    menuButton.setAttribute('aria-expanded', 'false');
+  }
+
+  menuButton.addEventListener('click', function (event) {
+    event.stopPropagation();
     const open = navigation.classList.toggle('open');
     menuButton.setAttribute('aria-expanded', String(open));
   });
+
   navigation.addEventListener('click', function (event) {
-    if (event.target.matches('a')) { navigation.classList.remove('open'); menuButton.setAttribute('aria-expanded', 'false'); }
+    if (event.target.matches('a')) closeNav();
+  });
+
+  document.addEventListener('click', function (event) {
+    if (navigation.classList.contains('open') && !navigation.contains(event.target) && !menuButton.contains(event.target)) {
+      closeNav();
+    }
+  });
+
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape' && navigation.classList.contains('open')) {
+      closeNav();
+    }
   });
   window.addEventListener('hashchange', function () { render(location.hash.replace('#/', '') || 'home'); window.scrollTo(0, 0); });
   document.querySelector('#current-year').textContent = new Date().getFullYear();

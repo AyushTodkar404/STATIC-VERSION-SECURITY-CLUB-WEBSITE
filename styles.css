@@ -133,11 +133,10 @@ code {
   align-items: center;
   justify-content: space-between;
   gap: 1.25rem;
-  width: min(1340px, 100%);
-  margin: auto;
-  padding: 0.85rem max(1rem, 3vw);
+  width: 100%;
+  padding: 0.85rem max(1rem, calc((100vw - 1280px) / 2 + 1rem));
   border-bottom: 1px solid var(--line);
-  background: rgba(3, 7, 11, 0.82);
+  background: rgba(3, 7, 11, 0.85);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
@@ -496,6 +495,7 @@ h2,
 h3,
 p {
   margin-top: 0;
+  overflow-wrap: break-word;
 }
 
 h1 {
@@ -1541,7 +1541,7 @@ img.card-image.is-loaded,
   color: var(--text);
   background: rgba(3, 8, 13, 0.65);
   font-family: var(--font-sans);
-  font-size: 0.95rem;
+  font-size: 1rem;
   transition: all 0.2s ease;
 }
 
@@ -1683,34 +1683,52 @@ img.card-image.is-loaded,
 
 /* Media Queries */
 @media (max-width: 1180px) {
-  .site-header {
-    flex-wrap: wrap;
-  }
-
   .site-header .menu-toggle {
     display: block;
-    order: 2;
+    order: 10;
     flex: none;
+    margin-left: 0.5rem;
   }
 
   .site-header .header-actions {
-    order: 3;
+    order: 5;
+    margin-left: auto;
   }
 
   .site-nav {
     display: none;
-    order: 4;
-    flex-basis: 100%;
-    justify-content: flex-start;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0.85rem 1rem 1.25rem;
+    border-bottom: 1px solid var(--line-strong);
+    background: rgba(3, 7, 11, 0.98);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.85);
+    max-height: calc(100vh - 65px);
+    max-height: calc(100dvh - 65px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .site-nav.open {
     display: flex;
   }
+
+  .site-nav a {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    padding: 0.65rem 0.85rem;
+    font-size: 0.95rem;
+  }
 }
 
 @media (max-width: 900px) {
-
   .about-vision-mission,
   .about-coursework {
     grid-template-columns: 1fr;
@@ -1719,11 +1737,13 @@ img.card-image.is-loaded,
   .hero {
     grid-template-columns: minmax(0, 1fr);
     min-height: auto;
-    padding-block: 4rem;
+    padding-block: 3.5rem;
   }
 
   .signal-art {
-    height: 300px;
+    height: 280px;
+    max-width: 100%;
+    overflow: hidden;
   }
 
   .opportunities {
@@ -1760,12 +1780,12 @@ img.card-image.is-loaded,
 
 @media (max-width: 680px) {
   .site-header {
-    gap: 0.55rem;
-    padding: 0.75rem 1rem;
+    gap: 0.5rem;
+    padding: 0.65rem 0.85rem;
   }
 
   .brand {
-    gap: 0.5rem;
+    gap: 0.45rem;
     font-size: 0.92rem;
   }
 
@@ -1774,12 +1794,16 @@ img.card-image.is-loaded,
     height: 36px;
   }
 
+  .brand-tagline {
+    display: none;
+  }
+
   .header-actions {
-    gap: 0.4rem;
+    gap: 0.35rem;
   }
 
   .hud-toggle-btn {
-    padding: 0.3rem 0.6rem;
+    padding: 0.3rem 0.55rem;
     font-size: 0.68rem;
   }
 
@@ -1789,31 +1813,7 @@ img.card-image.is-loaded,
 
   .social-links a {
     width: 32px;
-    height: 34px;
-  }
-
-  .site-nav {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    left: 0;
-    flex-direction: column;
-    align-items: stretch;
-    padding: 0.85rem 1rem 1.25rem;
-    border-bottom: 1px solid var(--line-strong);
-    background: rgba(3, 7, 11, 0.98);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-  }
-
-  .site-nav.open {
-    display: flex;
-  }
-
-  .site-nav a {
-    min-height: 44px;
-    padding: 0.65rem 0.85rem;
-    font-size: 0.92rem;
+    height: 32px;
   }
 
   .section-shell {
@@ -1821,11 +1821,13 @@ img.card-image.is-loaded,
   }
 
   h1 {
-    font-size: clamp(2.5rem, 11vw, 4.2rem);
+    font-size: clamp(2rem, 8.5vw, 3.4rem);
+    line-height: 1.05;
   }
 
   .hero-lede {
-    font-size: 1rem;
+    font-size: 0.98rem;
+    line-height: 1.6;
   }
 
   .hero-actions,
@@ -1839,17 +1841,37 @@ img.card-image.is-loaded,
   }
 
   .signal-art {
-    height: 260px;
-    transform: scale(0.88);
+    height: 240px;
+    max-width: 100%;
+    overflow: hidden;
+    transform: scale(0.85);
   }
 
   .opportunities,
   .card-grid,
-  .gallery-grid,
   .footer-inner,
   .split-content,
   .contact-layout {
     grid-template-columns: 1fr;
+  }
+
+  .gallery-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.65rem;
+  }
+
+  .gallery-item,
+  .gallery-item img {
+    min-height: auto;
+    aspect-ratio: 4 / 3;
+  }
+
+  .gallery-item figcaption {
+    padding: 0.35rem 0.5rem;
+    font-size: 0.72rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .stat {
@@ -1869,25 +1891,32 @@ img.card-image.is-loaded,
     margin-top: -0.3rem;
   }
 
-  .gallery-item,
-  .gallery-item img {
-    min-height: 230px;
-  }
-
   .event-detail-overlay {
     padding: 0.5rem;
   }
 
   .event-detail {
-    max-height: 94dvh;
+    max-height: 92dvh;
+    padding: 1.35rem 1rem;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .gallery-lightbox {
+    padding: 3.5rem 0.65rem 2.5rem;
+  }
+
+  .gallery-lightbox img {
+    max-width: 96vw;
+    max-height: 72dvh;
   }
 
   .page {
-    padding-block: 1.5rem 4rem;
+    padding-block: 1.5rem 3.5rem;
   }
 
   .page-hero h1 {
-    font-size: clamp(2rem, 8vw, 3rem);
+    font-size: clamp(1.8rem, 7.5vw, 2.6rem);
   }
 
   .contact-email {
@@ -1904,6 +1933,56 @@ img.card-image.is-loaded,
 
   .submission-details {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .site-header .social-links {
+    display: none;
+  }
+
+  .section-shell {
+    width: calc(100% - 1.25rem);
+  }
+
+  .card-body {
+    padding: 1rem;
+  }
+
+  .gallery-all-button,
+  .gallery-year-button,
+  .event-year-button,
+  .gallery-folder-button {
+    padding: 0.4rem 0.65rem;
+    font-size: 0.74rem;
+    min-height: 38px;
+  }
+
+  .event-detail h2 {
+    font-size: 1.35rem;
+    padding-right: 2.25rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .site-header {
+    padding-inline: 0.5rem;
+  }
+
+  .hud-toggle-btn .hud-toggle-text {
+    display: none;
+  }
+
+  .hud-toggle-btn {
+    padding: 0.35rem 0.45rem;
+  }
+
+  .brand small {
+    display: none;
+  }
+
+  .gallery-grid {
+    gap: 0.45rem;
   }
 }
 
