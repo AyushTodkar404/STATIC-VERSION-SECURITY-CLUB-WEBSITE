@@ -85,7 +85,8 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
       const departmentAttr = item.department ? ' data-team-department="' + escapeHtml(item.department) + '"' : '';
       const yearAttr = item.tenure ? ' data-team-year-target="' + escapeHtml(item.tenure) + '"' : '';
       const highlightClass = item.highlight ? ' card-highlight' : '';
-      return '<article class="card' + (type === 'event-grid' ? ' event-card' : '') + highlightClass + '"' + eventAttribute + departmentAttr + yearAttr + '>' + photo + '<div class="card-body">' + (item.meta ? '<p class="card-meta">' + item.meta + '</p>' : '') + '<h3>' + escapeHtml(item.name || item.title) + '</h3>' + (item.role ? '<p class="role">' + escapeHtml(item.role) + '</p>' : '') + '<p>' + escapeHtml(item.description || item.bio || '') + '</p>' + eventHint + '</div></article>';
+      const linkedinLink = item.linkedin ? '<a class="team-linkedin-link" href="' + escapeHtml(item.linkedin) + '" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile for ' + escapeHtml(item.name || 'team member') + '" title="View LinkedIn Profile"><svg viewBox="0 0 24 24" aria-hidden="true" width="14" height="14"><path fill="currentColor" d="M5.2 3.5a2.2 2.2 0 1 1-.1 4.4 2.2 2.2 0 0 1 .1-4.4ZM3.3 9.5h3.8v11.2H3.3zM9.2 9.5h3.6V11h.1a4 4 0 0 1 3.6-2c3.9 0 4.6 2.5 4.6 5.7v6h-3.8v-5.3c0-1.3 0-3-1.9-3s-2.2 1.4-2.2 2.9v5.4H9.2z"/></svg><span>LinkedIn</span></a>' : '';
+      return '<article class="card' + (type === 'event-grid' ? ' event-card' : '') + highlightClass + '"' + eventAttribute + departmentAttr + yearAttr + '>' + photo + '<div class="card-body">' + (item.meta ? '<p class="card-meta">' + item.meta + '</p>' : '') + '<h3>' + escapeHtml(item.name || item.title) + '</h3>' + (item.role ? '<p class="role">' + escapeHtml(item.role) + '</p>' : '') + '<p>' + escapeHtml(item.description || item.bio || '') + '</p>' + linkedinLink + eventHint + '</div></article>';
     }).join('') + '</div>';
   }
 

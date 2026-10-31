@@ -101,7 +101,7 @@ window.teamData = [
     "role": "FACULTY COORDINATOR",
     "bio": "Security Club DBIT team member.",
     "image": "team/member-13.webp",
-    "linkedin": ""
+    "linkedin": "https://www.linkedin.com/in/aruna-khubalkar-49a91149"
   },
   {
     "name": "DHERAZLIN JEBISHA",

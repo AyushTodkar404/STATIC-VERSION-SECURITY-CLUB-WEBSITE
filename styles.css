@@ -1241,6 +1241,41 @@ img.card-image.is-loaded,
   margin-bottom: 0.35rem;
 }
 
+.team-linkedin-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: 0.85rem;
+  padding: 0.35rem 0.75rem;
+  background: rgba(0, 229, 255, 0.08);
+  border: 1px solid rgba(0, 229, 255, 0.3);
+  border-radius: 4px;
+  color: var(--cyan);
+  font: 600 0.76rem var(--font-mono);
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  width: fit-content;
+}
+
+.team-linkedin-link svg {
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.team-linkedin-link:hover,
+.team-linkedin-link:focus-visible {
+  background: rgba(0, 229, 255, 0.2);
+  border-color: var(--cyan);
+  color: #ffffff;
+  box-shadow: 0 0 12px rgba(0, 229, 255, 0.35);
+  outline: none;
+}
+
+.team-linkedin-link:hover svg {
+  transform: scale(1.1);
+}
+
 .team-section {
   margin-top: clamp(3.5rem, 7vw, 5.5rem);
 }
