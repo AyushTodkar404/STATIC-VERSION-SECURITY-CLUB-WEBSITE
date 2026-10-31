@@ -117,7 +117,23 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
     const files = (event.attachments || []).map(function (file) {
       return '<li><a class="button button-ghost attachment-link" href="' + escapeHtml(file.path) + '" target="_blank" rel="noopener">' + escapeHtml(file.label || file.path) + ' ↗</a><span>' + escapeHtml(file.type || 'File') + '</span></li>';
     }).join('');
-    return '<div class="event-detail-overlay" role="dialog" aria-modal="true" aria-label="Event details"><div class="event-detail"><button class="event-detail-close" type="button" aria-label="Close event details">×</button><p class="eyebrow">' + escapeHtml(event.type || 'Event') + '</p><h2>' + escapeHtml(event.title) + '</h2><p class="event-detail-meta">' + escapeHtml(event.dateLabel || event.date || '') + (event.venue ? ' · ' + escapeHtml(event.venue) : '') + '</p><p>' + escapeHtml(event.description || '') + '</p><h3>Attached files</h3>' + (files ? '<ul class="attachment-list">' + files + '</ul>' : '<p class="muted">No files are attached to this event yet.</p>') + '</div></div>';
+
+    const objectivesHtml = (event.objectives && event.objectives.length) ? '<h3>Objectives</h3><ol class="event-objectives">' + event.objectives.map(function (item) {
+      return '<li>' + escapeHtml(item) + '</li>';
+    }).join('') + '</ol>' : '';
+
+    const outcomesHtml = (event.outcomes && event.outcomes.length) ? '<h3>Outcomes</h3><div class="event-outcomes">' + event.outcomes.map(function (item, index) {
+      const code = typeof item === 'object' && item.code ? item.code : ('CO' + (index + 1));
+      const text = typeof item === 'object' && item.text ? item.text : String(item).replace(/^CO\d+[:\s-]*/i, '');
+      return '<div class="event-outcome-item"><span class="event-outcome-code">' + escapeHtml(code) + '</span><p>' + escapeHtml(text) + '</p></div>';
+    }).join('') + '</div>' : '';
+
+    const metaParts = [];
+    if (event.dateLabel || event.date) metaParts.push(escapeHtml(event.dateLabel || event.date));
+    if (event.venue) metaParts.push(escapeHtml(event.venue));
+    if (event.speaker) metaParts.push('Speaker: ' + escapeHtml(event.speaker));
+
+    return '<div class="event-detail-overlay" role="dialog" aria-modal="true" aria-label="Event details"><div class="event-detail"><button class="event-detail-close" type="button" aria-label="Close event details">×</button><p class="eyebrow">' + escapeHtml(event.type || 'Event') + '</p><h2>' + escapeHtml(event.title) + '</h2><p class="event-detail-meta">' + metaParts.join(' · ') + '</p><p>' + escapeHtml(event.description || '') + '</p>' + objectivesHtml + outcomesHtml + '<h3>Attached files</h3>' + (files ? '<ul class="attachment-list">' + files + '</ul>' : '<p class="muted">No files are attached to this event yet.</p>') + '</div></div>';
   }
 
   function eventYear(date) {

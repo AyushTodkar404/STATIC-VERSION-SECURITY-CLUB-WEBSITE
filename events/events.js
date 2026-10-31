@@ -55,6 +55,22 @@ window.eventsData = [
     "speaker": "MR. HERAMB PATIL",
     "description": "A workshop on penetration testing tools and techniques by speaker MR. HERAMB PATIL, conducted by Security Club , DBIT on October 26, 2026 at 2.00 PM to 4.00 PM.",
     "venue": "IT LAB 6 ,3rd FLOOR , A WING",
+    "objectives": [
+      "To introduce students to the fundamentals and methodology of penetration testing.",
+      "To develop practical understanding of identifying and assessing security vulnerabilities.",
+      "To familiarize students with commonly used penetration-testing tools and techniques.",
+      "To provide hands-on exposure to controlled security-testing environments.",
+      "To promote ethical, authorized, and responsible cybersecurity practices.",
+      "To help students understand the practical application of penetration testing in cybersecurity."
+    ],
+    "outcomes": [
+      { "code": "CO1", "text": "Improved understanding of penetration-testing concepts and methodology." },
+      { "code": "CO2", "text": "Practical exposure to cybersecurity assessment techniques." },
+      { "code": "CO3", "text": "Familiarity with relevant penetration-testing tools and workflows." },
+      { "code": "CO4", "text": "Improved ability to identify, interpret, and document basic security findings." },
+      { "code": "CO5", "text": "Greater awareness of ethical and responsible security testing." },
+      { "code": "CO6", "text": "Better understanding of practical cybersecurity roles and applications." }
+    ],
     "image": "events/tools for penetration testinng.webp",
     "attachments": [
       { "label": "Penetration testing tools poster", "path": "events/tools for penetration testinng.webp", "type": "Image" }
