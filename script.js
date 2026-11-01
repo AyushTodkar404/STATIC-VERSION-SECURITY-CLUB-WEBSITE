@@ -11,6 +11,7 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
   const pages = {
     home: { label: 'Welcome', title: 'Curious about cybersecurity? You belong here.', eyebrow: 'Security Club · Welcome terminal' },
     about: { label: 'About Us', title: 'Learn how the digital world works—and how to protect it.', eyebrow: 'A club for first steps' },
+    awareness: { label: 'Security Awareness', title: 'Empowering students with proactive cybersecurity alerts, tips, and campaigns.', eyebrow: 'Campus Cyber Awareness' },
     events: { label: 'Events', title: 'Learn together. Build together. Defend together.', eyebrow: 'Events archive' },
     flagships: { label: 'Flagships', title: 'Programs that turn curiosity into capability.', eyebrow: 'Our signature initiatives' },
     team: { label: 'Team', title: 'The people behind the signal.', eyebrow: 'Meet the club team' },
@@ -23,7 +24,7 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
     notFound: { label: '404 - Not Found', title: 'Target vector not found in cyberspace.', eyebrow: 'Status · 404' }
   };
 
-  const linkOrder = ['home', 'about', 'events', 'flagships', 'team', 'gallery', 'membership', 'submission', 'contact', 'ctf'];
+  const linkOrder = ['home', 'about', 'awareness', 'events', 'flagships', 'team', 'gallery', 'membership', 'submission', 'contact', 'ctf'];
   navigation.innerHTML = linkOrder.map(function (key) {
     return '<a href="#/' + key + '" data-page="' + key + '">' + pages[key].label + '</a>';
   }).join('');
@@ -369,6 +370,197 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
     applyFilter();
   }
 
+  function awarenessMarkup(items) {
+    items = items || [];
+    const years = items.map(function (item) {
+      return String(item.year || item.tenure || '2026-27').trim();
+    }).filter(function (year, index, all) {
+      return all.indexOf(year) === index;
+    }).sort().reverse();
+
+    if (!years.length) years.push('2026-27');
+    const initialYear = years[0];
+
+    const yearButtons = years.map(function (year) {
+      const active = year === initialYear;
+      return '<button class="gallery-year-button awareness-year-button' + (active ? ' is-active' : '') + '" type="button" data-awareness-year="' + escapeHtml(year) + '" aria-pressed="' + active + '">' + escapeHtml(year) + '</button>';
+    }).join('');
+
+    const controlsBar = '<div class="team-controls-bar awareness-controls-bar">'
+      + '<div class="team-years awareness-years" role="group" aria-label="Select awareness campaign year">'
+      + yearButtons
+      + '</div>'
+      + '<div class="team-filters awareness-filters" role="group" aria-label="Filter awareness campaigns">'
+      + '<button class="team-filter-button is-active" type="button" data-awareness-filter="all" aria-pressed="true">All Campaigns</button>'
+      + '<button class="team-filter-button" type="button" data-awareness-filter="advisory" aria-pressed="false">Advisories</button>'
+      + '<button class="team-filter-button" type="button" data-awareness-filter="poster" aria-pressed="false">Posters</button>'
+      + '<button class="team-filter-button" type="button" data-awareness-filter="guide" aria-pressed="false">Guides</button>'
+      + '</div>'
+      + '</div>';
+
+    const cardsHtml = items.map(function (item, index) {
+      const year = String(item.year || item.tenure || '2026-27').trim();
+      const category = (item.category || item.tag || 'CYBER ADVISORY').toUpperCase();
+      const catFilter = category.toLowerCase();
+      const isTop = index < 2;
+
+      const tipsList = Array.isArray(item.tips) && item.tips.length
+        ? '<div class="awareness-tips"><p class="awareness-tips-title">Key Safety Rules:</p><ul class="awareness-tips-list">'
+          + item.tips.map(function (tip) {
+            return '<li><span class="awareness-tip-icon" aria-hidden="true">✔</span><span>' + escapeHtml(tip) + '</span></li>';
+          }).join('')
+          + '</ul></div>'
+        : '';
+
+      const photoHtml = item.image
+        ? '<div class="awareness-image-wrapper">'
+          + '<button class="awareness-image-btn" type="button" data-awareness-image="' + escapeHtml(item.image) + '" data-awareness-title="' + escapeHtml(item.title) + '" data-awareness-desc="' + escapeHtml(item.description || '') + '" aria-label="Enlarge ' + escapeHtml(item.title) + '">'
+          + image(item.image, '+', item.title || item.alt, 'awareness-poster-img', isTop)
+          + '<span class="awareness-image-overlay" aria-hidden="true"><span class="awareness-overlay-text"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg> View Poster</span></span>'
+          + '</button>'
+          + '</div>'
+        : '<div class="awareness-image-wrapper awareness-image-placeholder" aria-hidden="true"><div class="awareness-placeholder-icon">🛡</div></div>';
+
+      return '<article class="card awareness-card" data-awareness-year-target="' + escapeHtml(year) + '" data-awareness-cat="' + escapeHtml(catFilter) + '">'
+        + '<div class="awareness-card-header">'
+        + '<span class="awareness-cat-pill">' + escapeHtml(category) + '</span>'
+        + '<span class="awareness-year-pill">' + escapeHtml(year) + '</span>'
+        + '</div>'
+        + photoHtml
+        + '<div class="card-body awareness-card-body">'
+        + (item.date ? '<p class="awareness-date">' + escapeHtml(item.date) + '</p>' : '')
+        + '<h3 class="awareness-card-title">' + escapeHtml(item.title) + '</h3>'
+        + '<div class="awareness-card-divider" aria-hidden="true"></div>'
+        + '<p class="awareness-card-desc">' + escapeHtml(item.description || '') + '</p>'
+        + tipsList
+        + '<div class="awareness-card-actions">'
+        + (item.image
+          ? '<button class="button button-ghost button-sm awareness-preview-btn" type="button" data-awareness-image="' + escapeHtml(item.image) + '" data-awareness-title="' + escapeHtml(item.title) + '" data-awareness-desc="' + escapeHtml(item.description || '') + '">View Poster</button>'
+            + '<a class="button button-primary button-sm" href="' + escapeHtml(item.image) + '" target="_blank" rel="noopener noreferrer">Full Res ↗</a>'
+          : '')
+        + '</div>'
+        + '</div>'
+        + '</article>';
+    }).join('');
+
+    const emptyNotice = '<div class="awareness-empty" hidden><p class="team-empty">No awareness posters found for this selection. Add new campaigns to <code>awareness/awareness.js</code>.</p></div>';
+
+    const lightbox = '<div class="awareness-lightbox" hidden role="dialog" aria-modal="true" aria-label="Expanded awareness poster">'
+      + '<button class="awareness-lightbox-close" type="button" aria-label="Close image">×</button>'
+      + '<div class="awareness-lightbox-dialog">'
+      + '<img alt="" class="awareness-lightbox-img">'
+      + '<div class="awareness-lightbox-info">'
+      + '<h3 class="awareness-lightbox-title"></h3>'
+      + '<p class="awareness-lightbox-caption"></p>'
+      + '<a class="button button-primary button-sm awareness-lightbox-link" href="#" target="_blank" rel="noopener noreferrer">Open Original ↗</a>'
+      + '</div>'
+      + '</div>'
+      + '</div>';
+
+    return '<div class="awareness-browser">'
+      + controlsBar
+      + '<div class="card-grid awareness-grid">' + cardsHtml + '</div>'
+      + emptyNotice
+      + lightbox
+      + '</div>';
+  }
+
+  function setupAwareness(items) {
+    const browser = document.querySelector('.awareness-browser');
+    if (!browser) return;
+
+    const yearButtons = browser.querySelectorAll('[data-awareness-year]');
+    const filterButtons = browser.querySelectorAll('[data-awareness-filter]');
+    const cards = browser.querySelectorAll('[data-awareness-year-target]');
+    const emptyNotice = browser.querySelector('.awareness-empty');
+    const lightbox = browser.querySelector('.awareness-lightbox');
+    const lightboxImg = lightbox ? lightbox.querySelector('.awareness-lightbox-img') : null;
+    const lightboxTitle = lightbox ? lightbox.querySelector('.awareness-lightbox-title') : null;
+    const lightboxCaption = lightbox ? lightbox.querySelector('.awareness-lightbox-caption') : null;
+    const lightboxLink = lightbox ? lightbox.querySelector('.awareness-lightbox-link') : null;
+    const lightboxClose = lightbox ? lightbox.querySelector('.awareness-lightbox-close') : null;
+
+    let selectedYear = (yearButtons[0] && yearButtons[0].dataset.awarenessYear) || '2026-27';
+    let selectedCat = 'all';
+
+    function applyFilter() {
+      let visibleCount = 0;
+      cards.forEach(function (card) {
+        const matchesYear = !card.dataset.awarenessYearTarget || card.dataset.awarenessYearTarget === selectedYear;
+        const cardCat = card.dataset.awarenessCat || '';
+        const matchesCat = selectedCat === 'all' || cardCat.indexOf(selectedCat) !== -1;
+        const isVisible = matchesYear && matchesCat;
+        card.hidden = !isVisible;
+        if (isVisible) visibleCount++;
+      });
+      if (emptyNotice) emptyNotice.hidden = visibleCount > 0;
+    }
+
+    yearButtons.forEach(function (button) {
+      button.addEventListener('click', function () {
+        yearButtons.forEach(function (b) {
+          const active = b === button;
+          b.classList.toggle('is-active', active);
+          b.setAttribute('aria-pressed', String(active));
+        });
+        selectedYear = button.dataset.awarenessYear;
+        applyFilter();
+      });
+    });
+
+    filterButtons.forEach(function (button) {
+      button.addEventListener('click', function () {
+        filterButtons.forEach(function (b) {
+          const active = b === button;
+          b.classList.toggle('is-active', active);
+          b.setAttribute('aria-pressed', String(active));
+        });
+        selectedCat = button.dataset.awarenessFilter;
+        applyFilter();
+      });
+    });
+
+    applyFilter();
+
+    function openLightbox(src, title, desc) {
+      if (!lightbox || !lightboxImg) return;
+      lightboxImg.src = src;
+      lightboxImg.alt = title;
+      if (lightboxTitle) lightboxTitle.textContent = title;
+      if (lightboxCaption) lightboxCaption.textContent = desc;
+      if (lightboxLink) lightboxLink.href = src;
+      lightbox.hidden = false;
+      document.body.classList.add('gallery-is-open');
+    }
+
+    function closeLightbox() {
+      if (!lightbox) return;
+      lightbox.hidden = true;
+      if (lightboxImg) lightboxImg.removeAttribute('src');
+      document.body.classList.remove('gallery-is-open');
+    }
+
+    browser.querySelectorAll('[data-awareness-image]').forEach(function (trigger) {
+      trigger.addEventListener('click', function () {
+        openLightbox(
+          trigger.dataset.awarenessImage,
+          trigger.dataset.awarenessTitle || '',
+          trigger.dataset.awarenessDesc || ''
+        );
+      });
+    });
+
+    if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
+    if (lightbox) {
+      lightbox.addEventListener('click', function (e) {
+        if (e.target === lightbox) closeLightbox();
+      });
+    }
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && lightbox && !lightbox.hidden) closeLightbox();
+    });
+  }
+
   function galleryMarkup(items) {
     const years = items.map(function (item) { return item.folder.split('/')[0]; }).filter(function (year, index, all) { return all.indexOf(year) === index; }).sort().reverse();
     const initialYear = years[0] || '';
@@ -488,6 +680,11 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
       content = { lede: 'Browse the original folder arrangement, then open any photo for a closer look.', body: galleryMarkup(window.galleryData || []) };
     } else if (key === 'about') {
       content = { lede: 'A student-led space to understand technology, question assumptions and practise defending the systems we depend on.', body: aboutMarkup() };
+    } else if (key === 'awareness') {
+      content = {
+        lede: 'Visual alerts, campaign posters, and practical security advisories published by the club to cultivate campus-wide digital defense.',
+        body: awarenessMarkup(window.awarenessData || [])
+      };
     } else if (key === 'flagships') {
       const flagships = window.flagshipsData || [];
       content = {
@@ -530,6 +727,7 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
     setupGallery();
     if (key === 'events') setupEvents(window.eventsData || []);
     if (key === 'team') setupTeam();
+    if (key === 'awareness') setupAwareness(window.awarenessData || []);
     document.title = pages[key].label + ' | Security Club DBIT';
     navigation.querySelectorAll('a').forEach(function (link) { link.classList.toggle('active', link.dataset.page === key); });
     const contactForm = app.querySelector('#contact-form');

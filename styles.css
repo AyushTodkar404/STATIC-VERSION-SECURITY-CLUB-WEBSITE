@@ -1822,6 +1822,308 @@ img.card-image.is-loaded,
   overflow: hidden;
 }
 
+/* ==========================================================================
+   Security Awareness Section & Campaign Posters
+   ========================================================================== */
+.awareness-browser {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.awareness-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 1.75rem;
+}
+
+.awareness-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: border-color 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+}
+
+.awareness-card:hover {
+  border-color: rgba(0, 217, 245, 0.45);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 36px -12px rgba(0, 0, 0, 0.85), 0 0 20px rgba(0, 217, 245, 0.12);
+}
+
+.awareness-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  background: rgba(3, 7, 8, 0.6);
+  border-bottom: 1px solid rgba(0, 217, 245, 0.1);
+}
+
+.awareness-cat-pill {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--green);
+  text-transform: uppercase;
+}
+
+.awareness-year-pill {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--cyan);
+  padding: 0.15rem 0.45rem;
+  border-radius: var(--radius-sm);
+  background: rgba(0, 217, 245, 0.08);
+  border: 1px solid rgba(0, 217, 245, 0.2);
+}
+
+.awareness-image-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  background: #030708;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(0, 217, 245, 0.1);
+}
+
+.awareness-image-btn {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  position: relative;
+}
+
+.awareness-poster-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.awareness-card:hover .awareness-poster-img {
+  transform: scale(1.03);
+}
+
+.awareness-image-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(3, 7, 8, 0.65);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.awareness-image-btn:hover .awareness-image-overlay,
+.awareness-image-btn:focus-visible .awareness-image-overlay {
+  opacity: 1;
+}
+
+.awareness-overlay-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.4rem 0.85rem;
+  background: rgba(0, 217, 245, 0.15);
+  border: 1px solid var(--cyan);
+  border-radius: 6px;
+  color: #ffffff;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 600;
+  box-shadow: 0 0 15px rgba(0, 217, 245, 0.3);
+}
+
+.awareness-card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  padding: 1.25rem;
+}
+
+.awareness-date {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--cyan);
+}
+
+.awareness-card-title {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-heading);
+  font-size: 1.18rem;
+  color: #ffffff;
+  line-height: 1.35;
+}
+
+.awareness-card-divider {
+  width: 100%;
+  height: 1px;
+  background: rgba(0, 217, 245, 0.14);
+  margin: 0.5rem 0 0.75rem;
+}
+
+.awareness-card-desc {
+  margin: 0 0 1rem;
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.awareness-tips {
+  margin-top: auto;
+  padding: 0.75rem;
+  background: rgba(0, 217, 245, 0.04);
+  border-left: 2px solid var(--green);
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.awareness-tips-title {
+  margin: 0 0 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--green);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.awareness-tips-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.awareness-tips-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.45rem;
+  font-size: 0.8rem;
+  color: #d1dde2;
+  line-height: 1.45;
+}
+
+.awareness-tip-icon {
+  color: var(--green);
+  font-size: 0.75rem;
+  flex: none;
+  margin-top: 0.15rem;
+}
+
+.awareness-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-top: 0.5rem;
+}
+
+/* Awareness Lightbox Modal */
+.awareness-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(2, 6, 8, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.awareness-lightbox[hidden] {
+  display: none !important;
+}
+
+.awareness-lightbox-dialog {
+  position: relative;
+  max-width: 900px;
+  max-height: 90vh;
+  max-height: 90dvh;
+  width: 100%;
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.9), 0 0 30px rgba(0, 217, 245, 0.15);
+  display: flex;
+  flex-direction: column;
+}
+
+.awareness-lightbox-img {
+  width: 100%;
+  max-height: 65vh;
+  max-height: 65dvh;
+  object-fit: contain;
+  background: #000000;
+}
+
+.awareness-lightbox-info {
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background: var(--surface);
+  border-top: 1px solid rgba(0, 217, 245, 0.12);
+}
+
+.awareness-lightbox-title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  color: #ffffff;
+}
+
+.awareness-lightbox-caption {
+  margin: 0;
+  font-size: 0.88rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.awareness-lightbox-close {
+  position: absolute;
+  top: 1rem;
+  right: 1.25rem;
+  z-index: 1010;
+  width: 44px;
+  height: 44px;
+  background: rgba(3, 7, 8, 0.85);
+  border: 1px solid rgba(0, 217, 245, 0.35);
+  border-radius: 50%;
+  color: #ffffff;
+  font-size: 1.5rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.awareness-lightbox-close:hover {
+  color: var(--cyan);
+  border-color: var(--cyan);
+  box-shadow: 0 0 14px rgba(0, 217, 245, 0.4);
+}
+
 /* Page Shells & Hero */
 .page {
   padding-block: 3.5rem 6.5rem;
@@ -2408,7 +2710,8 @@ img.card-image.is-loaded,
 }
 
 @media (max-width: 480px) {
-  .team-grid {
+  .team-grid,
+  .awareness-grid {
     grid-template-columns: 1fr;
   }
 
@@ -2547,7 +2850,8 @@ img.card-image.is-loaded,
   .event-year-button,
   .gallery-year-button,
   .gallery-folder-button,
-  .gallery-all-button {
+  .gallery-all-button,
+  .awareness-year-button {
     min-height: 44px;
   }
 }
