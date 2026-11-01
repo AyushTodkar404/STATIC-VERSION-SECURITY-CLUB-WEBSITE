@@ -65,8 +65,9 @@
 
 .security-logo .green-orbit-spinner {
   transform-box: view-box;
-  transform-origin: center;
+  transform-origin: 537px 537px;
   animation: security-logo-orbit 3.6s linear infinite;
+  will-change: transform;
 }
 
 .security-logo .green-orbit-spinner.reverse {
@@ -74,9 +75,11 @@
 }
 
 .security-logo.is-animating .green-orbit-spinner {
-  opacity: 0;
-  animation: security-logo-orbit 3.6s linear 6.7s infinite,
-    security-green-orbit-reveal .45s ease-out 6.7s forwards;
+  opacity: 1;
+  transform-box: view-box;
+  transform-origin: 537px 537px;
+  animation: security-logo-orbit 3.6s linear infinite,
+    security-green-orbit-reveal .4s ease-out forwards;
 }
 
 .security-logo.is-animating .green-orbit-spinner.reverse {
@@ -101,61 +104,62 @@
 .security-logo .logo-outline {
   stroke-opacity: .72;
   animation: security-shield-pulse 2.8s ease-in-out infinite;
+  will-change: stroke-opacity;
 }
 
 .security-logo.is-animating .logo-outline {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
   opacity: 0;
-  animation: security-logo-draw 1.65s cubic-bezier(.45, 0, .2, 1) 2.55s forwards,
-    security-shield-pulse 2.8s ease-in-out 4.2s infinite;
+  animation: security-logo-draw 0.8s cubic-bezier(.45, 0, .2, 1) 0.1s forwards,
+    security-shield-pulse 2.8s ease-in-out 0.9s infinite;
 }
 
 .security-logo.is-animating .logo-divider-vertical {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
   opacity: 0;
-  animation: security-logo-draw 1s ease-out 2.95s forwards;
+  animation: security-logo-draw 0.6s ease-out 0.2s forwards;
 }
 
 .security-logo.is-animating .logo-divider-horizontal {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
   opacity: 0;
-  animation: security-logo-draw .8s ease-out 4.15s forwards;
+  animation: security-logo-draw 0.6s ease-out 0.25s forwards;
 }
 
 .security-logo.is-animating .logo-orbit-outer {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
   opacity: 0;
-  animation: security-logo-draw 2.1s ease-out .05s forwards;
+  animation: security-logo-draw 0.75s ease-out 0.05s forwards;
 }
 
 .security-logo.is-animating .logo-orbit-inner {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
   opacity: 0;
-  animation: security-logo-draw 1.55s ease-out .85s forwards;
+  animation: security-logo-draw 0.7s ease-out 0.1s forwards;
 }
 
 .security-logo.is-animating .logo-web .web-line {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
   opacity: 0;
-  animation: security-logo-draw .3s ease-out var(--trace-delay, 0s) forwards;
+  animation: security-logo-draw 0.35s ease-out calc(0.15s + var(--trace-delay, 0s)) forwards;
 }
 
 .security-logo.is-animating .logo-mesh .mesh-edge {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
   opacity: 0;
-  animation: security-logo-draw .22s ease-out calc(4.95s + var(--trace-delay, 0s)) forwards;
+  animation: security-logo-draw 0.3s ease-out calc(0.25s + var(--trace-delay, 0s)) forwards;
 }
 
 .security-logo.is-animating .node-dot {
   opacity: 0;
-  animation: security-logo-fade .25s ease-out calc(5.45s + var(--trace-delay, 0s)) forwards;
+  animation: security-logo-fade 0.25s ease-out calc(0.35s + var(--trace-delay, 0s)) forwards;
 }
 
 @keyframes security-logo-draw {

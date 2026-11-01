@@ -773,9 +773,9 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
       });
     }
 
-    const isSlowConnection = typeof navigator !== 'undefined' && navigator.connection && (navigator.connection.saveData || /2g/.test(navigator.connection.effectiveType || ''));
-    const duration = isSlowConnection ? 1800 : 2600; // Fast-paced 2.6s (1.8s on 2G/data-saver)
-    const maxTimeout = isSlowConnection ? 2600 : 3600; // Strict fallback ceiling so weak connections never stall
+    const isSlowConnection = typeof navigator !== 'undefined' && navigator.connection && (navigator.connection.saveData || /2g|3g|slow/i.test(navigator.connection.effectiveType || ''));
+    const duration = isSlowConnection ? 1400 : 2200; // Fast 2.2s loading, 1.4s on slow/poor connections
+    const maxTimeout = isSlowConnection ? 2000 : 2800; // Strict fallback ceiling so weak connections never stall
     const startTime = performance.now();
     let isDone = false;
     let animId = null;

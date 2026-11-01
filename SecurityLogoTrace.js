@@ -116,6 +116,9 @@ export function mountSecurityLogo(container, size = 420) {
   if (!window.securityClubLogoMotionPlayed) {
     logo.classList.add('is-animating');
     window.securityClubLogoMotionPlayed = true;
+    window.setTimeout(function () {
+      logo.classList.remove('is-animating');
+    }, 1250);
   }
 
   container.replaceChildren(logo);
