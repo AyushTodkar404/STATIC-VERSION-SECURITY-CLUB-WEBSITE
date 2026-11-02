@@ -1,15 +1,24 @@
-// Generated from the public backend content. Edit this file for future static updates.
+// Security Club DBIT — Signature Flagship Programs
+// Generated from public club activities. Edit this file for future announcements.
 window.flagshipsData = [
   {
     "title": "Cyber Siege",
-    "meta": "Flagship - 2026",
-    "description": "Our annual inter-college cybersecurity challenge with red-vs-blue scenarios.",
-    "image": ""
+    "meta": "Flagship · Annual Summit",
+    "cycle": "2026-27 Edition",
+    "format": "Inter-College Red vs Blue Tournament",
+    "description": "Our premier annual inter-college cybersecurity competition bringing together offensive and defensive student teams to solve real-world scenario challenges in a live sandbox environment.",
+    "pillars": ["Red Team Exploitation", "Blue Team Incident Defense", "Network Forensics", "Live Attack Feeds"],
+    "badge": "siege",
+    "status": "Upcoming · Annual Summit"
   },
   {
     "title": "Secure Stack Sprint",
-    "meta": "Flagship - 2026",
-    "description": "A buildathon focused on secure coding, hardening, and incident response.",
-    "image": ""
+    "meta": "Flagship · 48-Hour Buildathon",
+    "cycle": "2026-27 Edition",
+    "format": "Secure Development & Code Hardening",
+    "description": "An intensive hands-on sprint where participants build software systems, subject them to peer security audits, patch emerging zero-days, and deploy hardened defenses under expert faculty and industry mentorship.",
+    "pillars": ["Threat Modeling", "Secure SDLC Practices", "Vulnerability Remediation", "Industry Mentorship"],
+    "badge": "sprint",
+    "status": "Registration Open"
   }
 ];

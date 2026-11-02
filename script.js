@@ -509,6 +509,315 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
     }
   }
 
+  function flagshipsMarkup(items) {
+    items = items || [];
+    if (!items.length) {
+      return '<p class="team-empty">Flagship programs will be announced soon.</p>';
+    }
+
+    const cardsHtml = items.map(function (item, index) {
+      const numTag = 'FLAGSHIP // 0' + (index + 1);
+      const isSiege = item.badge === 'siege' || /siege/i.test(item.title);
+      const emblemSvg = isSiege
+        ? '<svg viewBox="0 0 48 48" width="38" height="38" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M24 4 L40 10 V22 C40 32 32 40 24 44 C16 40 8 32 8 22 V10 Z" stroke="var(--cyan)" fill="rgba(0,229,255,0.06)"/><path d="M24 14 L32 24 L24 34 L16 24 Z" stroke="var(--green)"/><circle cx="24" cy="24" r="3" fill="var(--green)"/></svg>'
+        : '<svg viewBox="0 0 48 48" width="38" height="38" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="8" y="10" width="32" height="28" rx="3" stroke="var(--cyan)" fill="rgba(0,229,255,0.06)"/><path d="M16 20 L24 14 L32 20" stroke="var(--green)"/><path d="M16 28 L24 34 L32 28" stroke="var(--green)"/><circle cx="24" cy="24" r="2.5" fill="var(--cyan)"/></svg>';
+
+      const pillars = (item.pillars || []).map(function (p) {
+        return '<span class="flagship-pillar-tag"><span class="pillar-bullet" aria-hidden="true">◈</span>' + escapeHtml(p) + '</span>';
+      }).join('');
+
+      return '<article class="card flagship-card">'
+        + '<div class="flagship-card-header">'
+        + '<div class="flagship-meta-left">'
+        + '<span class="flagship-num-pill">' + escapeHtml(numTag) + '</span>'
+        + '<span class="flagship-status-pill">' + escapeHtml(item.status || item.cycle || '2026-27 Edition') + '</span>'
+        + '</div>'
+        + '<div class="flagship-emblem">' + emblemSvg + '</div>'
+        + '</div>'
+        + '<div class="card-body flagship-card-body">'
+        + (item.format ? '<p class="flagship-format-tag">' + escapeHtml(item.format) + '</p>' : '')
+        + '<h3 class="flagship-title">' + escapeHtml(item.title) + '</h3>'
+        + '<div class="flagship-divider" aria-hidden="true"></div>'
+        + '<p class="flagship-desc">' + escapeHtml(item.description) + '</p>'
+        + (pillars ? '<div class="flagship-pillars">' + pillars + '</div>' : '')
+        + '<div class="flagship-card-actions">'
+        + '<a class="button button-primary button-sm" href="#/submission">Register Interest →</a>'
+        + '<a class="button button-ghost button-sm" href="#/contact">Inquire Details ↗</a>'
+        + '</div>'
+        + '</div>'
+        + '</article>';
+    }).join('');
+
+    return '<div class="flagship-browser">'
+      + '<div class="flagship-overview-banner">'
+      + '<div class="flagship-banner-meta"><span class="status-beacon" aria-hidden="true"></span><span class="flagship-badge-lead">CORE CURRICULUM & INITIATIVES</span></div>'
+      + '<p class="flagship-banner-text">Annual multi-stage technical programs designed to bridge introductory curiosity with enterprise security readiness.</p>'
+      + '</div>'
+      + '<div class="card-grid flagship-grid">' + cardsHtml + '</div>'
+      + '</div>';
+  }
+
+  function ctfMarkup(challenges) {
+    challenges = challenges || [];
+    const categories = ['all'].concat(challenges.map(function (c) { return c.category; }).filter(function (cat, i, all) {
+      return cat && all.indexOf(cat) === i;
+    }));
+
+    const categoryButtons = categories.map(function (cat) {
+      const active = cat === 'all';
+      const label = cat === 'all' ? 'All Challenges' : cat.toUpperCase();
+      return '<button class="team-filter-button ctf-filter-btn' + (active ? ' is-active' : '') + '" type="button" data-ctf-filter="' + escapeHtml(cat) + '" aria-pressed="' + active + '">' + escapeHtml(label) + '</button>';
+    }).join('');
+
+    const cardsHtml = challenges.map(function (c) {
+      return '<article class="card ctf-card" data-ctf-id="' + escapeHtml(c.id) + '" data-ctf-category="' + escapeHtml(c.category) + '" data-ctf-pts="' + escapeHtml(c.points) + '">'
+        + '<div class="ctf-card-header">'
+        + '<div class="ctf-category-group">'
+        + '<span class="ctf-cat-pill ctf-cat-' + escapeHtml(c.category) + '">' + escapeHtml(c.category.toUpperCase()) + '</span>'
+        + '<span class="ctf-diff-pill ctf-diff-' + escapeHtml(c.difficulty) + '">' + escapeHtml(c.difficulty.toUpperCase()) + '</span>'
+        + '</div>'
+        + '<span class="ctf-pts-badge">' + escapeHtml(c.points) + ' PTS</span>'
+        + '</div>'
+        + '<div class="card-body ctf-card-body">'
+        + '<h3 class="ctf-card-title">' + escapeHtml(c.title) + '</h3>'
+        + '<div class="ctf-card-divider" aria-hidden="true"></div>'
+        + '<p class="ctf-card-desc">' + escapeHtml(c.description) + '</p>'
+        + (c.hint ? '<button type="button" class="ctf-hint-toggle" data-ctf-hint-target="' + escapeHtml(c.id) + '" aria-expanded="false"><span class="ctf-hint-icon" aria-hidden="true">▶</span> Reveal Intel Hint</button><div class="ctf-hint-box" id="ctf-hint-' + escapeHtml(c.id) + '" hidden><p class="ctf-hint-body">' + escapeHtml(c.hint) + '</p></div>' : '')
+        + '<form class="ctf-flag-form" data-ctf-form-id="' + escapeHtml(c.id) + '">'
+        + '<div class="ctf-input-group">'
+        + '<input type="text" class="ctf-flag-input" placeholder="SC{flag_token}" required aria-label="Enter flag for ' + escapeHtml(c.title) + '">'
+        + '<button type="submit" class="button button-primary button-sm ctf-submit-btn">Submit Flag</button>'
+        + '</div>'
+        + '<div class="ctf-feedback" aria-live="polite"></div>'
+        + '</form>'
+        + '</div>'
+        + '</article>';
+    }).join('');
+
+    return '<div class="ctf-browser">'
+      + '<div class="ctf-terminal-hud">'
+      + '<div class="ctf-hud-stat"><span class="hud-label">ENVIRONMENT</span><span class="hud-val hud-online"><span class="status-beacon" aria-hidden="true"></span>ACTIVE LABS</span></div>'
+      + '<div class="ctf-hud-stat"><span class="hud-label">AVAILABLE TARGETS</span><span class="hud-val" id="ctf-target-count">' + challenges.length + ' CHALLENGES</span></div>'
+      + '<div class="ctf-hud-stat"><span class="hud-label">SESSION SCORE</span><span class="hud-val hud-score" id="ctf-score-val">0 PTS</span></div>'
+      + '<div class="ctf-hud-stat"><span class="hud-label">CAPTURED</span><span class="hud-val" id="ctf-solved-val">0 / ' + challenges.length + '</span></div>'
+      + '</div>'
+      + '<div class="team-controls-bar ctf-controls-bar"><div class="team-filters ctf-filters" role="group" aria-label="Filter CTF challenges by category">' + categoryButtons + '</div></div>'
+      + '<div class="card-grid ctf-grid">' + cardsHtml + '</div>'
+      + '</div>';
+  }
+
+  function setupCtf() {
+    const browser = document.querySelector('.ctf-browser');
+    if (!browser) return;
+
+    const challenges = window.challengesData || [];
+    const filterButtons = browser.querySelectorAll('[data-ctf-filter]');
+    const cards = browser.querySelectorAll('[data-ctf-id]');
+    const scoreVal = browser.querySelector('#ctf-score-val');
+    const solvedVal = browser.querySelector('#ctf-solved-val');
+
+    const storageKey = 'security-club-ctf-solved-v1';
+    let solvedIds = [];
+    try {
+      const stored = sessionStorage.getItem(storageKey);
+      if (stored) solvedIds = JSON.parse(stored);
+    } catch (_) {}
+
+    function updateHud() {
+      let score = 0;
+      challenges.forEach(function (c) {
+        if (solvedIds.indexOf(c.id) !== -1) score += (c.points || 0);
+      });
+      if (scoreVal) scoreVal.textContent = score + ' PTS';
+      if (solvedVal) solvedVal.textContent = solvedIds.length + ' / ' + challenges.length;
+    }
+
+    function syncSolvedCard(card, challenge) {
+      card.classList.add('is-solved');
+      const input = card.querySelector('.ctf-flag-input');
+      const btn = card.querySelector('.ctf-submit-btn');
+      const feedback = card.querySelector('.ctf-feedback');
+      if (input) {
+        input.value = challenge.flag || 'SC{...}';
+        input.disabled = true;
+      }
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = 'Captured ✔';
+      }
+      if (feedback) {
+        feedback.className = 'ctf-feedback is-success';
+        feedback.innerHTML = '<strong>[✔] Solved:</strong> Flag token captured. +' + challenge.points + ' PTS';
+      }
+    }
+
+    cards.forEach(function (card) {
+      const cId = parseInt(card.dataset.ctfId, 10);
+      const ch = challenges.find(function (c) { return c.id === cId; });
+      if (ch && solvedIds.indexOf(cId) !== -1) syncSolvedCard(card, ch);
+    });
+    updateHud();
+
+    let selectedCat = 'all';
+    function applyCatFilter() {
+      cards.forEach(function (card) {
+        const matches = selectedCat === 'all' || card.dataset.ctfCategory === selectedCat;
+        card.hidden = !matches;
+      });
+    }
+    bindPillGroup(filterButtons, function (btn) {
+      selectedCat = btn.dataset.ctfFilter;
+      applyCatFilter();
+    });
+
+    browser.querySelectorAll('.ctf-hint-toggle').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        const targetId = btn.dataset.ctfHintTarget;
+        const box = browser.querySelector('#ctf-hint-' + targetId);
+        if (!box) return;
+        const willShow = box.hidden;
+        box.hidden = !willShow;
+        btn.setAttribute('aria-expanded', String(willShow));
+        const icon = btn.querySelector('.ctf-hint-icon');
+        if (icon) icon.textContent = willShow ? '▼' : '▶';
+      });
+    });
+
+    browser.querySelectorAll('.ctf-flag-form').forEach(function (form) {
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        const formId = parseInt(form.dataset.ctfFormId, 10);
+        const ch = challenges.find(function (c) { return c.id === formId; });
+        if (!ch) return;
+
+        const input = form.querySelector('.ctf-flag-input');
+        const feedback = form.querySelector('.ctf-feedback');
+        const entered = (input && input.value || '').trim();
+        const expected = String(ch.flag || '').trim();
+        const card = browser.querySelector('[data-ctf-id="' + formId + '"]');
+
+        if (entered.toLowerCase() === expected.toLowerCase()) {
+          if (solvedIds.indexOf(formId) === -1) {
+            solvedIds.push(formId);
+            try { sessionStorage.setItem(storageKey, JSON.stringify(solvedIds)); } catch (_) {}
+          }
+          if (card) syncSolvedCard(card, ch);
+          updateHud();
+        } else {
+          if (feedback) {
+            feedback.className = 'ctf-feedback is-error';
+            feedback.innerHTML = '<strong>[✖] Incorrect:</strong> Flag mismatch. Ensure standard format SC{...} and re-verify.';
+          }
+        }
+      });
+    });
+  }
+
+  function submissionFormMarkup() {
+    return '<form class="contact-panel contact-form submission-form-panel" id="student-submission-form">'
+      + '<div class="form-section-header">'
+      + '<span class="form-step-num">// 01</span>'
+      + '<div class="form-step-meta">'
+      + '<h3>Candidate Identity</h3>'
+      + '<p>Your name and primary communication channels.</p>'
+      + '</div></div>'
+      + '<div class="form-row-2">'
+      + '<div class="form-field">'
+      + '<label for="submission-name">Full Name <span class="req">*</span></label>'
+      + '<input id="submission-name" name="name" autocomplete="name" placeholder="e.g. Ayush Todkar" required>'
+      + '</div>'
+      + '<div class="form-field">'
+      + '<label for="submission-email">Gmail Address <span class="req">*</span></label>'
+      + '<input id="submission-email" name="email" type="email" autocomplete="email" placeholder="student@gmail.com" required>'
+      + '</div></div>'
+      + '<div class="form-field">'
+      + '<label for="submission-phone">WhatsApp / Phone Number <span class="req">*</span></label>'
+      + '<input id="submission-phone" name="phone" type="tel" autocomplete="tel" placeholder="+91 98765 43210" required>'
+      + '</div>'
+      + '<div class="form-section-header">'
+      + '<span class="form-step-num">// 02</span>'
+      + '<div class="form-step-meta">'
+      + '<h3>Academic Affiliation</h3>'
+      + '<p>Your current class and division at DBIT.</p>'
+      + '</div></div>'
+      + '<div class="submission-details">'
+      + '<div class="form-field">'
+      + '<label for="submission-year">Year of Study <span class="req">*</span></label>'
+      + '<div class="select-wrapper"><select id="submission-year" name="year" required>'
+      + '<option value="">Choose your year</option>'
+      + '<option value="FE">FE (First Year)</option>'
+      + '<option value="SE">SE (Second Year)</option>'
+      + '<option value="TE">TE (Third Year)</option>'
+      + '<option value="BE">BE (Fourth Year)</option>'
+      + '</select></div></div>'
+      + '<div class="form-field">'
+      + '<label for="submission-division">Division <span class="req">*</span></label>'
+      + '<div class="select-wrapper"><select id="submission-division" name="division" required>'
+      + '<option value="">Choose your division</option>'
+      + '<option value="A">Division A</option>'
+      + '<option value="B">Division B</option>'
+      + '<option value="C">Division C</option>'
+      + '<option value="Other">Other / not listed</option>'
+      + '</select></div></div></div>'
+      + '<div class="form-section-header">'
+      + '<span class="form-step-num">// 03</span>'
+      + '<div class="form-step-meta">'
+      + '<h3>Statement of Purpose</h3>'
+      + '<p>What security domains, tools, or goals excite you?</p>'
+      + '</div></div>'
+      + '<div class="form-field">'
+      + '<label for="submission-reason">Reason to Join the Club <span class="req">*</span></label>'
+      + '<textarea id="submission-reason" name="reason" rows="4" placeholder="Tell us why you would like to join and what you hope to build or learn..." required></textarea>'
+      + '</div>'
+      + '<div class="form-field">'
+      + '<label for="submission-query">Query or Specific Question <span class="form-optional">(optional)</span></label>'
+      + '<textarea id="submission-query" name="query" rows="2" placeholder="Any questions for the coordinators or faculty mentors?"></textarea>'
+      + '</div>'
+      + '<div class="form-dispatch-notice">'
+      + '<span class="status-beacon" aria-hidden="true"></span>'
+      + '<p class="form-help">Client-side dispatch: This static terminal does not store your details. A prepared message compiles locally and opens in your selected service for review before sending.</p>'
+      + '</div>'
+      + '<div class="submission-actions">'
+      + '<button class="button button-primary" type="submit" name="destination" value="gmail">Send on Gmail ↗</button>'
+      + '<button class="button button-ghost" type="submit" name="destination" value="whatsapp">Send on WhatsApp ↗</button>'
+      + '</div></form>';
+  }
+
+  function contactMarkup() {
+    return '<div class="contact-layout"><div class="contact-panel"><p class="eyebrow">Direct Gateway</p>'
+      + '<a class="contact-email" href="mailto:securityclubdbit@gmail.com" title="Direct mailto link">securityclubdbit@gmail.com</a>'
+      + '<p>WhatsApp / Call: <a href="https://wa.me/918369448072" target="_blank" rel="noopener noreferrer">+91 83694 48072</a></p>'
+      + '<p>Location: Don Bosco Institute of Technology, Kurla, Mumbai</p>'
+      + '<p>For current meeting times and sessions, reach out directly or join our community.</p>'
+      + '<div class="home-actions">'
+      + '<a class="button button-primary" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=securityclubdbit%40gmail.com" target="_blank" rel="noopener noreferrer">Compose in Gmail ↗</a>'
+      + '<a class="button button-ghost" href="mailto:securityclubdbit@gmail.com">Direct mailto</a>'
+      + '<a class="button button-ghost" href="https://wa.me/918369448072" target="_blank" rel="noopener noreferrer">Open WhatsApp ↗</a>'
+      + '</div></div>'
+      + '<form class="contact-panel contact-form" id="contact-form">'
+      + '<div class="form-section-header">'
+      + '<span class="form-step-num">// DISPATCH</span>'
+      + '<div class="form-step-meta">'
+      + '<h3>Message the Club</h3>'
+      + '<p>Inquiries, collaborations, and workshop partnerships.</p>'
+      + '</div></div>'
+      + '<div class="form-field">'
+      + '<label for="contact-name">Your Name <span class="req">*</span></label>'
+      + '<input id="contact-name" name="name" placeholder="e.g. Jane Doe" required>'
+      + '</div>'
+      + '<div class="form-field">'
+      + '<label for="contact-email">Email Address <span class="req">*</span></label>'
+      + '<input id="contact-email" name="email" type="email" placeholder="your.email@example.com" required>'
+      + '</div>'
+      + '<div class="form-field">'
+      + '<label for="contact-message">Message <span class="req">*</span></label>'
+      + '<textarea id="contact-message" name="message" rows="5" placeholder="Share your message or inquiry..." required></textarea>'
+      + '</div>'
+      + '<p class="form-help">Opens a Gmail draft in your browser. Sign in if prompted, then review and send it from Gmail. The message is not sent automatically.</p>'
+      + '<button class="button button-primary" type="submit">Open Gmail draft →</button>'
+      + '</form></div>';
+  }
+
   function galleryMarkup(items) {
     const years = extractYears(items, function (item) { return item.folder.split('/')[0]; });
     const initialYear = years[0] || '';
@@ -626,27 +935,26 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
         body: awarenessMarkup(window.awarenessData || [])
       };
     } else if (key === 'flagships') {
-      const flagships = window.flagshipsData || [];
       content = {
         lede: 'Our recurring initiatives create clear ways to learn, practise and contribute throughout the academic year.',
-        body: flagships.length ? cards(flagships, 'flagship-grid') : '<p class="team-empty">Flagship programs will be announced soon.</p>'
+        body: flagshipsMarkup(window.flagshipsData || [])
       };
     } else if (key === 'ctf') {
-      const challenges = (window.challengesData || []).map(function (challenge) {
-        return Object.assign({}, challenge, { meta: challenge.category + ' · ' + challenge.difficulty + ' · ' + challenge.points + ' points' });
-      });
       content = {
-        lede: 'Choose a challenge, learn responsibly and practise the skills that make secure systems possible.',
-        body: challenges.length ? cards(challenges, 'challenge-grid') : '<p class="team-empty">No active CTF challenges at this moment. Check back soon!</p>'
+        lede: 'Hands-on offensive and defensive cybersecurity labs. Solve challenges, discover vulnerabilities, and capture the flag.',
+        body: ctfMarkup(window.challengesData || [])
       };
     } else if (key === 'membership') {
       content = { lede: 'There is no account or login on this static page. Contact the club to ask about joining and upcoming sessions.', body: '<div class="split-content"><article class="info-panel"><p class="eyebrow">Start here</p><h2>Show up curious.</h2><p>Join an open session, ask questions and find the area of cybersecurity that excites you. Prior experience is never required.</p><a class="button button-primary" href="#/contact">Contact the club</a></article><article class="info-panel"><p class="eyebrow">What you can explore</p><ul class="clean-list"><li>Security fundamentals</li><li>CTFs and practical labs</li><li>Secure development</li><li>Research and community projects</li></ul></article></div>' };
     } else if (key === 'submission') {
-      content = { lede: 'Share your details and tell us why you would like to join. Choose Gmail or WhatsApp to open a prepared message that you can review and send.', body: '<form class="contact-panel contact-form submission-form-panel" id="student-submission-form"><label for="submission-name">Name</label><input id="submission-name" name="name" autocomplete="name" required><label for="submission-email">Gmail address</label><input id="submission-email" name="email" type="email" autocomplete="email" required><label for="submission-phone">Phone number</label><input id="submission-phone" name="phone" type="tel" autocomplete="tel" required><label for="submission-reason">Reason to join the club</label><textarea id="submission-reason" name="reason" rows="4" required></textarea><label for="submission-query">Query or question <span class="form-optional">(optional)</span></label><textarea id="submission-query" name="query" rows="3"></textarea><div class="submission-details"><div><label for="submission-year">Year of study</label><select id="submission-year" name="year" required><option value="">Choose your year</option><option value="FE">FE (First Year)</option><option value="SE">SE (Second Year)</option><option value="TE">TE (Third Year)</option><option value="BE">BE (Fourth Year)</option></select></div><div><label for="submission-division">Division</label><select id="submission-division" name="division" required><option value="">Choose your division</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="Other">Other / not listed</option></select></div></div><p class="form-help">This static website does not store your details. A prepared message opens in your selected service; review and send it there.</p><div class="submission-actions"><button class="button button-primary" type="submit" name="destination" value="gmail">Send on Gmail ↗</button><button class="button button-ghost" type="submit" name="destination" value="whatsapp">Send on WhatsApp ↗</button></div></form>' };
+      content = {
+        lede: 'Share your details and motivation with the club coordinators. Choose Gmail or WhatsApp to review and dispatch your registration.',
+        body: submissionFormMarkup()
+      };
     } else if (key === 'contact') {
       content = {
         lede: 'For collaborations, event invites, workshop partnerships or club questions, reach us directly by email or WhatsApp.',
-        body: '<div class="contact-layout"><div class="contact-panel"><p class="eyebrow">Contact info</p><a class="contact-email" href="mailto:securityclubdbit@gmail.com" title="Direct mailto link">securityclubdbit@gmail.com</a><p>WhatsApp / Call: <a href="https://wa.me/918369448072" target="_blank" rel="noopener noreferrer">+91 83694 48072</a></p><p>Location: Don Bosco Institute of Technology, Kurla, Mumbai</p><p>For current meeting times and sessions, reach out directly or join our community.</p><div class="home-actions"><a class="button button-primary" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=securityclubdbit%40gmail.com" target="_blank" rel="noopener noreferrer">Compose in Gmail ↗</a><a class="button button-ghost" href="mailto:securityclubdbit@gmail.com">Direct mailto</a><a class="button button-ghost" href="https://wa.me/918369448072" target="_blank" rel="noopener noreferrer">Open WhatsApp ↗</a></div></div><form class="contact-panel contact-form" id="contact-form"><p class="eyebrow">Message the club</p><label for="contact-name">Name</label><input id="contact-name" name="name" required><label for="contact-email">Email</label><input id="contact-email" name="email" type="email" required><label for="contact-message">Message</label><textarea id="contact-message" name="message" rows="5" required></textarea><p class="form-help">Opens a Gmail draft in your browser. Sign in if prompted, then review and send it from Gmail. The message is not sent automatically.</p><button class="button button-primary" type="submit">Open Gmail draft →</button></form></div>'
+        body: contactMarkup()
       };
     } else if (key === 'privacy') {
       content = {
@@ -668,6 +976,7 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
     if (key === 'events') setupEvents(window.eventsData || []);
     if (key === 'team') setupTeam();
     if (key === 'awareness') setupAwareness(window.awarenessData || []);
+    if (key === 'ctf') setupCtf();
     document.title = pages[key].label + ' | Security Club DBIT';
     navigation.querySelectorAll('a').forEach(function (link) { link.classList.toggle('active', link.dataset.page === key); });
     const contactForm = app.querySelector('#contact-form');

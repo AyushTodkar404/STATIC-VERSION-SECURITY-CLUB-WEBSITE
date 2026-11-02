@@ -2123,11 +2123,74 @@ img.card-image.is-loaded,
   text-shadow: 0 0 14px var(--cyan);
 }
 
-/* Forms */
+/* Forms — Watermelon UI Architecture */
 .contact-form {
   display: grid;
-  gap: 0.65rem;
+  gap: 1rem;
   margin-top: 0;
+}
+
+.form-section-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  margin: 1.25rem 0 0.5rem;
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.submission-form-panel .form-section-header:first-of-type,
+.contact-form .form-section-header:first-of-type {
+  margin-top: 0;
+}
+
+.form-step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font: 700 0.72rem var(--font-mono);
+  color: var(--green);
+  letter-spacing: 0.14em;
+  background: rgba(0, 255, 136, 0.08);
+  border: 1px solid rgba(0, 255, 136, 0.22);
+  padding: 0.25rem 0.55rem;
+  border-radius: 4px;
+}
+
+.form-step-meta h3 {
+  font: 700 1rem var(--font-heading);
+  color: var(--text);
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+
+.form-step-meta p {
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin: 0.2rem 0 0;
+  line-height: 1.4;
+}
+
+.form-row-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.form-field {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.form-field label {
+  font: 600 0.84rem var(--font-mono);
+  color: var(--text);
+  letter-spacing: 0.04em;
+}
+
+.req {
+  color: var(--cyan);
+  font-weight: 700;
 }
 
 .contact-form input,
@@ -2139,10 +2202,15 @@ img.card-image.is-loaded,
   border: 1px solid var(--line);
   border-radius: 6px;
   color: var(--text);
-  background: rgba(3, 8, 13, 0.65);
+  background: rgba(3, 8, 13, 0.7);
   font-family: var(--font-sans);
-  font-size: 1rem;
-  transition: all 0.2s ease;
+  font-size: 0.95rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: rgba(154, 174, 181, 0.45);
 }
 
 .contact-form input:focus,
@@ -2150,14 +2218,57 @@ img.card-image.is-loaded,
 .contact-form select:focus {
   outline: none;
   border-color: var(--cyan);
-  box-shadow: 0 0 0 3px rgba(0, 229, 255, 0.15), 0 0 12px rgba(0, 229, 255, 0.2);
-  background: rgba(5, 14, 22, 0.9);
+  box-shadow: 0 0 0 3px rgba(0, 229, 255, 0.15), 0 0 14px rgba(0, 229, 255, 0.18);
+  background: rgba(5, 14, 22, 0.92);
+}
+
+.select-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.select-wrapper select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 2.5rem;
+  cursor: pointer;
+}
+
+.select-wrapper::after {
+  content: "";
+  position: absolute;
+  right: 1.1rem;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid var(--cyan);
+  border-bottom: 2px solid var(--cyan);
+  transform: translateY(-65%) rotate(45deg);
+  pointer-events: none;
+  transition: transform 0.2s ease;
+}
+
+.form-dispatch-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.9rem 1.15rem;
+  background: rgba(0, 229, 255, 0.04);
+  border: 1px solid rgba(0, 229, 255, 0.18);
+  border-radius: 6px;
+  margin: 0.5rem 0;
+}
+
+.form-dispatch-notice .status-beacon {
+  margin-top: 0.25rem;
+  flex-shrink: 0;
 }
 
 .form-help {
   color: var(--muted);
   font-size: 0.8rem;
   line-height: 1.5;
+  margin: 0;
 }
 
 .form-feedback {
@@ -2182,13 +2293,6 @@ img.card-image.is-loaded,
   margin: 2rem auto 0;
 }
 
-.submission-form-panel>label,
-.submission-details label {
-  color: var(--text);
-  font-weight: 600;
-  font-size: 0.92rem;
-}
-
 .form-optional {
   color: var(--muted);
   font-size: 0.8em;
@@ -2201,16 +2305,446 @@ img.card-image.is-loaded,
   gap: 1rem;
 }
 
-.submission-details>div {
-  display: grid;
-  gap: 0.55rem;
-}
-
 .submission-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 0.85rem;
   margin-top: 0.4rem;
+}
+
+/* Flagship Section — Watermelon UI Editorial Architecture */
+.flagship-browser {
+  display: grid;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.flagship-overview-banner {
+  padding: 1.4rem 1.8rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(0, 229, 255, 0.05), rgba(0, 255, 136, 0.03) 60%, rgba(3, 8, 13, 0.8));
+  box-shadow: inset 0 1px 0 rgba(0, 229, 255, 0.2);
+}
+
+.flagship-banner-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 0.4rem;
+}
+
+.flagship-badge-lead {
+  font: 700 0.72rem var(--font-mono);
+  color: var(--green);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.flagship-banner-text {
+  color: var(--text);
+  font-size: 0.96rem;
+  line-height: 1.6;
+  margin: 0;
+  max-width: 72ch;
+}
+
+.flagship-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.8rem;
+}
+
+.flagship-card {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: rgba(6, 17, 24, 0.72);
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.flagship-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(0, 229, 255, 0.45);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.55), 0 0 24px rgba(0, 229, 255, 0.12);
+}
+
+.flagship-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  background: rgba(3, 8, 13, 0.6);
+  border-bottom: 1px solid rgba(0, 229, 255, 0.14);
+}
+
+.flagship-meta-left {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.flagship-num-pill {
+  font: 700 0.72rem var(--font-mono);
+  color: var(--green);
+  letter-spacing: 0.14em;
+  background: rgba(0, 255, 136, 0.08);
+  border: 1px solid rgba(0, 255, 136, 0.22);
+  padding: 0.25rem 0.55rem;
+  border-radius: 4px;
+}
+
+.flagship-status-pill {
+  font: 600 0.7rem var(--font-mono);
+  color: var(--cyan);
+  background: rgba(0, 229, 255, 0.08);
+  border: 1px solid rgba(0, 229, 255, 0.2);
+  padding: 0.22rem 0.55rem;
+  border-radius: 4px;
+}
+
+.flagship-emblem {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  background: rgba(0, 229, 255, 0.06);
+  border: 1px solid rgba(0, 229, 255, 0.18);
+  color: var(--cyan);
+  flex-shrink: 0;
+}
+
+.flagship-card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 1.5rem;
+}
+
+.flagship-format-tag {
+  font: 700 0.72rem var(--font-mono);
+  color: var(--cyan);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin: 0 0 0.4rem;
+}
+
+.flagship-title {
+  font: 700 1.5rem var(--font-heading);
+  color: var(--text);
+  margin: 0 0 0.8rem;
+  letter-spacing: -0.01em;
+}
+
+.flagship-divider {
+  height: 1px;
+  background: linear-gradient(90deg, var(--cyan), transparent 85%);
+  margin-bottom: 1rem;
+  opacity: 0.35;
+}
+
+.flagship-desc {
+  font-size: 0.94rem;
+  line-height: 1.65;
+  color: var(--muted);
+  margin: 0 0 1.25rem;
+  flex: 1;
+}
+
+.flagship-pillars {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-bottom: 1.5rem;
+}
+
+.flagship-pillar-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font: 0.74rem var(--font-mono);
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0.28rem 0.6rem;
+  border-radius: 4px;
+}
+
+.pillar-bullet {
+  color: var(--green);
+  font-size: 0.6rem;
+}
+
+.flagship-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* CTF Challenge Sandbox — Watermelon UI Architecture */
+.ctf-browser {
+  display: grid;
+  gap: 1.75rem;
+  margin-top: 2rem;
+}
+
+.ctf-terminal-hud {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+  padding: 1.15rem 1.6rem;
+  border: 1px solid var(--line);
+  background: rgba(4, 11, 16, 0.82);
+  border-radius: 8px;
+  box-shadow: inset 0 1px 0 rgba(0, 229, 255, 0.15);
+}
+
+.ctf-hud-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.ctf-hud-stat .hud-label {
+  font: 700 0.66rem var(--font-mono);
+  color: var(--muted);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.ctf-hud-stat .hud-val {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font: 700 1.05rem var(--font-mono);
+  color: var(--text);
+}
+
+.ctf-hud-stat .hud-online {
+  color: var(--green);
+}
+
+.ctf-hud-stat .hud-score {
+  color: var(--green) !important;
+  text-shadow: 0 0 12px rgba(0, 255, 136, 0.3);
+}
+
+.ctf-controls-bar {
+  margin: 0;
+}
+
+.ctf-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.ctf-card {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(6, 17, 24, 0.75);
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.ctf-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(0, 229, 255, 0.4);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 229, 255, 0.09);
+}
+
+.ctf-card.is-solved {
+  border-color: rgba(0, 255, 136, 0.45);
+  background: linear-gradient(180deg, rgba(0, 255, 136, 0.06), rgba(4, 11, 16, 0.85));
+  box-shadow: 0 0 24px rgba(0, 255, 136, 0.12);
+}
+
+.ctf-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.35rem;
+  background: rgba(3, 8, 13, 0.5);
+  border-bottom: 1px solid rgba(0, 229, 255, 0.12);
+}
+
+.ctf-category-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.ctf-cat-pill {
+  font: 700 0.68rem var(--font-mono);
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+  letter-spacing: 0.08em;
+}
+
+.ctf-cat-web {
+  color: var(--cyan);
+  background: rgba(0, 229, 255, 0.08);
+  border: 1px solid rgba(0, 229, 255, 0.22);
+}
+
+.ctf-cat-crypto {
+  color: #ffd166;
+  background: rgba(255, 209, 102, 0.08);
+  border: 1px solid rgba(255, 209, 102, 0.22);
+}
+
+.ctf-cat-network {
+  color: #b388ff;
+  background: rgba(179, 136, 255, 0.08);
+  border: 1px solid rgba(179, 136, 255, 0.22);
+}
+
+.ctf-diff-pill {
+  font: 600 0.66rem var(--font-mono);
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0.2rem 0.45rem;
+  border-radius: 4px;
+  letter-spacing: 0.06em;
+}
+
+.ctf-diff-beginner {
+  color: #00f5a0;
+  border-color: rgba(0, 245, 160, 0.25);
+}
+
+.ctf-diff-intermediate {
+  color: #ffd166;
+  border-color: rgba(255, 209, 102, 0.25);
+}
+
+.ctf-pts-badge {
+  font: 700 0.78rem var(--font-mono);
+  color: var(--green);
+  background: rgba(0, 255, 136, 0.08);
+  border: 1px solid rgba(0, 255, 136, 0.22);
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+}
+
+.ctf-card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 1.35rem;
+}
+
+.ctf-card-title {
+  font: 700 1.18rem var(--font-heading);
+  color: var(--text);
+  margin: 0 0 0.5rem;
+}
+
+.ctf-card-divider {
+  height: 1px;
+  background: linear-gradient(90deg, var(--cyan), transparent 85%);
+  margin-bottom: 0.85rem;
+  opacity: 0.3;
+}
+
+.ctf-card-desc {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--muted);
+  margin: 0 0 1rem;
+  flex: 1;
+}
+
+.ctf-hint-toggle {
+  align-self: flex-start;
+  background: none;
+  border: none;
+  color: var(--cyan);
+  font: 600 0.78rem var(--font-mono);
+  cursor: pointer;
+  padding: 0.25rem 0;
+  margin-bottom: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: color 0.2s ease;
+}
+
+.ctf-hint-toggle:hover {
+  color: #fff;
+  text-shadow: 0 0 10px var(--cyan);
+}
+
+.ctf-hint-box {
+  padding: 0.75rem 1rem;
+  background: rgba(0, 229, 255, 0.05);
+  border-left: 2px solid var(--cyan);
+  border-radius: 0 6px 6px 0;
+  margin-bottom: 1rem;
+}
+
+.ctf-hint-body {
+  font: 0.82rem var(--font-mono);
+  color: var(--text);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.ctf-flag-form {
+  margin-top: auto;
+}
+
+.ctf-input-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.ctf-flag-input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.6rem 0.85rem;
+  font: 0.85rem var(--font-mono);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: rgba(3, 8, 13, 0.85);
+  color: var(--text);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ctf-flag-input:focus {
+  outline: none;
+  border-color: var(--cyan);
+  box-shadow: 0 0 0 2px rgba(0, 229, 255, 0.18);
+}
+
+.ctf-submit-btn {
+  white-space: nowrap;
+}
+
+.ctf-feedback {
+  margin-top: 0.5rem;
+  font: 0.8rem var(--font-mono);
+  min-height: 1.2rem;
+}
+
+.ctf-feedback.is-success {
+  color: var(--green);
+}
+
+.ctf-feedback.is-error {
+  color: #ff6b6b;
 }
 
 /* Footer */
@@ -2574,14 +3108,21 @@ img.card-image.is-loaded,
     align-items: stretch;
   }
 
+  .form-row-2,
+  .flagship-grid,
   .submission-details {
     grid-template-columns: 1fr;
+  }
+
+  .ctf-terminal-hud {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (max-width: 480px) {
   .team-grid,
-  .awareness-grid {
+  .awareness-grid,
+  .ctf-terminal-hud {
     grid-template-columns: 1fr;
   }
 
