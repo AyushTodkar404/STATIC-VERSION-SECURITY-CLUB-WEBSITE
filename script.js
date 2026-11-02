@@ -1057,19 +1057,23 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
     const toggleButton = document.querySelector('#matrix-toggle');
     if (!context) return;
     const characters = '0101010123456789ABCDEF$#*+-<>/';
-    const fontSize = 14;
+    const isMobile = window.innerWidth < 768;
+    const fontSize = isMobile ? 15 : 14;
     let width = 0;
     let height = 0;
     let drops = [];
     let animationFrame = 0;
     let animationTimer = 0;
     let isStreamActive = !reducedMotion.matches;
+    let isScrolling = false;
+    let scrollResumeTimer = 0;
 
     function resize() {
       const newWidth = window.innerWidth;
       const newHeight = window.innerHeight;
       if (newWidth === width && Math.abs(newHeight - height) < 120) return;
-      const pixelRatio = Math.min(window.devicePixelRatio || 1, 1.5);
+      // On mobile / low power devices, lock pixel ratio to 1.0 to eliminate fillRect overhead. Desktop max 1.25.
+      const pixelRatio = newWidth < 768 ? 1.0 : Math.min(window.devicePixelRatio || 1, 1.25);
       width = newWidth;
       height = newHeight;
       matrixCanvas.width = Math.round(width * pixelRatio);
@@ -1082,7 +1086,7 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
 
     function draw() {
       animationFrame = 0;
-      if (document.hidden || !isStreamActive) return;
+      if (document.hidden || !isStreamActive || isScrolling) return;
       context.fillStyle = 'rgba(3, 7, 8, 0.14)';
       context.fillRect(0, 0, width, height);
       context.font = fontSize + "px 'JetBrains Mono', monospace";
@@ -1108,7 +1112,7 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
       animationTimer = window.setTimeout(function () {
         animationTimer = 0;
         animationFrame = window.requestAnimationFrame(draw);
-      }, 70);
+      }, 80);
     }
 
     function pause() {
@@ -1119,7 +1123,7 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
     }
 
     function resume() {
-      if (!document.hidden && isStreamActive && !reducedMotion.matches && !animationFrame && !animationTimer) {
+      if (!document.hidden && isStreamActive && !reducedMotion.matches && !isScrolling && !animationFrame && !animationTimer) {
         animationFrame = window.requestAnimationFrame(draw);
       }
     }
@@ -1146,6 +1150,18 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
 
     resize();
     window.addEventListener('resize', resize, { passive: true });
+    window.addEventListener('scroll', function () {
+      if (!isScrolling) {
+        isScrolling = true;
+        pause();
+      }
+      if (scrollResumeTimer) window.clearTimeout(scrollResumeTimer);
+      scrollResumeTimer = window.setTimeout(function () {
+        isScrolling = false;
+        resume();
+      }, 100);
+    }, { passive: true });
+
     document.addEventListener('visibilitychange', function () {
       if (document.hidden) pause(); else resume();
     });
@@ -1204,6 +1220,7 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
       closeNav();
     }
   }, { passive: true });
+
   function setupSplashLoader() {
     const splash = document.querySelector('#splash-loader');
     if (!splash) return;
@@ -1230,9 +1247,9 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
       });
     }
 
-    const isSlowConnection = typeof navigator !== 'undefined' && navigator.connection && (navigator.connection.saveData || /2g|3g|slow/i.test(navigator.connection.effectiveType || ''));
-    const duration = isSlowConnection ? 1400 : 2200; // Fast 2.2s loading, 1.4s on slow/poor connections
-    const maxTimeout = isSlowConnection ? 2000 : 2800; // Strict fallback ceiling so weak connections never stall
+    const isSlowConnection = typeof navigator !== 'undefined' && ((navigator.connection && (navigator.connection.saveData || /2g|3g|slow/i.test(navigator.connection.effectiveType || ''))) || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4));
+    const duration = isSlowConnection ? 1100 : 1600; // Ultra-fast responsive entry: 1.1s on slow/poor connections, 1.6s on fast
+    const maxTimeout = isSlowConnection ? 1600 : 2000; // Strict fallback ceiling so weak connections never wait or stall
     const startTime = performance.now();
     let isDone = false;
     let animId = null;
@@ -1264,6 +1281,11 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
         }, 450);
       }, 150);
     }
+
+    // Fast-path dismiss: clicking/tapping anywhere dismisses splash immediately on slow networks
+    splash.addEventListener('click', finish, { passive: true });
+    // Hard fallback guarantees splash will never hang regardless of background throttling
+    window.setTimeout(finish, 2200);
 
     function step(now) {
       if (isDone) return;
