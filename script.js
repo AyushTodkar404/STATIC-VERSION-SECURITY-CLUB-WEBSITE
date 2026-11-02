@@ -21,7 +21,7 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
     contact: { label: 'Contact', title: 'Have a question? Start a conversation.', eyebrow: 'Reach the club' },
     ctf: { label: 'CTF', title: 'Think sideways. Solve carefully. Learn constantly.', eyebrow: 'Capture the flag' },
     privacy: { label: 'Privacy & Ethics', title: 'Responsible practice. Student privacy.', eyebrow: 'Code of conduct & disclosure' },
-    notFound: { label: '404 - Not Found', title: 'Target vector not found in cyberspace.', eyebrow: 'Status · 404' }
+    notFound: { label: '404 - Not Found', title: 'Page not found.', eyebrow: 'Status · 404' }
   };
 
   const linkOrder = ['home', 'about', 'awareness', 'events', 'flagships', 'team', 'gallery', 'membership', 'submission', 'contact', 'ctf'];
@@ -550,8 +550,8 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
 
     return '<div class="flagship-browser">'
       + '<div class="flagship-overview-banner">'
-      + '<div class="flagship-banner-meta"><span class="status-beacon" aria-hidden="true"></span><span class="flagship-badge-lead">CORE CURRICULUM & INITIATIVES</span></div>'
-      + '<p class="flagship-banner-text">Annual multi-stage technical programs designed to bridge introductory curiosity with enterprise security readiness.</p>'
+      + '<div class="flagship-banner-meta"><span class="status-beacon" aria-hidden="true"></span><span class="flagship-badge-lead">Flagship Initiatives</span></div>'
+      + '<p class="flagship-banner-text">Annual programs designed to guide students from introductory fundamentals to hands-on security practice.</p>'
       + '</div>'
       + '<div class="card-grid flagship-grid">' + cardsHtml + '</div>'
       + '</div>';
@@ -582,7 +582,7 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
         + '<h3 class="ctf-card-title">' + escapeHtml(c.title) + '</h3>'
         + '<div class="ctf-card-divider" aria-hidden="true"></div>'
         + '<p class="ctf-card-desc">' + escapeHtml(c.description) + '</p>'
-        + (c.hint ? '<button type="button" class="ctf-hint-toggle" data-ctf-hint-target="' + escapeHtml(c.id) + '" aria-expanded="false"><span class="ctf-hint-icon" aria-hidden="true">▶</span> Reveal Intel Hint</button><div class="ctf-hint-box" id="ctf-hint-' + escapeHtml(c.id) + '" hidden><p class="ctf-hint-body">' + escapeHtml(c.hint) + '</p></div>' : '')
+        + (c.hint ? '<button type="button" class="ctf-hint-toggle" data-ctf-hint-target="' + escapeHtml(c.id) + '" aria-expanded="false"><span class="ctf-hint-icon" aria-hidden="true">▶</span> View Hint</button><div class="ctf-hint-box" id="ctf-hint-' + escapeHtml(c.id) + '" hidden><p class="ctf-hint-body">' + escapeHtml(c.hint) + '</p></div>' : '')
         + '<form class="ctf-flag-form" data-ctf-form-id="' + escapeHtml(c.id) + '">'
         + '<div class="ctf-input-group">'
         + '<input type="text" class="ctf-flag-input" placeholder="SC{flag_token}" required aria-label="Enter flag for ' + escapeHtml(c.title) + '">'
@@ -596,10 +596,10 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
 
     return '<div class="ctf-browser">'
       + '<div class="ctf-terminal-hud">'
-      + '<div class="ctf-hud-stat"><span class="hud-label">ENVIRONMENT</span><span class="hud-val hud-online"><span class="status-beacon" aria-hidden="true"></span>ACTIVE LABS</span></div>'
-      + '<div class="ctf-hud-stat"><span class="hud-label">AVAILABLE TARGETS</span><span class="hud-val" id="ctf-target-count">' + challenges.length + ' CHALLENGES</span></div>'
+      + '<div class="ctf-hud-stat"><span class="hud-label">ENVIRONMENT</span><span class="hud-val hud-online"><span class="status-beacon" aria-hidden="true"></span>Active Labs</span></div>'
+      + '<div class="ctf-hud-stat"><span class="hud-label">CHALLENGES</span><span class="hud-val" id="ctf-target-count">' + challenges.length + ' Available</span></div>'
       + '<div class="ctf-hud-stat"><span class="hud-label">SESSION SCORE</span><span class="hud-val hud-score" id="ctf-score-val">0 PTS</span></div>'
-      + '<div class="ctf-hud-stat"><span class="hud-label">CAPTURED</span><span class="hud-val" id="ctf-solved-val">0 / ' + challenges.length + '</span></div>'
+      + '<div class="ctf-hud-stat"><span class="hud-label">FLAGS SOLVED</span><span class="hud-val" id="ctf-solved-val">0 / ' + challenges.length + '</span></div>'
       + '</div>'
       + '<div class="team-controls-bar ctf-controls-bar"><div class="team-filters ctf-filters" role="group" aria-label="Filter CTF challenges by category">' + categoryButtons + '</div></div>'
       + '<div class="card-grid ctf-grid">' + cardsHtml + '</div>'
@@ -718,8 +718,8 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
       + '<div class="form-section-header">'
       + '<span class="form-step-num">01</span>'
       + '<div class="form-step-meta">'
-      + '<h3>Candidate Identity</h3>'
-      + '<p>Your name and primary communication channels.</p>'
+      + '<h3>Personal Details</h3>'
+      + '<p>Your name and primary contact information.</p>'
       + '</div></div>'
       + '<div class="form-row-2">'
       + '<div class="form-field">'
@@ -737,8 +737,8 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
       + '<div class="form-section-header">'
       + '<span class="form-step-num">02</span>'
       + '<div class="form-step-meta">'
-      + '<h3>Academic Affiliation</h3>'
-      + '<p>Your current class and division at DBIT.</p>'
+      + '<h3>Academic Details</h3>'
+      + '<p>Your current year and division at DBIT.</p>'
       + '</div></div>'
       + '<div class="submission-details">'
       + '<div class="form-field">'
@@ -762,8 +762,8 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
       + '<div class="form-section-header">'
       + '<span class="form-step-num">03</span>'
       + '<div class="form-step-meta">'
-      + '<h3>Statement of Purpose</h3>'
-      + '<p>What security domains, tools, or goals excite you?</p>'
+      + '<h3>Your Interests</h3>'
+      + '<p>What topics, tools, or goals would you like to explore?</p>'
       + '</div></div>'
       + '<div class="form-field">'
       + '<label for="submission-reason">Reason to Join the Club <span class="req">*</span></label>'
@@ -775,7 +775,7 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
       + '</div>'
       + '<div class="form-dispatch-notice">'
       + '<span class="status-beacon" aria-hidden="true"></span>'
-      + '<p class="form-help">Client-side dispatch: This static terminal does not store your details. A prepared message compiles locally and opens in your selected service for review before sending.</p>'
+      + '<p class="form-help">Your details are not stored on any server. Clicking below opens a message draft in your chosen app so you can review before sending.</p>'
       + '</div>'
       + '<div class="submission-actions">'
       + '<button class="button button-primary" type="submit" name="destination" value="gmail">Send on Gmail ↗</button>'
@@ -784,21 +784,21 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
   }
 
   function contactMarkup() {
-    return '<div class="contact-layout"><div class="contact-panel"><p class="eyebrow">Direct Gateway</p>'
-      + '<a class="contact-email" href="mailto:securityclubdbit@gmail.com" title="Direct mailto link">securityclubdbit@gmail.com</a>'
+    return '<div class="contact-layout"><div class="contact-panel"><p class="eyebrow">Contact Information</p>'
+      + '<span class="contact-email">securityclubdbit@gmail.com</span>'
       + '<p>WhatsApp / Call: <a href="https://wa.me/918369448072" target="_blank" rel="noopener noreferrer">+91 83694 48072</a></p>'
       + '<p>Location: Don Bosco Institute of Technology, Kurla, Mumbai</p>'
-      + '<p>For current meeting times and sessions, reach out directly or join our community.</p>'
+      + '<p>For meeting times, sessions, or collaboration questions, feel free to reach out.</p>'
       + '<div class="home-actions">'
       + '<a class="button button-primary" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=securityclubdbit%40gmail.com" target="_blank" rel="noopener noreferrer">Compose in Gmail ↗</a>'
       + '<a class="button button-ghost" href="https://wa.me/918369448072" target="_blank" rel="noopener noreferrer">Open WhatsApp ↗</a>'
       + '</div></div>'
       + '<form class="contact-panel contact-form" id="contact-form">'
       + '<div class="form-section-header">'
-      + '<span class="form-step-num">DISPATCH</span>'
+      + '<span class="form-step-num">01</span>'
       + '<div class="form-step-meta">'
-      + '<h3>Message the Club</h3>'
-      + '<p>Inquiries, collaborations, and workshop partnerships.</p>'
+      + '<h3>Send a Message</h3>'
+      + '<p>Questions, event collaborations, or workshop inquiries.</p>'
       + '</div></div>'
       + '<div class="form-field">'
       + '<label for="contact-name">Your Name <span class="req">*</span></label>'
@@ -918,7 +918,7 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
     if (key === 'home') {
       content = {
         lede: 'Security Club is a welcoming campus community for beginners, builders and problem-solvers. Explore cybersecurity through workshops, CTFs, projects and hands-on learning.',
-        body: '<div class="home-hero-visual"></div><div class="home-actions"><a class="button button-primary" href="#/events">Explore events →</a><a class="button button-ghost" href="#/about">Meet the club</a></div><p class="hero-note">No prior knowledge. No gatekeeping. Just curiosity.</p><section class="intro"><p class="eyebrow">A club for first steps</p><h2>You do not need to be a hacker to start.</h2><p>We make the first step practical, social and fun. Find your people, try a lab and build real skills at your own pace.</p></section><section class="opportunities"><div class="stat"><strong>Community</strong><span>learn together</span></div><div class="stat"><strong>Questions</strong><span>always welcome</span></div><div class="stat"><strong>Hands-on</strong><span>build real skills</span></div></section>'
+        body: '<div class="home-hero-visual"></div><div class="home-actions"><a class="button button-primary" href="#/events">Explore events →</a><a class="button button-ghost" href="#/about">Meet the club</a></div><section class="intro"><p class="eyebrow">A club for first steps</p><h2>You do not need to be a hacker to start.</h2><p>We make the first step practical, social and fun. Find your people, try a lab and build real skills at your own pace.</p></section><section class="opportunities"><div class="stat"><strong>Community</strong><span>learn together</span></div><div class="stat"><strong>Questions</strong><span>always welcome</span></div><div class="stat"><strong>Hands-on</strong><span>build real skills</span></div></section>'
       };
     } else if (key === 'events') {
       content = { lede: 'Browse Security Club events by year. Select a year to see that year’s workshops, bootcamps and community sessions.', body: eventsMarkup(window.eventsData || []) };
@@ -944,7 +944,7 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
         body: ctfMarkup(window.challengesData || [])
       };
     } else if (key === 'membership') {
-      content = { lede: 'There is no account or login on this static page. Contact the club to ask about joining and upcoming sessions.', body: '<div class="split-content"><article class="info-panel"><p class="eyebrow">Start here</p><h2>Show up curious.</h2><p>Join an open session, ask questions and find the area of cybersecurity that excites you. Prior experience is never required.</p><a class="button button-primary" href="#/contact">Contact the club</a></article><article class="info-panel"><p class="eyebrow">What you can explore</p><ul class="clean-list"><li>Security fundamentals</li><li>CTFs and practical labs</li><li>Secure development</li><li>Research and community projects</li></ul></article></div>' };
+      content = { lede: 'Open to all students across DBIT. Join our technical sessions, participate in CTF labs, and build real-world security skills.', body: '<div class="split-content"><article class="info-panel"><p class="eyebrow">Start here</p><h2>Show up curious.</h2><p>Join an open session, ask questions and find the area of cybersecurity that excites you. Prior experience is never required.</p><a class="button button-primary" href="#/submission">Register your interest →</a></article><article class="info-panel"><p class="eyebrow">What you can explore</p><ul class="clean-list"><li>Security fundamentals</li><li>CTFs and practical labs</li><li>Secure development</li><li>Research and community projects</li></ul></article></div>' };
     } else if (key === 'submission') {
       content = {
         lede: 'Share your details and motivation with the club coordinators. Choose Gmail or WhatsApp to review and dispatch your registration.',
@@ -962,8 +962,8 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
       };
     } else if (key === 'notFound') {
       content = {
-        lede: 'The requested vector does not exist or has been relocated in this terminal.',
-        body: '<div class="split-content"><article class="info-panel"><p class="eyebrow">Status · 404</p><h2>Target Not Found</h2><p>The route you requested does not resolve to an active section. Re-route using the buttons below.</p><div class="home-actions" style="margin-top:1.5rem"><a class="button button-primary" href="#/">Return to Terminal →</a><a class="button button-ghost" href="#/contact">Contact the club</a></div></article></div>'
+        lede: 'The requested page was not found.',
+        body: '<div class="split-content"><article class="info-panel"><p class="eyebrow">Status · 404</p><h2>Page Not Found</h2><p>The link you followed may be broken or the page may have been moved. Return to the home page or contact the team.</p><div class="home-actions" style="margin-top:1.5rem"><a class="button button-primary" href="#/">Return to Home →</a><a class="button button-ghost" href="#/contact">Contact the club</a></div></article></div>'
       };
     } else {
       content = { lede: 'This page is presented as a public static information page. There is no login, account system or private data in this version.', body: '<div class="split-content"><article class="info-panel"><p class="eyebrow">Static workspace</p><h2>' + pages[key].label + '</h2><p>Use this space to publish the club’s current work, resources and updates directly from the GitHub repository.</p></article><article class="info-panel"><p class="eyebrow">How it works</p><h2>GitHub is the editor.</h2><p>Update the HTML, CSS, JavaScript and image folders, then commit and push. The hosted page reflects the repository contents.</p></article></div>' };
@@ -1304,17 +1304,17 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
 
       if (statusEl) {
         if (effectiveRatio < 0.25) {
-          statusEl.textContent = 'INITIALIZING SECURE CORE...';
+          statusEl.textContent = 'Loading club assets...';
         } else if (effectiveRatio < 0.50) {
-          statusEl.textContent = 'LOADING SECURITY PROTOCOLS...';
+          statusEl.textContent = 'Preparing workshop modules...';
         } else if (effectiveRatio < 0.75) {
-          statusEl.textContent = 'SYNCHRONIZING THREAT MATRICES...';
+          statusEl.textContent = 'Setting up labs and sessions...';
         } else if (effectiveRatio < 0.98) {
-          statusEl.textContent = 'VERIFYING SYSTEM ASSETS & FONTS...';
+          statusEl.textContent = 'Loading fonts and styles...';
         } else if (!assetsReady) {
-          statusEl.textContent = 'FINALIZING NETWORK ASSET STREAM...';
+          statusEl.textContent = 'Connecting...';
         } else {
-          statusEl.textContent = 'CORE READY · WELCOME TO DBIT';
+          statusEl.textContent = 'Welcome to Security Club DBIT';
         }
       }
 

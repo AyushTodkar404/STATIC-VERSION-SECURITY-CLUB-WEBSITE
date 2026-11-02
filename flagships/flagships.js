@@ -1,5 +1,4 @@
 // Security Club DBIT — Signature Flagship Programs
-// Generated from public club activities. Edit this file for future announcements.
 window.flagshipsData = [
   {
     "title": "Cyber Siege",

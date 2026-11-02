@@ -1,4 +1,4 @@
-// Generated from the public backend content. Edit this file for future static updates.
+// Security Club DBIT — Student Council & Mentors Directory
 window.teamData = [
   {
     "name": "Payal Samant",

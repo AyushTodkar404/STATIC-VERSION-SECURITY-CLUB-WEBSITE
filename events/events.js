@@ -1,4 +1,4 @@
-// Generated from the public backend content. Edit this file for future static updates.
+// Security Club DBIT — Events Archive & Technical Sessions
 window.eventsData = [
   {
     "title": "The Inauguration Ceremony",

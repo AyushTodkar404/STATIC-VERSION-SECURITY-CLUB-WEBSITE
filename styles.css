@@ -4,7 +4,7 @@
   --font-heading: 'Space Grotesk', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 
-  /* Watermelon UI Human-Crafted Cyber Palette */
+  /* Color System */
   --bg: #030708;
   --bg-secondary: #071013;
   --surface: #091417;
@@ -743,7 +743,7 @@ h3 {
   font-size: 0.95rem;
 }
 
-/* Dossier Cards System */
+/* Card Grid System */
 .card-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1052,9 +1052,7 @@ img.card-image.is-loaded,
   overflow: hidden;
 }
 
-/* ==============================================================
-   TOGGLE BUTTONS - Segmented Hardware Cyber Controls
-   ============================================================== */
+/* Filter Controls & Toggle Groups */
 .event-years,
 .gallery-years,
 .gallery-level,
@@ -1199,9 +1197,7 @@ img.card-image.is-loaded,
   display: none;
 }
 
-/* ==============================================================
-   WATERMELON UI TEAM DIRECTORY & ART-DIRECTED CARDS
-   ============================================================== */
+/* Team Directory */
 .team-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -1724,9 +1720,7 @@ img.card-image.is-loaded,
   overflow: hidden;
 }
 
-/* ==========================================================================
-   Security Awareness Section & Campaign Posters
-   ========================================================================== */
+/* Security Awareness */
 .awareness-browser {
   display: flex;
   flex-direction: column;
@@ -2134,7 +2128,7 @@ img.card-image.is-loaded,
   text-shadow: 0 0 14px var(--cyan);
 }
 
-/* Forms — Watermelon UI Architecture */
+/* Forms */
 .contact-form {
   display: grid;
   gap: 1rem;
@@ -2323,7 +2317,7 @@ img.card-image.is-loaded,
   margin-top: 0.4rem;
 }
 
-/* Flagship Section — Watermelon UI Editorial Architecture */
+/* Flagships */
 .flagship-browser {
   display: grid;
   gap: 2rem;
@@ -2500,7 +2494,7 @@ img.card-image.is-loaded,
   border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-/* CTF Challenge Sandbox — Watermelon UI Architecture */
+/* CTF Challenge Sandbox */
 .ctf-browser {
   display: grid;
   gap: 1.75rem;
@@ -3397,9 +3391,7 @@ img.card-image.is-loaded,
   }
 }
 
-/* ==========================================================================
-   Splash Screen Loader (5-6s Initial Load Animation)
-   ========================================================================== */
+/* Splash Screen Loader */
 
 body.splash-active {
   overflow: hidden !important;
