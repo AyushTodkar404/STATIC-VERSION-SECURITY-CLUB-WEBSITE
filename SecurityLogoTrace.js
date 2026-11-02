@@ -1,4 +1,3 @@
-const CYAN = '#00eaff';
 const SHIELD_D = 'M 537 245 L 774 330 L 774 555 C 774 690 700 775 537 830 C 374 775 300 690 300 555 L 300 330 Z';
 
 let logoCount = 0;

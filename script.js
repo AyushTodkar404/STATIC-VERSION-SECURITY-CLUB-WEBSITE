@@ -132,48 +132,54 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
     }).join('') + '</div>';
   }
 
+  function extractYears(items, keyExtractor) {
+    const years = items.map(keyExtractor).filter(function (y, i, all) {
+      return y && all.indexOf(y) === i;
+    }).sort().reverse();
+    return years.length ? years : ['2026-27'];
+  }
+
+  function roleRank(role) {
+    const r = String(role || '').toLowerCase();
+    if (/president\b/i.test(r) && !/vice/i.test(r)) return 10;
+    if (/vice\s*president/i.test(r)) return 20;
+    if (/research\s*head/i.test(r) && !/asst/i.test(r)) return 30;
+    if (/technical\s*head/i.test(r)) return 31;
+    if (/event\s*head/i.test(r) && !/asst/i.test(r)) return 32;
+    if (/editorial.*head/i.test(r) && !/asst/i.test(r)) return 33;
+    if (/publicity\s*head/i.test(r) && !/asst/i.test(r)) return 34;
+    if (/asst.*research/i.test(r)) return 40;
+    if (/asst.*event/i.test(r)) return 41;
+    if (/asst.*editorial/i.test(r)) return 42;
+    if (/asst.*publicity/i.test(r)) return 43;
+    return /member/i.test(r) ? 50 : 60;
+  }
+
+  function departmentOf(role) {
+    const r = String(role || '').toLowerCase();
+    if (/president/i.test(r)) return 'leadership';
+    if (/technical/i.test(r)) return 'technical';
+    if (/research/i.test(r)) return 'research';
+    if (/event|publicity/i.test(r)) return 'events';
+    if (/editorial|design/i.test(r)) return 'design';
+    return 'other';
+  }
+
+  function firstNameOf(member) {
+    return String(member.name || '').trim().split(/\s+/)[0] || '';
+  }
+
+  function byFirstName(left, right) {
+    return firstNameOf(left).localeCompare(firstNameOf(right), undefined, { sensitivity: 'base' })
+      || String(left.name || '').localeCompare(String(right.name || ''), undefined, { sensitivity: 'base' });
+  }
+
+  function byLeadership(left, right) {
+    const rankDiff = roleRank(left.role) - roleRank(right.role);
+    return rankDiff !== 0 ? rankDiff : byFirstName(left, right);
+  }
+
   function teamSections(items) {
-    const roleRank = function (role) {
-      const r = String(role || '').toLowerCase();
-      if (/president\b/i.test(r) && !/vice/i.test(r)) return 10;
-      if (/vice\s*president/i.test(r)) return 20;
-      if (/research\s*head/i.test(r) && !/asst/i.test(r)) return 30;
-      if (/technical\s*head/i.test(r)) return 31;
-      if (/event\s*head/i.test(r) && !/asst/i.test(r)) return 32;
-      if (/editorial.*head/i.test(r) && !/asst/i.test(r)) return 33;
-      if (/publicity\s*head/i.test(r) && !/asst/i.test(r)) return 34;
-      if (/asst.*research/i.test(r)) return 40;
-      if (/asst.*event/i.test(r)) return 41;
-      if (/asst.*editorial/i.test(r)) return 42;
-      if (/asst.*publicity/i.test(r)) return 43;
-      if (/member/i.test(r)) return 50;
-      return 60;
-    };
-
-    const departmentOf = function (role) {
-      const r = String(role || '').toLowerCase();
-      if (/president/i.test(r)) return 'leadership';
-      if (/technical/i.test(r)) return 'technical';
-      if (/research/i.test(r)) return 'research';
-      if (/event|publicity/i.test(r)) return 'events';
-      if (/editorial|design/i.test(r)) return 'design';
-      return 'other';
-    };
-
-    const byFirstName = function (left, right) {
-      const firstName = function (member) {
-        return String(member.name || '').trim().split(/\s+/)[0] || '';
-      };
-      return firstName(left).localeCompare(firstName(right), undefined, { sensitivity: 'base' })
-        || String(left.name || '').localeCompare(String(right.name || ''), undefined, { sensitivity: 'base' });
-    };
-
-    const byLeadership = function (left, right) {
-      const rankDiff = roleRank(left.role) - roleRank(right.role);
-      if (rankDiff !== 0) return rankDiff;
-      return byFirstName(left, right);
-    };
-
     const mentors = items.filter(function (member) {
       return /faculty|mentor|teacher/i.test(member.role || '');
     }).slice().sort(byFirstName);
@@ -185,22 +191,16 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
     const coreTeam = items.filter(function (member) {
       return !/faculty|mentor|teacher|alumni/i.test(member.role || '');
     }).slice().sort(byLeadership).map(function (c) {
-      const dept = departmentOf(c.role);
-      const isLead = /president/i.test(c.role || '');
       return Object.assign({}, c, {
-        department: dept,
-        highlight: isLead,
+        department: departmentOf(c.role),
+        highlight: /president/i.test(c.role || ''),
         tenure: c.tenure || '2026-27'
       });
     });
 
-    const tenures = coreTeam.map(function (member) {
+    const tenures = extractYears(coreTeam, function (member) {
       return String(member.tenure || '2026-27').trim();
-    }).filter(function (tenure, index, all) {
-      return all.indexOf(tenure) === index;
-    }).sort().reverse();
-
-    if (!tenures.length) tenures.push('2026-27');
+    });
     const initialTenure = tenures[0];
 
     const tenureButtons = tenures.map(function (tenure) {
@@ -285,20 +285,35 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
     return '<div class="event-browser"><div class="event-years" role="group" aria-label="Filter events by year">' + buttons + '</div>' + groups + '</div>';
   }
 
+  function bindPillGroup(buttons, onSelect) {
+    buttons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        buttons.forEach(function (b) {
+          const active = b === btn;
+          b.classList.toggle('is-active', active);
+          b.setAttribute('aria-pressed', String(active));
+        });
+        onSelect(btn);
+      });
+    });
+  }
+
+  function closeActiveLightbox() {
+    document.querySelectorAll('.gallery-lightbox, .awareness-lightbox').forEach(function (lb) {
+      lb.hidden = true;
+      const img = lb.querySelector('img');
+      if (img) img.removeAttribute('src');
+    });
+    document.body.classList.remove('gallery-is-open');
+  }
+
   function setupEvents(items) {
     const browser = document.querySelector('.event-browser');
     if (!browser) return;
     const yearButtons = browser.querySelectorAll('[data-event-year]');
-    yearButtons.forEach(function (button) {
-      button.addEventListener('click', function () {
-        yearButtons.forEach(function (other) {
-          const selected = other === button;
-          other.classList.toggle('is-active', selected);
-          other.setAttribute('aria-pressed', String(selected));
-        });
-        browser.querySelectorAll('[data-event-year-group]').forEach(function (group) {
-          group.hidden = group.dataset.eventYearGroup !== button.dataset.eventYear;
-        });
+    bindPillGroup(yearButtons, function (btn) {
+      browser.querySelectorAll('[data-event-year-group]').forEach(function (group) {
+        group.hidden = group.dataset.eventYearGroup !== btn.dataset.eventYear;
       });
     });
     const cards = document.querySelectorAll('[data-event-id]');
@@ -309,10 +324,7 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
         if (!event) return;
         document.body.insertAdjacentHTML('beforeend', eventDetailsMarkup(event));
         const modal = document.querySelector('.event-detail-overlay');
-        const onModalKey = function (e) { if (e.key === 'Escape') close(); };
-        document.addEventListener('keydown', onModalKey);
         const close = function () {
-          document.removeEventListener('keydown', onModalKey);
           modal.remove();
           document.body.classList.remove('event-is-open');
         };
@@ -322,7 +334,9 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
         document.body.classList.add('event-is-open');
       };
       card.addEventListener('click', open);
-      card.addEventListener('keydown', function (event) { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); open(); } });
+      card.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); open(); }
+      });
     });
   }
 
@@ -343,42 +357,16 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
       });
     }
 
-    yearButtons.forEach(function (button) {
-      button.addEventListener('click', function () {
-        yearButtons.forEach(function (b) {
-          const active = b === button;
-          b.classList.toggle('is-active', active);
-          b.setAttribute('aria-pressed', String(active));
-        });
-        selectedYear = button.dataset.teamYear;
-        applyFilter();
-      });
-    });
-
-    filterButtons.forEach(function (button) {
-      button.addEventListener('click', function () {
-        filterButtons.forEach(function (b) {
-          const active = b === button;
-          b.classList.toggle('is-active', active);
-          b.setAttribute('aria-pressed', String(active));
-        });
-        selectedDept = button.dataset.teamFilter;
-        applyFilter();
-      });
-    });
-
+    bindPillGroup(yearButtons, function (btn) { selectedYear = btn.dataset.teamYear; applyFilter(); });
+    bindPillGroup(filterButtons, function (btn) { selectedDept = btn.dataset.teamFilter; applyFilter(); });
     applyFilter();
   }
 
   function awarenessMarkup(items) {
     items = items || [];
-    const years = items.map(function (item) {
+    const years = extractYears(items, function (item) {
       return String(item.year || item.tenure || '2026-27').trim();
-    }).filter(function (year, index, all) {
-      return all.indexOf(year) === index;
-    }).sort().reverse();
-
-    if (!years.length) years.push('2026-27');
+    });
     const initialYear = years[0];
 
     const yearButtons = years.map(function (year) {
@@ -465,7 +453,7 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
       + '</div>';
   }
 
-  function setupAwareness(items) {
+  function setupAwareness() {
     const browser = document.querySelector('.awareness-browser');
     if (!browser) return;
 
@@ -478,7 +466,6 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
     const lightboxTitle = lightbox ? lightbox.querySelector('.awareness-lightbox-title') : null;
     const lightboxCaption = lightbox ? lightbox.querySelector('.awareness-lightbox-caption') : null;
     const lightboxLink = lightbox ? lightbox.querySelector('.awareness-lightbox-link') : null;
-    const lightboxClose = lightbox ? lightbox.querySelector('.awareness-lightbox-close') : null;
 
     let selectedYear = (yearButtons[0] && yearButtons[0].dataset.awarenessYear) || '2026-27';
     let selectedCat = 'all';
@@ -496,73 +483,34 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
       if (emptyNotice) emptyNotice.hidden = visibleCount > 0;
     }
 
-    yearButtons.forEach(function (button) {
-      button.addEventListener('click', function () {
-        yearButtons.forEach(function (b) {
-          const active = b === button;
-          b.classList.toggle('is-active', active);
-          b.setAttribute('aria-pressed', String(active));
-        });
-        selectedYear = button.dataset.awarenessYear;
-        applyFilter();
-      });
-    });
-
-    filterButtons.forEach(function (button) {
-      button.addEventListener('click', function () {
-        filterButtons.forEach(function (b) {
-          const active = b === button;
-          b.classList.toggle('is-active', active);
-          b.setAttribute('aria-pressed', String(active));
-        });
-        selectedCat = button.dataset.awarenessFilter;
-        applyFilter();
-      });
-    });
-
+    bindPillGroup(yearButtons, function (btn) { selectedYear = btn.dataset.awarenessYear; applyFilter(); });
+    bindPillGroup(filterButtons, function (btn) { selectedCat = btn.dataset.awarenessFilter; applyFilter(); });
     applyFilter();
-
-    function openLightbox(src, title, desc) {
-      if (!lightbox || !lightboxImg) return;
-      lightboxImg.src = src;
-      lightboxImg.alt = title;
-      if (lightboxTitle) lightboxTitle.textContent = title;
-      if (lightboxCaption) lightboxCaption.textContent = desc;
-      if (lightboxLink) lightboxLink.href = src;
-      lightbox.hidden = false;
-      document.body.classList.add('gallery-is-open');
-    }
-
-    function closeLightbox() {
-      if (!lightbox) return;
-      lightbox.hidden = true;
-      if (lightboxImg) lightboxImg.removeAttribute('src');
-      document.body.classList.remove('gallery-is-open');
-    }
 
     browser.querySelectorAll('[data-awareness-image]').forEach(function (trigger) {
       trigger.addEventListener('click', function () {
-        openLightbox(
-          trigger.dataset.awarenessImage,
-          trigger.dataset.awarenessTitle || '',
-          trigger.dataset.awarenessDesc || ''
-        );
+        if (!lightbox || !lightboxImg) return;
+        lightboxImg.src = trigger.dataset.awarenessImage;
+        lightboxImg.alt = trigger.dataset.awarenessTitle || '';
+        if (lightboxTitle) lightboxTitle.textContent = trigger.dataset.awarenessTitle || '';
+        if (lightboxCaption) lightboxCaption.textContent = trigger.dataset.awarenessDesc || '';
+        if (lightboxLink) lightboxLink.href = trigger.dataset.awarenessImage;
+        lightbox.hidden = false;
+        document.body.classList.add('gallery-is-open');
       });
     });
 
-    if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
+    const closeBtn = lightbox && lightbox.querySelector('.awareness-lightbox-close');
+    if (closeBtn) closeBtn.addEventListener('click', closeActiveLightbox);
     if (lightbox) {
       lightbox.addEventListener('click', function (e) {
-        if (e.target === lightbox) closeLightbox();
+        if (e.target === lightbox) closeActiveLightbox();
       });
     }
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && lightbox && !lightbox.hidden) closeLightbox();
-    });
   }
 
   function galleryMarkup(items) {
-    const years = items.map(function (item) { return item.folder.split('/')[0]; }).filter(function (year, index, all) { return all.indexOf(year) === index; }).sort().reverse();
+    const years = extractYears(items, function (item) { return item.folder.split('/')[0]; });
     const initialYear = years[0] || '';
     const yearButtons = years.map(function (year) {
       return '<button class="gallery-year-button' + (year === initialYear ? ' is-active' : '') + '" type="button" data-gallery-year="' + escapeHtml(year) + '">' + escapeHtml(year) + '</button>';
@@ -627,11 +575,6 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
     const lightbox = browser.querySelector('.gallery-lightbox');
     const lightboxImage = lightbox.querySelector('img');
     const lightboxCaption = lightbox.querySelector('p');
-    function closeLightbox() {
-      lightbox.hidden = true;
-      lightboxImage.removeAttribute('src');
-      document.body.classList.remove('gallery-is-open');
-    }
     browser.querySelectorAll('[data-gallery-image]').forEach(function (button) {
       button.addEventListener('click', function () {
         lightboxImage.src = button.dataset.galleryImage;
@@ -641,12 +584,9 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
         document.body.classList.add('gallery-is-open');
       });
     });
-    lightbox.querySelector('.gallery-lightbox-close').addEventListener('click', closeLightbox);
+    lightbox.querySelector('.gallery-lightbox-close').addEventListener('click', closeActiveLightbox);
     lightbox.addEventListener('click', function (event) {
-      if (event.target === lightbox) closeLightbox();
-    });
-    document.addEventListener('keydown', function (event) {
-      if (event.key === 'Escape' && !lightbox.hidden) closeLightbox();
+      if (event.target === lightbox) closeActiveLightbox();
     });
   }
 
@@ -724,7 +664,7 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
     app.innerHTML = shell(key, content);
     const splashActive = document.body.classList.contains('splash-active');
     if (key === 'home' && !splashActive) mountSecurityLogo(app.querySelector('.home-hero-visual'));
-    setupGallery();
+    if (key === 'gallery') setupGallery();
     if (key === 'events') setupEvents(window.eventsData || []);
     if (key === 'team') setupTeam();
     if (key === 'awareness') setupAwareness(window.awarenessData || []);
@@ -935,7 +875,18 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
   });
 
   document.addEventListener('keydown', function (event) {
-    if (event.key === 'Escape' && navigation.classList.contains('open')) {
+    if (event.key !== 'Escape') return;
+    const modal = document.querySelector('.event-detail-overlay');
+    if (modal) {
+      modal.remove();
+      document.body.classList.remove('event-is-open');
+      return;
+    }
+    if (document.body.classList.contains('gallery-is-open')) {
+      closeActiveLightbox();
+      return;
+    }
+    if (navigation.classList.contains('open')) {
       closeNav();
     }
   });
@@ -1047,9 +998,14 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
     animId = requestAnimationFrame(step);
   }
 
-  window.addEventListener('hashchange', function () { render(location.hash.replace('#/', '') || 'home'); window.scrollTo(0, 0); });
+  function route() {
+    render(location.hash.replace(/^#\/?/, '') || 'home');
+    window.scrollTo(0, 0);
+  }
+
+  window.addEventListener('hashchange', route);
   document.querySelector('#current-year').textContent = new Date().getFullYear();
   setupSplashLoader();
   setupMatrix();
-  render(location.hash.replace('#/', '') || 'home');
+  route();
 }());
