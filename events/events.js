@@ -9,8 +9,7 @@ window.eventsData = [
     "image": "events/Inauguration Poster.webp",
     "attachments": [
       {
-        "label": "Inauguration poster", "path": "events/Inauguration Poster.webp", "type": "Image",
-
+        "label": "Inauguration poster", "path": "events/Inauguration Poster.webp", "type": "Image"
       }
     ]
   },
