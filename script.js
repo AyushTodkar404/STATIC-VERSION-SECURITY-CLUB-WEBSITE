@@ -5,8 +5,6 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
   const navigation = document.querySelector('.site-nav');
   const menuButton = document.querySelector('.menu-toggle');
   const matrixCanvas = document.querySelector('#matrix-background');
-  const scrambleSessionKey = 'security-club-heading-scramble-v1';
-  let scrambleInterval = 0;
 
   const pages = {
     home: { label: 'Welcome', title: 'Curious about cybersecurity? You belong here.', eyebrow: 'Security Club · Welcome terminal' },
@@ -75,12 +73,11 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
 
   function shell(key, content) {
     const page = pages[key];
-    return '<div class="page section-shell"><section class="page-hero"><div><div class="hero-eyebrow-badge"><span class="eyebrow-indicator" aria-hidden="true"></span><p class="eyebrow">' + page.eyebrow + '</p></div><h1>' + page.title + '</h1><p class="hero-lede">' + content.lede + '</p></div></section>' + content.body + '</div>';
+    return '<div class="page section-shell"><section class="page-hero"><div><p class="eyebrow">' + escapeHtml(page.eyebrow) + '</p><h1>' + page.title + '</h1><p class="hero-lede">' + content.lede + '</p></div></section>' + content.body + '</div>';
   }
 
   function teamCards(items) {
-    return '<div class="card-grid team-grid">' + items.map(function (item, index) {
-      const isTop = index < 3;
+    return '<div class="card-grid team-grid">' + items.map(function (item) {
       const deptCode = item.department ? item.department.toUpperCase() : (item.role && /faculty|coordinator|mentor/i.test(item.role) ? 'FACULTY' : (item.role && /alumni/i.test(item.role) ? 'ALUMNI' : 'MEMBER'));
       const tenureTag = item.tenure || (item.role && /alumni/i.test(item.role) ? 'ALUMNI' : 'MENTOR');
       const isLeader = item.highlight || /president/i.test(item.role || '');
@@ -88,7 +85,7 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
       const photo = item.image
         ? '<a class="team-image-link" href="' + escapeHtml(item.image) + '" target="_blank" rel="noopener noreferrer" aria-label="View full-size photo of ' + escapeHtml(item.name || 'team member') + '">'
           + '<div class="team-photo-wrapper">'
-          + image(item.image, '+', item.name || item.role, 'team-photo', isTop)
+          + image(item.image, '+', item.name || item.role, 'team-photo', false)
           + '<div class="team-photo-scrim" aria-hidden="true"></div>'
           + '<span class="team-tenure-badge">' + escapeHtml(tenureTag) + '</span>'
           + '</div></a>'
@@ -104,17 +101,20 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
           + '<span>LinkedIn</span><span class="team-link-arrow" aria-hidden="true">↗</span></a>'
         : '';
 
+      const bioHtml = (item.bio || item.description)
+        ? '<p class="team-member-bio">' + escapeHtml(item.bio || item.description) + '</p>'
+        : '';
+
       return '<article class="card team-card' + highlightClass + '"' + departmentAttr + yearAttr + '>'
         + '<div class="team-card-header">'
         + '<span class="team-dept-pill">' + escapeHtml(deptCode) + '</span>'
-        + '<span class="team-index-pill">#' + String(index + 1).padStart(2, '0') + '</span>'
         + '</div>'
         + photo
         + '<div class="card-body team-card-body">'
         + '<p class="team-role-tag">' + escapeHtml(item.role || 'Member') + '</p>'
         + '<h3 class="team-member-name">' + escapeHtml(item.name) + '</h3>'
         + '<div class="team-card-divider" aria-hidden="true"></div>'
-        + '<p class="team-member-bio">' + escapeHtml(item.description || item.bio || 'Security Club DBIT team member.') + '</p>'
+        + bioHtml
         + linkedinLink
         + '</div>'
         + '</article>';
@@ -126,7 +126,7 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
       const isTop = index < 2;
       const photo = item.image ? image(item.image, '+', item.name || item.title || item.alt, '', isTop) : '<div class="card-image card-placeholder" aria-hidden="true"></div>';
       const eventAttribute = type === 'event-grid' ? ' data-event-id="' + escapeHtml(item.title) + '"' : '';
-      const eventHint = type === 'event-grid' ? '<p class="card-action-hint">Access Mission Brief →</p>' : '';
+      const eventHint = type === 'event-grid' ? '<p class="card-action-hint">View event details →</p>' : '';
       const highlightClass = item.highlight ? ' card-highlight' : '';
       return '<article class="card' + (type === 'event-grid' ? ' event-card' : '') + highlightClass + '"' + eventAttribute + '>' + photo + '<div class="card-body">' + (item.meta ? '<p class="card-meta">' + item.meta + '</p>' : '') + '<h3>' + escapeHtml(item.name || item.title) + '</h3>' + (item.role ? '<p class="role">' + escapeHtml(item.role) + '</p>' : '') + '<p>' + escapeHtml(item.description || item.bio || '') + '</p>' + eventHint + '</div></article>';
     }).join('') + '</div>';
@@ -137,22 +137,6 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
       return y && all.indexOf(y) === i;
     }).sort().reverse();
     return years.length ? years : ['2026-27'];
-  }
-
-  function roleRank(role) {
-    const r = String(role || '').toLowerCase();
-    if (/president\b/i.test(r) && !/vice/i.test(r)) return 10;
-    if (/vice\s*president/i.test(r)) return 20;
-    if (/research\s*head/i.test(r) && !/asst/i.test(r)) return 30;
-    if (/technical\s*head/i.test(r)) return 31;
-    if (/event\s*head/i.test(r) && !/asst/i.test(r)) return 32;
-    if (/editorial.*head/i.test(r) && !/asst/i.test(r)) return 33;
-    if (/publicity\s*head/i.test(r) && !/asst/i.test(r)) return 34;
-    if (/asst.*research/i.test(r)) return 40;
-    if (/asst.*event/i.test(r)) return 41;
-    if (/asst.*editorial/i.test(r)) return 42;
-    if (/asst.*publicity/i.test(r)) return 43;
-    return /member/i.test(r) ? 50 : 60;
   }
 
   function departmentOf(role) {
@@ -175,17 +159,19 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
   }
 
   function byLeadership(left, right) {
-    const rankDiff = roleRank(left.role) - roleRank(right.role);
+    const rankDiff = (left.rank || 50) - (right.rank || 50);
     return rankDiff !== 0 ? rankDiff : byFirstName(left, right);
   }
 
   function teamSections(items) {
     const mentors = items.filter(function (member) {
-      return /faculty|mentor|teacher/i.test(member.role || '');
+      return (/faculty|mentor|teacher/i.test(member.role || '') || member.department === 'faculty')
+        && !/alumni/i.test(member.role || '')
+        && member.department !== 'alumni';
     }).slice().sort(byFirstName);
 
     const alumni = items.filter(function (member) {
-      return /alumni/i.test(member.role || '');
+      return /alumni/i.test(member.role || '') || member.department === 'alumni';
     }).slice().sort(byFirstName);
 
     const coreTeam = items.filter(function (member) {
@@ -395,7 +381,7 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
       const tipsList = Array.isArray(item.tips) && item.tips.length
         ? '<div class="awareness-tips"><p class="awareness-tips-title">Key Safety Rules:</p><ul class="awareness-tips-list">'
           + item.tips.map(function (tip) {
-            return '<li><span class="awareness-tip-icon" aria-hidden="true">✔</span><span>' + escapeHtml(tip) + '</span></li>';
+            return '<li><span class="awareness-tip-icon" aria-hidden="true">•</span><span>' + escapeHtml(tip) + '</span></li>';
           }).join('')
           + '</ul></div>'
         : '';
@@ -407,7 +393,7 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
           + '<span class="awareness-image-overlay" aria-hidden="true"><span class="awareness-overlay-text"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg> View Poster</span></span>'
           + '</button>'
           + '</div>'
-        : '<div class="awareness-image-wrapper awareness-image-placeholder" aria-hidden="true"><div class="awareness-placeholder-icon">🛡</div></div>';
+        : '<div class="awareness-image-wrapper awareness-image-placeholder" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>';
 
       return '<article class="card awareness-card" data-awareness-year-target="' + escapeHtml(year) + '" data-awareness-cat="' + escapeHtml(catFilter) + '">'
         + '<div class="awareness-card-header">'
@@ -643,11 +629,11 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
       }
       if (btn) {
         btn.disabled = true;
-        btn.textContent = 'Captured ✔';
+        btn.textContent = 'Captured [OK]';
       }
       if (feedback) {
         feedback.className = 'ctf-feedback is-success';
-        feedback.innerHTML = '<strong>[✔] Solved:</strong> Flag token captured. +' + challenge.points + ' PTS';
+        feedback.innerHTML = '<strong>[+] Solved:</strong> Flag token captured. +' + challenge.points + ' PTS';
       }
     }
 
@@ -706,7 +692,7 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
         } else {
           if (feedback) {
             feedback.className = 'ctf-feedback is-error';
-            feedback.innerHTML = '<strong>[✖] Incorrect:</strong> Flag mismatch. Ensure standard format SC{...} and re-verify.';
+            feedback.innerHTML = '<strong>[-] Incorrect:</strong> Flag mismatch. Ensure standard format SC{...} and re-verify.';
           }
         }
       });
@@ -910,15 +896,11 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
 
   function render(key) {
     if (!pages[key]) key = 'notFound';
-    if (scrambleInterval) {
-      window.clearInterval(scrambleInterval);
-      scrambleInterval = 0;
-    }
     let content;
     if (key === 'home') {
       content = {
         lede: 'Security Club is a welcoming campus community for beginners, builders and problem-solvers. Explore cybersecurity through workshops, CTFs, projects and hands-on learning.',
-        body: '<div class="home-hero-visual"></div><div class="home-actions"><a class="button button-primary" href="#/events">Explore events →</a><a class="button button-ghost" href="#/about">Meet the club</a></div><section class="intro"><p class="eyebrow">A club for first steps</p><h2>You do not need to be a hacker to start.</h2><p>We make the first step practical, social and fun. Find your people, try a lab and build real skills at your own pace.</p></section><section class="opportunities"><div class="stat"><strong>Community</strong><span>learn together</span></div><div class="stat"><strong>Questions</strong><span>always welcome</span></div><div class="stat"><strong>Hands-on</strong><span>build real skills</span></div></section>'
+        body: '<div class="home-hero-visual"></div><div class="home-actions"><a class="button button-primary" href="#/events">Explore events →</a><a class="button button-ghost" href="#/about">Meet the club</a></div><section class="intro"><p class="eyebrow">A club for first steps</p><h2>You do not need to be a hacker to start.</h2><p>We make the first step practical, social and fun. Find your people, try a lab and build real skills at your own pace.</p></section><section class="opportunities"><div class="stat"><strong>Hands-on Labs</strong><span>Workshops &amp; practical defense</span></div><div class="stat"><strong>CTF Challenges</strong><span>Interactive beginner-friendly labs</span></div><div class="stat"><strong>Open Community</strong><span>Zero prerequisites to start</span></div></section>'
       };
     } else if (key === 'events') {
       content = { lede: 'Browse Security Club events by year. Select a year to see that year’s workshops, bootcamps and community sessions.', body: eventsMarkup(window.eventsData || []) };
@@ -969,8 +951,7 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
       content = { lede: 'This page is presented as a public static information page. There is no login, account system or private data in this version.', body: '<div class="split-content"><article class="info-panel"><p class="eyebrow">Static workspace</p><h2>' + pages[key].label + '</h2><p>Use this space to publish the club’s current work, resources and updates directly from the GitHub repository.</p></article><article class="info-panel"><p class="eyebrow">How it works</p><h2>GitHub is the editor.</h2><p>Update the HTML, CSS, JavaScript and image folders, then commit and push. The hosted page reflects the repository contents.</p></article></div>' };
     }
     app.innerHTML = shell(key, content);
-    const splashActive = document.body.classList.contains('splash-active');
-    if (key === 'home' && !splashActive) mountSecurityLogo(app.querySelector('.home-hero-visual'));
+    if (key === 'home') mountSecurityLogo(app.querySelector('.home-hero-visual'));
     if (key === 'gallery') setupGallery();
     if (key === 'events') setupEvents(window.eventsData || []);
     if (key === 'team') setupTeam();
@@ -1010,48 +991,14 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
       window.open(targetUrl, '_blank', 'noopener,noreferrer');
       showFormFeedback(submissionForm, targetUrl, destination === 'whatsapp' ? 'WhatsApp' : 'Gmail');
     });
-    if (!splashActive) decodeText(app.querySelector('h1'));
     app.querySelectorAll('img').forEach(function (img) {
       if (img.complete) img.classList.add('is-loaded');
     });
     app.focus({ preventScroll: true });
   }
 
-  function decodeText(element, force) {
-    if (!element) return;
-    if (scrambleInterval) {
-      window.clearInterval(scrambleInterval);
-      scrambleInterval = 0;
-    }
-    // sessionStorage is shared by route changes and survives reloads in this tab.
-    // If storage is unavailable, keep a page-lifetime guard as a safe fallback.
-    let alreadyAnimated = false;
-    try {
-      alreadyAnimated = !force && sessionStorage.getItem(scrambleSessionKey) === 'done';
-      sessionStorage.setItem(scrambleSessionKey, 'done');
-    } catch (_) {
-      alreadyAnimated = !force && window.headingScramblePlayed === true;
-      window.headingScramblePlayed = true;
-    }
-    if (alreadyAnimated) return;
-    const finalText = element.textContent;
-    const chars = "!@#$%^&*()_+{}:\"<>?|[];',./`~0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    let iteration = 0;
-    scrambleInterval = window.setInterval(function () {
-      element.textContent = finalText.split('').map(function (character, index) {
-        if (index < iteration) return character;
-        return chars[Math.floor(Math.random() * chars.length)];
-      }).join('');
-      iteration += 1 / 3;
-      if (iteration >= finalText.length) {
-        element.textContent = finalText;
-        window.clearInterval(scrambleInterval);
-        scrambleInterval = 0;
-      }
-    }, 20);
-  }
-
   function setupMatrix() {
+    if (!matrixCanvas) return;
     const context = matrixCanvas.getContext('2d');
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     const toggleButton = document.querySelector('#matrix-toggle');
@@ -1087,7 +1034,7 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
     function draw() {
       animationFrame = 0;
       if (document.hidden || !isStreamActive || isScrolling) return;
-      context.fillStyle = 'rgba(3, 7, 8, 0.14)';
+      context.fillStyle = 'rgba(11, 15, 18, 0.16)';
       context.fillRect(0, 0, width, height);
       context.font = fontSize + "px 'JetBrains Mono', monospace";
       drops.forEach(function (drop, index) {
@@ -1216,116 +1163,48 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
   });
 
   window.addEventListener('resize', function () {
-    if (window.innerWidth > 1180 && navigation.classList.contains('open')) {
+    if (window.innerWidth > 1200 && navigation.classList.contains('open')) {
       closeNav();
     }
   }, { passive: true });
 
-  function setupSplashLoader() {
-    const splash = document.querySelector('#splash-loader');
-    if (!splash) return;
+  function setupSiteLoader() {
+    const loader = document.querySelector('#site-loader');
+    if (!loader) return;
 
-    document.body.classList.add('splash-active');
-
-    const progressBar = splash.querySelector('.splash-progress-bar');
-    const percentEl = splash.querySelector('.splash-percent');
-    const statusEl = splash.querySelector('.splash-status');
-
-    let isWindowLoaded = document.readyState === 'complete';
-    if (!isWindowLoaded) {
-      window.addEventListener('load', function () {
-        isWindowLoaded = true;
-      }, { once: true });
-    }
-
-    let isFontsReady = !document.fonts;
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(function () {
-        isFontsReady = true;
-      }).catch(function () {
-        isFontsReady = true;
-      });
-    }
-
-    const isSlowConnection = typeof navigator !== 'undefined' && ((navigator.connection && (navigator.connection.saveData || /2g|3g|slow/i.test(navigator.connection.effectiveType || ''))) || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4));
-    const duration = isSlowConnection ? 1100 : 1600; // Ultra-fast responsive entry: 1.1s on slow/poor connections, 1.6s on fast
-    const maxTimeout = isSlowConnection ? 1600 : 2000; // Strict fallback ceiling so weak connections never wait or stall
-    const startTime = performance.now();
     let isDone = false;
-    let animId = null;
-
     function finish() {
       if (isDone) return;
       isDone = true;
-      if (animId) cancelAnimationFrame(animId);
-      if (progressBar) progressBar.style.width = '100%';
-      if (percentEl) percentEl.textContent = '100%';
-      if (statusEl) statusEl.textContent = 'CORE READY · WELCOME TO DBIT';
-      splash.setAttribute('aria-valuenow', '100');
-
+      loader.classList.add('is-loaded');
+      const heroVisual = app.querySelector('.home-hero-visual');
+      if (heroVisual && (!location.hash || location.hash.replace(/^#\/?/, '') === 'home')) {
+        window.securityClubLogoMotionPlayed = false;
+        mountSecurityLogo(heroVisual);
+      }
       setTimeout(function () {
-        splash.classList.add('is-finished');
-        document.body.classList.remove('splash-active');
-
-        // Splash completed: trigger logo tracing animation & heading scramble live
-        const heroVisual = app.querySelector('.home-hero-visual');
-        if (heroVisual) {
-          window.securityClubLogoMotionPlayed = false;
-          mountSecurityLogo(heroVisual);
-        }
-        decodeText(app.querySelector('h1'), true);
-
-        setTimeout(function () {
-          splash.style.display = 'none';
-          splash.setAttribute('aria-hidden', 'true');
-        }, 450);
-      }, 150);
+        if (loader.parentNode) loader.remove();
+      }, 400);
     }
 
-    // Fast-path dismiss: clicking/tapping anywhere dismisses splash immediately on slow networks
-    splash.addEventListener('click', finish, { passive: true });
-    // Hard fallback guarantees splash will never hang regardless of background throttling
-    window.setTimeout(finish, 2200);
+    // Dismiss when assets & fonts are genuinely ready, with a gentle floor so it doesn't flicker in 10ms
+    const minDisplayTime = 400;
+    const start = performance.now();
 
-    function step(now) {
-      if (isDone) return;
-      const elapsed = now - startTime;
-      const timeRatio = elapsed / duration;
-      const isTimedOut = elapsed >= maxTimeout;
-
-      // Ensure full asset and font readiness before passing 98%, with fallback ceiling for weak internet
-      const assetsReady = (isWindowLoaded && isFontsReady) || isTimedOut;
-      const effectiveRatio = (!assetsReady && timeRatio >= 0.98) ? 0.98 : Math.min(1, timeRatio);
-      const percent = Math.floor(effectiveRatio * 100);
-
-      if (progressBar) progressBar.style.width = percent + '%';
-      if (percentEl) percentEl.textContent = percent + '%';
-      splash.setAttribute('aria-valuenow', String(percent));
-
-      if (statusEl) {
-        if (effectiveRatio < 0.25) {
-          statusEl.textContent = 'Loading club assets...';
-        } else if (effectiveRatio < 0.50) {
-          statusEl.textContent = 'Preparing workshop modules...';
-        } else if (effectiveRatio < 0.75) {
-          statusEl.textContent = 'Setting up labs and sessions...';
-        } else if (effectiveRatio < 0.98) {
-          statusEl.textContent = 'Loading fonts and styles...';
-        } else if (!assetsReady) {
-          statusEl.textContent = 'Connecting...';
-        } else {
-          statusEl.textContent = 'Welcome to Security Club DBIT';
-        }
-      }
-
-      if ((timeRatio >= 1 && assetsReady) || isTimedOut) {
-        finish();
-      } else {
-        animId = requestAnimationFrame(step);
-      }
+    function onReady() {
+      const elapsed = performance.now() - start;
+      const delay = Math.max(0, minDisplayTime - elapsed);
+      setTimeout(finish, delay);
     }
 
-    animId = requestAnimationFrame(step);
+    if (document.readyState === 'complete') {
+      onReady();
+    } else {
+      window.addEventListener('load', onReady, { once: true });
+    }
+
+    // Failsafe in case a font or image hangs
+    setTimeout(finish, 2400);
   }
 
   function route() {
@@ -1335,7 +1214,7 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
 
   window.addEventListener('hashchange', route);
   document.querySelector('#current-year').textContent = new Date().getFullYear();
-  setupSplashLoader();
+  setupSiteLoader();
   setupMatrix();
   route();
 }());

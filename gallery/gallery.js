@@ -51,190 +51,190 @@ window.galleryData = [
   },
   {
     "image": "gallery/2026/DSCI 2 DAY BOOTCAMP 2026/photo-1.webp",
-    "alt": "DSCI 2 DAY BOOTCAMP 2026",
-    "caption": "DSCI 2 DAY BOOTCAMP 2026",
+    "alt": "DSCI Bootcamp inaugural briefing",
+    "caption": "DSCI Bootcamp inaugural briefing",
     "folder": "2026/DSCI 2 DAY BOOTCAMP 2026",
     "folderLabel": "DSCI 2 DAY BOOTCAMP 2026"
   },
   {
     "image": "gallery/2026/DSCI 2 DAY BOOTCAMP 2026/photo-2.webp",
-    "alt": "DSCI 2 DAY BOOTCAMP 2026",
-    "caption": "DSCI 2 DAY BOOTCAMP 2026",
+    "alt": "Hands-on vulnerability analysis lab",
+    "caption": "Hands-on vulnerability analysis lab",
     "folder": "2026/DSCI 2 DAY BOOTCAMP 2026",
     "folderLabel": "DSCI 2 DAY BOOTCAMP 2026"
   },
   {
     "image": "gallery/2026/DSCI 2 DAY BOOTCAMP 2026/photo-3.webp",
-    "alt": "DSCI 2 DAY BOOTCAMP 2026",
-    "caption": "DSCI 2 DAY BOOTCAMP 2026",
+    "alt": "Students analyzing network packet captures",
+    "caption": "Students analyzing network packet captures",
     "folder": "2026/DSCI 2 DAY BOOTCAMP 2026",
     "folderLabel": "DSCI 2 DAY BOOTCAMP 2026"
   },
   {
     "image": "gallery/2026/DSCI 2 DAY BOOTCAMP 2026/photo-4.webp",
-    "alt": "DSCI 2 DAY BOOTCAMP 2026",
-    "caption": "DSCI 2 DAY BOOTCAMP 2026",
+    "alt": "Network reconnaissance methodology walkthrough",
+    "caption": "Network reconnaissance methodology walkthrough",
     "folder": "2026/DSCI 2 DAY BOOTCAMP 2026",
     "folderLabel": "DSCI 2 DAY BOOTCAMP 2026"
   },
   {
     "image": "gallery/2026/DSCI 2 DAY BOOTCAMP 2026/photo-5.webp",
-    "alt": "DSCI 2 DAY BOOTCAMP 2026",
-    "caption": "DSCI 2 DAY BOOTCAMP 2026",
+    "alt": "Practical exploitation sandbox exercise",
+    "caption": "Practical exploitation sandbox exercise",
     "folder": "2026/DSCI 2 DAY BOOTCAMP 2026",
     "folderLabel": "DSCI 2 DAY BOOTCAMP 2026"
   },
   {
     "image": "gallery/2026/DSCI 2 DAY BOOTCAMP 2026/photo-6.webp",
-    "alt": "DSCI 2 DAY BOOTCAMP 2026",
-    "caption": "DSCI 2 DAY BOOTCAMP 2026",
+    "alt": "Trainer guidance during live lab exercises",
+    "caption": "Trainer guidance during live lab exercises",
     "folder": "2026/DSCI 2 DAY BOOTCAMP 2026",
     "folderLabel": "DSCI 2 DAY BOOTCAMP 2026"
   },
   {
     "image": "gallery/2026/DSCI 2 DAY BOOTCAMP 2026/photo-7.webp",
-    "alt": "DSCI 2 DAY BOOTCAMP 2026",
-    "caption": "DSCI 2 DAY BOOTCAMP 2026",
+    "alt": "Interactive group problem solving and defense tactics",
+    "caption": "Interactive group problem solving and defense tactics",
     "folder": "2026/DSCI 2 DAY BOOTCAMP 2026",
     "folderLabel": "DSCI 2 DAY BOOTCAMP 2026"
   },
   {
     "image": "gallery/2026/DSCI 2 DAY BOOTCAMP 2026/photo-8.webp",
-    "alt": "DSCI 2 DAY BOOTCAMP 2026",
-    "caption": "DSCI 2 DAY BOOTCAMP 2026",
+    "alt": "Participant teams completing lab challenges",
+    "caption": "Participant teams completing lab challenges",
     "folder": "2026/DSCI 2 DAY BOOTCAMP 2026",
     "folderLabel": "DSCI 2 DAY BOOTCAMP 2026"
   },
   {
     "image": "gallery/2026/DSCI 2 DAY BOOTCAMP 2026/photo-9.webp",
-    "alt": "DSCI 2 DAY BOOTCAMP 2026",
-    "caption": "DSCI 2 DAY BOOTCAMP 2026",
+    "alt": "Bootcamp assessment and quiz session",
+    "caption": "Bootcamp assessment and quiz session",
     "folder": "2026/DSCI 2 DAY BOOTCAMP 2026",
     "folderLabel": "DSCI 2 DAY BOOTCAMP 2026"
   },
   {
     "image": "gallery/2026/DSCI 2 DAY BOOTCAMP 2026/photo-10.webp",
-    "alt": "DSCI 2 DAY BOOTCAMP 2026",
-    "caption": "DSCI 2 DAY BOOTCAMP 2026",
+    "alt": "Certificate distribution with DSCI mentors",
+    "caption": "Certificate distribution with DSCI mentors",
     "folder": "2026/DSCI 2 DAY BOOTCAMP 2026",
     "folderLabel": "DSCI 2 DAY BOOTCAMP 2026"
   },
   {
     "image": "gallery/2026/DSCI 2 DAY BOOTCAMP 2026/photo-11.webp",
-    "alt": "DSCI 2 DAY BOOTCAMP 2026",
-    "caption": "DSCI 2 DAY BOOTCAMP 2026",
+    "alt": "Closing ceremony with faculty mentors and cohort",
+    "caption": "Closing ceremony with faculty mentors and cohort",
     "folder": "2026/DSCI 2 DAY BOOTCAMP 2026",
     "folderLabel": "DSCI 2 DAY BOOTCAMP 2026"
   },
   {
     "image": "gallery/2026/TechQuest-2026/DBCL--DBIT--TechQuest 2026--45.webp",
-    "alt": "TechQuest 2026",
-    "caption": "TechQuest 2026",
+    "alt": "TechQuest participants assembling for challenge brief",
+    "caption": "TechQuest participants assembling for challenge brief",
     "folder": "2026/TechQuest-2026",
     "folderLabel": "TechQuest 2026"
   },
   {
     "image": "gallery/2026/TechQuest-2026/DBCL--DBIT--TechQuest 2026--46.webp",
-    "alt": "TechQuest 2026",
-    "caption": "TechQuest 2026",
+    "alt": "SIE & Security Club collaboration setup",
+    "caption": "SIE & Security Club collaboration setup",
     "folder": "2026/TechQuest-2026",
     "folderLabel": "TechQuest 2026"
   },
   {
     "image": "gallery/2026/TechQuest-2026/DBCL--DBIT--TechQuest 2026--76.webp",
-    "alt": "TechQuest 2026",
-    "caption": "TechQuest 2026",
+    "alt": "Murder mystery forensics challenge orientation",
+    "caption": "Murder mystery forensics challenge orientation",
     "folder": "2026/TechQuest-2026",
     "folderLabel": "TechQuest 2026"
   },
   {
     "image": "gallery/2026/TechQuest-2026/DBCL--DBIT--TechQuest 2026--77.webp",
-    "alt": "TechQuest 2026",
-    "caption": "TechQuest 2026",
+    "alt": "Teams inspecting digital evidence files",
+    "caption": "Teams inspecting digital evidence files",
     "folder": "2026/TechQuest-2026",
     "folderLabel": "TechQuest 2026"
   },
   {
     "image": "gallery/2026/TechQuest-2026/DBCL--DBIT--TechQuest 2026--78.webp",
-    "alt": "TechQuest 2026",
-    "caption": "TechQuest 2026",
+    "alt": "Participants decoding suspect logs under time limit",
+    "caption": "Participants decoding suspect logs under time limit",
     "folder": "2026/TechQuest-2026",
     "folderLabel": "TechQuest 2026"
   },
   {
     "image": "gallery/2026/TechQuest-2026/DBCL--DBIT--TechQuest 2026--79.webp",
-    "alt": "TechQuest 2026",
-    "caption": "TechQuest 2026",
+    "alt": "Forensic analysis of scenario evidence artifacts",
+    "caption": "Forensic analysis of scenario evidence artifacts",
     "folder": "2026/TechQuest-2026",
     "folderLabel": "TechQuest 2026"
   },
   {
     "image": "gallery/2026/TechQuest-2026/DBCL--DBIT--TechQuest 2026--80.webp",
-    "alt": "TechQuest 2026",
-    "caption": "TechQuest 2026",
+    "alt": "Student teams collaborating on incident timeline",
+    "caption": "Student teams collaborating on incident timeline",
     "folder": "2026/TechQuest-2026",
     "folderLabel": "TechQuest 2026"
   },
   {
     "image": "gallery/2026/TechQuest-2026/DBCL--DBIT--TechQuest 2026--81.webp",
-    "alt": "TechQuest 2026",
-    "caption": "TechQuest 2026",
+    "alt": "Live 10-minute countdown in Computer Tutorial Room",
+    "caption": "Live 10-minute countdown in Computer Tutorial Room",
     "folder": "2026/TechQuest-2026",
     "folderLabel": "TechQuest 2026"
   },
   {
     "image": "gallery/2026/TechQuest-2026/DBCL--DBIT--TechQuest 2026--82.webp",
-    "alt": "TechQuest 2026",
-    "caption": "TechQuest 2026",
+    "alt": "Volunteers evaluating participant deduction logic",
+    "caption": "Volunteers evaluating participant deduction logic",
     "folder": "2026/TechQuest-2026",
     "folderLabel": "TechQuest 2026"
   },
   {
     "image": "gallery/2026/TechQuest-2026/DBCL--DBIT--TechQuest 2026--83.webp",
-    "alt": "TechQuest 2026",
-    "caption": "TechQuest 2026",
+    "alt": "Verification of final case findings against truth key",
+    "caption": "Verification of final case findings against truth key",
     "folder": "2026/TechQuest-2026",
     "folderLabel": "TechQuest 2026"
   },
   {
     "image": "gallery/2026/TechQuest-2026/DBCL--DBIT--TechQuest 2026--84.webp",
-    "alt": "TechQuest 2026",
-    "caption": "TechQuest 2026",
+    "alt": "Scoring participant forensic accuracy and speed",
+    "caption": "Scoring participant forensic accuracy and speed",
     "folder": "2026/TechQuest-2026",
     "folderLabel": "TechQuest 2026"
   },
   {
     "image": "gallery/2026/TechQuest-2026/DBCL--DBIT--TechQuest 2026--85.webp",
-    "alt": "TechQuest 2026",
-    "caption": "TechQuest 2026",
+    "alt": "Student teams presenting perpetrator deductions",
+    "caption": "Student teams presenting perpetrator deductions",
     "folder": "2026/TechQuest-2026",
     "folderLabel": "TechQuest 2026"
   },
   {
     "image": "gallery/2026/TechQuest-2026/DBCL--DBIT--TechQuest 2026--86.webp",
-    "alt": "TechQuest 2026",
-    "caption": "TechQuest 2026",
+    "alt": "TechQuest challenge debrief and solution reveal",
+    "caption": "TechQuest challenge debrief and solution reveal",
     "folder": "2026/TechQuest-2026",
     "folderLabel": "TechQuest 2026"
   },
   {
     "image": "gallery/2026/TechQuest-2026/DBCL--DBIT--TechQuest 2026--87.webp",
-    "alt": "TechQuest 2026",
-    "caption": "TechQuest 2026",
+    "alt": "Recognition ceremony for murder mystery finalists",
+    "caption": "Recognition ceremony for murder mystery finalists",
     "folder": "2026/TechQuest-2026",
     "folderLabel": "TechQuest 2026"
   },
   {
     "image": "gallery/2026/TechQuest-2026/techquest1.jpeg",
-    "alt": "TechQuest 2026",
-    "caption": "TechQuest 2026",
+    "alt": "TechQuest competition floor overview",
+    "caption": "TechQuest competition floor overview",
     "folder": "2026/TechQuest-2026",
     "folderLabel": "TechQuest 2026"
   },
   {
     "image": "gallery/2026/TechQuest-2026/techquest2.jpeg",
-    "alt": "TechQuest 2026",
-    "caption": "TechQuest 2026",
+    "alt": "Participants engaged in technical murder mystery tasks",
+    "caption": "Participants engaged in technical murder mystery tasks",
     "folder": "2026/TechQuest-2026",
     "folderLabel": "TechQuest 2026"
   }

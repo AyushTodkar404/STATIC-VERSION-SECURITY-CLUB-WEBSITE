@@ -1,7 +1,6 @@
 (function () {
   const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  if (!finePointer.matches || reducedMotion.matches) return;
+  if (!finePointer.matches) return;
 
   const targetSelector = 'a, button, input, textarea, select, [role="button"], .cursor-target, .gallery-item, .card, [data-event-id], .info-panel, .opportunities, .option, .hud-toggle-btn, .year-btn, .level-btn, .gallery-folder-button, .gallery-image-button';
   const cursor = document.createElement('div');
@@ -20,21 +19,18 @@
   let pointerY = window.innerHeight / 2;
   let activeTarget = null;
   let frame = 0;
-  let rafCursor = 0;
 
-  function updateCursor() {
-    rafCursor = 0;
-    cursor.style.transform = 'translate3d(' + pointerX + 'px, ' + pointerY + 'px, 0) translate(-50%, -50%)';
-    if (activeTarget) positionCorners(activeTarget);
-  }
+  // Immediately assign idle transforms so all 4 corners are rendered instantly
+  corners.forEach(function (corner, index) {
+    corner.style.transform = 'translate3d(' + idlePositions[index][0] + 'px, ' + idlePositions[index][1] + 'px, 0)';
+  });
 
   function moveCursor(event) {
     if (event.pointerType !== 'mouse' && event.pointerType !== 'pen') return;
     pointerX = event.clientX;
     pointerY = event.clientY;
-    if (!rafCursor) {
-      rafCursor = window.requestAnimationFrame(updateCursor);
-    }
+    cursor.style.transform = 'translate3d(' + pointerX + 'px, ' + pointerY + 'px, 0)';
+    if (activeTarget) positionCorners(activeTarget);
   }
 
   function positionCorners(target) {
@@ -109,4 +105,10 @@
   window.addEventListener('pointerdown', function (event) { if (event.pointerType !== 'touch') cursor.classList.add('is-clicking'); });
   window.addEventListener('pointerup', function (event) { if (event.pointerType !== 'touch') cursor.classList.remove('is-clicking'); });
   window.addEventListener('pointercancel', function (event) { if (event.pointerType !== 'touch') cursor.classList.remove('is-clicking'); });
+  finePointer.addEventListener('change', function (event) {
+    if (!event.matches) {
+      cursor.remove();
+      document.body.classList.remove('has-target-cursor');
+    }
+  });
 }());

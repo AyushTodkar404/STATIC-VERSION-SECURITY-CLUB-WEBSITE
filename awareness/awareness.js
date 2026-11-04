@@ -4,13 +4,13 @@
 
 window.awarenessData = [
   {
-    "title": "Security_awareness_comic_Episode 1.",
+    "title": "Your Parcel Could Not Be Delivered — Comic Episode 1",
     "category": "CAMPUS GUIDE",
     "year": "2026-27",
     "date": "July 2026",
-    "image": "awareness/2026-27/CS_Comic1_Final_Your Parcel Could Not Be Delivered.jpg",
-    "alt": "Cybersecurity Awareness Comic Episode 1 ",
-    "description": "These comic books are created to bring awareness of cybersecurity. "
+    "image": "awareness/2026-27/CS_Comic1_Final_Your Parcel Could Not Be Delivered.webp",
+    "alt": "Cybersecurity Awareness Comic: Your Parcel Could Not Be Delivered (Episode 1)",
+    "description": "Student cybersecurity comic illustrating how fraudulent parcel delivery SMS phishing campaigns deceive recipients into disclosing credentials, and how to verify legitimate courier notifications."
   }
 ];
 

@@ -19,49 +19,37 @@
   <meta name="twitter:description"
     content="Explore, learn and build practical cybersecurity skills. Workshops, CTFs, and hands-on defence labs.">
   <meta name="twitter:image" content="assets/security-club-logo.png">
+  <meta name="ctf-flag" content="SC{welcome_to_security_club}">
   <title>Security Club | DBIT</title>
   <link rel="icon" href="assets/security-club-logo-small.png" type="image/png">
   <link rel="preload" as="image" href="assets/security-club-logo-small.png" type="image/png" fetchpriority="high">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@600;700;800&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=11">
+  <link rel="stylesheet" href="styles.css?v=17">
   <link rel="stylesheet" href="SecurityLogoTrace.css">
 </head>
 
-<body class="splash-active">
-  <div id="splash-loader" class="splash-loader" role="progressbar" aria-label="Loading Security Club DBIT" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-    <div class="splash-backdrop" aria-hidden="true"></div>
-    <div class="splash-content">
-      <div class="splash-logo-container">
-        <div class="splash-orbit-ring" aria-hidden="true"></div>
-        <div class="splash-orbit-ring-outer" aria-hidden="true"></div>
-        <div class="splash-logo-wrap">
-          <img class="splash-logo-img" src="assets/security-club-logo-small.png" alt="Security Club DBIT Logo" width="82" height="82" fetchpriority="high">
-        </div>
+<body>
+  <div id="site-loader" class="site-loader" role="status" aria-label="Loading Security Club DBIT">
+    <div class="loader-content">
+      <div class="loader-mark-wrap">
+        <div class="loader-spin-ring" aria-hidden="true"></div>
+        <img class="loader-logo-img" src="assets/security-club-logo-small.png" alt="Security Club DBIT Logo" width="62" height="62" fetchpriority="high">
       </div>
-      <div class="splash-text-container">
-        <h1 class="splash-title">Security Club, DBIT</h1>
-        <p class="splash-tagline">Stay connected, stay secure.</p>
-        <div class="splash-progress-track" aria-hidden="true">
-          <div class="splash-progress-bar"></div>
-        </div>
-        <div class="splash-status-meta">
-          <span class="splash-status">Loading club assets...</span>
-          <span class="splash-percent">0%</span>
-        </div>
+      <div class="loader-meta">
+        <h1 class="loader-title">Security Club <small>DBIT</small></h1>
+        <p class="loader-tagline">Stay connected, stay secure.</p>
       </div>
     </div>
   </div>
   <canvas id="matrix-background" aria-hidden="true"></canvas>
-  <div class="ambient-grid" aria-hidden="true"></div>
-  <!-- [SECURITY CLUB CTF CHALLENGE #1] Flag captured by source reconnaissance: SC{welcome_to_security_club} -->
   <header class="site-header">
     <a class="brand" href="#/" aria-label="Security Club home"><img src="assets/security-club-logo-small.png"
         alt="Security Club DBIT logo" width="42" height="42" fetchpriority="high" decoding="async"><span>Security Club <small>DBIT</small><span
-          class="brand-tagline"><span class="status-beacon" aria-hidden="true"></span>Stay connected, stay
+          class="brand-tagline">Stay connected, stay
           secure.</span></span></a>
     <button class="menu-toggle" type="button" aria-expanded="false"
       aria-controls="site-navigation"><span></span><span></span><span></span><span class="sr-only">Toggle
@@ -134,9 +122,9 @@
   <script defer src="ctf/challenges.js"></script>
   <script defer src="team/team.js"></script>
   <script defer src="awareness/awareness.js"></script>
-  <script defer src="gallery/gallery.js?v=3"></script>
-  <script type="module" src="script.js?v=7"></script>
-  <script defer src="cursor.js"></script>
+  <script defer src="gallery/gallery.js?v=4"></script>
+  <script defer src="cursor.js?v=2"></script>
+  <script type="module" src="script.js?v=11"></script>
 </body>
 
 </html>

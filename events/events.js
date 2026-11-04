@@ -37,11 +37,11 @@ window.eventsData = [
     ]
   },
   {
-    "title": "Tech Quest - 2026 ",
-    "date": "09-10-2026 ",
+    "title": "Tech Quest 2026",
+    "date": "2026-10-09",
     "type": "Competition",
-    "description": "Tech Quest is an inter-college competition organized by DBIT, featuring a series of challenges and activities designed to test participants' skills and knowledge.Security Club was in collaboration with SIE Club.As a challenge, we designed a murder mystery for the participants. Here, we provided three files, out of which one was about the case and two were the evidence files. Along with those, there was a 10-minute timer to find out the actual perpetrator. ",
-    "venue": "Computer tutorial room ",
+    "description": "Tech Quest was an inter-college technical competition organized at DBIT. Security Club collaborated with the SIE Club to host a digital forensics challenge formatted as a murder mystery. Participants analyzed three evidence files under a 10-minute countdown to identify the perpetrator through digital artifacts.",
+    "venue": "Computer Tutorial Room",
     "image": "events/Security Club_20261009_142358_0000.webp",
     "attachments": [
       { "label": "Tech Quest poster", "path": "events/Security Club_20261009_142358_0000.webp", "type": "Image" }
@@ -49,11 +49,11 @@ window.eventsData = [
   },
   {
     "title": "Tools For Penetration Testing",
-    "date": "26-10-2026",
+    "date": "2026-10-26",
     "type": "Workshop",
-    "speaker": "MR. HERAMB PATIL",
-    "description": "A workshop on penetration testing tools and techniques by speaker MR. HERAMB PATIL, conducted by Security Club , DBIT on October 26, 2026 at 2.00 PM to 4.00 PM.",
-    "venue": "IT LAB 6 ,3rd FLOOR , A WING",
+    "speaker": "Mr. Heramb Patil",
+    "description": "A hands-on workshop covering penetration testing workflows and automated vulnerability assessment tools, delivered by Mr. Heramb Patil for DBIT students on October 26, 2026 (2:00 PM – 4:00 PM).",
+    "venue": "IT Lab 6, 3rd Floor, A-Wing",
     "objectives": [
       "To introduce students to the fundamentals and methodology of penetration testing.",
       "To develop practical understanding of identifying and assessing security vulnerabilities.",

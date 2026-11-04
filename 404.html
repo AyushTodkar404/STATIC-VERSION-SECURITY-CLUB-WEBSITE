@@ -10,8 +10,8 @@
   <link rel="icon" href="assets/security-club-logo-small.png" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=11">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=17">
   <style>
     .not-found-wrapper {
       min-height: 80vh;
@@ -26,7 +26,8 @@
       padding: clamp(1.5rem, 5vw, 3rem);
       border: 1px solid var(--line);
       background: var(--surface);
-      box-shadow: 0 0 40px rgba(0, 255, 120, .06);
+      box-shadow: 0 16px 32px -8px rgba(0, 0, 0, 0.45);
+      border-radius: var(--radius-sm);
       text-align: left;
     }
     .not-found-code {
@@ -35,18 +36,18 @@
       color: var(--cyan);
       margin: 0;
       line-height: 1;
-      font-family: ui-monospace, monospace;
+      font-family: 'JetBrains Mono', monospace;
     }
     .not-found-log {
       margin: 1.5rem 0;
       padding: 1rem;
       background: rgba(0, 0, 0, .45);
-      border-left: 2px solid var(--green);
-      font: .85rem/1.6 ui-monospace, monospace;
+      border-left: 2px solid var(--accent);
+      font: .85rem/1.6 'JetBrains Mono', monospace;
       color: var(--muted);
     }
     .not-found-log span {
-      color: var(--green);
+      color: var(--accent);
     }
     .not-found-actions {
       display: flex;
@@ -85,6 +86,7 @@
   <footer class="site-footer">
     <p class="copyright">© Security Club DBIT · Don Bosco Institute of Technology</p>
   </footer>
+  <script defer src="cursor.js?v=2"></script>
 </body>
 
 </html>
