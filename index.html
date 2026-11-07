@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#05080c">
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; base-uri 'self'; form-action 'self' https://mail.google.com https://wa.me;">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()">
   <meta name="description"
     content="Security Club DBIT - explore, learn and build practical cybersecurity skills at Don Bosco Institute of Technology.">
   <meta property="og:title" content="Security Club | DBIT">
@@ -28,11 +32,12 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=17">
+  <link rel="stylesheet" href="styles.css?v=18">
   <link rel="stylesheet" href="SecurityLogoTrace.css">
 </head>
 
 <body>
+  <a href="#app" class="skip-link">Skip to main content</a>
   <div id="site-loader" class="site-loader" role="status" aria-label="Loading Security Club DBIT">
     <div class="loader-content">
       <div class="loader-mark-wrap">
@@ -119,12 +124,12 @@
   </footer>
   <script defer src="events/events.js"></script>
   <script defer src="flagships/flagships.js"></script>
-  <script defer src="ctf/challenges.js"></script>
+  <script defer src="ctf/challenges.js?v=2"></script>
   <script defer src="team/team.js"></script>
   <script defer src="awareness/awareness.js"></script>
   <script defer src="gallery/gallery.js?v=4"></script>
-  <script defer src="cursor.js?v=2"></script>
-  <script type="module" src="script.js?v=11"></script>
+  <script defer src="cursor.js?v=3"></script>
+  <script type="module" src="script.js?v=12"></script>
 </body>
 
 </html>

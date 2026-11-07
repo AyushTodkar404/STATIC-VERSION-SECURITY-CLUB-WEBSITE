@@ -72,8 +72,8 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
   }, true);
 
   function shell(key, content) {
-    const page = pages[key];
-    return '<div class="page section-shell"><section class="page-hero"><div><p class="eyebrow">' + escapeHtml(page.eyebrow) + '</p><h1>' + page.title + '</h1><p class="hero-lede">' + content.lede + '</p></div></section>' + content.body + '</div>';
+    const page = (Object.prototype.hasOwnProperty.call(pages, key) && pages[key]) || pages.notFound;
+    return '<div class="page section-shell"><section class="page-hero"><div><p class="eyebrow">' + escapeHtml(page.eyebrow) + '</p><h1>' + escapeHtml(page.title) + '</h1><p class="hero-lede">' + escapeHtml(content.lede) + '</p></div></section>' + content.body + '</div>';
   }
 
   function teamCards(items) {
@@ -223,7 +223,7 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
   }
   function eventDetailsMarkup(event) {
     const files = (event.attachments || []).map(function (file) {
-      return '<li><a class="button button-ghost attachment-link" href="' + escapeHtml(file.path) + '" target="_blank" rel="noopener">' + escapeHtml(file.label || file.path) + ' ↗</a><span>' + escapeHtml(file.type || 'File') + '</span></li>';
+      return '<li><a class="button button-ghost attachment-link" href="' + escapeHtml(file.path) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(file.label || file.path) + ' ↗</a><span>' + escapeHtml(file.type || 'File') + '</span></li>';
     }).join('');
 
     const objectivesHtml = (event.objectives && event.objectives.length) ? '<h3>Objectives</h3><ol class="event-objectives">' + event.objectives.map(function (item) {
@@ -284,6 +284,7 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
     });
   }
 
+  let lastModalTrigger = null;
   function closeActiveLightbox() {
     document.querySelectorAll('.gallery-lightbox, .awareness-lightbox').forEach(function (lb) {
       lb.hidden = true;
@@ -291,6 +292,10 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
       if (img) img.removeAttribute('src');
     });
     document.body.classList.remove('gallery-is-open');
+    if (lastModalTrigger && typeof lastModalTrigger.focus === 'function') {
+      lastModalTrigger.focus();
+      lastModalTrigger = null;
+    }
   }
 
   function setupEvents(items) {
@@ -308,15 +313,33 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
       const open = function () {
         const event = items.find(function (item) { return item.title === card.dataset.eventId; });
         if (!event) return;
+        const lastActive = document.activeElement;
         document.body.insertAdjacentHTML('beforeend', eventDetailsMarkup(event));
         const modal = document.querySelector('.event-detail-overlay');
+        const closeBtn = modal.querySelector('.event-detail-close');
         const close = function () {
           modal.remove();
           document.body.classList.remove('event-is-open');
+          if (lastActive && typeof lastActive.focus === 'function') lastActive.focus();
         };
-        modal.querySelector('.event-detail-close').addEventListener('click', close);
+        closeBtn.addEventListener('click', close);
         modal.addEventListener('click', function (eventTarget) { if (eventTarget.target === modal) close(); });
-        modal.querySelector('.event-detail-close').focus();
+        modal.addEventListener('keydown', function (e) {
+          if (e.key === 'Tab') {
+            const focusables = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+            if (!focusables.length) return;
+            const first = focusables[0];
+            const last = focusables[focusables.length - 1];
+            if (e.shiftKey && document.activeElement === first) {
+              e.preventDefault();
+              last.focus();
+            } else if (!e.shiftKey && document.activeElement === last) {
+              e.preventDefault();
+              first.focus();
+            }
+          }
+        });
+        closeBtn.focus();
         document.body.classList.add('event-is-open');
       };
       card.addEventListener('click', open);
@@ -473,9 +496,11 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
     bindPillGroup(filterButtons, function (btn) { selectedCat = btn.dataset.awarenessFilter; applyFilter(); });
     applyFilter();
 
+    const closeBtn = lightbox && lightbox.querySelector('.awareness-lightbox-close');
     browser.querySelectorAll('[data-awareness-image]').forEach(function (trigger) {
       trigger.addEventListener('click', function () {
         if (!lightbox || !lightboxImg) return;
+        lastModalTrigger = trigger;
         lightboxImg.src = trigger.dataset.awarenessImage;
         lightboxImg.alt = trigger.dataset.awarenessTitle || '';
         if (lightboxTitle) lightboxTitle.textContent = trigger.dataset.awarenessTitle || '';
@@ -483,10 +508,10 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
         if (lightboxLink) lightboxLink.href = trigger.dataset.awarenessImage;
         lightbox.hidden = false;
         document.body.classList.add('gallery-is-open');
+        if (closeBtn) closeBtn.focus();
       });
     });
 
-    const closeBtn = lightbox && lightbox.querySelector('.awareness-lightbox-close');
     if (closeBtn) closeBtn.addEventListener('click', closeActiveLightbox);
     if (lightbox) {
       lightbox.addEventListener('click', function (e) {
@@ -624,7 +649,7 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
       const btn = card.querySelector('.ctf-submit-btn');
       const feedback = card.querySelector('.ctf-feedback');
       if (input) {
-        input.value = challenge.flag || 'SC{...}';
+        input.value = challenge.flag || 'SC{FLAG_VERIFIED}';
         input.disabled = true;
       }
       if (btn) {
@@ -679,22 +704,37 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
         const input = form.querySelector('.ctf-flag-input');
         const feedback = form.querySelector('.ctf-feedback');
         const entered = (input && input.value || '').trim();
-        const expected = String(ch.flag || '').trim();
         const card = browser.querySelector('[data-ctf-id="' + formId + '"]');
 
-        if (entered.toLowerCase() === expected.toLowerCase()) {
-          if (solvedIds.indexOf(formId) === -1) {
-            solvedIds.push(formId);
-            try { sessionStorage.setItem(storageKey, JSON.stringify(solvedIds)); } catch (_) {}
+        async function checkEnteredFlag(val, challenge) {
+          const clean = val.trim().toLowerCase();
+          if (challenge.flag && clean === String(challenge.flag).trim().toLowerCase()) return true;
+          if (challenge.flagHash && window.crypto && window.crypto.subtle) {
+            try {
+              const enc = new TextEncoder().encode(clean);
+              const buf = await window.crypto.subtle.digest('SHA-256', enc);
+              const hash = Array.from(new Uint8Array(buf)).map(function (b) { return b.toString(16).padStart(2, '0'); }).join('');
+              return hash === challenge.flagHash.toLowerCase();
+            } catch (_) {}
           }
-          if (card) syncSolvedCard(card, ch);
-          updateHud();
-        } else {
-          if (feedback) {
-            feedback.className = 'ctf-feedback is-error';
-            feedback.innerHTML = '<strong>[-] Incorrect:</strong> Flag mismatch. Ensure standard format SC{...} and re-verify.';
-          }
+          return false;
         }
+
+        checkEnteredFlag(entered, ch).then(function (isCorrect) {
+          if (isCorrect) {
+            if (solvedIds.indexOf(formId) === -1) {
+              solvedIds.push(formId);
+              try { sessionStorage.setItem(storageKey, JSON.stringify(solvedIds)); } catch (_) {}
+            }
+            if (card) syncSolvedCard(card, ch);
+            updateHud();
+          } else {
+            if (feedback) {
+              feedback.className = 'ctf-feedback is-error';
+              feedback.innerHTML = '<strong>[-] Incorrect:</strong> Flag mismatch. Ensure standard format SC{...} and re-verify.';
+            }
+          }
+        });
       });
     });
   }
@@ -869,16 +909,19 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
     const lightbox = browser.querySelector('.gallery-lightbox');
     const lightboxImage = lightbox.querySelector('img');
     const lightboxCaption = lightbox.querySelector('p');
+    const galleryCloseBtn = lightbox.querySelector('.gallery-lightbox-close');
     browser.querySelectorAll('[data-gallery-image]').forEach(function (button) {
       button.addEventListener('click', function () {
+        lastModalTrigger = button;
         lightboxImage.src = button.dataset.galleryImage;
         lightboxImage.alt = button.dataset.galleryAlt;
         lightboxCaption.textContent = button.dataset.galleryAlt;
         lightbox.hidden = false;
         document.body.classList.add('gallery-is-open');
+        if (galleryCloseBtn) galleryCloseBtn.focus();
       });
     });
-    lightbox.querySelector('.gallery-lightbox-close').addEventListener('click', closeActiveLightbox);
+    if (galleryCloseBtn) galleryCloseBtn.addEventListener('click', closeActiveLightbox);
     lightbox.addEventListener('click', function (event) {
       if (event.target === lightbox) closeActiveLightbox();
     });
@@ -895,7 +938,7 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
   }
 
   function render(key) {
-    if (!pages[key]) key = 'notFound';
+    if (!Object.prototype.hasOwnProperty.call(pages, key)) key = 'notFound';
     let content;
     if (key === 'home') {
       content = {
@@ -1208,7 +1251,10 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
   }
 
   function route() {
-    render(location.hash.replace(/^#\/?/, '') || 'home');
+    const raw = String(location.hash || '').replace(/^#\/?/, '').trim();
+    const cleanKey = (raw.split('?')[0].split('/')[0] || 'home').toLowerCase();
+    const validKey = Object.prototype.hasOwnProperty.call(pages, cleanKey) ? cleanKey : 'notFound';
+    render(validKey);
     window.scrollTo(0, 0);
   }
 

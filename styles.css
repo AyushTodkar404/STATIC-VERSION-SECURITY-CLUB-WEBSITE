@@ -146,6 +146,30 @@ code {
   margin-inline: auto;
 }
 
+/* Accessible Skip Link (WCAG 2.4.1) */
+.skip-link {
+  position: absolute;
+  top: -120px;
+  left: 1.25rem;
+  z-index: 10000;
+  padding: 0.75rem 1.25rem;
+  background: var(--surface-bright);
+  color: var(--accent);
+  border: 2px solid var(--accent);
+  border-radius: var(--radius-sm);
+  font: 600 0.88rem var(--font-mono);
+  text-decoration: none;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.75);
+  transition: top 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+  top: 1.25rem;
+  outline: 2px solid var(--cyan);
+  outline-offset: 2px;
+}
+
 /* Sticky Header with Frosted Glass */
 .site-header {
   position: sticky;
@@ -400,7 +424,11 @@ code {
   background: rgba(0, 229, 255, 0.12);
   box-shadow: none;
   transform: translateY(-2px);
-  outline: none;
+}
+
+.social-links a:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 2px;
 }
 
 .social-links svg {
@@ -1374,7 +1402,11 @@ img.card-image.is-loaded,
   border-color: var(--cyan);
   color: #ffffff;
   box-shadow: none;
-  outline: none;
+}
+
+.team-linkedin-link:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 2px;
 }
 
 .team-linkedin-link:hover .team-link-arrow {

@@ -11,53 +11,8 @@
 **Run Commands:**
 
 ```bash
-# 1. Syntax check all JavaScript files
-node --check script.js
-node --check SecurityLogoTrace.js
-node --check cursor.js
-node --check events/events.js
-node --check flagships/flagships.js
-node --check team/team.js
-node --check gallery/gallery.js
-node --check ctf/challenges.js
-node --check awareness/awareness.js
-
-# 2. Automated Asset & Manifest Verification Script
-node -e "
-const fs = require('fs');
-const path = require('path');
-let pass = 0, fail = 0;
-function assert(cond, msg) { if (cond) pass++; else { console.error('FAIL: ' + msg); fail++; } }
-
-// Check data manifests
-global.window = {};
-eval(fs.readFileSync('events/events.js', 'utf8'));
-assert(Array.isArray(window.eventsData) && window.eventsData.length > 0, 'eventsData loaded');
-
-eval(fs.readFileSync('team/team.js', 'utf8'));
-assert(Array.isArray(window.teamData) && window.teamData.length > 0, 'teamData loaded');
-
-eval(fs.readFileSync('flagships/flagships.js', 'utf8'));
-assert(Array.isArray(window.flagshipsData) && window.flagshipsData.length > 0, 'flagshipsData loaded');
-
-eval(fs.readFileSync('awareness/awareness.js', 'utf8'));
-assert(Array.isArray(window.awarenessData) && window.awarenessData.length > 0, 'awarenessData loaded');
-
-eval(fs.readFileSync('ctf/challenges.js', 'utf8'));
-assert(Array.isArray(window.challengesData) && window.challengesData.length > 0, 'challengesData loaded');
-
-eval(fs.readFileSync('gallery/gallery.js', 'utf8'));
-assert(Array.isArray(window.galleryData) && window.galleryData.length > 0, 'galleryData loaded');
-
-// Verify all referenced team images exist on disk
-window.teamData.forEach(m => { if (m.image) assert(fs.existsSync(m.image), 'Team image exists: ' + m.image); });
-
-// Verify all awareness images exist on disk
-window.awarenessData.forEach(a => { if (a.image) assert(fs.existsSync(a.image), 'Awareness image exists: ' + a.image); });
-
-console.log('Passed:', pass, 'Failed:', fail);
-if (fail > 0) process.exit(1);
-"
+# Automated 5-Skill Full Verification Suite (Syntax, Manifests, Assets, Security Headers, Routing, A11y, CTF Cryptography)
+node test.js
 ```
 
 ## Test File Organization
