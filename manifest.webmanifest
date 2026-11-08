@@ -1,0 +1,23 @@
+{
+  "name": "DBIT Security Club - Official Portal & CTF Sandbox",
+  "short_name": "SecurityClub",
+  "description": "Official cybersecurity student club portal at Don Bosco Institute of Technology (DBIT), Mumbai.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#060913",
+  "theme_color": "#00d9f5",
+  "icons": [
+    {
+      "src": "assets/security-club-logo-small.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/security-club-logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

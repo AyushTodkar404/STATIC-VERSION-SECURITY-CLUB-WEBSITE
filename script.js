@@ -1256,4 +1256,10 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
   setupSiteLoader();
   setupMatrix();
   route();
+
+  if ('serviceWorker' in navigator && window.location.protocol !== 'file:') {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('./sw.js').catch(function () {});
+    });
+  }
 }());

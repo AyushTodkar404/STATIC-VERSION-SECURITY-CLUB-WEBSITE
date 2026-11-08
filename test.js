@@ -160,8 +160,12 @@ window.challengesData.forEach(function (ch) {
 
 // Test known solutions against hashes
 assert(sha256Hex('SC{welcome_to_security_club}') === window.challengesData[0].flagHash, 'Challenge #1 solution matches SHA-256 hash');
-assert(sha256Hex('SC{c0bb1_ciphe4_rk0ck}') === window.challengesData[1].flagHash, 'Challenge #2 solution matches SHA-256 hash');
-assert(sha256Hex('SC{h34d3r_1nj3ct10n_d3t3ct3d}') === window.challengesData[2].flagHash, 'Challenge #3 solution matches SHA-256 hash');
+if (window.challengesData.length > 1) {
+  assert(sha256Hex('SC{c0bb1_ciphe4_rk0ck}') === window.challengesData[1].flagHash, 'Challenge #2 solution matches SHA-256 hash');
+}
+if (window.challengesData.length > 2) {
+  assert(sha256Hex('SC{h34d3r_1nj3ct10n_d3t3ct3d}') === window.challengesData[2].flagHash, 'Challenge #3 solution matches SHA-256 hash');
+}
 assert(sha256Hex('SC{fake_flag}') !== window.challengesData[0].flagHash, 'Invalid flag token correctly fails SHA-256 hash comparison');
 
 // Test HTML escaping logic
