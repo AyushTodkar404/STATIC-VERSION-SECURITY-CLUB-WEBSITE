@@ -18,32 +18,47 @@
   let pointerX = window.innerWidth / 2;
   let pointerY = window.innerHeight / 2;
   let activeTarget = null;
-  let frame = 0;
+  let rafPending = false;
 
   // Immediately assign idle transforms so all 4 corners are rendered instantly
   corners.forEach(function (corner, index) {
     corner.style.transform = 'translate3d(' + idlePositions[index][0] + 'px, ' + idlePositions[index][1] + 'px, 0)';
   });
 
+  function updateCursorFrame() {
+    rafPending = false;
+    cursor.style.transform = 'translate3d(' + pointerX + 'px, ' + pointerY + 'px, 0)';
+    if (activeTarget && activeTarget.isConnected) {
+      const rect = activeTarget.getBoundingClientRect();
+      const positions = [
+        [rect.left - 3, rect.top - 3],
+        [rect.right + 3 - cornerSize, rect.top - 3],
+        [rect.right + 3 - cornerSize, rect.bottom + 3 - cornerSize],
+        [rect.left - 3, rect.bottom + 3 - cornerSize]
+      ];
+      for (let i = 0; i < 4; i++) {
+        corners[i].style.transform = 'translate3d(' + (positions[i][0] - pointerX) + 'px, ' + (positions[i][1] - pointerY) + 'px, 0)';
+      }
+    }
+  }
+
+  function scheduleCursorFrame() {
+    if (!rafPending) {
+      rafPending = true;
+      window.requestAnimationFrame(updateCursorFrame);
+    }
+  }
+
   function moveCursor(event) {
     if (event.pointerType !== 'mouse' && event.pointerType !== 'pen') return;
     pointerX = event.clientX;
     pointerY = event.clientY;
-    cursor.style.transform = 'translate3d(' + pointerX + 'px, ' + pointerY + 'px, 0)';
-    if (activeTarget) positionCorners(activeTarget);
+    scheduleCursorFrame();
   }
 
   function positionCorners(target) {
-    const rect = target.getBoundingClientRect();
-    const positions = [
-      [rect.left - 3, rect.top - 3],
-      [rect.right + 3 - cornerSize, rect.top - 3],
-      [rect.right + 3 - cornerSize, rect.bottom + 3 - cornerSize],
-      [rect.left - 3, rect.bottom + 3 - cornerSize]
-    ];
-    corners.forEach(function (corner, index) {
-      corner.style.transform = 'translate3d(' + (positions[index][0] - pointerX) + 'px, ' + (positions[index][1] - pointerY) + 'px, 0)';
-    });
+    if (!target) return;
+    scheduleCursorFrame();
   }
 
   function returnToIdle() {
@@ -86,15 +101,11 @@
   function syncTarget() {
     if (!activeTarget) return;
     if (!activeTarget.isConnected) returnToIdle();
-    else positionCorners(activeTarget);
+    else scheduleCursorFrame();
   }
 
   function scheduleSync() {
-    if (frame) return;
-    frame = window.requestAnimationFrame(function () {
-      frame = 0;
-      syncTarget();
-    });
+    scheduleCursorFrame();
   }
 
   window.addEventListener('pointermove', moveCursor, { passive: true });

@@ -580,30 +580,39 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
 
   function ctfMarkup(challenges) {
     challenges = challenges || [];
-    const categories = ['all'].concat(challenges.map(function (c) { return c.category; }).filter(function (cat, i, all) {
-      return cat && all.indexOf(cat) === i;
-    }));
-
-    const categoryButtons = categories.map(function (cat) {
-      const active = cat === 'all';
-      const label = cat === 'all' ? 'All Challenges' : cat.toUpperCase();
-      return '<button class="team-filter-button ctf-filter-btn' + (active ? ' is-active' : '') + '" type="button" data-ctf-filter="' + escapeHtml(cat) + '" aria-pressed="' + active + '">' + escapeHtml(label) + '</button>';
-    }).join('');
+    const totalPts = challenges.reduce(function (sum, c) { return sum + (c.points || 0); }, 0);
 
     const cardsHtml = challenges.map(function (c) {
-      return '<article class="card ctf-card" data-ctf-id="' + escapeHtml(c.id) + '" data-ctf-category="' + escapeHtml(c.category) + '" data-ctf-pts="' + escapeHtml(c.points) + '">'
+      const catName = c.category === 'web' ? 'Web Security' :
+                      c.category === 'crypto' ? 'Cryptography' :
+                      c.category === 'network' ? 'Network Security' :
+                      (c.category ? c.category.charAt(0).toUpperCase() + c.category.slice(1) : 'Security');
+      const diffName = c.difficulty === 'beginner' ? 'Introductory' :
+                       c.difficulty === 'intermediate' ? 'Intermediate' :
+                       (c.difficulty ? c.difficulty.charAt(0).toUpperCase() + c.difficulty.slice(1) : 'Standard');
+
+      const safeDesc = escapeHtml(c.description).replace(/&#039;([^&#]+)&#039;/g, '<code>$1</code>');
+
+      const hintHtml = c.hint
+        ? '<details class="ctf-hint-details">'
+          + '<summary class="ctf-hint-summary">Need a hint?</summary>'
+          + '<div class="ctf-hint-content"><p class="ctf-hint-text">' + escapeHtml(c.hint) + '</p></div>'
+          + '</details>'
+        : '';
+
+      return '<article class="card ctf-card" data-ctf-id="' + escapeHtml(c.id) + '" data-ctf-pts="' + escapeHtml(c.points) + '">'
         + '<div class="ctf-card-header">'
-        + '<div class="ctf-category-group">'
-        + '<span class="ctf-cat-pill ctf-cat-' + escapeHtml(c.category) + '">' + escapeHtml(c.category.toUpperCase()) + '</span>'
-        + '<span class="ctf-diff-pill ctf-diff-' + escapeHtml(c.difficulty) + '">' + escapeHtml(c.difficulty.toUpperCase()) + '</span>'
+        + '<div class="ctf-card-meta">'
+        + '<span class="ctf-meta-cat">' + escapeHtml(catName) + '</span>'
+        + '<span class="ctf-meta-dot" aria-hidden="true">·</span>'
+        + '<span class="ctf-meta-diff">' + escapeHtml(diffName) + '</span>'
         + '</div>'
-        + '<span class="ctf-pts-badge">' + escapeHtml(c.points) + ' PTS</span>'
+        + '<span class="ctf-points-tag">' + escapeHtml(c.points) + ' pts</span>'
         + '</div>'
         + '<div class="card-body ctf-card-body">'
         + '<h3 class="ctf-card-title">' + escapeHtml(c.title) + '</h3>'
-        + '<div class="ctf-card-divider" aria-hidden="true"></div>'
-        + '<p class="ctf-card-desc">' + escapeHtml(c.description) + '</p>'
-        + (c.hint ? '<button type="button" class="ctf-hint-toggle" data-ctf-hint-target="' + escapeHtml(c.id) + '" aria-expanded="false"><span class="ctf-hint-icon" aria-hidden="true">▶</span> View Hint</button><div class="ctf-hint-box" id="ctf-hint-' + escapeHtml(c.id) + '" hidden><p class="ctf-hint-body">' + escapeHtml(c.hint) + '</p></div>' : '')
+        + '<p class="ctf-card-desc">' + safeDesc + '</p>'
+        + hintHtml
         + '<form class="ctf-flag-form" data-ctf-form-id="' + escapeHtml(c.id) + '">'
         + '<div class="ctf-input-group">'
         + '<input type="text" class="ctf-flag-input" placeholder="SC{flag_token}" required aria-label="Enter flag for ' + escapeHtml(c.title) + '">'
@@ -616,12 +625,23 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
     }).join('');
 
     return '<div class="ctf-browser">'
-      + '<div class="ctf-terminal-hud">'
-      + '<div class="ctf-hud-stat"><span class="hud-label">CHALLENGES</span><span class="hud-val" id="ctf-target-count">' + challenges.length + ' Available</span></div>'
-      + '<div class="ctf-hud-stat"><span class="hud-label">FLAGS SOLVED</span><span class="hud-val" id="ctf-solved-val">0 / ' + challenges.length + '</span></div>'
-      + '<div class="ctf-hud-stat"><span class="hud-label">SESSION SCORE</span><span class="hud-val hud-score" id="ctf-score-val">0 PTS</span></div>'
+      + '<div class="ctf-overview-panel">'
+      + '<div class="ctf-overview-info">'
+      + '<h2 class="ctf-overview-title">Practice Challenges</h2>'
+      + '<p class="ctf-overview-desc">Curated introductory challenges for DBIT students. Inspect code, decrypt tokens, and submit the flag to verify your findings.</p>'
       + '</div>'
-      + '<div class="team-controls-bar ctf-controls-bar"><div class="team-filters ctf-filters" role="group" aria-label="Filter CTF challenges by category">' + categoryButtons + '</div></div>'
+      + '<div class="ctf-progress-card">'
+      + '<div class="ctf-stat-item">'
+      + '<span class="ctf-stat-label">Progress</span>'
+      + '<span class="ctf-stat-val" id="ctf-solved-val">0 / ' + challenges.length + ' solved</span>'
+      + '</div>'
+      + '<div class="ctf-stat-divider" aria-hidden="true"></div>'
+      + '<div class="ctf-stat-item">'
+      + '<span class="ctf-stat-label">Session Score</span>'
+      + '<span class="ctf-stat-val ctf-score-val" id="ctf-score-val">0 / ' + totalPts + ' pts</span>'
+      + '</div>'
+      + '</div>'
+      + '</div>'
       + '<div class="card-grid ctf-grid">' + cardsHtml + '</div>'
       + '</div>';
   }
@@ -631,7 +651,7 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
     if (!browser) return;
 
     const challenges = window.challengesData || [];
-    const filterButtons = browser.querySelectorAll('[data-ctf-filter]');
+    const totalPts = challenges.reduce(function (sum, c) { return sum + (c.points || 0); }, 0);
     const cards = browser.querySelectorAll('[data-ctf-id]');
     const scoreVal = browser.querySelector('#ctf-score-val');
     const solvedVal = browser.querySelector('#ctf-solved-val');
@@ -648,8 +668,8 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
       challenges.forEach(function (c) {
         if (solvedIds.indexOf(c.id) !== -1) score += (c.points || 0);
       });
-      if (scoreVal) scoreVal.textContent = score + ' PTS';
-      if (solvedVal) solvedVal.textContent = solvedIds.length + ' / ' + challenges.length;
+      if (scoreVal) scoreVal.textContent = score + ' / ' + totalPts + ' pts';
+      if (solvedVal) solvedVal.textContent = solvedIds.length + ' / ' + challenges.length + ' solved';
     }
 
     function syncSolvedCard(card, challenge) {
@@ -667,7 +687,7 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
       }
       if (feedback) {
         feedback.className = 'ctf-feedback is-success';
-        feedback.innerHTML = '<strong>Solved:</strong> Flag verified. +' + challenge.points + ' PTS';
+        feedback.innerHTML = '<strong>Verified:</strong> Flag correct. +' + challenge.points + ' pts';
       }
     }
 
@@ -677,31 +697,6 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
       if (ch && solvedIds.indexOf(cId) !== -1) syncSolvedCard(card, ch);
     });
     updateHud();
-
-    let selectedCat = 'all';
-    function applyCatFilter() {
-      cards.forEach(function (card) {
-        const matches = selectedCat === 'all' || card.dataset.ctfCategory === selectedCat;
-        card.hidden = !matches;
-      });
-    }
-    bindPillGroup(filterButtons, function (btn) {
-      selectedCat = btn.dataset.ctfFilter;
-      applyCatFilter();
-    });
-
-    browser.querySelectorAll('.ctf-hint-toggle').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        const targetId = btn.dataset.ctfHintTarget;
-        const box = browser.querySelector('#ctf-hint-' + targetId);
-        if (!box) return;
-        const willShow = box.hidden;
-        box.hidden = !willShow;
-        btn.setAttribute('aria-expanded', String(willShow));
-        const icon = btn.querySelector('.ctf-hint-icon');
-        if (icon) icon.textContent = willShow ? '▼' : '▶';
-      });
-    });
 
     browser.querySelectorAll('.ctf-flag-form').forEach(function (form) {
       form.addEventListener('submit', function (e) {
@@ -740,7 +735,7 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
           } else {
             if (feedback) {
               feedback.className = 'ctf-feedback is-error';
-              feedback.innerHTML = '<strong>Incorrect:</strong> Flag mismatch. Please verify your solution and format (SC{...}).';
+              feedback.innerHTML = '<strong>Incorrect flag:</strong> Please verify your solution and format (SC{...}).';
             }
           }
         });
@@ -1053,7 +1048,7 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
     if (!context) return;
     const characters = '0101010123456789ABCDEF$#*+-<>/';
     const isMobile = window.innerWidth < 768;
-    const fontSize = isMobile ? 15 : 14;
+    const fontSize = isMobile ? 18 : 14;
     let width = 0;
     let height = 0;
     let drops = [];
@@ -1232,27 +1227,20 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
       }
       setTimeout(function () {
         if (loader.parentNode) loader.remove();
-      }, 400);
+      }, 300);
     }
 
-    // Dismiss when assets & fonts are genuinely ready, with a gentle floor so it doesn't flicker in 10ms
-    const minDisplayTime = 400;
-    const start = performance.now();
-
-    function onReady() {
-      const elapsed = performance.now() - start;
-      const delay = Math.max(0, minDisplayTime - elapsed);
-      setTimeout(finish, delay);
-    }
-
-    if (document.readyState === 'complete') {
-      onReady();
+    // Dismiss as soon as DOM is ready; on slow networks/offline never wait for hung assets
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+      setTimeout(finish, 180);
     } else {
-      window.addEventListener('load', onReady, { once: true });
+      document.addEventListener('DOMContentLoaded', function () {
+        setTimeout(finish, 180);
+      }, { once: true });
     }
 
-    // Failsafe in case a font or image hangs
-    setTimeout(finish, 2400);
+    // Strict failsafe ceiling (450ms) so slow connections / offline never freeze
+    setTimeout(finish, 450);
   }
 
   function route() {

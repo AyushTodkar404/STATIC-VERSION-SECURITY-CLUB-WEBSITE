@@ -180,6 +180,11 @@ assert(!/0 0 24px rgba\(0,\s*229,\s*255/i.test(stylesCss), 'styles.css has no gl
 assert(!/<figcaption>/i.test(scriptJs), 'script.js gallery markup omits unnecessary <figcaption> titles on images');
 assert(!/<span class="form-step-num">01<\/span>/i.test(scriptJs.match(/function contactMarkup[\s\S]*?<\/form>/)?.[0] || ''), 'contactMarkup omits fake single-step number badge');
 assert(!/ENVIRONMENT[\s\S]*?Active Labs/i.test(scriptJs), 'ctfMarkup omits fake ENVIRONMENT: Active Labs telemetry stat');
+assert(!/ctf-terminal-hud/i.test(scriptJs), 'script.js ctfMarkup replaces sci-fi HUD with clean overview panel');
+assert(!/ctf-filter-btn/i.test(scriptJs), 'script.js ctfMarkup removes redundant filter buttons for 3 challenges');
+assert(!/ctf-cat-pill/i.test(scriptJs), 'script.js ctfMarkup removes pill soup in challenge card headers');
+assert(/<details class="ctf-hint-details"/i.test(scriptJs), 'script.js ctfMarkup uses semantic native <details> for hints');
+assert(/<code>/i.test(scriptJs), 'script.js ctfMarkup wraps code strings in semantic <code> elements');
 assert(!/awareness\/awareness\.js/i.test(scriptJs), 'script.js does not leak internal source paths to public visitors in empty states');
 
 console.log('\n==========================================');
