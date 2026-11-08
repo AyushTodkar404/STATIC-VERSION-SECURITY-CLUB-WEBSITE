@@ -172,6 +172,16 @@ function escapeHtml(value) {
 }
 assert(escapeHtml('<script>alert("XSS")</script>') === '&lt;script&gt;alert(&quot;XSS&quot;)&lt;/script&gt;', 'escapeHtml prevents script and quote injection');
 
+console.log('\n--- 8. CONTENT INTEGRITY & UNSLOP REGRESSION CHECKS ---');
+const stylesCss = fs.readFileSync('styles.css', 'utf8');
+
+assert(!/0 0 20px rgba\(0,\s*217,\s*245/i.test(stylesCss), 'styles.css has no glowing cyan card halos');
+assert(!/0 0 24px rgba\(0,\s*229,\s*255/i.test(stylesCss), 'styles.css has no glowing flagship card halos');
+assert(!/<figcaption>/i.test(scriptJs), 'script.js gallery markup omits unnecessary <figcaption> titles on images');
+assert(!/<span class="form-step-num">01<\/span>/i.test(scriptJs.match(/function contactMarkup[\s\S]*?<\/form>/)?.[0] || ''), 'contactMarkup omits fake single-step number badge');
+assert(!/ENVIRONMENT[\s\S]*?Active Labs/i.test(scriptJs), 'ctfMarkup omits fake ENVIRONMENT: Active Labs telemetry stat');
+assert(!/awareness\/awareness\.js/i.test(scriptJs), 'script.js does not leak internal source paths to public visitors in empty states');
+
 console.log('\n==========================================');
 console.log('TEST SUMMARY: ' + pass + ' PASSED, ' + fail + ' FAILED');
 console.log('==========================================');

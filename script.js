@@ -7,18 +7,18 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
   const matrixCanvas = document.querySelector('#matrix-background');
 
   const pages = {
-    home: { label: 'Welcome', title: 'Curious about cybersecurity? You belong here.', eyebrow: 'Security Club · Welcome terminal' },
-    about: { label: 'About Us', title: 'Learn how the digital world works—and how to protect it.', eyebrow: 'A club for first steps' },
-    awareness: { label: 'Security Awareness', title: 'Empowering students with proactive cybersecurity alerts, tips, and campaigns.', eyebrow: 'Campus Cyber Awareness' },
-    events: { label: 'Events', title: 'Learn together. Build together. Defend together.', eyebrow: 'Events archive' },
-    flagships: { label: 'Flagships', title: 'Programs that turn curiosity into capability.', eyebrow: 'Our signature initiatives' },
-    team: { label: 'Team', title: 'The people behind the signal.', eyebrow: 'Meet the club team' },
-    gallery: { label: 'Gallery', title: 'Captured in the club.', eyebrow: 'Moments from our community' },
-    membership: { label: 'Membership', title: 'Your route from visitor to contributor.', eyebrow: 'Join the community' },
-    submission: { label: 'Submission', title: 'Submit your interest in the club.', eyebrow: 'Student submission' },
-    contact: { label: 'Contact', title: 'Have a question? Start a conversation.', eyebrow: 'Reach the club' },
-    ctf: { label: 'CTF', title: 'Think sideways. Solve carefully. Learn constantly.', eyebrow: 'Capture the flag' },
-    privacy: { label: 'Privacy & Ethics', title: 'Responsible practice. Student privacy.', eyebrow: 'Code of conduct & disclosure' },
+    home: { label: 'Welcome', title: 'Curious about cybersecurity? You belong here.', eyebrow: 'Student Community · DBIT' },
+    about: { label: 'About Us', title: 'Learn how the digital world works—and how to protect it.', eyebrow: 'About Security Club' },
+    awareness: { label: 'Security Awareness', title: 'Practical digital safety guides, alerts, and student comics.', eyebrow: 'Security Awareness' },
+    events: { label: 'Events', title: 'Workshops, bootcamps, and technical sessions.', eyebrow: 'Events Archive' },
+    flagships: { label: 'Flagships', title: 'Hands-on programs across the academic year.', eyebrow: 'Annual Flagships' },
+    team: { label: 'Team', title: 'Faculty mentors and student coordinators.', eyebrow: 'Club Directory' },
+    gallery: { label: 'Gallery', title: 'Workshops, bootcamps, and club activities.', eyebrow: 'Photo Archive' },
+    membership: { label: 'Membership', title: 'Open to all students at DBIT.', eyebrow: 'Get Involved' },
+    submission: { label: 'Submission', title: 'Join Security Club DBIT', eyebrow: 'Member Registration' },
+    contact: { label: 'Contact', title: 'Get in touch with the team.', eyebrow: 'Contact Us' },
+    ctf: { label: 'CTF', title: 'Capture the Flag', eyebrow: 'Interactive Labs' },
+    privacy: { label: 'Privacy & Ethics', title: 'Responsible practice and student privacy.', eyebrow: 'Privacy & Conduct' },
     notFound: { label: '404 - Not Found', title: 'Page not found.', eyebrow: 'Status · 404' }
   };
 
@@ -205,11 +205,11 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
       + '<button class="team-filter-button" type="button" data-team-filter="design" aria-pressed="false">Design & Editorial</button>'
       + '</div></div>';
 
-    return '<section class="team-section" aria-labelledby="team-mentors-heading"><div class="team-section-heading"><div class="section-heading-meta"><span class="section-tag-dot" aria-hidden="true"></span><p class="eyebrow">Academic Advisory · DBIT</p></div><h2 id="team-mentors-heading">Mentors & Faculty Guidance</h2><p>Faculty coordinators and teachers supporting the club with institutional expertise.</p></div>'
+    return '<section class="team-section" aria-labelledby="team-mentors-heading"><div class="team-section-heading"><div class="section-heading-meta"><span class="section-tag-dot" aria-hidden="true"></span><p class="eyebrow">Faculty Guidance</p></div><h2 id="team-mentors-heading">Faculty Mentors</h2><p>Faculty coordinators and teachers supporting the club with academic guidance.</p></div>'
       + (mentors.length ? teamCards(mentors) : '<p class="team-empty">Mentors will be listed here.</p>')
-      + '</section><section class="team-section" aria-labelledby="team-alumni-heading"><div class="team-section-heading"><div class="section-heading-meta"><span class="section-tag-dot" aria-hidden="true"></span><p class="eyebrow">Our Foundation & Heritage</p></div><h2 id="team-alumni-heading">Alumni Network</h2><p>Former members who built the club and now defend systems across industry.</p></div>'
+      + '</section><section class="team-section" aria-labelledby="team-alumni-heading"><div class="team-section-heading"><div class="section-heading-meta"><span class="section-tag-dot" aria-hidden="true"></span><p class="eyebrow">Past Members</p></div><h2 id="team-alumni-heading">Alumni Network</h2><p>Former members who helped build the club and now work across the industry.</p></div>'
       + (alumni.length ? teamCards(alumni) : '<p class="team-empty">Alumni will be listed here.</p>')
-      + '</section><section class="team-section" aria-labelledby="team-core-heading"><div class="team-section-heading"><div class="section-heading-meta"><span class="section-tag-dot" aria-hidden="true"></span><p class="eyebrow">Student Leadership Council</p></div><h2 id="team-core-heading">Core Team</h2><p>The student council and coordinators leading the Security Club initiatives.</p></div>'
+      + '</section><section class="team-section" aria-labelledby="team-core-heading"><div class="team-section-heading"><div class="section-heading-meta"><span class="section-tag-dot" aria-hidden="true"></span><p class="eyebrow">Student Council</p></div><h2 id="team-core-heading">Core Team</h2><p>The student coordinators leading club initiatives for the academic year.</p></div>'
       + filterBar
       + (coreTeam.length ? teamCards(coreTeam) : '<p class="team-empty">Core team members will be listed here.</p>')
       + '</section>';
@@ -383,16 +383,26 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
       return '<button class="gallery-year-button awareness-year-button' + (active ? ' is-active' : '') + '" type="button" data-awareness-year="' + escapeHtml(year) + '" aria-pressed="' + active + '">' + escapeHtml(year) + '</button>';
     }).join('');
 
+    const categories = items.map(function (item) {
+      return (item.category || item.tag || '').trim();
+    }).filter(function (cat, i, all) {
+      return cat && all.indexOf(cat) === i;
+    });
+
+    const categoryFilters = categories.length > 1
+      ? '<div class="team-filters awareness-filters" role="group" aria-label="Filter awareness campaigns">'
+        + '<button class="team-filter-button is-active" type="button" data-awareness-filter="all" aria-pressed="true">All</button>'
+        + categories.map(function (cat) {
+          return '<button class="team-filter-button" type="button" data-awareness-filter="' + escapeHtml(cat.toLowerCase()) + '" aria-pressed="false">' + escapeHtml(cat) + '</button>';
+        }).join('')
+        + '</div>'
+      : '';
+
     const controlsBar = '<div class="team-controls-bar awareness-controls-bar">'
       + '<div class="team-years awareness-years" role="group" aria-label="Select awareness campaign year">'
       + yearButtons
       + '</div>'
-      + '<div class="team-filters awareness-filters" role="group" aria-label="Filter awareness campaigns">'
-      + '<button class="team-filter-button is-active" type="button" data-awareness-filter="all" aria-pressed="true">All Campaigns</button>'
-      + '<button class="team-filter-button" type="button" data-awareness-filter="advisory" aria-pressed="false">Advisories</button>'
-      + '<button class="team-filter-button" type="button" data-awareness-filter="poster" aria-pressed="false">Posters</button>'
-      + '<button class="team-filter-button" type="button" data-awareness-filter="guide" aria-pressed="false">Guides</button>'
-      + '</div>'
+      + categoryFilters
       + '</div>';
 
     const cardsHtml = items.map(function (item, index) {
@@ -440,7 +450,7 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
         + '</article>';
     }).join('');
 
-    const emptyNotice = '<div class="awareness-empty" hidden><p class="team-empty">No awareness posters found for this selection. Add new campaigns to <code>awareness/awareness.js</code>.</p></div>';
+    const emptyNotice = '<div class="awareness-empty" hidden><p class="team-empty">No awareness campaigns found for this selection.</p></div>';
 
     const lightbox = '<div class="awareness-lightbox" hidden role="dialog" aria-modal="true" aria-label="Expanded awareness poster">'
       + '<button class="awareness-lightbox-close" type="button" aria-label="Close image">×</button>'
@@ -527,7 +537,7 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
     }
 
     const cardsHtml = items.map(function (item, index) {
-      const numTag = 'FLAGSHIP 0' + (index + 1);
+      const numTag = 'Flagship 0' + (index + 1);
       const isSiege = item.badge === 'siege' || /siege/i.test(item.title);
       const emblemSvg = isSiege
         ? '<svg viewBox="0 0 48 48" width="38" height="38" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M24 4 L40 10 V22 C40 32 32 40 24 44 C16 40 8 32 8 22 V10 Z" stroke="var(--cyan)" fill="rgba(0,229,255,0.06)"/><path d="M24 14 L32 24 L24 34 L16 24 Z" stroke="var(--green)"/><circle cx="24" cy="24" r="3" fill="var(--green)"/></svg>'
@@ -561,7 +571,7 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
 
     return '<div class="flagship-browser">'
       + '<div class="flagship-overview-banner">'
-      + '<div class="flagship-banner-meta"><span class="status-beacon" aria-hidden="true"></span><span class="flagship-badge-lead">Flagship Initiatives</span></div>'
+      + '<div class="flagship-banner-meta"><span class="flagship-badge-lead">Flagship Initiatives</span></div>'
       + '<p class="flagship-banner-text">Annual programs designed to guide students from introductory fundamentals to hands-on security practice.</p>'
       + '</div>'
       + '<div class="card-grid flagship-grid">' + cardsHtml + '</div>'
@@ -607,10 +617,9 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
 
     return '<div class="ctf-browser">'
       + '<div class="ctf-terminal-hud">'
-      + '<div class="ctf-hud-stat"><span class="hud-label">ENVIRONMENT</span><span class="hud-val hud-online"><span class="status-beacon" aria-hidden="true"></span>Active Labs</span></div>'
       + '<div class="ctf-hud-stat"><span class="hud-label">CHALLENGES</span><span class="hud-val" id="ctf-target-count">' + challenges.length + ' Available</span></div>'
-      + '<div class="ctf-hud-stat"><span class="hud-label">SESSION SCORE</span><span class="hud-val hud-score" id="ctf-score-val">0 PTS</span></div>'
       + '<div class="ctf-hud-stat"><span class="hud-label">FLAGS SOLVED</span><span class="hud-val" id="ctf-solved-val">0 / ' + challenges.length + '</span></div>'
+      + '<div class="ctf-hud-stat"><span class="hud-label">SESSION SCORE</span><span class="hud-val hud-score" id="ctf-score-val">0 PTS</span></div>'
       + '</div>'
       + '<div class="team-controls-bar ctf-controls-bar"><div class="team-filters ctf-filters" role="group" aria-label="Filter CTF challenges by category">' + categoryButtons + '</div></div>'
       + '<div class="card-grid ctf-grid">' + cardsHtml + '</div>'
@@ -654,11 +663,11 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
       }
       if (btn) {
         btn.disabled = true;
-        btn.textContent = 'Captured [OK]';
+        btn.textContent = 'Solved';
       }
       if (feedback) {
         feedback.className = 'ctf-feedback is-success';
-        feedback.innerHTML = '<strong>[+] Solved:</strong> Flag token captured. +' + challenge.points + ' PTS';
+        feedback.innerHTML = '<strong>Solved:</strong> Flag verified. +' + challenge.points + ' PTS';
       }
     }
 
@@ -731,7 +740,7 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
           } else {
             if (feedback) {
               feedback.className = 'ctf-feedback is-error';
-              feedback.innerHTML = '<strong>[-] Incorrect:</strong> Flag mismatch. Ensure standard format SC{...} and re-verify.';
+              feedback.innerHTML = '<strong>Incorrect:</strong> Flag mismatch. Please verify your solution and format (SC{...}).';
             }
           }
         });
@@ -800,7 +809,6 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
       + '<textarea id="submission-query" name="query" rows="2" placeholder="e.g. Timings of upcoming labs, or beginner requirements."></textarea>'
       + '</div>'
       + '<div class="form-dispatch-notice">'
-      + '<span class="status-beacon" aria-hidden="true"></span>'
       + '<p class="form-help">Your details are not stored on any server. Clicking below opens a message draft in your chosen app so you can review before sending.</p>'
       + '</div>'
       + '<div class="submission-actions">'
@@ -821,7 +829,6 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
       + '</div></div>'
       + '<form class="contact-panel contact-form" id="contact-form">'
       + '<div class="form-section-header">'
-      + '<span class="form-step-num">01</span>'
       + '<div class="form-step-meta">'
       + '<h3>Send a Message</h3>'
       + '<p>Questions, event collaborations, or workshop inquiries.</p>'
@@ -860,9 +867,9 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
       }).join('') + '</div>';
     }).join('');
     const photos = items.map(function (item) {
-      return '<figure class="gallery-item" data-gallery-item data-gallery-folder="' + escapeHtml(item.folder) + '"><button class="gallery-image-button" type="button" data-gallery-image="' + escapeHtml(item.image) + '" data-gallery-alt="' + escapeHtml(item.alt) + '" aria-label="Open ' + escapeHtml(item.alt) + '">' + image(item.image, '+', item.alt, '') + '</button><figcaption>' + escapeHtml(item.caption) + '</figcaption></figure>';
+      return '<figure class="gallery-item" data-gallery-item data-gallery-folder="' + escapeHtml(item.folder) + '"><button class="gallery-image-button" type="button" data-gallery-image="' + escapeHtml(item.image) + '" data-gallery-alt="' + escapeHtml(item.alt) + '" aria-label="View photo in full size">' + image(item.image, '+', item.alt, '') + '</button></figure>';
     }).join('');
-    return '<div class="gallery-browser"><div class="gallery-level"><button class="gallery-all-button is-active" type="button" data-gallery-all>All photos</button><div class="gallery-years" role="group" aria-label="Gallery years">' + yearButtons + '</div></div><div class="gallery-folders" role="group" aria-label="Gallery folders">' + folderGroups + '</div><div class="gallery-grid">' + photos + '</div><div class="gallery-lightbox" hidden role="dialog" aria-modal="true" aria-label="Expanded gallery image"><button class="gallery-lightbox-close" type="button" aria-label="Close image">×</button><img alt=""><p></p></div></div>';
+    return '<div class="gallery-browser"><div class="gallery-level"><button class="gallery-all-button is-active" type="button" data-gallery-all>All photos</button><div class="gallery-years" role="group" aria-label="Gallery years">' + yearButtons + '</div></div><div class="gallery-folders" role="group" aria-label="Gallery folders">' + folderGroups + '</div><div class="gallery-grid">' + photos + '</div><div class="gallery-lightbox" hidden role="dialog" aria-modal="true" aria-label="Expanded gallery image"><button class="gallery-lightbox-close" type="button" aria-label="Close image">×</button><img alt=""></div></div>';
   }
 
   function setupGallery() {
@@ -908,14 +915,12 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
     browser.querySelectorAll('[data-gallery-year-group]').forEach(function (group) { group.hidden = group.dataset.galleryYearGroup !== (yearButtons[0] && yearButtons[0].dataset.galleryYear); });
     const lightbox = browser.querySelector('.gallery-lightbox');
     const lightboxImage = lightbox.querySelector('img');
-    const lightboxCaption = lightbox.querySelector('p');
     const galleryCloseBtn = lightbox.querySelector('.gallery-lightbox-close');
     browser.querySelectorAll('[data-gallery-image]').forEach(function (button) {
       button.addEventListener('click', function () {
         lastModalTrigger = button;
         lightboxImage.src = button.dataset.galleryImage;
-        lightboxImage.alt = button.dataset.galleryAlt;
-        lightboxCaption.textContent = button.dataset.galleryAlt;
+        lightboxImage.alt = button.dataset.galleryAlt || 'Gallery photo';
         lightbox.hidden = false;
         document.body.classList.add('gallery-is-open');
         if (galleryCloseBtn) galleryCloseBtn.focus();
@@ -942,42 +947,42 @@ import { mountSecurityLogo } from './SecurityLogoTrace.js';
     let content;
     if (key === 'home') {
       content = {
-        lede: 'Security Club is a welcoming campus community for beginners, builders and problem-solvers. Explore cybersecurity through workshops, CTFs, projects and hands-on learning.',
-        body: '<div class="home-hero-visual"></div><div class="home-actions"><a class="button button-primary" href="#/events">Explore events →</a><a class="button button-ghost" href="#/about">Meet the club</a></div><section class="intro"><p class="eyebrow">A club for first steps</p><h2>You do not need to be a hacker to start.</h2><p>We make the first step practical, social and fun. Find your people, try a lab and build real skills at your own pace.</p></section><section class="opportunities"><div class="stat"><strong>Hands-on Labs</strong><span>Workshops &amp; practical defense</span></div><div class="stat"><strong>CTF Challenges</strong><span>Interactive beginner-friendly labs</span></div><div class="stat"><strong>Open Community</strong><span>Zero prerequisites to start</span></div></section>'
+        lede: 'Security Club DBIT is a campus community for students interested in practical cybersecurity. Learn through hands-on workshops, CTFs, and collaborative labs.',
+        body: '<div class="home-hero-visual"></div><div class="home-actions"><a class="button button-primary" href="#/events">Explore events →</a><a class="button button-ghost" href="#/about">Meet the club</a></div><section class="intro"><p class="eyebrow">Our Approach</p><h2>You do not need to be a hacker to start.</h2><p>We make the first step practical, collaborative and beginner-friendly. Join our sessions, try a lab, and build real skills at your own pace.</p></section><section class="opportunities"><div class="stat"><strong>Hands-on Labs</strong><span>Workshops &amp; practical defense</span></div><div class="stat"><strong>CTF Challenges</strong><span>Interactive beginner-friendly labs</span></div><div class="stat"><strong>Open Community</strong><span>Zero prerequisites to start</span></div></section>'
       };
     } else if (key === 'events') {
-      content = { lede: 'Browse Security Club events by year. Select a year to see that year’s workshops, bootcamps and community sessions.', body: eventsMarkup(window.eventsData || []) };
+      content = { lede: 'Workshops, bootcamps, and technical sessions organized by Security Club DBIT across academic years.', body: eventsMarkup(window.eventsData || []) };
     } else if (key === 'team') {
-      content = { lede: 'Meet the faculty mentors and student core team who make cybersecurity approachable, practical and collaborative.', body: teamSections(window.teamData || []) };
+      content = { lede: 'Faculty mentors and student coordinators who organize sessions, manage operations, and maintain our technical labs.', body: teamSections(window.teamData || []) };
     } else if (key === 'gallery') {
-      content = { lede: 'Browse the original folder arrangement, then open any photo for a closer look.', body: galleryMarkup(window.galleryData || []) };
+      content = { lede: 'Photos from our workshops, bootcamps, and team sessions. Click any photo to view in full resolution.', body: galleryMarkup(window.galleryData || []) };
     } else if (key === 'about') {
-      content = { lede: 'A student-led space to understand technology, question assumptions and practise defending the systems we depend on.', body: aboutMarkup() };
+      content = { lede: 'A student-led community at Don Bosco Institute of Technology dedicated to practical cybersecurity, ethical hacking, and defense.', body: aboutMarkup() };
     } else if (key === 'awareness') {
       content = {
-        lede: 'Visual alerts, campaign posters, and practical security advisories published by the club to cultivate campus-wide digital defense.',
+        lede: 'Comics, posters, and simple advisories created by the club to help students spot phishing, secure accounts, and protect data.',
         body: awarenessMarkup(window.awarenessData || [])
       };
     } else if (key === 'flagships') {
       content = {
-        lede: 'Our recurring initiatives create clear ways to learn, practise and contribute throughout the academic year.',
+        lede: 'Annual programs providing structured hands-on learning, team competitions, and security defense practice.',
         body: flagshipsMarkup(window.flagshipsData || [])
       };
     } else if (key === 'ctf') {
       content = {
-        lede: 'Hands-on offensive and defensive cybersecurity labs. Solve challenges, discover vulnerabilities, and capture the flag.',
+        lede: 'Hands-on challenges for DBIT students. Inspect source code, analyze network packets, and decode ciphers.',
         body: ctfMarkup(window.challengesData || [])
       };
     } else if (key === 'membership') {
-      content = { lede: 'Open to all students across DBIT. Join our technical sessions, participate in CTF labs, and build real-world security skills.', body: '<div class="split-content"><article class="info-panel"><p class="eyebrow">Start here</p><h2>Show up curious.</h2><p>Join an open session, ask questions and find the area of cybersecurity that excites you. Prior experience is never required.</p><a class="button button-primary" href="#/submission">Register your interest →</a></article><article class="info-panel"><p class="eyebrow">What you can explore</p><ul class="clean-list"><li>Security fundamentals</li><li>CTFs and practical labs</li><li>Secure development</li><li>Research and community projects</li></ul></article></div>' };
+      content = { lede: 'Open to all students across DBIT branches. Attend technical workshops, participate in CTFs, and build practical skills.', body: '<div class="split-content"><article class="info-panel"><p class="eyebrow">Start here</p><h2>Show up curious.</h2><p>Join an open session, ask questions and find the area of cybersecurity that excites you. Prior experience is never required.</p><a class="button button-primary" href="#/submission">Register your interest →</a></article><article class="info-panel"><p class="eyebrow">What you can explore</p><ul class="clean-list"><li>Security fundamentals</li><li>CTFs and practical labs</li><li>Secure development</li><li>Research and community projects</li></ul></article></div>' };
     } else if (key === 'submission') {
       content = {
-        lede: 'Share your details and motivation with the club coordinators. Choose Gmail or WhatsApp to review and dispatch your registration.',
+        lede: 'Submit your details to join Security Club. Choose Gmail or WhatsApp to send your registration to the coordinators.',
         body: submissionFormMarkup()
       };
     } else if (key === 'contact') {
       content = {
-        lede: 'For collaborations, event invites, workshop partnerships or club questions, reach us directly by email or WhatsApp.',
+        lede: 'Have a question, collaboration proposal, or workshop inquiry? Reach out to our coordinators directly.',
         body: contactMarkup()
       };
     } else if (key === 'privacy') {
